@@ -1,4 +1,4 @@
-target_sources(${PROJECT_NAME}_sources
+target_sources(zappy_gui_lib
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/HelloWorld.cpp
   PUBLIC

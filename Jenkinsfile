@@ -94,24 +94,10 @@ pipeline {
                 sh 'make tests_run'
 
                 script {
-                    def dirs = []
-
-                    for (_dir in dirs) {
-                        junit(testResults: "${_dir}/criterion.xml", allowEmptyResults : true)
-
-                        dir(_dir) {
-                            sh "gcovr --cobertura cobertura.xml --exclude tests/ --exclude libs/"
-                            def coverage_id = _dir.replaceAll('/', '-') + "-coverage"
-
-                            recordCoverage(tools: [[parser: 'COBERTURA']], sourceDirectories: [[path: "${_dir}/**"]],
-                                id: coverage_id, name: "${_dir} Coverage",
-                                sourceCodeRetention: 'EVERY_BUILD')
-                        }
-                    }
-                    junit(testResults: "criterion.xml", allowEmptyResults : true)
+                    junit(testResults: "test_detail.xml", allowEmptyResults : true)
                 }
 
-                sh 'gcovr --cobertura cobertura.xml --exclude tests/ --exclude libs/'
+                sh 'gcovr --cobertura cobertura.xml'
 
                 recordCoverage(tools: [[parser: 'COBERTURA']],
                     id: "coverage", name: "Coverage",

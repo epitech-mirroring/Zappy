@@ -60,4 +60,4 @@ tests_run: fclean
 	@mkdir -p build
 	@cmake -S . -B build -DTESTS=ON -DSERVER=ON -DGUI=ON
 	@cmake --build build --target zappy_tests
-	@./build/tests/zappy_tests
+	@./build/tests/zappy_tests --

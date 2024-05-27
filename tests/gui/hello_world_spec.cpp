@@ -7,9 +7,9 @@
 */
 
 #include <gtest/gtest.h>
-#include "server.h"
+#include "GUI.hpp"
 
-TEST(SERVER_HelloWorldTest, HelloWorldTest)
+TEST(GUI_HelloWorldTest, HelloWorldTest)
 {
     testing::internal::CaptureStdout();
     hello_world();
