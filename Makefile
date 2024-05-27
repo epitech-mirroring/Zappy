@@ -31,7 +31,8 @@ zappy_server:
 	@cmake -S . -B build -DSERVER=ON -DGUI=OFF
 	@cmake --build build --target zappy_server
 	@cp build/server/zappy_server .
-	@printf "$(SUCCESS)$(GREEN)  🚀  Zappy server built successfully$(RESET)\n"
+	@printf "$(SUCCESS)$(GREEN)  🚀  Zappy server built \
+successfully$(RESET)\n"
 
 zappy_ai:
 	@mkdir -p build/robots
