@@ -62,3 +62,5 @@ tests_run: fclean
 	@cmake -S . -B build -DTESTS=ON -DSERVER=ON -DGUI=ON
 	@cmake --build build --target zappy_tests
 	@./build/tests/zappy_tests --gtest_output=xml
+	@mkdir -p build/robots
+	cd robots && CARGO_TARGET_DIR=../build/robots cargo test
