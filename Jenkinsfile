@@ -93,14 +93,19 @@ pipeline {
                 // Run the tests
                 sh 'make tests_run'
 
-                script {
-                    junit(testResults: "test_detail.xml", allowEmptyResults : true)
-                }
+                junit(testResults: "test_detail.xml", allowEmptyResults : true)
 
                 sh 'gcovr --cobertura cobertura.xml'
 
                 recordCoverage(tools: [[parser: 'COBERTURA']],
                     id: "coverage", name: "Coverage",
+                    sourceCodeRetention: 'EVERY_BUILD')
+
+                sh 'rm -f cobertura.xml'
+                sh 'gcovr --cobertura cobertura.xml --branch'
+
+                recordCoverage(tools: [[parser: 'COBERTURA']],
+                    id: "coverage-branch", name: "Coverage Branch",
                     sourceCodeRetention: 'EVERY_BUILD')
             }
         }
