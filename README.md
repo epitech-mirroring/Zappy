@@ -1,7 +1,7 @@
 # Zappy
 
 <p align="center">
-<img width="800" height="200" src="https://github.com/epitech-mirroring/Zappy/assets/46846093/14fa682c-172d-4a85-abfb-49fd6cb5c19d">
+<img width="800" height="200" src="https://github.com/epitech-mirroring/Zappy/assets/46846093/14fa682c-172d-4a85-abfb-49fd6cb5c19d" alt="banner">
 </p>
 
 ## **ℹ️ About**
@@ -10,8 +10,8 @@ Second year final project at [{Epitech}](https://www.epitech.eu/). The Zappy is 
 The Raytracer project undertaken in the Second year at is designed to allow students to put into practice fundamental programming concepts of oriented object in C++, the concept of network programing in c and a complex IA.
 
 ## **📑 Project Info**
-- [📦 Epitech private repository]()
-- [📦 Group remote repository](https://github.com/6im0n/Raytracer)
+- [📦 Epitech private repository](https://github.com/EpitechPromo2027/B-YEP-400-NAN-4-1-zappy-quentin.tennerel)
+- [📦 Group remote repository](https://github.com/epitech-mirroring/Zappy)
 - [📄 PDF Project]()
 
 ### **📃 Description**
@@ -73,7 +73,7 @@ The program was developed using the following technologies:
 ## **🎮 How to Use:**
 
 <p align="center">
-<img width="450" height="150" src="https://github.com/epitech-mirroring/Zappy/assets/46846093/064d09b2-799c-4f13-8acd-c88e198a483c">
+<img width="450" height="150" src="https://github.com/epitech-mirroring/Zappy/assets/46846093/064d09b2-799c-4f13-8acd-c88e198a483c" alt="./zappy -help">
 </p>
 
 For the latest stable release, visit the [Release Page](https://github.com/epitech-mirroring/Zappy/tag/Release) and download the executable for your platform.
