@@ -1,0 +1,35 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
+max_line_length = 80
+tab_width = 4
+
+[*.md]
+trim_trailing_whitespace = false
+
+[{*.cpp,*.hpp}]
+indent_style = space
+indent_size = 4
+ij_c_block_brace_style = end_of_line
+ij_c_class_brace_style = end_of_line
+ij_any_block_brace_style = end_of_line
+ij_any_class_brace_style = end_of_line
+
+[{*.c,*.h}]
+indent_style = space
+indent_size = 4
+ij_c_block_brace_style = gnu
+ij_c_class_brace_style = gnu
+ij_any_block_brace_style = gnu
+ij_any_class_brace_style = gnu
+
+[Makefile]
+indent_style = tab
+
+[{CMakeLists.txt,*.cmake}]
+indent_style = space
+indent_size = 2
