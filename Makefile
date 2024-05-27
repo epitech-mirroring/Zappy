@@ -42,7 +42,7 @@ zappy_ai:
 
 zappy_gui:
 	@mkdir -p build
-	@cmake -S gui -B build -DGUI=ON -DSERVER=OFF
+	@cmake -S . -B build -DGUI=ON -DSERVER=OFF
 	@cmake --build build --target zappy_gui
 	@cp build/gui/zappy_gui .
 	@printf "$(SUCCESS)$(GREEN)  🎨  Zappy GUI built successfully$(RESET)\n"
