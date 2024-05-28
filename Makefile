@@ -64,4 +64,4 @@ tests_run: fclean
 	@./build/tests/zappy_tests --gtest_output=xml
 	@mkdir -p build/robots
 	@pip install -r robots/requirements.txt
-	@pytest --junitxml ai.xml
+	@python3 -m pytest --junitxml ai.xml
