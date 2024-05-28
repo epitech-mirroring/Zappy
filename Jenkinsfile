@@ -94,6 +94,7 @@ pipeline {
                 sh 'make tests_run'
 
                 junit(testResults: "test_detail.xml", allowEmptyResults : true)
+                junit(testResults: "ai.xml", allowEmptyResults : true)
 
                 sh 'gcovr --cobertura cobertura.xml'
 

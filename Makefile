@@ -35,9 +35,9 @@ zappy_server:
 successfully$(RESET)\n"
 
 zappy_ai:
-	@mkdir -p build/robots
-	@cd robots && CARGO_TARGET_DIR=../build/robots cargo build --release
-	@cp build/robots/release/zappy_ai .
+	@pip install -r robots/requirements.txt
+	@echo "#!$(shell which bash)\npython3 robots/main.py" > zappy_ai
+	@chmod +x zappy_ai
 	@printf "$(SUCCESS)$(GREEN)  🤖  Zappy AI built successfully$(RESET)\n"
 
 zappy_gui:
@@ -63,4 +63,5 @@ tests_run: fclean
 	@cmake --build build --target zappy_tests
 	@./build/tests/zappy_tests --gtest_output=xml
 	@mkdir -p build/robots
-	cd robots && CARGO_TARGET_DIR=../build/robots cargo test
+	@pip install -r robots/requirements.txt
+	@pytest --junitxml ai.xml
