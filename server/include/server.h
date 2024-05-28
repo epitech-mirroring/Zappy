@@ -9,13 +9,12 @@
 #ifndef ZAPPY_SERVER_H
     #define ZAPPY_SERVER_H
     #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
     #endif
 
-void hello_world(void);
+    void hello_world(void);
 
     #ifdef __cplusplus
-        }
+}
     #endif
 #endif //ZAPPY_SERVER_H
