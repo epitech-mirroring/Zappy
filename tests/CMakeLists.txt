@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.21)
+
+# Tests
+include(GoogleTest)
+enable_testing()
+add_executable(zappy_tests main.cpp)
+
+add_subdirectory(server)
+
+gtest_discover_tests(zappy_tests)
+target_include_directories(zappy_tests PRIVATE /usr/local/include)
+target_link_directories(zappy_tests PRIVATE /usr/local/lib)
+target_link_libraries(zappy_tests PRIVATE zappy_server_lib gtest_main gtest)
+target_include_directories(zappy_tests PRIVATE ${CMAKE_SOURCE_DIR}/server/include)

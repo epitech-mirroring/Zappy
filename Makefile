@@ -27,8 +27,9 @@ all: zappy_server zappy_ai zappy_gui
 	@printf "$(SUCCESS)$(GREEN)  🎉  Zappy built successfully$(RESET)\n"
 
 zappy_server:
-	@mkdir -p build/server
-	@cd build/server && cmake ../../server && make -j
+	@mkdir -p build
+	@cmake -S . -B build -DSERVER=ON -DGUI=OFF
+	@cmake --build build --target zappy_server
 	@cp build/server/zappy_server .
 	@printf "$(SUCCESS)$(GREEN)  🚀  Zappy server built successfully$(RESET)\n"
 
@@ -39,8 +40,9 @@ zappy_ai:
 	@printf "$(SUCCESS)$(GREEN)  🤖  Zappy AI built successfully$(RESET)\n"
 
 zappy_gui:
-	@mkdir -p build/gui
-	@cd build/gui && cmake ../../gui && make -j
+	@mkdir -p build
+	@cmake -S gui -B build -DGUI=ON -DSERVER=OFF
+	@cmake --build build --target zappy_gui
 	@cp build/gui/zappy_gui .
 	@printf "$(SUCCESS)$(GREEN)  🎨  Zappy GUI built successfully$(RESET)\n"
 
@@ -54,5 +56,8 @@ fclean: clean
 
 re: fclean all
 
-tests_run:
-	@cd tests && make tests_run
+tests_run: fclean
+	@mkdir -p build
+	@cmake -S . -B build -DTESTS=ON -DSERVER=ON -DGUI=ON
+	@cmake --build build --target zappy_tests
+	@./build/tests/zappy_tests

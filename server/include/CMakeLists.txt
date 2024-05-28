@@ -1,4 +1,4 @@
-target_sources(${PROJECT_NAME}_sources
+target_sources(zappy_server_lib
   PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/server.h
 )
