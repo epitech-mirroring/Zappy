@@ -18,7 +18,6 @@ class Deraumere : public GUI::AStone {
         float getDensity() const noexcept override;
 
     protected:
-        float _density;
 };
 } // namespace GUI //
 #endif /* !DERAUMERE_HPP_ */

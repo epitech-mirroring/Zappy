@@ -18,7 +18,6 @@ class Sibur : public AStone {
         float getDensity() const noexcept override;
 
     protected:
-        float _density;
 };
 } // namespace GUI //
 #endif /* !SIBUR_HPP_ */

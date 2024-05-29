@@ -19,7 +19,6 @@ class Mendiane : public GUI::AStone {
         float getDensity() const noexcept override;
 
     protected:
-        float _density;
 };
 } // namespace GUI //
 #endif /* !MENDIANE_HPP_ */

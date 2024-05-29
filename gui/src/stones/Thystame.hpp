@@ -18,7 +18,6 @@ class Thystame : public AStone {
         float getDensity() const noexcept override;
 
     protected:
-        float _density;
 };
 } // namespace GUI //
 #endif /* !THYSTAME_HPP_ */

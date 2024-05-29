@@ -18,7 +18,6 @@ class Phiras : public GUI::AStone {
         float getDensity() const noexcept override;
 
     protected:
-        float _density;
 };
 } // namespace GUI //
 #endif /* !PHIRAS_HPP_ */
