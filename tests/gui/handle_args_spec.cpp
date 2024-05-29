@@ -25,21 +25,24 @@ TEST(HandleArgsTest, CheckArgsInvalidNumberOfArgs) {
 }
 
 TEST(HandleArgsTest, CheckArgsInvalidPort) {
-    char *argv[] = { (char*)"./zappy_gui", (char*)"invalid_port", (char*)"127.0.0.1" };
+    char *argv[] = { (char*)"./zappy_gui",
+        (char*)"invalid_port", (char*)"127.0.0.1" };
     HandleArgs ha;
     int result = ha.checkArgs(3, argv);
     ASSERT_EQ(result, 84);
 }
 
 TEST(HandleArgsTest, CheckArgsInvalidHostname) {
-    char *argv[] = { (char*)"./zappy_gui", (char*)"1234", (char*)"invalid_hostname" };
+    char *argv[] = { (char*)"./zappy_gui", (char*)"1234",
+        (char*)"invalid_hostname" };
     HandleArgs ha;
     int result = ha.checkArgs(3, argv);
     ASSERT_EQ(result, 84);
 }
 
 TEST(HandleArgsTest, CheckArgsValid) {
-    char *argv[] = { (char*)"./zappy_gui", (char*)"1234", (char*)"192.168.1.1" };
+    char *argv[] = { (char*)"./zappy_gui", (char*)"1234",
+        (char*)"192.168.1.1" };
     HandleArgs ha;
     int result = ha.checkArgs(3, argv);
     ASSERT_EQ(result, 0);
