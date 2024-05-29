@@ -11,7 +11,7 @@
 #include "../abstracts/AStone.hpp"
 
 namespace GUI {
-class Deraumere : public GUI::AStone {
+class Deraumere : public AStone {
     public:
         Deraumere();
         virtual ~Deraumere() noexcept = default;

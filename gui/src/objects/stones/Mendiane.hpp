@@ -11,7 +11,7 @@
 #include "../abstracts/AStone.hpp"
 
 namespace GUI {
-class Mendiane : public GUI::AStone {
+class Mendiane : public AStone {
     public:
         Mendiane();
         virtual ~Mendiane() noexcept = default;

@@ -11,7 +11,7 @@
 #include "../abstracts/AStone.hpp"
 
 namespace GUI {
-class Phiras : public GUI::AStone {
+class Phiras : public AStone {
     public:
         Phiras();
         virtual ~Phiras() noexcept = default;

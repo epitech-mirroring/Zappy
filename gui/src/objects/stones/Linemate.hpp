@@ -11,7 +11,7 @@
 #include "../abstracts/AStone.hpp"
 
 namespace GUI {
-class Linemate :public GUI::AStone{
+class Linemate : public AStone{
     public:
         Linemate();
         virtual ~Linemate() noexcept = default;
