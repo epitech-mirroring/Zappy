@@ -6,7 +6,7 @@
 */
 
 #include <gtest/gtest.h>
-#include "gui/src/handle_args/HandleArgs.hpp"
+#include "handle_args/HandleArgs.hpp"
 
 using namespace GUI;
 

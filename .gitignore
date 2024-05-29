@@ -183,3 +183,8 @@ Temporary Items
 !/Makefile
 build/
 .vscode
+robots/__pycache__/__init__.cpython-311.pyc
+robots/src/__pycache__/__init__.cpython-311.pyc
+robots/src/__pycache__/hello_world.cpython-311.pyc
+robots/tests/__pycache__/__init__.cpython-311.pyc
+robots/tests/__pycache__/hello_world_test.cpython-311-pytest-8.2.1.pyc
