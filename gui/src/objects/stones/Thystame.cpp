@@ -13,9 +13,3 @@ Thystame::Thystame()
     :   AStone(0.05)
 {
 }
-
-float Thystame::getDensity() const noexcept
-{
-    return _density;
-}
-

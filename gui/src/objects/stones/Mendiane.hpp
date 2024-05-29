@@ -8,17 +8,13 @@
 #ifndef MENDIANE_HPP_
 #define MENDIANE_HPP_
 
-#include "abstract/AStone.hpp"
+#include "../abstracts/AStone.hpp"
 
 namespace GUI {
 class Mendiane : public GUI::AStone {
     public:
         Mendiane();
-        ~Mendiane();
-
-        float getDensity() const noexcept override;
-
-    protected:
+        virtual ~Mendiane() noexcept = default;
 };
 } // namespace GUI //
 #endif /* !MENDIANE_HPP_ */

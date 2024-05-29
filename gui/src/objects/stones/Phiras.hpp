@@ -8,16 +8,13 @@
 #ifndef PHIRAS_HPP_
 #define PHIRAS_HPP_
 
-#include "abstract/AStone.hpp"
+#include "../abstracts/AStone.hpp"
 
 namespace GUI {
 class Phiras : public GUI::AStone {
     public:
         Phiras();
-
-        float getDensity() const noexcept override;
-
-    protected:
+        virtual ~Phiras() noexcept = default;
 };
 } // namespace GUI //
 #endif /* !PHIRAS_HPP_ */

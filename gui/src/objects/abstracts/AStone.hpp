@@ -8,16 +8,13 @@
 #ifndef ASTONE_HPP_
 #define ASTONE_HPP_
 
+#include "AObject.hpp"
+
 namespace GUI {
-class AStone {
+class AStone : public AObject {
     public:
         AStone(float density);
-        virtual ~AStone() = default;
-
-        virtual float getDensity() const noexcept = 0;
-
-    protected:
-        float _density;
+        virtual ~AStone() noexcept = default;
 };
 } // namespace GUI
 #endif /* !ASTONE_HPP_ */

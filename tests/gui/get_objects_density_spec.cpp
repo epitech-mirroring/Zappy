@@ -7,13 +7,13 @@
 
 #include <gtest/gtest.h>
 #include <memory>
-#include "stones/Deraumere.hpp"
-#include "stones/Linemate.hpp"
-#include "stones/Mendiane.hpp"
-#include "stones/Phiras.hpp"
-#include "stones/Sibur.hpp"
-#include "stones/Thystame.hpp"
-#include "food/Food.hpp"
+#include "objects/stones/Deraumere.hpp"
+#include "objects/stones/Linemate.hpp"
+#include "objects/stones/Mendiane.hpp"
+#include "objects/stones/Phiras.hpp"
+#include "objects/stones/Sibur.hpp"
+#include "objects/stones/Thystame.hpp"
+#include "objects/food/Food.hpp"
 
 TEST(get_objects_density, test1)
 {

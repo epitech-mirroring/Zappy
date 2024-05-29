@@ -8,16 +8,13 @@
 #ifndef DERAUMERE_HPP_
 #define DERAUMERE_HPP_
 
-#include "abstract/AStone.hpp"
+#include "../abstracts/AStone.hpp"
 
 namespace GUI {
 class Deraumere : public GUI::AStone {
     public:
         Deraumere();
-
-        float getDensity() const noexcept override;
-
-    protected:
+        virtual ~Deraumere() noexcept = default;
 };
 } // namespace GUI //
 #endif /* !DERAUMERE_HPP_ */

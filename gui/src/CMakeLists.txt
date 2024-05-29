@@ -5,30 +5,30 @@ target_sources(zappy_gui_lib
     # EXCEPTIONS
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.cpp
-    # STONES
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/abstract/AStone.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Deraumere.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Linemate.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Mendiane.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Phiras.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Sibur.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Thystame.cpp
-    # FOOD
-    ${CMAKE_CURRENT_SOURCE_DIR}/food/Food.cpp
+    # OBJECTS
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Deraumere.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Linemate.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Mendiane.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Phiras.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Sibur.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Thystame.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/food/Food.cpp
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
     # EXCEPTIONS
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.hpp
-    # STONES
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/abstract/AStone.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Deraumere.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Linemate.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Mendiane.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Phiras.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Sibur.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/stones/Thystame.hpp
-    # FOOD
-    ${CMAKE_CURRENT_SOURCE_DIR}/food/Food.hpp
+    # OBJECTS
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Deraumere.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Linemate.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Mendiane.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Phiras.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Sibur.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Thystame.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/food/Food.hpp
 )

@@ -8,16 +8,13 @@
 #ifndef THYSTAME_HPP_
 #define THYSTAME_HPP_
 
-#include "abstract/AStone.hpp"
+#include "../abstracts/AStone.hpp"
 
 namespace GUI {
 class Thystame : public AStone {
     public:
         Thystame();
-
-        float getDensity() const noexcept override;
-
-    protected:
+        virtual ~Thystame() noexcept = default;
 };
 } // namespace GUI //
 #endif /* !THYSTAME_HPP_ */

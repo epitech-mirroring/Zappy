@@ -13,8 +13,3 @@ Deraumere::Deraumere()
     :   AStone(0.15)
 {
 }
-
-float Deraumere::getDensity() const noexcept
-{
-    return _density;
-}

@@ -8,16 +8,13 @@
 #ifndef SIBUR_HPP_
 #define SIBUR_HPP_
 
-#include "abstract/AStone.hpp"
+#include "../abstracts/AStone.hpp"
 
 namespace GUI {
 class Sibur : public AStone {
     public:
         Sibur();
-
-        float getDensity() const noexcept override;
-
-    protected:
+        virtual ~Sibur() noexcept = default;
 };
 } // namespace GUI //
 #endif /* !SIBUR_HPP_ */

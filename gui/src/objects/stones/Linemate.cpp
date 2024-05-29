@@ -13,8 +13,3 @@ Linemate::Linemate()
     :   AStone(0.3)
 {
 }
-
-float Linemate::getDensity() const noexcept
-{
-    return _density;
-}

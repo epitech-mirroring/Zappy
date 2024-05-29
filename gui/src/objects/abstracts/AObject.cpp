@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2024
 ** Zappy [WSL: kali-linux]
 ** File description:
-** AStone
+** AObject
 */
 
-#include "AStone.hpp"
+#include "AObject.hpp"
 
 using namespace GUI;
 
-AStone::AStone(float density)
+AObject::AObject(float density)
     : _density(density)
 {
 }
 
-float AStone::getDensity() const noexcept
+float AObject::getDensity() const noexcept
 {
     return _density;
 }

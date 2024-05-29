@@ -8,16 +8,13 @@
 #ifndef LINEMATE_HPP_
 #define LINEMATE_HPP_
 
-#include "abstract/AStone.hpp"
+#include "../abstracts/AStone.hpp"
 
 namespace GUI {
 class Linemate :public GUI::AStone{
     public:
         Linemate();
-
-        float getDensity() const noexcept override;
-
-    protected:
+        virtual ~Linemate() noexcept = default;
 };
 } // namespace GUI //
 #endif /* !LINEMATE_HPP_ */

@@ -13,8 +13,3 @@ Phiras::Phiras()
     :   AStone(0.08)
 {
 }
-
-float Phiras::getDensity() const noexcept
-{
-    return _density;
-}
