@@ -13,11 +13,7 @@ using namespace GUI;
 int main(int ac, char **av)
 {
     GUI::HandleArgs args;
-    try {
-        args.checkArgs(ac, av);
-    } catch (const GUI::ArgsException &e) {
-        std::cerr << e.what() << std::endl;
-        return 84;
-    }
+
+    args.checkArgs(ac, av);
     return 0;
 }
