@@ -6,6 +6,11 @@
 */
 
 #include "HandleArgs.hpp"
+#include <string>
+#include <sstream>
+#include <vector>
+#include <cctype>
+#include <cstdlib>
 #include <iostream>
 
 using namespace GUI;
@@ -52,6 +57,25 @@ int HandleArgs::checkPort(const std::string &port)
 
 int HandleArgs::checkHostname(const std::string &hostname)
 {
+    std::vector<std::string> parts;
+    std::stringstream ss(hostname);
+    std::string part;
+
+    while (std::getline(ss, part, '.'))
+        parts.push_back(part);
+    if (parts.size() != 4)
+        return 84;
+    for (const auto &p : parts) {
+        if (p.empty() || p.size() > 3)
+            return 84;
+        for (const auto &c : p) {
+            if (!std::isdigit(c))
+                return 84;
+        }
+        int num = std::stoi(p);
+        if (num < 0 || num > 255)
+            return 84;
+    }
     _hostname = hostname;
     return 0;
 }
