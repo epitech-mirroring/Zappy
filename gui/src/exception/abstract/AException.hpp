@@ -26,5 +26,5 @@ class AException : public IException {
         std::string _type;
     private:
 };
-} // namespace GUI
+} // namespace GUI //
 #endif /* !AEXCEPTION_HPP_ */

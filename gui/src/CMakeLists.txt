@@ -1,10 +1,10 @@
 target_sources(zappy_gui_lib
   PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/args_handling/HandleArgs.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.cpp
   PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/args_handling/HandleArgs.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.hpp
 )

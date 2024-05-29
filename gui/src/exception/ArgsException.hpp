@@ -17,5 +17,5 @@ class ArgsException : public AException {
 
     protected:
 };
-}
+} // namespace GUI //
 #endif /* !ARGSEXCEPTION_HPP_ */

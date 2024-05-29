@@ -6,15 +6,15 @@
 */
 
 #include <iostream>
-#include "exception/ArgsException.hpp"
+#include "handle_args/HandleArgs.hpp"
 
 using namespace GUI;
 
 int main(int ac, char **av)
 {
+    GUI::HandleArgs args;
     try {
-        if (ac != 1)
-            throw ArgsException("Invalid number of arguments");
+        args.checkArgs(ac, av);
     } catch (const GUI::ArgsException &e) {
         std::cerr << e.what() << std::endl;
         return 84;

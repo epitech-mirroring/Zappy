@@ -20,5 +20,5 @@ class IException : public std::exception {
         virtual const char* what() const noexcept override = 0;
         virtual std::string getType() const noexcept = 0;
 };
-} // namespace GUI
+} // namespace GUI //
 #endif /* !IEXCEPTION_HPP_ */
