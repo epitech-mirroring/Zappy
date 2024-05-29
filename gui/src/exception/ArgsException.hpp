@@ -1,0 +1,21 @@
+/*
+** EPITECH PROJECT, 2024
+** Zappy [WSL: kali-linux]
+** File description:
+** ArgsException
+*/
+
+#ifndef ARGSEXCEPTION_HPP_
+#define ARGSEXCEPTION_HPP_
+
+#include "abstract/AException.hpp"
+
+namespace GUI {
+class ArgsException : public AException {
+    public:
+        ArgsException(const std::string &message);
+
+    protected:
+};
+}
+#endif /* !ARGSEXCEPTION_HPP_ */

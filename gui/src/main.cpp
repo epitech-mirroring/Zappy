@@ -1,17 +1,23 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy
+** Zappy [WSL: kali-linux]
 ** File description:
-** No file there , just an epitech header example .
-** You can even have multiple lines if you want !
+** GUI-main
 */
 
-#include "GUI.hpp"
+#include <iostream>
+#include "exception/ArgsException.hpp"
+
+using namespace GUI;
 
 int main(int ac, char **av)
 {
-    (void)ac;
-    (void)av;
-    hello_world();
+    try {
+        if (ac != 1)
+            throw ArgsException("Invalid number of arguments");
+    } catch (const GUI::ArgsException &e) {
+        std::cerr << e.what() << std::endl;
+        return 84;
+    }
     return 0;
 }

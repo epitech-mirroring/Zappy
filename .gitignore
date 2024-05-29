@@ -182,3 +182,4 @@ Temporary Items
 *.lock*
 !/Makefile
 build/
+.vscode
