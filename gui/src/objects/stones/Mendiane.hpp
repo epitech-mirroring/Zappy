@@ -13,6 +13,9 @@
 namespace GUI {
 class Mendiane : public AStone {
     public:
+        /**
+         * @brief Construct a new Mendiane object
+         */
         Mendiane();
         virtual ~Mendiane() noexcept = default;
 };

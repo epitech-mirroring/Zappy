@@ -13,7 +13,13 @@
 namespace GUI {
 class Phiras : public AStone {
     public:
+        /**
+         * @brief Construct a new Phiras object
+         */
         Phiras();
+        /**
+         * @brief Destroy the Phiras object
+         */
         virtual ~Phiras() noexcept = default;
 };
 } // namespace GUI //

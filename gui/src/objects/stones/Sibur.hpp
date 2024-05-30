@@ -13,7 +13,13 @@
 namespace GUI {
 class Sibur : public AStone {
     public:
+        /**
+         * @brief Construct a new Sibur object
+         */
         Sibur();
+        /**
+         * @brief Destroy the Sibur object
+         */
         virtual ~Sibur() noexcept = default;
 };
 } // namespace GUI //

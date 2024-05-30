@@ -13,7 +13,13 @@
 namespace GUI {
 class Linemate : public AStone{
     public:
+        /**
+         * @brief Construct a new Linemate object
+         */
         Linemate();
+        /**
+         * @brief Destroy the Linemate object
+         */
         virtual ~Linemate() noexcept = default;
 };
 } // namespace GUI //

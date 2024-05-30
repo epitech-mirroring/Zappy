@@ -13,7 +13,13 @@
 namespace GUI {
 class Deraumere : public AStone {
     public:
+        /**
+         * @brief Construct a new Deraumere object
+         */
         Deraumere();
+        /**
+         * @brief Destroy the Deraumere object
+         */
         virtual ~Deraumere() noexcept = default;
 };
 } // namespace GUI //

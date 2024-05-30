@@ -13,7 +13,13 @@
 namespace GUI {
 class Food : public AObject {
     public:
+        /**
+         * @brief Construct a new Food object
+        */
         Food();
+        /**
+         * @brief Destroy the Food object
+        */
         virtual ~Food() noexcept = default;
 };
 } // namespace GUI //

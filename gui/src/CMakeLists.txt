@@ -15,6 +15,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Sibur.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Thystame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/food/Food.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/eggs/Egg.cpp
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
@@ -31,4 +32,5 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Sibur.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Thystame.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/food/Food.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/objects/eggs/Egg.hpp
 )

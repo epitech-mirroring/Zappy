@@ -13,12 +13,23 @@
 namespace GUI {
 class AObject : public IObject {
     public:
+        /**
+         * @brief Construct a new AObject object
+         * @param density
+         */
         AObject(float density);
+        /**
+         * @brief Destroy the AObject object
+         */
         virtual ~AObject() noexcept = default;
 
+        /**
+         * @brief Get the Density object
+         * @return float
+         */
         float getDensity() const noexcept override final;
     protected:
-        float _density;
+        float _density;         // density of the object
 };
 }  // namespace GUI //
 #endif /* !AOBJECT_HPP_ */
