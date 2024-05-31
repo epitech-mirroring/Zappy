@@ -13,11 +13,11 @@
     #include <stddef.h>
 
 /**
- * @enum e_action
+ * @enum action_e
  *
  * This enumeration is used to store the different actions that a trantorian can do
  */
-enum e_action {
+enum action_e {
     FORWARD,
     RIGHT,
     LEFT,
@@ -33,27 +33,27 @@ enum e_action {
 };
 
 /**
- * @struct s_action
+ * @struct action_s
  *
  * This structure is used to store the action of the trantorian
  * Each action has a type and a time to start and a wait time
  */
-typedef struct s_action {
-    enum e_action action;
+typedef struct action_s {
+    enum action_e action;
     int time_start;
     int wait_time;
-} t_action;
+} action_t;
 
 /**
- * @struct s_action_list
+ * @struct actions_list_s
  *
  * This structure is used to store the action of the trantorian
  * Each action has a type and a time to start and a wait time
  */
-typedef struct s_actions_list {
+typedef struct actions_list_s {
     size_t size;
-    t_action *actions;
-    struct s_action_list *next;
-} t_action_list;
+    action_t *actions;
+    struct action_s_list *next;
+} action_list_t;
 
 #endif //ZAPPY_ACTIONS_H

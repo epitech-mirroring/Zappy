@@ -17,9 +17,9 @@
  * This structure represents the elements in the inventory of a Trantorian in the game Zappy.
  * Each element has a type and a quantity.
 */
-typedef struct s_inventory {
+typedef struct inventory_s {
     int food_time; // need to find accurate variable name
-    t_elements elements;
-} t_inventory;
+    elements_t elements;
+} inventory_t;
 
 #endif //ZAPPY_INVENTORY_H

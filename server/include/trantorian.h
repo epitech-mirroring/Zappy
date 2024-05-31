@@ -14,12 +14,12 @@
     #include "actions.h"
 
 /**
- * @struct s_coordinates
+ * @struct coordinates_s
  *
  * This structure represents the coordinates of a tile on the map.
  * Each tile has an x and y coordinate.
  */
-enum e_direction {
+enum direction_e {
     NORTH,
     EAST,
     SOUTH,
@@ -27,19 +27,19 @@ enum e_direction {
 };
 
 /**
- * @struct s_trantorian
+ * @struct trantorian_s
  *
  * this structure represents a trantorian in the game Zappy
  * Each trantorian has a unique ID, coordinates on the map, a level, an inventory, an action list, a direction, and a team.
  */
-typedef struct s_trantorian {
+typedef struct trantorian_s {
     int id;
-    t_coordinates coordinates;
+    coordinates_t coordinates;
     int level;
-    t_inventory inventory;
-    t_action_list *action_list;
-    enum e_direction direction;
+    inventory_t inventory;
+    action_list_t *action_list;
+    enum direction_e direction;
     int team;
-} t_trantorian;
+} trantorian_t;
 
 #endif //ZAPPY_TRANTORIAN_H

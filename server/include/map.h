@@ -10,15 +10,15 @@
     #define ZAPPY_MAP_H
 
 /**
- * @struct s_coordinates
+ * @struct coordinates_s
  *
  * This structure represents the coordinates of a tile on the map.
  * Each tile has an x and y coordinate.
  */
-typedef struct s_coordinates {
+typedef struct coordinates_s {
     int x;
     int y;
-} t_coordinates;
+} coordinates_t;
 
 /**
  * @struct s_resources
@@ -26,7 +26,7 @@ typedef struct s_coordinates {
  * This structure represents the resources on a tile on the map.
  * Each tile has a quantity of food, linemate, deraumere, sibur, mendiane, phiras, and thystame.
  */
-typedef struct resources {
+typedef struct resources_s {
     int food;
     int linemate;
     int deraumere;
@@ -34,30 +34,30 @@ typedef struct resources {
     int mendiane;
     int phiras;
     int thystame;
-} t_resources;
+} resources_t;
 
 /**
- * @struct s_tile
+ * @struct tile_s
  *
  * This structure represents a tile on the map.
  * Each tile has coordinates, a player count, and resources.
  */
-typedef struct s_tile {
-    t_coordinates coordinates;
+typedef struct tile_s {
+    coordinates_t coordinates;
     int player_count;
-    t_resources resources;
-} t_tile;
+    resources_t resources;
+} tile_t;
 
 /**
- * @struct s_map
+ * @struct map_s
  *
  * This structure represents the map of the game.
  * The map has a width, a height, and a 2D array of tiles.
  */
-typedef struct s_map {
+typedef struct map_s {
     int width;
     int height;
-    t_tile **tiles;
-} t_map;
+    tile_t **tiles;
+} map_t;
 
 #endif //ZAPPY_MAP_H

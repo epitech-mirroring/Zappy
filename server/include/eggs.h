@@ -12,15 +12,15 @@
     #include "map.h"
 
 /**
- * @struct s_egg
+ * @struct egg_s
  *
  * This structure represents an egg laid by a Trantorian in the game Zappy.
  * Each egg has a unique ID, coordinates on the map, and belongs to a specific team.
  */
-typedef struct s_egg {
+typedef struct egg_s {
     int id;
-    t_coordinates coordinates;
+    coordinates_t coordinates;
     int team;
-} t_egg;
+} egg_t;
 
 #endif //ZAPPY_EGGS_H
