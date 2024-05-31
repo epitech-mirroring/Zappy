@@ -1,6 +1,4 @@
 /*
-** EPITECH PROJECT, 2024
-** Zappy
 ** File description:
 ** Trantorian
 */
@@ -9,7 +7,7 @@
 #define TRANTORIAN_
 
     #include <iostream>
-    #include <vector>
+    #include <utility>
 
 namespace GUI {
     class Trantorian {
@@ -30,9 +28,9 @@ namespace GUI {
             void setPosition(int x, int y);
             /**
              * @brief Get trantorian postion
-             * @return vector of ints
+             * @return pair of ints
              */
-            std::vector<int, int> getPosition();
+            std::pair<int, int> getPosition();
 
             /**
              * @brief Set trantorian team
@@ -41,7 +39,7 @@ namespace GUI {
             void setTeam(std::string teamName);
             /**
              * @brief Get trantorian team
-             * @return std::string
+             * @return std::string w/ team's name
              */
             std::string getTeam();
 
@@ -52,7 +50,7 @@ namespace GUI {
             void setLifetime(int lifetime);
             /**
              * @brief Get trantorian lifetime
-             * @return int
+             * @return int representing life time remaining
              */
             int getLifetime();
 
@@ -63,7 +61,7 @@ namespace GUI {
             void setIsAlive(bool isAlive);
             /**
              * @brief Get trantorian alive
-             * @return bool
+             * @return false if dead, true if alive
              */
             bool getIsAlive();
 
@@ -74,7 +72,7 @@ namespace GUI {
             void setAction(bool Action);
             /**
              * @brief Get trantorian action
-             * @return bool
+             * @return true if doing an action, false if not
              */
             bool getAction();
 
@@ -85,23 +83,23 @@ namespace GUI {
             void setId(int id);
             /**
              * @brief Get trantorian id
-             * @return int
+             * @return int representing player's id
              */
             int getId();
 
             /**
              * @brief Set trantorian level
-             * @param int
+             * @param level
              */
             void setLevel(int level);
             /**
              * @brief Get trantorian level
-             * @return int
+             * @return int representing player's level
              */
             int getLevel();
 
         private:
-            std::vector<int, int> _postion;
+            std::pair<int, int> _position;
             std::string _team;
             int _lifetimeRemaining;
             bool _alive;

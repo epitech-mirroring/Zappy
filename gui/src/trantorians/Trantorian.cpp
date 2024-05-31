@@ -1,6 +1,4 @@
 /*
-** EPITECH PROJECT, 2024
-** Zappy
 ** File description:
 ** Trantorian
 */
@@ -67,12 +65,13 @@ int GUI::Trantorian::getLifetime()
 
 void GUI::Trantorian::setPosition(int x, int y)
 {
-    _postion = {x, y};
+    _position.first = x;
+    _position.second = y;
 }
 
-std::vector<int, int> GUI::Trantorian::getPosition()
+std::pair<int, int> GUI::Trantorian::getPosition()
 {
-    return _postion;
+    return _position;
 }
 
 void GUI::Trantorian::setTeam(std::string teamName)
