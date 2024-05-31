@@ -1,6 +1,4 @@
 /*
-** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
 ** File description:
 ** hello_world_spec
 */
@@ -11,7 +9,7 @@
 using namespace GUI;
 
 TEST(HandleArgsTest, CheckArgsHelp) {
-    char *argv[] = { (char*)"./zappy_gui", (char*)"-help" };
+    char *argv[] = { (char*)"./zappy_gui", (char*)"--help" };
     HandleArgs ha;
     int result = ha.checkArgs(2, argv);
     ASSERT_EQ(result, 0);

@@ -1,19 +1,16 @@
 /*
-** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
 ** File description:
 ** Egg
 */
 
 #ifndef EGG_HPP_
-#define EGG_HPP_
+    #define EGG_HPP_
 
-
-#include <iostream>
-#include "../abstracts/AObject.hpp"
+    #include <iostream>
+    #include "../abstracts/AObject.hpp"
 
 namespace GUI {
-class Egg : public AObject {
+    class Egg : public AObject {
     public:
         /**
          * @brief Construct a new Egg object
@@ -28,33 +25,34 @@ class Egg : public AObject {
 
         /**
          * @brief Get the team name
-         * @return std::string
+         * @return std::string (team name)
         */
-        std::string getTeam() const;
+        [[nodiscard]] std::string getTeam() const;
 
         /**
          * @brief Get the owner ID
-         * @return int
+         * @return int (owner of the egg ID)
         */
-        int getOwnerID() const;
+        [[nodiscard]] int getOwnerID() const;
 
         /**
          * @brief Get the isEjected
-         * @return bool
+         * @return bool (true if the egg is ejected, false if not)
         */
-        bool getIsEjected() const;
+        [[nodiscard]] bool getIsEjected() const;
 
         /**
          * @brief Set the isEjected
          * @param bool isEjected
+         * @return void (nothing to return)
         */
         void setIsEjected(bool isEjected);
 
     protected:
         std::string _teamName;      // team name
-        int _ownerID;           // ownerID (player whol laid it) -1 if no owner
-        bool _isEjected;        // is egg ejected
+        int _ownerID;               // ownerID (player who laid it) default -1
+        bool _isEjected;            // is egg ejected
 
-};
+    };
 } // namespace GUI //
 #endif /* !EGG_HPP_ */

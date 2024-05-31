@@ -1,6 +1,4 @@
 /*
-** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
 ** File description:
 ** AException
 */
@@ -11,7 +9,7 @@ using namespace GUI;
 
 AException::AException(const std::string &message,
     const std::string &type) noexcept
-    : _message{message}, _type{type}
+    : _message{std::move(message)}, _type{std::move(type)}
 {
 }
 

@@ -1,23 +1,21 @@
 /*
-** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
 ** File description:
 ** Mendiane
 */
 
 #ifndef MENDIANE_HPP_
-#define MENDIANE_HPP_
+    #define MENDIANE_HPP_
 
-#include "../abstracts/AStone.hpp"
+    #include "../abstracts/AStone.hpp"
 
 namespace GUI {
-class Mendiane : public AStone {
+    class Mendiane : public AStone {
     public:
         /**
          * @brief Construct a new Mendiane object
          */
         Mendiane();
         virtual ~Mendiane() noexcept = default;
-};
+    };
 } // namespace GUI //
 #endif /* !MENDIANE_HPP_ */

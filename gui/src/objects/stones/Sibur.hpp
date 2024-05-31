@@ -1,17 +1,15 @@
 /*
-** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
 ** File description:
 ** Sibur
 */
 
 #ifndef SIBUR_HPP_
-#define SIBUR_HPP_
+    #define SIBUR_HPP_
 
-#include "../abstracts/AStone.hpp"
+    #include "../abstracts/AStone.hpp"
 
 namespace GUI {
-class Sibur : public AStone {
+    class Sibur : public AStone {
     public:
         /**
          * @brief Construct a new Sibur object
@@ -21,6 +19,6 @@ class Sibur : public AStone {
          * @brief Destroy the Sibur object
          */
         virtual ~Sibur() noexcept = default;
-};
+    };
 } // namespace GUI //
 #endif /* !SIBUR_HPP_ */

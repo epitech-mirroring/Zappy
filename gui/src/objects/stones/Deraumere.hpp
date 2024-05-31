@@ -1,17 +1,15 @@
 /*
-** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
 ** File description:
 ** Deraumere
 */
 
 #ifndef DERAUMERE_HPP_
-#define DERAUMERE_HPP_
+    #define DERAUMERE_HPP_
 
-#include "../abstracts/AStone.hpp"
+    #include "../abstracts/AStone.hpp"
 
 namespace GUI {
-class Deraumere : public AStone {
+    class Deraumere : public AStone {
     public:
         /**
          * @brief Construct a new Deraumere object
@@ -21,6 +19,6 @@ class Deraumere : public AStone {
          * @brief Destroy the Deraumere object
          */
         virtual ~Deraumere() noexcept = default;
-};
+    };
 } // namespace GUI //
 #endif /* !DERAUMERE_HPP_ */

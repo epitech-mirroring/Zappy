@@ -1,6 +1,4 @@
 /*
-** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
 ** File description:
 ** GUI-main
 */
@@ -14,6 +12,7 @@ int main(int ac, char **av)
 {
     GUI::HandleArgs args;
 
-    args.checkArgs(ac, av);
+    if (args.checkArgs(ac, av))
+        return 84;
     return 0;
 }
