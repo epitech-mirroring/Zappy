@@ -9,6 +9,8 @@
 #ifndef ZAPPY_EGGS_H
     #define ZAPPY_EGGS_H
 
+    #include "map.h"
+
 /**
  * @struct s_egg
  *

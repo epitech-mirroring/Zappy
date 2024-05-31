@@ -11,6 +11,7 @@
 
     #include <stdio.h>
     #include "inventory.h"
+    #include "actions.h"
 
 /**
  * @struct s_coordinates

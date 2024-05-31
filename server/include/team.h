@@ -9,6 +9,8 @@
 #ifndef ZAPPY_TEAM_H
     #define ZAPPY_TEAM_H
 
+    #include "trantorian.h"
+
 /**
  * @struct s_team
  *
