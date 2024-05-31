@@ -7,7 +7,7 @@
 */
 
 #ifndef ZAPPY_MAP_H
-#define ZAPPY_MAP_H
+    #define ZAPPY_MAP_H
 
 /**
  * @struct s_coordinates
@@ -15,7 +15,7 @@
  * This structure represents the coordinates of a tile on the map.
  * Each tile has an x and y coordinate.
  */
-typedef struct s_coordinates
+typedef struct s_coordinates {
     int x;
     int y;
 } t_coordinates;

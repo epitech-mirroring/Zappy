@@ -8,7 +8,9 @@
 
 
 #ifndef ZAPPY_ACTIONS_H
-#define ZAPPY_ACTIONS_H
+    #define ZAPPY_ACTIONS_H
+
+    #include <stddef.h>
 
 /**
  * @enum e_action

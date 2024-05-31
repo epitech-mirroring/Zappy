@@ -7,7 +7,7 @@
 */
 
 #ifndef ZAPPY_TEAM_H
-#define ZAPPY_TEAM_H
+    #define ZAPPY_TEAM_H
 
 /**
  * @struct s_team

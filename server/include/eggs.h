@@ -7,7 +7,7 @@
 */
 
 #ifndef ZAPPY_EGGS_H
-#define ZAPPY_EGGS_H
+    #define ZAPPY_EGGS_H
 
 /**
  * @struct s_egg

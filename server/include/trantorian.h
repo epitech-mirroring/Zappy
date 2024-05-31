@@ -7,10 +7,10 @@
 */
 
 #ifndef ZAPPY_TRANTORIAN_H
-#define ZAPPY_TRANTORIAN_H
+    #define ZAPPY_TRANTORIAN_H
 
-#include <stdio.h>
-#include "inventory.h"
+    #include <stdio.h>
+    #include "inventory.h"
 
 /**
  * @struct s_coordinates

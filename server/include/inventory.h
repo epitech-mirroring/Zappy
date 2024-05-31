@@ -7,9 +7,9 @@
 */
 
 #ifndef ZAPPY_INVENTORY_H
-#define ZAPPY_INVENTORY_H
+    #define ZAPPY_INVENTORY_H
 
-#include "map.h"
+    #include "map.h"
 
 /**
  * @brief Structure of the elements in the inventory
