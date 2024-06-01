@@ -9,9 +9,9 @@
 
 using namespace GUI;
 
-AException::AException(const std::string &message,
-    const std::string &type) noexcept
-    : _message{std::move(message)}, _type{std::move(type)}
+AException::AException(std::string message, std::string type) noexcept
+    : _message{std::move(message)}
+    , _type{std::move(type)}
 {
 }
 

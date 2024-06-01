@@ -18,8 +18,7 @@ namespace GUI {
          * @brief Construct a new AException object
          * @param message (error message)
         */
-        AException(const std::string& message,
-            const std::string& type) noexcept;
+        AException(std::string message, std::string type) noexcept;
         /**
          * @brief Destroy the AException object
         */

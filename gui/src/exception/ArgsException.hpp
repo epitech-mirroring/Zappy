@@ -17,7 +17,7 @@ namespace GUI {
          * @brief Construct a new ArgsException object
          * @param message (error message)
          */
-        ArgsException(const std::string &message);
+        ArgsException(std::string message);
 
     protected:
     };

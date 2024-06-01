@@ -9,7 +9,7 @@
 
 using namespace GUI;
 
-ArgsException::ArgsException(const std::string &message)
-    : AException{std::move(message), std::move("ArgsException")}
+ArgsException::ArgsException(std::string message)
+    : AException{std::move(message), "ArgsException"}
 {
 }
