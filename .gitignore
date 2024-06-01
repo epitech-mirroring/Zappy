@@ -190,3 +190,5 @@ robots/tests/__pycache__/__init__.cpython-311.pyc
 robots/tests/__pycache__/hello_world_test.cpython-311-pytest-8.2.1.pyc
 ai.xml
 test_detail.xml
+robots/src/__pycache__/Objects.cpython-311.pyc
+robots/tests/__pycache__/Objects_test.cpython-311-pytest-8.2.1.pyc

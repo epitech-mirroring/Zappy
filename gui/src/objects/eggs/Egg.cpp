@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
+** Zappy
 ** File description:
 ** Egg
 */
@@ -11,7 +11,7 @@ using namespace GUI;
 
 Egg::Egg(std::string teamName, int ownerID)
     :   AObject(0)
-    ,   _teamName(teamName)
+    ,   _teamName(std::move(teamName))
     ,   _ownerID(ownerID)
 {
 }

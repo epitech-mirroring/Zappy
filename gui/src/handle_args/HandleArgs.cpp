@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
+** Zappy
 ** File description:
 ** HandleArgs
 */
@@ -19,9 +19,9 @@ int HandleArgs::checkArgs(int nbArgs, char **args)
 {
     try {
         if (nbArgs == 2 &&
-            (std::string(args[1]) == "-help" || std::string(args[1]) == "-h")) {
+            (std::string(args[1]) == "--help" || std::string(args[1]) == "-h")) {
             printUsage();
-            goto end;
+            return 0;
         }
         if (nbArgs != 3)
             throw ArgsException("ARGS ERROR: Invalid number of arguments");
@@ -33,7 +33,6 @@ int HandleArgs::checkArgs(int nbArgs, char **args)
         std::cerr << e.what() << std::endl;
         return 84;
     }
-    end:
     return 0;
 }
 

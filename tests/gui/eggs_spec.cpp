@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
+** Zappy
 ** File description:
-** EggTests
+** eggs_spec
 */
 
 #include <gtest/gtest.h>

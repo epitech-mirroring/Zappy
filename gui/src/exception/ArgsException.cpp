@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
+** Zappy
 ** File description:
 ** ArgsException
 */
@@ -9,7 +9,7 @@
 
 using namespace GUI;
 
-ArgsException::ArgsException(const std::string &message)
-    : AException{message, "ArgsException"}
+ArgsException::ArgsException(std::string message)
+    : AException{std::move(message), "ArgsException"}
 {
 }

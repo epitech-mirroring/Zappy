@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
+** Zappy
 ** File description:
-** get_objects_density
+** get_objects_density_spec
 */
 
 #include <gtest/gtest.h>
@@ -56,8 +56,6 @@ TEST(get_objects_density, test7)
     GUI::Food food;
     ASSERT_FLOAT_EQ(0.5, food.getDensity());
 }
-
-// NOW TESTS WITH UNIQUE PTS OBJECTS //
 
 TEST(get_object_density, test7)
 {

@@ -1,17 +1,17 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
+** Zappy
 ** File description:
 ** Linemate
 */
 
 #ifndef LINEMATE_HPP_
-#define LINEMATE_HPP_
+    #define LINEMATE_HPP_
 
-#include "../abstracts/AStone.hpp"
+    #include "../abstracts/AStone.hpp"
 
 namespace GUI {
-class Linemate : public AStone{
+    class Linemate : public AStone{
     public:
         /**
          * @brief Construct a new Linemate object
@@ -21,6 +21,6 @@ class Linemate : public AStone{
          * @brief Destroy the Linemate object
          */
         virtual ~Linemate() noexcept = default;
-};
+    };
 } // namespace GUI //
 #endif /* !LINEMATE_HPP_ */

@@ -1,17 +1,17 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
+** Zappy
 ** File description:
 ** AStone
 */
 
 #ifndef ASTONE_HPP_
-#define ASTONE_HPP_
+    #define ASTONE_HPP_
 
-#include "AObject.hpp"
+    #include "AObject.hpp"
 
 namespace GUI {
-class AStone : public AObject {
+    class AStone : public AObject {
     public:
         /**
          * @brief Construct a new AStone object
@@ -22,6 +22,6 @@ class AStone : public AObject {
          * @brief Destroy the AStone object
          */
         virtual ~AStone() noexcept = default;
-};
+    };
 } // namespace GUI
 #endif /* !ASTONE_HPP_ */
