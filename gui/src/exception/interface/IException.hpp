@@ -27,7 +27,7 @@ namespace GUI {
          * @brief Get the what object
          * @return const char* (error message)
         */
-        [[nodiscard]] virtual const char* what() const noexcept override = 0;
+        [[nodiscard]] const char* what() const noexcept override = 0;
         /**
          * @brief Get the Type object
          * @return std::string (error type)
