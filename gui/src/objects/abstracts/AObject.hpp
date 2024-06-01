@@ -27,7 +27,7 @@ namespace GUI {
          * @brief Get the Density object
          * @return float (density of the object)
          */
-        [[nodiscard]] float getDensity() const noexcept override final;
+        [[nodiscard]] float getDensity() const noexcept final;
     protected:
         float _density;         // density of the object
     };

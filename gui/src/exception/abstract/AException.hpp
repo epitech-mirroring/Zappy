@@ -28,12 +28,12 @@ namespace GUI {
          * @brief Get the message object
          * @return const char* (error message)
         */
-        [[nodiscard]] const char *what() const noexcept override final;
+        [[nodiscard]] const char *what() const noexcept final;
         /**
          * @brief Get the Type object
          * @return std::string (error type)
         */
-        [[nodiscard]] std::string getType() const noexcept override final;
+        [[nodiscard]] std::string getType() const noexcept final;
 
     protected:
         std::string _message;       // error message
