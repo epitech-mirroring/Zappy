@@ -1,6 +1,8 @@
 /*
+** EPITECH PROJECT, 2024
+** Zappy
 ** File description:
-** GUI-main
+** main
 */
 
 #include <iostream>

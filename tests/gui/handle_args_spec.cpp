@@ -1,6 +1,8 @@
 /*
+** EPITECH PROJECT, 2024
+** Zappy
 ** File description:
-** hello_world_spec
+** handle_args_spec
 */
 
 #include <gtest/gtest.h>

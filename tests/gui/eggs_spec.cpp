@@ -1,6 +1,8 @@
 /*
+** EPITECH PROJECT, 2024
+** Zappy
 ** File description:
-** EggTests
+** eggs_spec
 */
 
 #include <gtest/gtest.h>

@@ -1,6 +1,8 @@
 /*
+** EPITECH PROJECT, 2024
+** Zappy
 ** File description:
-** get_objects_density
+** get_objects_density_spec
 */
 
 #include <gtest/gtest.h>
