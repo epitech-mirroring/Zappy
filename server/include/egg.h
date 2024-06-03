@@ -6,10 +6,11 @@
 ** eggs for the zappy project
 */
 
-#ifndef ZAPPY_EGGS_H
-    #define ZAPPY_EGGS_H
+#ifndef ZAPPY_EGG_H
+    #define ZAPPY_EGG_H
 
     #include "map.h"
+    #include "uuid/uuid.h"
 
 /**
  * @struct egg_s
@@ -18,9 +19,8 @@
  * Each egg has a unique ID, coordinates on the map, and belongs to a specific team.
  */
 typedef struct egg_s {
-    int id;
+    uuid_t team_uuid;
     coordinates_t coordinates;
-    int team;
 } egg_t;
 
-#endif //ZAPPY_EGGS_H
+#endif //ZAPPY_EGG_H

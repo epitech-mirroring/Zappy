@@ -10,6 +10,7 @@
     #define ZAPPY_TRANTORIAN_H
 
     #include <stdio.h>
+    #include <uuid/uuid.h>
     #include "inventory.h"
     #include "actions.h"
 
@@ -33,13 +34,12 @@ enum direction_e {
  * Each trantorian has a unique ID, coordinates on the map, a level, an inventory, an action list, a direction, and a team.
  */
 typedef struct trantorian_s {
-    int id;
+    uuid_t uuid;
     coordinates_t coordinates;
-    int level;
+    size_t level;
     inventory_t inventory;
-    action_list_t *action_list;
+    array_t *actions;
     enum direction_e direction;
-    int team;
 } trantorian_t;
 
 #endif //ZAPPY_TRANTORIAN_H
