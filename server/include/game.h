@@ -14,6 +14,13 @@
     #include "trantorian.h"
     #include "egg.h"
 
+    /**
+     * @struct game_s
+     *
+     * This structure represents a game in the game Zappy.
+     * Each game has an array of teams, an array of eggs, an array of Trantorians, and a map.
+     *
+     */
     typedef struct game_s {
         array_t *teams;
         array_t *eggs;
