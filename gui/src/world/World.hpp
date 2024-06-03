@@ -6,7 +6,7 @@
 */
 
 #ifndef WORLD_HPP_
-#define WORLD_HPP_
+    #define WORLD_HPP_
 
     #include <list>
     #include "../objects/interface/IObject.hpp"

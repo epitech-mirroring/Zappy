@@ -15,10 +15,6 @@ Position::Position(unsigned int x, unsigned int y)
 {
 }
 
-Position::~Position()
-{
-}
-
 unsigned int Position::getX() const noexcept
 {
     return _x;

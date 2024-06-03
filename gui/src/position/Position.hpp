@@ -17,7 +17,7 @@ namespace GUI {
          * @param y (y position) default is 0
         */
         Position(unsigned int x = 0, unsigned int y = 0);
-        ~Position();
+        ~Position() = default;
 
         /**
          * @brief Get the X position
