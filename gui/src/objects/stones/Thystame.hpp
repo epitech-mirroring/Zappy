@@ -15,8 +15,9 @@ namespace GUI {
     public:
         /**
          * @brief Construct a new Thystame object
+         * @param tile Tile where the object is
          */
-        Thystame();
+        Thystame(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Thystame object
          */

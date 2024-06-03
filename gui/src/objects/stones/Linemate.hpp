@@ -15,8 +15,9 @@ namespace GUI {
     public:
         /**
          * @brief Construct a new Linemate object
+         * @param tile Tile where the object is
          */
-        Linemate();
+        Linemate(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Linemate object
          */

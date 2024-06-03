@@ -18,8 +18,10 @@ namespace GUI {
          * @brief Construct a new Egg object
          * @param std::string teamName
          * @param int ownerID
+         * @param Position Tile where the object is
         */
-        Egg(std::string teamName, int ownerID = -1);
+        Egg(std::string teamName, int ownerID = -1,
+            Position tile = Position(0, 0));
         /**
          * @brief Destroy the Egg object
         */

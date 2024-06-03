@@ -15,8 +15,9 @@ namespace GUI {
     public:
         /**
          * @brief Construct a new Food object
+         * @param tile Tile where the object is
         */
-        Food();
+        Food(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Food object
         */

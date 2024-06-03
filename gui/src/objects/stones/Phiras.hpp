@@ -15,8 +15,9 @@ namespace GUI {
     public:
         /**
          * @brief Construct a new Phiras object
+         * @param tile Tile where the object is
          */
-        Phiras();
+        Phiras(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Phiras object
          */

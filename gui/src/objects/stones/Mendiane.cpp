@@ -9,7 +9,7 @@
 
 using namespace GUI;
 
-Mendiane::Mendiane()
-    :   AStone(0.1, {0, 0})
+Mendiane::Mendiane(Position tile)
+    :   AStone(0.1, tile)
 {
 }

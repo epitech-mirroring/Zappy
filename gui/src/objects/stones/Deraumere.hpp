@@ -15,8 +15,9 @@ namespace GUI {
     public:
         /**
          * @brief Construct a new Deraumere object
+         * @param tile Tile where the object is
          */
-        Deraumere();
+        Deraumere(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Deraumere object
          */

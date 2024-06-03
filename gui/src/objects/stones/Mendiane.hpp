@@ -15,8 +15,9 @@ namespace GUI {
     public:
         /**
          * @brief Construct a new Mendiane object
+         * @param tile Tile where the object is
          */
-        Mendiane();
+        Mendiane(Position tile = Position(0, 0));
         virtual ~Mendiane() noexcept = default;
     };
 } // namespace GUI //

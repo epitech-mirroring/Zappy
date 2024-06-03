@@ -15,8 +15,9 @@ namespace GUI {
     public:
         /**
          * @brief Construct a new Sibur object
+         * @param tile Tile where the object is
          */
-        Sibur();
+        Sibur(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Sibur object
          */
