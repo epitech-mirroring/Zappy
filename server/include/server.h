@@ -8,13 +8,19 @@
 
 #ifndef ZAPPY_SERVER_H
     #define ZAPPY_SERVER_H
-    #ifdef __cplusplus
-extern "C" {
-    #endif
 
-    void hello_world(void);
+    #include "game.h"
+    #include "array.h"
 
-    #ifdef __cplusplus
-}
-    #endif
+    typedef struct server_s {
+        game_t *game;
+        array_t *clients;
+
+        size_t single_tick_time;
+        size_t prev_tick_time;
+        size_t nb_ticks;
+
+        unsigned short port;
+    } server_t;
+
 #endif //ZAPPY_SERVER_H
