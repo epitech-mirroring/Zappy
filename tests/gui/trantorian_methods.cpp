@@ -5,18 +5,21 @@
 
 #include <gtest/gtest.h>
 #include "trantorians/Trantorian.hpp"
+#include "position/Position.hpp"
 
 using namespace GUI;
 
 TEST(trantorian_methods, PositionSetterAndGetters) {
     Trantorian player;
-    std::pair<int, int> res = {42, 84};
-    std::pair<int, int> new_res = {-42, -84};
+    Position res(42, 84);
+    Position new_res(-42, -84);
 
     player.setPosition(42, 84);
-    EXPECT_EQ(player.getPosition(), res);
+    EXPECT_EQ(player.getPosition().getX(), res.getX());
+    EXPECT_EQ(player.getPosition().getY(), res.getY());
     player.setPosition(-42, -84);
-    EXPECT_EQ(player.getPosition(), new_res);
+    EXPECT_EQ(player.getPosition().getX(), new_res.getX());
+    EXPECT_EQ(player.getPosition().getY(), new_res.getY());
 }
 
 TEST(trantorian_methods, TeamSetterAndGetters) {
