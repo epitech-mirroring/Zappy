@@ -54,14 +54,14 @@ std::list<IObject *> World::getObjects() const
     return _objects;
 }
 
-std::list <IObject *> World::getObjectsAt(std::pair<unsigned int,
-    unsigned int> tile) const
+std::list <IObject *> World::getObjectsAt(Position tile) const
 {
     std::list<IObject *> objects;
 
-    for (auto &object : _objects) {
-        if (object->getPosition() == tile)
+    for (auto object : _objects) {
+        if (object->getPosition().getX() == tile.getX() &&
+            object->getPosition().getY() == tile.getY()) {
             objects.push_back(object);
+        }
     }
-    return objects;
 }

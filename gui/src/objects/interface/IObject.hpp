@@ -8,7 +8,7 @@
 #ifndef IOBJECT_HPP_
     #define IOBJECT_HPP_
 
-    #include <utility>
+    #include "../../position/Position.hpp"
 
 namespace GUI {
     class IObject {
@@ -33,7 +33,7 @@ namespace GUI {
          * @brief Get the Position of the object
          * @return std::pair<unsigned int (x), unsigned int (y)> tile where the object is
          */
-        [[nodiscard]] virtual std::pair<unsigned int, unsigned int> getPosition() const noexcept = 0;
+        [[nodiscard]] virtual Position getPosition() const noexcept = 0;
     };
 }  // namespace GUI
 #endif /* !IOBJECT_HPP_ */

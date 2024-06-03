@@ -16,8 +16,9 @@ namespace GUI {
         /**
          * @brief Construct a new AStone object
          * @param density
+         * @param tile
          */
-        AStone(float density);
+        AStone(float density, Position tile);
         /**
          * @brief Destroy the AStone object
          */

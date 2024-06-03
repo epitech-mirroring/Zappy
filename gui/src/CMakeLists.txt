@@ -18,6 +18,8 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/eggs/Egg.cpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.cpp
+    # POSITION
+    ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.cpp
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
@@ -37,4 +39,6 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/eggs/Egg.hpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.hpp
+    # POSITION
+    ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
 )

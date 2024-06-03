@@ -9,8 +9,9 @@
 
 using namespace GUI;
 
-AObject::AObject(float density)
+AObject::AObject(float density, Position tile)
     : _density(density)
+    , _position(tile)
 {
 }
 
@@ -19,7 +20,7 @@ float AObject::getDensity() const noexcept
     return _density;
 }
 
-std::pair<unsigned int, unsigned int> AObject::getPosition() const noexcept
+Position AObject::getPosition() const noexcept
 {
     return _position;
 }

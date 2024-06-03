@@ -41,13 +41,13 @@ namespace GUI {
          * @brief Get the Width of the world
          * @return unsigned int (width of the world x)
         */
-        unsigned int getWidth() const;
+        [[nodiscard]] unsigned int getWidth() const;
 
         /**
          * @brief Get the Height of the world
          * @return unsigned int (height of the world y)
         */
-        unsigned int getHeight() const;
+        [[nodiscard]] unsigned int getHeight() const;
 
         /**
          * @brief Add an object to the world
@@ -64,13 +64,12 @@ namespace GUI {
          * @brief Get the list of objects in the world
          * @return std::list<IObject *> (list of objects)
         */
-        std::list<IObject *> getObjects() const;
+        [[nodiscard]] std::list<IObject *> getObjects() const;
         /**
          * @brief Get the list of objects at a specific tile
-         * @param tile tile where the objects are, first = X, second = Y
+         * @param tile (Position object that contains uint X and unint Y as protected)
         */
-        std::list <IObject *> getObjectsAt(std::pair<unsigned int,
-            unsigned int> tile) const;
+        [[nodiscard]] std::list <IObject *> getObjectsAt(Position tile) const;
 
     protected:
         unsigned int _width;         // width of the world

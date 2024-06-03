@@ -10,6 +10,6 @@
 using namespace GUI;
 
 Linemate::Linemate()
-    :   AStone(0.3)
+    :   AStone(0.3, {0, 0})
 {
 }

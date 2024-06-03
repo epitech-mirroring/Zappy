@@ -10,6 +10,6 @@
 using namespace GUI;
 
 Phiras::Phiras()
-    :   AStone(0.08)
+    :   AStone(0.08, {0, 0})
 {
 }

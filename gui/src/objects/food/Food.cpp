@@ -10,6 +10,6 @@
 using namespace GUI;
 
 Food::Food()
-    :   AObject(0.5)
+    :   AObject(0.5, {0, 0})
 {
 }

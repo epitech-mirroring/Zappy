@@ -16,8 +16,9 @@ namespace GUI {
         /**
          * @brief Construct a new AObject object
          * @param density
+         * @param tile
          */
-        AObject(float density);
+        AObject(float density, Position tile);
         /**
          * @brief Destroy the AObject object
          */
@@ -33,11 +34,11 @@ namespace GUI {
          * @brief Get the Position of the tile where the object is
          * @return std::pair<unsigned int (x), unsigned int (y)> tile where the object is
         */
-        [[nodiscard]] std::pair<unsigned int, unsigned int> getPosition() const noexcept final;
+        [[nodiscard]] Position getPosition() const noexcept final;
 
     protected:
         float _density;         // density of the object
-        std::pair<unsigned int, unsigned int> _position; // tile where the object is (x, y)
+        Position _position;     // tile where the object is (x, y)
     };
 }  // namespace GUI //
 #endif /* !AOBJECT_HPP_ */

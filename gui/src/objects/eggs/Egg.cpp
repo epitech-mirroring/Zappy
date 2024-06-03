@@ -10,7 +10,7 @@
 using namespace GUI;
 
 Egg::Egg(std::string teamName, int ownerID)
-    :   AObject(0)
+    :   AObject(0, {0, 0})
     ,   _teamName(std::move(teamName))
     ,   _ownerID(ownerID)
 {

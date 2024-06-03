@@ -10,6 +10,6 @@
 using namespace GUI;
 
 Mendiane::Mendiane()
-    :   AStone(0.1)
+    :   AStone(0.1, {0, 0})
 {
 }

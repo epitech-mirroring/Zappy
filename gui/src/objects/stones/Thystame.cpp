@@ -10,6 +10,6 @@
 using namespace GUI;
 
 Thystame::Thystame()
-    :   AStone(0.05)
+    :   AStone(0.05, {0, 0})
 {
 }
