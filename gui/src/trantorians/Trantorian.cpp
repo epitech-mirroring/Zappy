@@ -65,11 +65,11 @@ int GUI::Trantorian::getLifetime()
 
 void GUI::Trantorian::setPosition(int x, int y)
 {
-    _position.first = x;
-    _position.second = y;
+    _position.setX(x);
+    _position.setY(y);
 }
 
-std::pair<int, int> GUI::Trantorian::getPosition()
+GUI::Position GUI::Trantorian::getPosition()
 {
     return _position;
 }

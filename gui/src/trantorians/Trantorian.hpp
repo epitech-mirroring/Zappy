@@ -8,6 +8,7 @@
 
     #include <iostream>
     #include <utility>
+    #include "../position/Position.hpp"
 
 namespace GUI {
     class Trantorian {
@@ -30,7 +31,7 @@ namespace GUI {
              * @brief Get trantorian postion
              * @return pair of ints
              */
-            std::pair<int, int> getPosition();
+            GUI::Position getPosition();
 
             /**
              * @brief Set trantorian team
@@ -99,7 +100,7 @@ namespace GUI {
             int getLevel();
 
         private:
-            std::pair<int, int> _position;
+            GUI::Position _position;
             std::string _team;
             int _lifetimeRemaining;
             bool _alive;
