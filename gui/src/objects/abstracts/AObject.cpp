@@ -18,3 +18,8 @@ float AObject::getDensity() const noexcept
 {
     return _density;
 }
+
+std::pair<unsigned int, unsigned int> AObject::getPosition() const noexcept
+{
+    return _position;
+}

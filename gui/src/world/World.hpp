@@ -8,21 +8,75 @@
 #ifndef WORLD_HPP_
 #define WORLD_HPP_
 
+    #include <list>
+    #include "../objects/interface/IObject.hpp"
+
 namespace GUI {
-class World {
+    class World {
     public:
+        /**
+         * @brief Construct a new World object
+         * @param width (width of the world x)
+         * @param height (height of the world y)
+        */
         World(unsigned int width, unsigned int height);
+        /**
+         * @brief Destroy the World object
+        */
         ~World();
 
+        /**
+         * @brief Set the Width of the world
+         * @param width (width of the world x)
+        */
         void setWidth(unsigned int width);
+
+        /**
+         * @brief Set the Height of the world
+         * @param height (height of the world y)
+        */
         void setHeight(unsigned int height);
 
+        /**
+         * @brief Get the Width of the world
+         * @return unsigned int (width of the world x)
+        */
         unsigned int getWidth() const;
+
+        /**
+         * @brief Get the Height of the world
+         * @return unsigned int (height of the world y)
+        */
         unsigned int getHeight() const;
 
+        /**
+         * @brief Add an object to the world
+         * @param object (object to add)
+        */
+        void addObject(IObject *object);
+        /**
+         * @brief Remove an object from the world
+         * @param object (object to remove)
+        */
+        void removeObject(IObject *object);
+
+        /**
+         * @brief Get the list of objects in the world
+         * @return std::list<IObject *> (list of objects)
+        */
+        std::list<IObject *> getObjects() const;
+        /**
+         * @brief Get the list of objects at a specific tile
+         * @param tile tile where the objects are, first = X, second = Y
+        */
+        std::list <IObject *> getObjectsAt(std::pair<unsigned int,
+            unsigned int> tile) const;
+
     protected:
-        unsigned int _width;
-        unsigned int _height;
-};
+        unsigned int _width;         // width of the world
+        unsigned int _height;        // height of the world
+
+        std::list<IObject *> _objects;  // list of objects in the world
+    };
 } // namespace GUI //
 #endif /* !WORLD_HPP_ */

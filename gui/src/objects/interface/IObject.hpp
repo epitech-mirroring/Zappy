@@ -8,6 +8,8 @@
 #ifndef IOBJECT_HPP_
     #define IOBJECT_HPP_
 
+    #include <utility>
+
 namespace GUI {
     class IObject {
     public:
@@ -26,6 +28,12 @@ namespace GUI {
          * @return float (density of the object)
          */
         [[nodiscard]] virtual float getDensity() const noexcept = 0;
+
+        /**
+         * @brief Get the Position of the object
+         * @return std::pair<unsigned int (x), unsigned int (y)> tile where the object is
+         */
+        [[nodiscard]] virtual std::pair<unsigned int, unsigned int> getPosition() const noexcept = 0;
     };
 }  // namespace GUI
 #endif /* !IOBJECT_HPP_ */

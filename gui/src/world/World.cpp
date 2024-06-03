@@ -39,3 +39,29 @@ unsigned int World::getHeight() const
     return _height;
 }
 
+void World::addObject(IObject *object)
+{
+    _objects.push_back(object);
+}
+
+void World::removeObject(IObject *object)
+{
+    _objects.remove(object);
+}
+
+std::list<IObject *> World::getObjects() const
+{
+    return _objects;
+}
+
+std::list <IObject *> World::getObjectsAt(std::pair<unsigned int,
+    unsigned int> tile) const
+{
+    std::list<IObject *> objects;
+
+    for (auto &object : _objects) {
+        if (object->getPosition() == tile)
+            objects.push_back(object);
+    }
+    return objects;
+}
