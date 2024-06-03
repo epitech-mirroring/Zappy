@@ -5,7 +5,7 @@
 ** different useful functions that are copy from c++
 */
 
-#include "function.h"
+#include "array.h"
 
 void array_push_back(array_t *array, void *element)
 {
