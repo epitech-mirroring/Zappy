@@ -16,7 +16,7 @@ namespace GUI {
             /**
              * @brief Create trantorian object
              */
-            Trantorian();
+            Trantorian(std::string team = "", int x = 0, int y = 0);
             /**
              * @brief Destroy trantorian object
              */

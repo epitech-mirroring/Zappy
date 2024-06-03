@@ -5,8 +5,15 @@
 
 #include "Trantorian.hpp"
 
-GUI::Trantorian::Trantorian()
+GUI::Trantorian::Trantorian(std::string teamName, int x, int y)
 {
+    _team = teamName;
+    _position.setX(x);
+    _position.setY(y);
+    _alive = true;
+    _action = false;
+    _level = 1;
+    _lifetimeRemaining = 100;
 }
 
 GUI::Trantorian::~Trantorian()
