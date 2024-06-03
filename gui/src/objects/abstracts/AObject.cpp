@@ -20,7 +20,12 @@ float AObject::getDensity() const noexcept
     return _density;
 }
 
-Position AObject::getPosition() const noexcept
+const Position& AObject::getPosition() const noexcept
+{
+    return _position;
+}
+
+Position& AObject::getPosition() noexcept
 {
     return _position;
 }

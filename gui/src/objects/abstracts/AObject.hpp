@@ -32,9 +32,15 @@ namespace GUI {
 
         /**
          * @brief Get the Position of the tile where the object is
-         * @return std::pair<unsigned int (x), unsigned int (y)> tile where the object is
-        */
-        [[nodiscard]] Position getPosition() const noexcept final;
+         * @return const Position& tile where the object is (read-only)
+         */
+        [[nodiscard]] const Position& getPosition() const noexcept final;
+
+        /**
+         * @brief Get the Position of the tile where the object is
+         * @return Position& tile where the object is (modifiable)
+         */
+        [[nodiscard]] Position& getPosition() noexcept;
 
     protected:
         float _density;         // density of the object

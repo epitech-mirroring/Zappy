@@ -64,4 +64,5 @@ std::list <IObject *> World::getObjectsAt(Position tile) const
             objects.push_back(object);
         }
     }
+    return objects;
 }

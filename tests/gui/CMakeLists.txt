@@ -4,4 +4,5 @@ target_sources(zappy_tests
         ${CMAKE_CURRENT_LIST_DIR}/get_objects_density_spec.cpp
         ${CMAKE_CURRENT_LIST_DIR}/eggs_spec.cpp
         ${CMAKE_CURRENT_LIST_DIR}/world_spec.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/get_objects_positions_spec.cpp
 )

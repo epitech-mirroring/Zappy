@@ -30,10 +30,16 @@ namespace GUI {
         [[nodiscard]] virtual float getDensity() const noexcept = 0;
 
         /**
-         * @brief Get the Position of the object
-         * @return std::pair<unsigned int (x), unsigned int (y)> tile where the object is
+         * @brief Get the Position of the tile where the object is
+         * @return const Position& tile where the object is (read-only)
          */
-        [[nodiscard]] virtual Position getPosition() const noexcept = 0;
+        [[nodiscard]] virtual const Position& getPosition() const noexcept = 0;
+
+        /**
+         * @brief Get the Position of the tile where the object is
+         * @return Position& tile where the object is (modifiable)
+         */
+        [[nodiscard]] virtual Position& getPosition() noexcept = 0;
     };
 }  // namespace GUI
 #endif /* !IOBJECT_HPP_ */
