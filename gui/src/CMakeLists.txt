@@ -1,6 +1,12 @@
 target_sources(zappy_gui_lib
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Trantorian.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Tribes.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.cpp
   PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Trantorian.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Tribes.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.hpp
 )
