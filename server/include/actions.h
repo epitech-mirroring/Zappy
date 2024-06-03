@@ -32,28 +32,4 @@ enum action_e {
     INCANTATION
 };
 
-/**
- * @struct action_s
- *
- * This structure is used to store the action of the trantorian
- * Each action has a type and a time to start and a wait time
- */
-typedef struct action_s {
-    enum action_e action;
-    int time_start;
-    int wait_time;
-} action_t;
-
-/**
- * @struct actions_list_s
- *
- * This structure is used to store the action of the trantorian
- * Each action has a type and a time to start and a wait time
- */
-typedef struct actions_list_s {
-    size_t size;
-    action_t *actions;
-    struct action_s_list *next;
-} action_list_t;
-
 #endif //ZAPPY_ACTIONS_H
