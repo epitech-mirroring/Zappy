@@ -33,7 +33,7 @@ namespace GUI
              * @brief Get tribe's name
              * @return std::string of tribe's name
              */
-            std::string getName();
+            [[nodiscard]] std::string getName();
 
             /**
              * @brief Add new trantorian to tribe
@@ -44,7 +44,7 @@ namespace GUI
              * @brief Get list of trantorian in the tribe
              * @return list of trantorian objects
              */
-            std::list<GUI::Trantorian> getTrantorianList();
+            [[nodiscard]] std::list<GUI::Trantorian> getTrantorianList();
 
         private:
             std::string _name;

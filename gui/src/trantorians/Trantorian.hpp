@@ -31,7 +31,7 @@ namespace GUI {
              * @brief Get trantorian postion
              * @return pair of ints
              */
-            GUI::Position getPosition();
+            [[nodiscard]] GUI::Position getPosition();
 
             /**
              * @brief Set trantorian team
@@ -42,7 +42,7 @@ namespace GUI {
              * @brief Get trantorian team
              * @return std::string w/ team's name
              */
-            std::string getTeam();
+            [[nodiscard]] std::string getTeam();
 
             /**
              * @brief Set trantorian's lifetime
@@ -53,7 +53,7 @@ namespace GUI {
              * @brief Get trantorian lifetime
              * @return int representing life time remaining
              */
-            int getLifetime();
+            [[nodiscard]] int getLifetime();
 
             /**
              * @brief Set trantorian alive
@@ -64,7 +64,7 @@ namespace GUI {
              * @brief Get trantorian alive
              * @return false if dead, true if alive
              */
-            bool getIsAlive();
+            [[nodiscard]] bool getIsAlive();
 
             /**
              * @brief Set trantorian action
@@ -75,7 +75,7 @@ namespace GUI {
              * @brief Get trantorian action
              * @return true if doing an action, false if not
              */
-            bool getAction();
+            [[nodiscard]] bool getAction();
 
             /**
              * @brief Set trantorian id
@@ -86,7 +86,7 @@ namespace GUI {
              * @brief Get trantorian id
              * @return int representing player's id
              */
-            int getId();
+            [[nodiscard]] int getId();
 
             /**
              * @brief Set trantorian level
@@ -97,7 +97,7 @@ namespace GUI {
              * @brief Get trantorian level
              * @return int representing player's level
              */
-            int getLevel();
+            [[nodiscard]] int getLevel();
 
         private:
             GUI::Position _position;
