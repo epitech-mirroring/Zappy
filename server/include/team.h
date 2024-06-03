@@ -10,6 +10,7 @@
     #define ZAPPY_TEAM_H
 
     #include "trantorian.h"
+    #include "array.h"
 
 /**
  * @struct team_s
@@ -18,10 +19,9 @@
  * Each team has a unique ID, a name, a number of members, and an array of Trantorians.
  */
 typedef struct team_s {
-    int id;
+    uuid_t uuid;
+    array_t *trantorians;
     char *name;
-    int menber_count;
-    trantorian_t *members;
 } team_t;
 
 #endif //ZAPPY_TEAM_H
