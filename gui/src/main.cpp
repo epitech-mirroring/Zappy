@@ -1,14 +1,18 @@
 /*
 ** File description:
-** No file there , just an epitech header example .
-** You can even have multiple lines if you want !
+** main
 */
 
-#include "GUI.hpp"
+#include <iostream>
+#include "handle_args/HandleArgs.hpp"
+
+using namespace GUI;
 
 int main(int ac, char **av)
 {
-    (void)ac;
-    (void)av;
+    GUI::HandleArgs args;
+
+    if (args.checkArgs(ac, av))
+        return 84;
     return 0;
 }
