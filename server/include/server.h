@@ -12,6 +12,14 @@
     #include "game.h"
     #include "array.h"
 
+    /**
+     * @struct server_s
+     *
+     * This structure represents a server in the game Zappy.
+     * Each server has a game, a list of clients, a single tick time,
+     * a previous tick time, a number of ticks, and a port.
+     *
+     */
     typedef struct server_s {
         game_t *game;
         array_t *clients;
@@ -22,5 +30,51 @@
 
         unsigned short port;
     } server_t;
+
+    /**
+     * @brief Initialize a server
+     *
+     * @param port The port on which the server will listen
+     * @param freq The frequency of the server
+     * @return server_t* The server
+     */
+    server_t *init_server(unsigned short port, size_t freq);
+
+    /**
+     * @brief Destroy a server
+     *
+     * @param server The server to destroy
+     */
+    void destroy_server(server_t *server);
+
+    /**
+     * @brief Run the server
+     *
+     * @param server The server to run
+     */
+
+    void run_server(server_t *server);
+
+    /**
+     * @brief Add a client to the server
+     *
+     * @param server The server
+     * @param client The client to add
+     */
+    void reader(server_t *server);
+
+    /**
+     * @brief Remove a client from the server
+     *
+     * @param server The server
+     */
+    void writer(server_t *server);
+
+    /**
+     * @brief Check if a client is dead and remove it from the client list
+     *
+     * @param server The server
+     */
+    void check_dead_clients(server_t *server);
 
 #endif //ZAPPY_SERVER_H
