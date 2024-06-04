@@ -13,6 +13,9 @@
     #include <uuid/uuid.h>
     #include "inventory.h"
     #include "actions.h"
+    #ifdef __cplusplus
+extern "C" {
+    #endif // __cplusplus
 
 /**
  * @struct coordinates_s
@@ -41,5 +44,9 @@ typedef struct trantorian_s {
     array_t *actions;
     enum direction_e direction;
 } trantorian_t;
+
+    #ifdef __cplusplus
+}
+    #endif // __cplusplus
 
 #endif //ZAPPY_TRANTORIAN_H

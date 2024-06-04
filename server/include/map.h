@@ -8,7 +8,9 @@
 
 #ifndef ZAPPY_MAP_H
     #define ZAPPY_MAP_H
-
+    #ifdef __cplusplus
+extern "C" {
+    #endif // __cplusplus
 /**
  * @struct coordinates_s
  *
@@ -46,6 +48,7 @@ typedef struct tile_s {
     coordinates_t coordinates;
     int player_count;
     resources_t resources;
+    array_t *eggs;
 } tile_t;
 
 /**
@@ -59,5 +62,9 @@ typedef struct map_s {
     int height;
     tile_t **tiles;
 } map_t;
+
+    #ifdef __cplusplus
+}
+    #endif // __cplusplus
 
 #endif //ZAPPY_MAP_H

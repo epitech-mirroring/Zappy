@@ -11,6 +11,9 @@
 
     #include "trantorian.h"
     #include "array.h"
+    #ifdef __cplusplus
+extern "C" {
+    #endif // __cplusplus
 
 /**
  * @struct team_s
@@ -23,5 +26,9 @@ typedef struct team_s {
     array_t *trantorians;
     char *name;
 } team_t;
+
+    #ifdef __cplusplus
+}
+    #endif // __cplusplus
 
 #endif //ZAPPY_TEAM_H

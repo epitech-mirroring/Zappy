@@ -9,6 +9,9 @@
 
 #ifndef ZAPPY_ACTIONS_H
     #define ZAPPY_ACTIONS_H
+    #ifdef __cplusplus
+extern "C" {
+    #endif // __cplusplus
 
     #include <stddef.h>
 
@@ -31,5 +34,8 @@ enum action_e {
     SET,
     INCANTATION
 };
+    #ifdef __cplusplus
+}
+    #endif // __cplusplus
 
 #endif //ZAPPY_ACTIONS_H
