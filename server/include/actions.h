@@ -21,20 +21,21 @@ extern "C" {
  * This enumeration is used to store the different actions that a
  * trantorian can do
  */
-enum action_e {
-    FORWARD,
-    RIGHT,
-    LEFT,
-    LOOK,
-    INVENTORY,
-    BROADCAST,
-    CONNECT_NBR,
-    FORK,
-    EJECT,
-    TAKE,
-    SET,
-    INCANTATION
-};
+    enum action_e {
+        FORWARD,
+        RIGHT,
+        LEFT,
+        LOOK,
+        INVENTORY,
+        BROADCAST,
+        CONNECT_NBR,
+        FORK,
+        EJECT,
+        TAKE,
+        SET,
+        INCANTATION
+    };
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
