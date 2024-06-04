@@ -18,7 +18,8 @@ extern "C" {
 /**
  * @enum action_e
  *
- * This enumeration is used to store the different actions that a trantorian can do
+ * This enumeration is used to store the different actions that a
+ * trantorian can do
  */
 enum action_e {
     FORWARD,
