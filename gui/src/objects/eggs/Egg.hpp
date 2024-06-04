@@ -9,7 +9,7 @@
     #define EGG_HPP_
 
     #include <iostream>
-    #include "../abstracts/AObject.hpp"
+    #include "objects/abstracts/AObject.hpp"
 
 namespace GUI {
     class Egg : public AObject {

@@ -8,7 +8,7 @@
 #ifndef LINEMATE_HPP_
     #define LINEMATE_HPP_
 
-    #include "../abstracts/AStone.hpp"
+    #include "objects/abstracts/AStone.hpp"
 
 namespace GUI {
     class Linemate : public AStone{

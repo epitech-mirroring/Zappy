@@ -15,10 +15,6 @@ World::World(unsigned int width, unsigned int height)
 {
 }
 
-World::~World()
-{
-}
-
 void World::setWidth(unsigned int width)
 {
     _width = width;

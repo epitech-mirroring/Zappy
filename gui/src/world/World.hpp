@@ -9,7 +9,7 @@
     #define WORLD_HPP_
 
     #include <list>
-    #include "../objects/interface/IObject.hpp"
+    #include "objects/interface/IObject.hpp"
 
 namespace GUI {
     class World {
@@ -23,7 +23,7 @@ namespace GUI {
         /**
          * @brief Destroy the World object
         */
-        ~World();
+        ~World() = default;
 
         /**
          * @brief Set the Width of the world

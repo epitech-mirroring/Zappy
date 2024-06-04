@@ -8,7 +8,7 @@
 #ifndef MENDIANE_HPP_
     #define MENDIANE_HPP_
 
-    #include "../abstracts/AStone.hpp"
+    #include "objects/abstracts/AStone.hpp"
 
 namespace GUI {
     class Mendiane : public AStone {

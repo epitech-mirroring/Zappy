@@ -8,7 +8,7 @@
 #ifndef SIBUR_HPP_
     #define SIBUR_HPP_
 
-    #include "../abstracts/AStone.hpp"
+    #include "objects/abstracts/AStone.hpp"
 
 namespace GUI {
     class Sibur : public AStone {

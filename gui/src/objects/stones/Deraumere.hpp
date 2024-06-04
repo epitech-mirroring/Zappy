@@ -8,7 +8,7 @@
 #ifndef DERAUMERE_HPP_
     #define DERAUMERE_HPP_
 
-    #include "../abstracts/AStone.hpp"
+    #include "objects/abstracts/AStone.hpp"
 
 namespace GUI {
     class Deraumere : public AStone {

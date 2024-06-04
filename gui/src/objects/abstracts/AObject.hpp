@@ -8,7 +8,7 @@
 #ifndef AOBJECT_HPP_
     #define AOBJECT_HPP_
 
-    #include "../interface/IObject.hpp"
+    #include "objects/interface/IObject.hpp"
 
 namespace GUI {
     class AObject : public IObject {

@@ -8,7 +8,7 @@
 #ifndef PHIRAS_HPP_
     #define PHIRAS_HPP_
 
-    #include "../abstracts/AStone.hpp"
+    #include "objects/abstracts/AStone.hpp"
 
 namespace GUI {
     class Phiras : public AStone {

@@ -8,7 +8,7 @@
 #ifndef FOOD_HPP_
     #define FOOD_HPP_
 
-    #include "../abstracts/AObject.hpp"
+    #include "objects/abstracts/AObject.hpp"
 
 namespace GUI {
     class Food : public AObject {

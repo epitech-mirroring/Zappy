@@ -8,7 +8,7 @@
 #ifndef THYSTAME_HPP_
     #define THYSTAME_HPP_
 
-    #include "../abstracts/AStone.hpp"
+    #include "objects/abstracts/AStone.hpp"
 
 namespace GUI {
     class Thystame : public AStone {

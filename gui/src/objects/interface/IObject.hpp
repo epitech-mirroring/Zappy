@@ -8,7 +8,7 @@
 #ifndef IOBJECT_HPP_
     #define IOBJECT_HPP_
 
-    #include "../../position/Position.hpp"
+    #include "position/Position.hpp"
 
 namespace GUI {
     class IObject {
