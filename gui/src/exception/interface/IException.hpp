@@ -11,7 +11,7 @@
     #include <exception>
     #include <string>
 
-namespace GUI {
+namespace zappy {
     class IException : public std::exception {
     public:
         /**

@@ -11,7 +11,7 @@
     #include "exception/interface/IException.hpp"
     #include <string>
 
-namespace GUI {
+namespace zappy {
     class AException : public IException {
     public:
         /**

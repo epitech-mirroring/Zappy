@@ -24,12 +24,12 @@ int HandleArgs::checkArgs(int nbArgs, char **args)
             return 0;
         }
         if (nbArgs != 3)
-            throw ArgsException("ARGS ERROR: Invalid number of arguments");
+            throw zappy::ArgsException("ARGS ERROR: Invalid number of arguments");
         if (checkPort(args[1]) == 84)
-            throw ArgsException("ARGS ERROR: Invalid port");
+            throw zappy::ArgsException("ARGS ERROR: Invalid port");
         if (checkHostname(args[2]) == 84)
-            throw ArgsException("ARGS ERROR: Invalid hostname");
-    } catch (const ArgsException &e) {
+            throw zappy::ArgsException("ARGS ERROR: Invalid hostname");
+    } catch (const zappy::ArgsException &e) {
         std::cerr << e.what() << std::endl;
         return 84;
     }
