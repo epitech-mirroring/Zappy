@@ -11,6 +11,8 @@
 
     #include "game.h"
     #include "array.h"
+    #include "client.h"
+    #include "buffer.h"
     #ifdef __cplusplus
 extern "C" {
     #endif // __cplusplus
@@ -40,7 +42,8 @@ extern "C" {
      * @param freq The frequency of the server
      * @return server_t* The server
      */
-    server_t *init(unsigned short port, size_t freq);
+    server_t *init(unsigned short port, size_t freq,
+        array_t *teams, int map_size[2]);
 
     /**
      * @brief Destroy a server
@@ -54,30 +57,64 @@ extern "C" {
      *
      * @param server The server to run
      */
-
     void run(server_t *server);
 
     /**
      * @brief Add a client to the server
      *
      * @param server The server
-     * @param client The client to add
+     * @param fd The file descriptor of the client
+     * @param message The message received from the client
      */
-    void reader(server_t *server);
+    void add_client(server_t *server, int fd, char *message);
 
     /**
      * @brief Remove a client from the server
      *
      * @param server The server
+     * @param fd The file descriptor of the client
      */
-    void writer(server_t *server);
+    void remove_client(server_t *server, int fd);
 
     /**
-     * @brief Check if a client is dead and remove it from the client list
+     * @brief Send a message to a client
+     *
+     * @param server The server
+     * @param fd The file descriptor of the client
+     * @param message The message to send
+     */
+    void send_message(server_t *server, int fd, char *message);
+
+    /**
+     * @brief Send a message to all clients
+     *
+     * @param server The server
+     * @param message The message to send
+     */
+    void send_message_to_all(server_t *server, char *message);
+
+    /**
+     * @brief Read client messages that have not been read yet
      *
      * @param server The server
      */
-    void check_dead_clients(server_t *server);
+    void read_clients_messages(server_t *server);
+
+    /**
+     * @brief Read a client message
+     *
+     * @param server The server
+     * @param client The client
+     */
+    void read_client_message(server_t *server, client_t *client);
+
+    /**
+     * @brief Execute client command (only network command)
+     *
+     * @param server The server
+     * @param client The client
+     */
+    void execute_client_command(server_t *server, client_t *client);
 
     #ifdef __cplusplus
 }
