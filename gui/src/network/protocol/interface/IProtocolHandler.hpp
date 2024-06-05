@@ -14,9 +14,19 @@
 namespace network {
     class IProtocolHandler {
     public:
+        /**
+         * @brief Construct a new IProtocolHandler object
+         */
         IProtocolHandler() noexcept = default;
+        /**
+         * @brief Destroy the IProtocolHandler object
+         */
         virtual ~IProtocolHandler() noexcept = default;
 
+        /**
+         * @brief Handle the communication with the server
+         * @param socket (socket of the client)
+         */
         virtual void handleCommunication(std::unique_ptr<ASocket>& socket) = 0;
     };
 } // namespace network //

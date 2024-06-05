@@ -13,6 +13,9 @@
 namespace network {
     class ProtocolHandler : public AProtocolHandler {
     public:
+        /**
+         * @brief Construct a new ProtocolHandler object
+         */
         void handleUtilsCommunication(ASocket &socket) noexcept;
     };
 } // namespace network //
