@@ -13,6 +13,7 @@ extern "C" {
     #endif // __cplusplus
 
     #include "array.h"
+    #include "buffer.h"
     #include <uuid/uuid.h>
 
     /**
