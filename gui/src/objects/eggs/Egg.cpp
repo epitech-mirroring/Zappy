@@ -9,8 +9,8 @@
 
 using namespace GUI;
 
-Egg::Egg(std::string teamName, int ownerID)
-    :   AObject(0)
+Egg::Egg(std::string teamName, int ownerID, Position tile)
+    :   AObject(0, tile)
     ,   _teamName(std::move(teamName))
     ,   _ownerID(ownerID)
 {

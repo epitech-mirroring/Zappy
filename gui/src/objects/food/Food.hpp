@@ -8,15 +8,16 @@
 #ifndef FOOD_HPP_
     #define FOOD_HPP_
 
-    #include "../abstracts/AObject.hpp"
+    #include "objects/abstracts/AObject.hpp"
 
 namespace GUI {
     class Food : public AObject {
     public:
         /**
          * @brief Construct a new Food object
+         * @param tile Tile where the object is
         */
-        Food();
+        Food(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Food object
         */

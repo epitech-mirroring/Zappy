@@ -8,15 +8,16 @@
 #ifndef PHIRAS_HPP_
     #define PHIRAS_HPP_
 
-    #include "../abstracts/AStone.hpp"
+    #include "objects/abstracts/AStone.hpp"
 
 namespace GUI {
     class Phiras : public AStone {
     public:
         /**
          * @brief Construct a new Phiras object
+         * @param tile Tile where the object is
          */
-        Phiras();
+        Phiras(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Phiras object
          */

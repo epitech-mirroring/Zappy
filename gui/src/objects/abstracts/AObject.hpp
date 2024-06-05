@@ -8,7 +8,7 @@
 #ifndef AOBJECT_HPP_
     #define AOBJECT_HPP_
 
-    #include "../interface/IObject.hpp"
+    #include "objects/interface/IObject.hpp"
 
 namespace GUI {
     class AObject : public IObject {
@@ -16,8 +16,9 @@ namespace GUI {
         /**
          * @brief Construct a new AObject object
          * @param density
+         * @param tile
          */
-        AObject(float density);
+        AObject(float density, Position tile);
         /**
          * @brief Destroy the AObject object
          */
@@ -28,8 +29,22 @@ namespace GUI {
          * @return float (density of the object)
          */
         [[nodiscard]] float getDensity() const noexcept final;
+
+        /**
+         * @brief Get the Position of the tile where the object is
+         * @return const Position& tile where the object is (read-only)
+         */
+        [[nodiscard]] const Position& getPosition() const noexcept final;
+
+        /**
+         * @brief Get the Position of the tile where the object is
+         * @return Position& tile where the object is (modifiable)
+         */
+        [[nodiscard]] Position& getPosition() noexcept;
+
     protected:
         float _density;         // density of the object
+        Position _position;     // tile where the object is (x, y)
     };
 }  // namespace GUI //
 #endif /* !AOBJECT_HPP_ */
