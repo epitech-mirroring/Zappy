@@ -25,16 +25,16 @@ void TCPSocket::connect(const std::string &hostname, unsigned int port)
     _sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     if (_sockfd < 0)
-        throw SocketException("SOCKET ERROR: opening socket");
+        throw zappy::SocketException("SOCKET ERROR: opening socket");
 
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(port);
 
     if (inet_pton(AF_INET, hostname.c_str(), &serv_addr.sin_addr) <= 0)
-        throw SocketException("SOCKET ERROR: Invalid address");
+        throw zappy::SocketException("SOCKET ERROR: Invalid address");
     if (::connect(_sockfd,
         (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
-        throw SocketException("SOCKET ERROR: Connection failed");
+        throw zappy::SocketException("SOCKET ERROR: Connection failed");
 }
 
 void TCPSocket::close()
@@ -56,6 +56,6 @@ std::string TCPSocket::receive()
     int bytesRead = ::recv(_sockfd, buffer, sizeof(buffer), 0);
 
     if (bytesRead < 0)
-        throw SocketException("SOCKET ERROR: Reading failed");
+        throw zappy::SocketException("SOCKET ERROR: Reading failed");
     return std::string(buffer);
 }

@@ -5,6 +5,7 @@ target_sources(zappy_gui_lib
     # EXCEPTIONS
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/exception/SocketException.cpp
     # OBJECTS
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.cpp
@@ -20,12 +21,18 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.cpp
     # POSITION
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.cpp
+    # NETWORK
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/client/Client.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/ProtocolHandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/abstract/AProtocolHandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.cpp
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
     # EXCEPTIONS
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/exception/SocketException.hpp
     # OBJECTS
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.hpp
@@ -41,4 +48,10 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.hpp
     # POSITION
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
+    # NETWORK
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/client/Client.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/ProtocolHandler.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/abstract/AProtocolHandler.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/interface/IProtocolHandler.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.hpp
 )
