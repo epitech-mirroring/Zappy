@@ -23,6 +23,7 @@ extern "C" {
     typedef struct array_s {
         void **data;
         size_t elementSize;
+        void(*element_destructor)(void *element);
     } array_t;
 
     /**

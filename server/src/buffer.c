@@ -68,7 +68,7 @@ void buffer_destroy(buffer_t *buffer)
     free(buffer);
 }
 
-bool can_write(buffer_t *buffer, size_t size)
+static bool can_write(buffer_t *buffer, size_t size)
 {
     if (size >= buffer->capacity)
         return false;

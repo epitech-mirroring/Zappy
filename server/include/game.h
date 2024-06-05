@@ -34,11 +34,6 @@ extern "C" {
         map_t *map;
     } game_t;
 
-    #ifdef __cplusplus
-}
-    #endif // __cplusplus
-#endif //ZAPPY_GAME_H
-
     /**
      * @brief Initialize a game
      *
@@ -81,3 +76,8 @@ extern "C" {
      * @param client The client that wants to create a Trantorian
      */
     void create_trantorian(game_t *game, char *team_name, client_t *client);
+
+    #ifdef __cplusplus
+}
+    #endif // __cplusplus
+#endif //ZAPPY_GAME_H

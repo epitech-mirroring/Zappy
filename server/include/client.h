@@ -40,12 +40,6 @@ extern "C" {
         buffer_t *buffer_answered;
     } client_t;
 
-    #ifdef __cplusplus
-}
-    #endif // __cplusplus
-
-#endif //ZAPPY_CLIENT_H
-
     /**
      * @brief Initialize a client
      *
@@ -93,3 +87,9 @@ extern "C" {
      * @return int The socket of the client
      */
     int get_socket(client_t *client);
+
+    #ifdef __cplusplus
+}
+    #endif // __cplusplus
+
+#endif //ZAPPY_CLIENT_H
