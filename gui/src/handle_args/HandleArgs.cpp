@@ -78,3 +78,13 @@ int HandleArgs::checkHostname(const std::string &hostname)
     _hostname = hostname;
     return 0;
 }
+
+unsigned int HandleArgs::getPort() const
+{
+    return _port;
+}
+
+std::string HandleArgs::getHostname() const
+{
+    return _hostname;
+}

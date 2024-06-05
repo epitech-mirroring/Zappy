@@ -9,7 +9,7 @@
 
 using namespace network;
 
-void AProtocolHandler::handleCommunication(ASocket &socket) noexcept
+void AProtocolHandler::handleCommunication(std::unique_ptr<ASocket>& socket) noexcept
 {
     (void)socket;
     /**
@@ -17,8 +17,8 @@ void AProtocolHandler::handleCommunication(ASocket &socket) noexcept
      * Example:
     */
     std::string message = "Hello from the GUI";
-    socket.send(message.c_str());
+    socket->send(message.c_str());
 
-    std::string serverResponse = socket.receive();
+    std::string serverResponse = socket->receive();
     std::cout << "LOG: " << serverResponse << std::endl;
 }

@@ -8,6 +8,7 @@
 #ifndef APROTOCOLHANDLER_HPP_
     #define APROTOCOLHANDLER_HPP_
 
+    #include <memory>
     #include "network/protocol/interface/IProtocolHandler.hpp"
 
 namespace network {
@@ -16,7 +17,7 @@ namespace network {
         AProtocolHandler() noexcept = default;
         ~AProtocolHandler() noexcept = default;
 
-        virtual void handleCommunication(ASocket &socket) noexcept final;
+        virtual void handleCommunication(std::unique_ptr<ASocket>& socket) noexcept final;
     };
 } // namespace network //
 #endif /* !APROTOCOLHANDLER_HPP_ */
