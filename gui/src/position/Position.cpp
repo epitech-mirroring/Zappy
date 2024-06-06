@@ -1,4 +1,6 @@
 /*
+** EPITECH PROJECT, 2024
+** Zappy
 ** File description:
 ** Position
 */
@@ -10,10 +12,6 @@ using namespace GUI;
 Position::Position(unsigned int x, unsigned int y)
     :   _x(x)
     ,   _y(y)
-{
-}
-
-Position::~Position()
 {
 }
 
