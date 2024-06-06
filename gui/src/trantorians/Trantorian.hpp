@@ -20,7 +20,7 @@ namespace GUI {
             /**
              * @brief Destroy trantorian object
              */
-            ~Trantorian();
+            ~Trantorian() = default;
 
             /**
              * @brief Set trantorian position

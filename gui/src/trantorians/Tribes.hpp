@@ -18,11 +18,11 @@ namespace GUI
             /**
              * @brief Create Tribe object
              */
-            Tribes();
+            Tribes(std::string name = "");
             /**
              * @brief Create Tribe object
              */
-            ~Tribes();
+            ~Tribes() = default;
 
             /**
              * @brief Set name of the tribe

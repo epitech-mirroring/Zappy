@@ -5,11 +5,8 @@
 
 #include "Tribes.hpp"
 
-GUI::Tribes::Tribes()
-{
-}
-
-GUI::Tribes::~Tribes()
+GUI::Tribes::Tribes(std::string name)
+    :   _name(name)
 {
 }
 

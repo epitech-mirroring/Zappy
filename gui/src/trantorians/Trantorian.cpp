@@ -16,10 +16,6 @@ GUI::Trantorian::Trantorian(std::string teamName, int x, int y)
     _lifetimeRemaining = 100;
 }
 
-GUI::Trantorian::~Trantorian()
-{
-}
-
 void GUI::Trantorian::setAction(bool action)
 {
     _action = action;

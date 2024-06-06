@@ -32,8 +32,8 @@ namespace GUI {
             /**
              * @brief 
              */
-            Actions();
-            ~Actions();
+            Actions() = default;
+            ~Actions() = default;
 
             /**
              * @brief Trantorian move up one tile
@@ -80,7 +80,7 @@ namespace GUI {
             /**
              * @brief Death of a player
              */
-            [[nodiscard]] void playerDead();
+            void playerDead();
 
             /**
              * @brief Trantorian take an object
