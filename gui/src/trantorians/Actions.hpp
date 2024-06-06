@@ -1,10 +1,12 @@
 /*
+** EPITECH PROJECT, 2024
+** Zappy
 ** File description:
 ** Actions
 */
 
 #ifndef ACTIONS_HPP_
-#define ACTIONS_HPP_
+    #define ACTIONS_HPP_
 
     #include <stdbool.h>
     #include <vector>
