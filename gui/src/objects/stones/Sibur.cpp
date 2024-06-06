@@ -9,7 +9,7 @@
 
 using namespace GUI;
 
-Sibur::Sibur()
-    :   AStone(0.1)
+Sibur::Sibur(Position tile)
+    :   AStone(0.1, tile)
 {
 }

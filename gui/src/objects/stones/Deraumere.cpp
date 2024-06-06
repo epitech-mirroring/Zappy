@@ -9,7 +9,7 @@
 
 using namespace GUI;
 
-Deraumere::Deraumere()
-    :   AStone(0.15)
+Deraumere::Deraumere(Position tile)
+    :   AStone(0.15, tile)
 {
 }

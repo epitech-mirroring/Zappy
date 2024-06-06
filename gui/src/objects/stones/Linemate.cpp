@@ -9,7 +9,7 @@
 
 using namespace GUI;
 
-Linemate::Linemate()
-    :   AStone(0.3)
+Linemate::Linemate(Position tile)
+    :   AStone(0.3, tile)
 {
 }

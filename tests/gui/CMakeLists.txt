@@ -1,8 +1,10 @@
 target_sources(zappy_tests
   PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/handle_args_spec.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/get_objects_density_spec.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/eggs_spec.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/trantorian_methods.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/tribes_methods.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/TrantorianMethods.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/TribesMethods.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/HandleArgsSpec.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/ObjectsDensitySpec.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/EggsSpec.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/WorldSpec.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/ObjectsPositionsSpec.cpp
 )

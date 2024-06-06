@@ -8,15 +8,16 @@
 #ifndef LINEMATE_HPP_
     #define LINEMATE_HPP_
 
-    #include "../abstracts/AStone.hpp"
+    #include "objects/abstracts/AStone.hpp"
 
 namespace GUI {
     class Linemate : public AStone{
     public:
         /**
          * @brief Construct a new Linemate object
+         * @param tile Tile where the object is
          */
-        Linemate();
+        Linemate(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Linemate object
          */

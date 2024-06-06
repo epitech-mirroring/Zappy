@@ -8,15 +8,16 @@
 #ifndef SIBUR_HPP_
     #define SIBUR_HPP_
 
-    #include "../abstracts/AStone.hpp"
+    #include "objects/abstracts/AStone.hpp"
 
 namespace GUI {
     class Sibur : public AStone {
     public:
         /**
          * @brief Construct a new Sibur object
+         * @param tile Tile where the object is
          */
-        Sibur();
+        Sibur(Position tile = Position(0, 0));
         /**
          * @brief Destroy the Sibur object
          */
