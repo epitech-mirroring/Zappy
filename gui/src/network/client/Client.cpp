@@ -20,6 +20,19 @@ Client::Client(const std::string& hostname, unsigned int port)
 void Client::handleConnection()
 {
     _socket->connect(_hostname, _port);
+
+    std::string welcomeMessage = _socket->receive();
+    if (welcomeMessage.find("WELCOME") == std::string::npos) {
+        throw std::runtime_error("Failed to receive welcome message from server");
+    }
+    std::cout << "Server response: " << welcomeMessage << std::endl;
+
+    _socket->send("GRAPHIC\n");
+
+    std::string clientNumMessage = _socket->receive();
+    std::string worldSizeMessage = _socket->receive();
+    std::cout << "Server response: " << clientNumMessage << std::endl;
+    std::cout << "Server response: " << worldSizeMessage << std::endl;
 }
 
 void Client::handleDisconnection()

@@ -19,7 +19,7 @@ int main(int ac, char **av)
         network::Client client(args.getHostname(), args.getPort());
         client.handleConnection();
         client.sendCommand("msz");
-        client.handleDisconnection();
+        // client.handleDisconnection();
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
         return 84;
