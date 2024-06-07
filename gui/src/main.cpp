@@ -18,7 +18,7 @@ int main(int ac, char **av)
     try {
         network::Client client(args.getHostname(), args.getPort());
         client.handleConnection();
-        client.handleCommunication();
+        client.sendCommand("msz");
         client.handleDisconnection();
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;

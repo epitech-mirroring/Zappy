@@ -13,14 +13,10 @@
 namespace network {
     class CommandMapSize : public ICommand {
     public:
-        CommandMapSize();
-        ~CommandMapSize();
+        CommandMapSize() = default;
+        ~CommandMapSize() = default;
 
-        void execute(const std::vector<std::string> &args,
-            ASocket &socket) override;
-
-    protected:
-    private:
+        void execute(ASocket &socket) override;
     };
 } // namespace network //
 #endif /* !COMMANDMAPSIZE_HPP_ */

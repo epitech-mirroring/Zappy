@@ -18,11 +18,7 @@ namespace network {
         ICommand() noexcept = default;
         virtual ~ICommand() noexcept = default;
 
-        virtual void execute(const std::vector<std::string> &args,
-            ASocket &socket) = 0;
-
-    protected:
-    private:
+        virtual void execute(ASocket &socket) = 0;
     };
 } // namespace network //
 #endif /* !ICOMMAND_HPP_ */

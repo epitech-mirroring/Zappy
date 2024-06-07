@@ -9,8 +9,8 @@
 
 using namespace network;
 
-void CommandMapSize::execute(const std::vector<std::string> &args,
-    ASocket &socket)
-    
+void CommandMapSize::execute(ASocket &socket)
 {
+    std::string request = "msz\n";
+    socket.send(request);
 }

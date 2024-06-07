@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
+** Zappy
 ** File description:
 ** Client
 */
@@ -27,8 +27,8 @@ void Client::handleDisconnection()
     _socket->close();
 }
 
-void Client::handleCommunication()
+void Client::sendCommand(const std::string &commandName)
 {
-    _protocolHandler->handleCommunication(_socket);
+    _protocolHandler->handleCommunication(_socket, commandName);
 }
 

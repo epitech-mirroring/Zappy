@@ -20,6 +20,9 @@ namespace network {
         CommandFactory();
         ~CommandFactory() = default;
 
+        std::unique_ptr<ICommand> getCommand(const std::string &commandName);
+
+    protected:
         std::unordered_map<std::string, std::unique_ptr<ICommand>> _commands;
     };
 } // namespace network //

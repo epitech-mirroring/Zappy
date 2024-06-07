@@ -27,7 +27,8 @@ namespace network {
          * @brief Handle the communication with the server
          * @param socket (socket of the client)
          */
-        virtual void handleCommunication(std::unique_ptr<ASocket>& socket) = 0;
+        virtual void handleCommunication(std::unique_ptr<ASocket>& socket,
+            const std::string& commandName) = 0;
     };
 } // namespace network //
 #endif /* !IPROTOCOLHANDLER_HPP_ */

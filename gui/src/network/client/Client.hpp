@@ -38,7 +38,7 @@ namespace network {
         /**
          * @brief Handle the communication with the server
         */
-        void handleCommunication();
+        void sendCommand(const std::string &commandName);
     protected:
         unsigned int _port;     // Port of the server
         std::string _hostname;  // Hostname of the server
