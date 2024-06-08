@@ -30,13 +30,13 @@ extern "C" {
      * linemate, deraumere, sibur, mendiane, phiras, and thystame.
      */
     typedef struct resources_s {
-        int food;
-        int linemate;
-        int deraumere;
-        int sibur;
-        int mendiane;
-        int phiras;
-        int thystame;
+        int food_count;
+        int linemate_count;
+        int deraumere_count;
+        int sibur_count;
+        int mendiane_count;
+        int phiras_count;
+        int thystame_count;
     } resources_t;
 
     /**
