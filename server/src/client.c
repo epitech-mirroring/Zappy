@@ -33,6 +33,7 @@ void destroy_client(client_t *client)
     free(client);
 }
 
+//TODO make a case when the buffer is full
 void add_message(client_t *client, char *message)
 {
     if (client == NULL)
@@ -54,9 +55,4 @@ client_type_t get_type(client_t *client)
     else if (client->type == AI)
         return (AI);
     return (UNKNOWN);
-}
-
-int get_socket(client_t *client)
-{
-    return (client->socket);
 }
