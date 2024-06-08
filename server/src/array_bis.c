@@ -45,7 +45,7 @@ void array_clear(array_t *array)
     array->data = NULL;
 }
 
-void array_get_at(array_t *array, size_t index)
+void *array_get_at(array_t *array, size_t index)
 {
     if (index >= array_get_size(array))
         return NULL;
