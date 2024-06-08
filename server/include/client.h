@@ -25,6 +25,7 @@ extern "C" {
     typedef enum client_type_e {
         AI = 0,
         GRAPHIC = 1,
+        UNKNOWN = 2
     } client_type_t;
 
     /**
