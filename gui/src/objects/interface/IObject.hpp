@@ -8,6 +8,8 @@
 #ifndef IOBJECT_HPP_
     #define IOBJECT_HPP_
 
+    #include "position/Position.hpp"
+
 namespace GUI {
     class IObject {
     public:
@@ -26,6 +28,18 @@ namespace GUI {
          * @return float (density of the object)
          */
         [[nodiscard]] virtual float getDensity() const noexcept = 0;
+
+        /**
+         * @brief Get the Position of the tile where the object is
+         * @return const Position& tile where the object is (read-only)
+         */
+        [[nodiscard]] virtual const Position& getPosition() const noexcept = 0;
+
+        /**
+         * @brief Get the Position of the tile where the object is
+         * @return Position& tile where the object is (modifiable)
+         */
+        [[nodiscard]] virtual Position& getPosition() noexcept = 0;
     };
 }  // namespace GUI
 #endif /* !IOBJECT_HPP_ */

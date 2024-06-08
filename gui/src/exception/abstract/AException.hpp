@@ -8,7 +8,7 @@
 #ifndef AEXCEPTION_HPP_
     #define AEXCEPTION_HPP_
 
-    #include "../interface/IException.hpp"
+    #include "exception/interface/IException.hpp"
     #include <string>
 
 namespace GUI {

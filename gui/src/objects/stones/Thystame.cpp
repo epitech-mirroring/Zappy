@@ -9,7 +9,7 @@
 
 using namespace GUI;
 
-Thystame::Thystame()
-    :   AStone(0.05)
+Thystame::Thystame(Position tile)
+    :   AStone(0.05, tile)
 {
 }

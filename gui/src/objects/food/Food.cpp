@@ -9,7 +9,7 @@
 
 using namespace GUI;
 
-Food::Food()
-    :   AObject(0.5)
+Food::Food(Position tile)
+    :   AObject(0.5, tile)
 {
 }

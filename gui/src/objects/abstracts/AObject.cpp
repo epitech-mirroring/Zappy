@@ -9,12 +9,23 @@
 
 using namespace GUI;
 
-AObject::AObject(float density)
+AObject::AObject(float density, Position tile)
     : _density(density)
+    , _position(tile)
 {
 }
 
 float AObject::getDensity() const noexcept
 {
     return _density;
+}
+
+const Position& AObject::getPosition() const noexcept
+{
+    return _position;
+}
+
+Position& AObject::getPosition() noexcept
+{
+    return _position;
 }
