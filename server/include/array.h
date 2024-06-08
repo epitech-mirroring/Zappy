@@ -21,6 +21,7 @@ extern "C" {
      * and functions to manipulate the array.
      */
     typedef struct array_s {
+        void(*element_destructor)(void *element);
         void **data;
         size_t elementSize;
     } array_t;
