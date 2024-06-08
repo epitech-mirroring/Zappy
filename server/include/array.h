@@ -24,7 +24,6 @@ extern "C" {
         void(*element_destructor)(void *element);
         void **data;
         size_t elementSize;
-        void(*element_destructor)(void *element);
     } array_t;
 
     /**
