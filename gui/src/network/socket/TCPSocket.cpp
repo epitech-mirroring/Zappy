@@ -52,10 +52,20 @@ void TCPSocket::send(const std::string &data)
 
 std::string TCPSocket::receive()
 {
-    char buffer[1024] = {0};
-    int bytesRead = ::recv(_sockfd, buffer, sizeof(buffer), 0);
+    std::string data;
+    char buffer[4096];
+    int bytesRead = 0;
 
-    if (bytesRead < 0)
-        throw zappy::SocketException("SOCKET ERROR: Reading failed");
-    return std::string(buffer);
+    while (true) {
+        bytesRead = ::recv(_sockfd, buffer, sizeof(buffer), 0);
+        if (bytesRead < 0)
+            throw zappy::SocketException("SOCKET ERROR: Reading failed");
+        else if (bytesRead == 0)
+            break;
+        data.append(buffer, bytesRead);
+
+        if (data.find('\n') != std::string::npos)
+            break;
+    }
+    return data;
 }
