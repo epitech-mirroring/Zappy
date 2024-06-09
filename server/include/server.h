@@ -9,6 +9,8 @@
 #ifndef ZAPPY_SERVER_H
     #define ZAPPY_SERVER_H
 
+    #define MAX_COMMAND_SIZE 1024
+
     #include "game.h"
     #include "array.h"
     #include "client.h"
@@ -33,6 +35,7 @@ extern "C" {
         size_t nb_ticks;
 
         unsigned short port;
+        int max_fd;
     } server_t;
 
     /**
@@ -42,8 +45,8 @@ extern "C" {
      * @param freq The frequency of the server
      * @return server_t* The server
      */
-    server_t *init(unsigned short port, size_t freq,
-        array_t *teams, int map_size[2]);
+    server_t *init(unsigned short port, array_t *teams,
+        size_t map_size[2], size_t nb_max_clients);
 
     /**
      * @brief Destroy a server
@@ -66,7 +69,7 @@ extern "C" {
      * @param fd The file descriptor of the client
      * @param message The message received from the client
      */
-    void add_client(server_t *server, int fd, char *message);
+    void add_client(server_t *server, int fd);
 
     /**
      * @brief Remove a client from the server
@@ -115,6 +118,20 @@ extern "C" {
      * @param client The client
      */
     void execute_client_command(server_t *server, client_t *client);
+
+    /**
+     * @brief Get the closet action of a client
+     *
+     * @param server The server
+     */
+    __suseconds_t get_closest_action(server_t *server);
+
+    /**
+     * @brief Find the max file descriptor
+     *
+     * @param server The server
+     */
+    int find_max_fd(server_t *server);
 
     #ifdef __cplusplus
 }
