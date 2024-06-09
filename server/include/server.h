@@ -117,7 +117,7 @@ extern "C" {
      * @param server The server
      * @param client The client
      */
-    void execute_client_command(server_t *server, client_t *client);
+    void new_clients_check(server_t *server, client_t *client);
 
     /**
      * @brief Get the closet action of a client

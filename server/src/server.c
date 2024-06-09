@@ -7,6 +7,7 @@
 */
 
 #include "server.h"
+#include "actions.h"
 
 void destroy(server_t *server)
 {
@@ -65,9 +66,10 @@ void add_client(server_t *server, int fd)
 
 void remove_client(server_t *server, int fd)
 {
-    for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client_t *client = array_get_at(server->clients, i);
+    client_t *client;
 
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        client = (client_t *)array_get_at(server->clients, i);
         if (client->socket == fd) {
             array_remove(server->clients, i);
             break;
@@ -76,12 +78,6 @@ void remove_client(server_t *server, int fd)
     if (fd == server->max_fd) {
         server->max_fd = 0;
         server->max_fd = find_max_fd(server);
-    }
-    for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client_t *client = array_get_at(server->clients, i);
-
-        if (client->socket > server->max_fd)
-            server->max_fd = client->socket;
     }
 }
 
@@ -92,17 +88,20 @@ void send_message(server_t *server, int fd, char *message)
 
 void send_message_to_all(server_t *server, char *message)
 {
-    for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client_t *client = array_get_at(server->clients, i);
+    client_t *client;
 
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        client = (client_t *)array_get_at(server->clients, i);
         send_message(server, client->socket, message);
     }
 }
 
 void read_clients_messages(server_t *server)
 {
+    client_t *client;
+
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client_t *client = array_get_at(server->clients, i);
+        client = (client_t *)array_get_at(server->clients, i);
         read_client_message(server, client);
     }
 }
@@ -117,7 +116,7 @@ void read_client_message(server_t *server, client_t *client)
     add_message(client, buffer);
 }
 
-void execute_client_command(server_t *server, client_t *client)
+void new_clients_check(server_t *server, client_t *client)
 {
     char *message = get_next_message(client);
 
@@ -137,12 +136,30 @@ void execute_client_command(server_t *server, client_t *client)
 int find_max_fd(server_t *server)
 {
     int max_fd = 0;
+    client_t *client;
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client_t *client = array_get_at(server->clients, i);
-
+        client = (client_t *)array_get_at(server->clients, i);
         if (client->socket > max_fd)
             max_fd = client->socket;
     }
     return max_fd;
+}
+
+__suseconds_t get_closest_action(server_t *server)
+{
+    __suseconds_t closest_action = -1;
+    __suseconds_t action;
+    trantorian_t *trantorian;
+
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        trantorian =
+            (trantorian_t *)array_get_at(server->game->trantorians, i);
+            action = (__suseconds_t)trantorian->waiting_tick
+                * server->single_tick_time * 1000;
+            if ((closest_action == -1 || action < closest_action)
+                && action >= 0)
+                closest_action = action;
+    }
+    return closest_action;
 }

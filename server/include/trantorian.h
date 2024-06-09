@@ -44,6 +44,7 @@ extern "C" {
         inventory_t inventory;
         array_t *actions;
         enum direction_e direction;
+        size_t waiting_tick;
     } trantorian_t;
 
     #ifdef __cplusplus
