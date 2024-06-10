@@ -12,6 +12,11 @@
 extern "C" {
     #endif // __cplusplus
 
+    enum operation_e {
+        ADD = 0,
+        SUBTRACT = 1
+    };
+
     /**
      * @struct number_s
      *
