@@ -15,6 +15,7 @@
     #include "array.h"
     #include "client.h"
     #include "buffer.h"
+    #include "number.h"
     #ifdef __cplusplus
 extern "C" {
     #endif // __cplusplus
@@ -30,9 +31,8 @@ extern "C" {
         game_t *game;
         array_t *clients;
 
-        size_t single_tick_time;
-        size_t prev_tick_time;
-        size_t nb_ticks;
+        size_t single_tick_time; // in microseconds
+        number_t *nb_ticks; // number of ticks
 
         unsigned short port;
         int max_fd;
@@ -132,6 +132,14 @@ extern "C" {
      * @param server The server
      */
     int find_max_fd(server_t *server);
+
+    /**
+     * @brief Tick the server
+     *
+     * @param server The server
+     * @param tick The time from the last call of Tick in microseconds
+     */
+    void tick(server_t *server, __suseconds_t time_since_last_tick);
 
     #ifdef __cplusplus
 }

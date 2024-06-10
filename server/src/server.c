@@ -9,52 +9,7 @@
 #include "server.h"
 #include "actions.h"
 
-void destroy(server_t *server)
-{
-    destroy_game(server->game);
-    array_destructor(server->clients);
-    free(server);
-}
-
-server_t *init(unsigned short port, array_t *teams,
-    size_t map_size[2], size_t nb_max_clients)
-{
-    server_t *server = malloc(sizeof(server_t));
-
-    if (!server)
-        return NULL;
-    server->game = init_game(teams, map_size, nb_max_clients);
-    server->clients = array_constructor(sizeof(client_t), (void *)&destroy_client);
-    server->prev_tick_time = 0;
-    server->nb_ticks = 0;
-    server->port = port;
-    server->max_fd = 0;
-    return server;
-}
-
-void run(server_t *server)
-{
-    struct timeval tv;
-    fd_set readfds;
-    fd_set writefds;
-    int ret;
-
-    while (1) {
-        tv.tv_sec = 0;
-        tv.tv_usec = get_closest_action(server);
-        FD_ZERO(&readfds);
-        FD_ZERO(&writefds);
-        FD_SET(server->max_fd, &readfds);
-        FD_SET(server->max_fd, &writefds);
-        ret = select(server->max_fd + 1, &readfds, &writefds, NULL, &tv);
-        if (ret == -1)
-            break;
-        tick(server);
-        // add client management
-    }
-}
-
-void add_client(server_t *server, int fd)
+static void add_client(server_t *server, int fd)
 {
     client_t *client = init_client(fd, UNKNOWN);
 
@@ -64,7 +19,7 @@ void add_client(server_t *server, int fd)
         server->max_fd = fd;
 }
 
-void remove_client(server_t *server, int fd)
+static void remove_client(server_t *server, int fd)
 {
     client_t *client;
 
@@ -81,12 +36,12 @@ void remove_client(server_t *server, int fd)
     }
 }
 
-void send_message(server_t *server, int fd, char *message)
+static void send_message(server_t *server, int fd, char *message)
 {
     dprintf(fd, "%s\n", message);
 }
 
-void send_message_to_all(server_t *server, char *message)
+static void send_message_to_all(server_t *server, char *message)
 {
     client_t *client;
 
@@ -96,13 +51,33 @@ void send_message_to_all(server_t *server, char *message)
     }
 }
 
-void read_clients_messages(server_t *server)
+static void read_clients_messages(server_t *server)
 {
     client_t *client;
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
         client = (client_t *)array_get_at(server->clients, i);
         read_client_message(server, client);
+    }
+}
+
+void run(server_t *server)
+{
+    struct timeval tv;
+    fd_set readfds;
+    fd_set writefds;
+
+    while (1) {
+        tv.tv_sec = 0;
+        tv.tv_usec = get_closest_action(server);
+        FD_ZERO(&readfds);
+        FD_ZERO(&writefds);
+        FD_SET(server->max_fd, &readfds);
+        FD_SET(server->max_fd, &writefds);
+        if (select(server->max_fd + 1, &readfds, &writefds, NULL, &tv) == -1)
+            return;
+        tick(server, tv.tv_usec);
+        // add client management
     }
 }
 
