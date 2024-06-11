@@ -8,6 +8,7 @@
 #ifndef ICOMMAND_HPP_
     #define ICOMMAND_HPP_
 
+    #include <memory>
     #include <vector>
     #include <string>
     #include "network/socket/ASocket.hpp"
@@ -18,7 +19,7 @@ namespace network {
         ICommand() noexcept = default;
         virtual ~ICommand() noexcept = default;
 
-        virtual void execute(ASocket &socket) = 0;
+        virtual void execute(std::unique_ptr<ASocket>& socket) = 0;
     };
 } // namespace network //
 #endif /* !ICOMMAND_HPP_ */

@@ -13,7 +13,6 @@
     #include <unordered_map>
     #include "network/command/interface/ICommand.hpp"
     #include "network/command/CommandMapSize.hpp"
-    #include "network/command/CommandTeamName.hpp"
 
 namespace network {
     class CommandFactory {

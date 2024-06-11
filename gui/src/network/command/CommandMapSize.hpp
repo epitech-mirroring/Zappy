@@ -16,7 +16,7 @@ namespace network {
         CommandMapSize() = default;
         ~CommandMapSize() = default;
 
-        void execute(ASocket &socket) override;
+        void execute(std::unique_ptr<ASocket>& socket) override;
     };
 } // namespace network //
 #endif /* !COMMANDMAPSIZE_HPP_ */

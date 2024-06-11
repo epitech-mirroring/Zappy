@@ -14,12 +14,12 @@ AProtocolHandler::AProtocolHandler() noexcept
 {
 }
 
-void AProtocolHandler::handleCommunication(std::unique_ptr<ASocket>& socket,
-            const std::string& commandName) noexcept
+void AProtocolHandler::handleCommunication(std::unique_ptr<ASocket> &socket,
+            const std::string &commandName) noexcept
 {
     auto command = _commandFactory->getCommand(commandName);
     if (command) {
-        command->execute(*socket);
+        command->execute(socket);
         std::string response = socket->receive();
         std::cout << "Server response: " << response;
     } else {
