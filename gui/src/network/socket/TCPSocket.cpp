@@ -69,3 +69,8 @@ std::vector<std::string> TCPSocket::receive()
         messages.push_back(receivedData);
     return messages;
 }
+
+int TCPSocket::getSockfd() const
+{
+    return _sockfd;
+}

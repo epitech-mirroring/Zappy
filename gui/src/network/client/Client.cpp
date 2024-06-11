@@ -44,9 +44,24 @@ void Client::sendCommand(const std::string &commandName)
 
 void Client::processServerMessages()
 {
+    fd_set readfds;
+    int sockfd = _socket->getSockfd();
+
     while (true) {
-        auto responses = _socket->receive();
-        for (const auto& response : responses)
-            _protocolHandler->handleResponse(_socket, response);
+        FD_ZERO(&readfds);
+        FD_SET(sockfd, &readfds);
+
+        int activity = select(sockfd + 1, &readfds, nullptr, nullptr, nullptr);
+
+        if (activity < 0 && errno != EINTR) {
+            std::cerr << "Select error" << std::endl;
+            break;
+        }
+
+        if (FD_ISSET(sockfd, &readfds)) {
+            auto responses = _socket->receive();
+            for (const auto& response : responses)
+                _protocolHandler->handleResponse(_socket, response);
+        }
     }
 }

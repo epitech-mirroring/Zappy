@@ -18,37 +18,44 @@ namespace network {
     public:
         /**
          * @brief Construct a new Client object
-         * @param hostname (hostname of the server)
-         * @param port (port of the server)
-        */
+         * @param hostname Hostname of the server
+         * @param port Port of the server
+         * @param world Reference to the World object
+         */
         Client(const std::string &hostname, unsigned int port, GUI::World &world);
+
         /**
          * @brief Destroy the Client object
-        */
+         */
         ~Client() = default;
 
         /**
          * @brief Handle the connection to the server
-        */
+         */
         void handleConnection();
+
         /**
-         * @brief Handle the disconnection to the server
-        */
+         * @brief Handle the disconnection from the server
+         */
         void handleDisconnection();
+
         /**
-         * @brief Handle the communication with the server
-        */
+         * @brief Send a command to the server
+         * @param commandName Name of the command
+         */
         void sendCommand(const std::string &commandName);
 
         /**
-         * @brief Process the server messages and handle them with the protocol
+         * @brief Process the server messages and handle them with the protocol handler
          */
         void processServerMessages();
+
     protected:
-        unsigned int _port;     // Port of the server
-        std::string _hostname;  // Hostname of the server
-        std::unique_ptr<ASocket> _socket;   // Socket of the client
-        std::unique_ptr<ProtocolHandler> _protocolHandler;  // Protocol handler of the client
+        unsigned int _port;     ///< Port of the server
+        std::string _hostname;  ///< Hostname of the server
+        std::unique_ptr<ASocket> _socket;   ///< Socket of the client
+        std::unique_ptr<ProtocolHandler> _protocolHandler;  ///< Protocol handler of the client
     };
 } // namespace network //
 #endif /* !CLIENT_HPP_ */
+
