@@ -16,6 +16,10 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Thystame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/food/Food.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/eggs/Egg.cpp
+    # TRANTORIAN
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Trantorian.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Tribes.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.cpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.cpp
     # POSITION
@@ -37,6 +41,11 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/stones/Thystame.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/food/Food.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/eggs/Egg.hpp
+    #TRANTORIAN
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Trantorian.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Tribes.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.hpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.hpp
     # POSITION
