@@ -8,6 +8,7 @@
 #ifndef ICOMMAND_HPP_
     #define ICOMMAND_HPP_
 
+    #include <functional>
     #include <sstream>
     #include <memory>
     #include <vector>

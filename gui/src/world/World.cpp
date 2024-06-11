@@ -62,3 +62,9 @@ std::list <IObject *> World::getObjectsAt(Position tile) const
     }
     return objects;
 }
+
+void World::setWorldSize(unsigned int width, unsigned int height)
+{
+    _width = width;
+    _height = height;
+}

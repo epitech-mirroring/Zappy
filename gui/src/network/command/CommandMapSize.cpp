@@ -20,3 +20,8 @@ std::unique_ptr<ICommand> CommandMapSize::clone() const
 {
     return std::make_unique<CommandMapSize>(*this);
 }
+
+void CommandMapSize::linkWorld(GUI::World *world)
+{
+    _world = world;
+}

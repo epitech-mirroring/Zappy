@@ -16,7 +16,8 @@ int main(int ac, char **av)
     if (args.checkArgs(ac, av))
         return 84;
 
-    network::Client client(args.getHostname(), args.getPort());
+    GUI::World world(0, 0);
+    network::Client client(args.getHostname(), args.getPort(), world);
 
     try {
         client.handleConnection();

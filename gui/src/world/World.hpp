@@ -61,6 +61,13 @@ namespace GUI {
         void removeObject(IObject *object);
 
         /**
+         * @brief Set the size of the world
+         * @param width (width of the world x)
+         * @param height (height of the world y)
+        */
+        void setWorldSize(unsigned int width, unsigned int height);
+
+        /**
          * @brief Get the list of objects in the world
          * @return std::list<IObject *> (list of objects)
         */

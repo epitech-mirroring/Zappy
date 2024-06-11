@@ -8,10 +8,12 @@
 #ifndef COMMANDMAPSIZE_HPP_
     #define COMMANDMAPSIZE_HPP_
 
-    #include "network/command/interface/ICommand.hpp"
+    #include "network/command/interface/IWorldCommand.hpp"
 
 namespace network {
-    class CommandMapSize : public ICommand {
+    class CommandMapSize : public IWorldCommand {
+    private:
+        GUI::World *_world;
     public:
         /**
          * @brief Construct a new Command Map Size object
@@ -33,6 +35,8 @@ namespace network {
          * @brief Clone the command
          */
         std::unique_ptr<ICommand> clone() const override;
+
+        void linkWorld(GUI::World *world) override;
     };
 } // namespace network //
 #endif /* !COMMANDMAPSIZE_HPP_ */

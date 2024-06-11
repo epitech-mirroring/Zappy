@@ -14,6 +14,7 @@
     #include "network/command/interface/ICommand.hpp"
     #include "network/command/CommandMapSize.hpp"
     #include "network/command/CommandMapSizeResponse.hpp"
+    #include <network/command/interface/IWorldCommand.hpp>
 
 namespace network {
     class CommandFactory {
@@ -21,7 +22,7 @@ namespace network {
         /**
          * @brief Construct a new Command Factory object
          */
-        CommandFactory();
+        CommandFactory(GUI::World &world);
         /**
          * @brief Destroy the Command Factory object
          */

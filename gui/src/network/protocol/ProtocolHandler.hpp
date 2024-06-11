@@ -19,7 +19,7 @@ namespace network {
         /**
          * @brief Construct a new Protocol Handler object
          */
-        ProtocolHandler() noexcept;
+        ProtocolHandler(GUI::World &world) noexcept;
         /**
          * @brief Destroy the Protocol Handler object
          */
@@ -39,6 +39,7 @@ namespace network {
          */
         void handleResponse(std::unique_ptr<ASocket>& socket,
             const std::string& response) noexcept;
+
     protected:
         std::unique_ptr<CommandFactory> _commandFactory;            // Command factory
     };

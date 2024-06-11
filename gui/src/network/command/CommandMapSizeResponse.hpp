@@ -8,15 +8,17 @@
 #ifndef COMMANDMAPSIZERESPONSE_HPP_
     #define COMMANDMAPSIZERESPONSE_HPP_
 
-    #include "network/command/interface/ICommand.hpp"
+    #include "network/command/interface/IWorldCommand.hpp"
 
 namespace network {
-    class CommandMapSizeResponse : public ICommand {
+    class CommandMapSizeResponse : public IWorldCommand {
+    private:
+        GUI::World *_world;
     public:
         /**
          * @brief Construct a new Command Map Size Response object
          */
-        CommandMapSizeResponse() = default;
+        CommandMapSizeResponse();
         /**
          * @brief Destroy the Command Map Size Response object
          */
@@ -31,6 +33,8 @@ namespace network {
          * @brief Clone the command
          */
         std::unique_ptr<ICommand> clone() const override;
+
+        void linkWorld(GUI::World *world) override;
     };
 } // namespace network //
 #endif /* !COMMANDMAPSIZERESPONSE_HPP_ */

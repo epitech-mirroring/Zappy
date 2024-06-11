@@ -9,8 +9,8 @@
 
 using namespace network;
 
-ProtocolHandler::ProtocolHandler() noexcept
-    : _commandFactory(std::make_unique<CommandFactory>())
+ProtocolHandler::ProtocolHandler(GUI::World &world) noexcept
+    : _commandFactory(std::make_unique<CommandFactory>(world))
 {
 }
 

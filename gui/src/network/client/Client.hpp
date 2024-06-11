@@ -21,7 +21,7 @@ namespace network {
          * @param hostname (hostname of the server)
          * @param port (port of the server)
         */
-        Client(const std::string &hostname, unsigned int port);
+        Client(const std::string &hostname, unsigned int port, GUI::World &world);
         /**
          * @brief Destroy the Client object
         */
