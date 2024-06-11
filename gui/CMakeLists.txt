@@ -9,4 +9,4 @@ if (TESTS)
 endif ()
 
 add_executable(zappy_gui src/main.cpp)
-target_link_libraries(zappy_gui zappy_gui_lib)
+target_link_libraries(zappy_gui zappy_gui_lib raylib)

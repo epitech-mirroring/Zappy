@@ -24,6 +24,9 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.cpp
     # POSITION
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.cpp
+    # DISPLAY
+    ${CMAKE_CURRENT_SOURCE_DIR}/display/Window.cpp
+
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
@@ -50,4 +53,6 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.hpp
     # POSITION
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
+    # DISPLAY
+    ${CMAKE_CURRENT_SOURCE_DIR}/display/Window.hpp
 )
