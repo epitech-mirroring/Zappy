@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Zappy [WSL: kali-linux]
+** Zappy
 ** File description:
 ** CommandMapSizeResponse
 */
@@ -13,14 +13,24 @@
 namespace network {
     class CommandMapSizeResponse : public ICommand {
     public:
+        /**
+         * @brief Construct a new Command Map Size Response object
+         */
         CommandMapSizeResponse() = default;
+        /**
+         * @brief Destroy the Command Map Size Response object
+         */
         ~CommandMapSizeResponse() =default;
 
+        /**
+         * @brief Execute the command
+         */
         void execute(std::unique_ptr<ASocket>& socket,
             const std::string &data) override;
+        /**
+         * @brief Clone the command
+         */
         std::unique_ptr<ICommand> clone() const override;
-    protected:
-    private:
     };
 } // namespace network //
 #endif /* !COMMANDMAPSIZERESPONSE_HPP_ */

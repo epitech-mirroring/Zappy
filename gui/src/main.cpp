@@ -15,12 +15,13 @@ int main(int ac, char **av)
 
     if (args.checkArgs(ac, av))
         return 84;
+
+    network::Client client(args.getHostname(), args.getPort());
+
     try {
-        network::Client client(args.getHostname(), args.getPort());
         client.handleConnection();
-        // client.sendCommand("msz");
-        // client.handleDisconnection();
     } catch (const std::exception &e) {
+        client.handleDisconnection();
         std::cerr << e.what() << std::endl;
         return 84;
     }

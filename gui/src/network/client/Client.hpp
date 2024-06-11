@@ -40,6 +40,9 @@ namespace network {
         */
         void sendCommand(const std::string &commandName);
 
+        /**
+         * @brief Process the server messages and handle them with the protocol
+         */
         void processServerMessages();
     protected:
         unsigned int _port;     // Port of the server
