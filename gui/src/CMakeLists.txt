@@ -24,10 +24,10 @@ target_sources(zappy_gui_lib
     # NETWORK
     ${CMAKE_CURRENT_SOURCE_DIR}/network/client/Client.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/ProtocolHandler.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/abstract/AProtocolHandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/factory/CommandFactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/CommandMapSize.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/CommandMapSizeResponse.cpp
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
@@ -53,11 +53,10 @@ target_sources(zappy_gui_lib
     # NETWORK
     ${CMAKE_CURRENT_SOURCE_DIR}/network/client/Client.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/ProtocolHandler.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/abstract/AProtocolHandler.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/interface/IProtocolHandler.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/factory/CommandFactory.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/interface/ICommand.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/CommandMapSize.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/CommandMapSizeResponse.hpp
 
 )

@@ -9,16 +9,32 @@
 
 using namespace network;
 
-void ProtocolHandler::handleUtilsCommunication(ASocket &socket) noexcept
+ProtocolHandler::ProtocolHandler() noexcept
+    : _commandFactory(std::make_unique<CommandFactory>())
 {
-    (void)socket;
-    /**
-     * Function to handle OUR protocol if we want to send bonus data
-     * Example:
-    */
-    std::string message = "Hello from the GUI";
-    socket.send(message.c_str());
+}
 
-    std::string serverResponse = socket.receive();
-    std::cout << "LOG: " << serverResponse << std::endl;
+void ProtocolHandler::handleCommand(std::unique_ptr<ASocket>& socket,
+    const std::string& commandName) noexcept
+{
+    auto command = _commandFactory->getCommand(commandName);
+    if (command) {
+        command->execute(socket, "");
+    } else {
+        std::cerr << "Unknown command: " << commandName << std::endl;
+    }
+}
+
+void ProtocolHandler::handleResponse(std::unique_ptr<ASocket>& socket,
+    const std::string& response) noexcept
+{
+    std::istringstream responseStream(response);
+    std::string responseName;
+    responseStream >> responseName;
+
+    auto command = _commandFactory->getResponseCommand(responseName);
+    if (command)
+        command->execute(socket, response);
+    else
+        std::cerr << "Unknown response: " << response << std::endl;
 }

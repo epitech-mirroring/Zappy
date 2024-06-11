@@ -8,15 +8,23 @@
 #ifndef PROTOCOLHANDLER_HPP_
     #define PROTOCOLHANDLER_HPP_
 
-    #include "network/protocol/abstract/AProtocolHandler.hpp"
+    #include <iostream>
+    #include <sstream>
+    #include <memory>
+    #include "network/command/factory/CommandFactory.hpp"
 
 namespace network {
-    class ProtocolHandler : public AProtocolHandler {
+    class ProtocolHandler {
     public:
-        /**
-         * @brief Construct a new ProtocolHandler object
-         */
-        void handleUtilsCommunication(ASocket &socket) noexcept;
+        ProtocolHandler() noexcept;
+        ~ProtocolHandler() noexcept = default;
+
+        void handleCommand(std::unique_ptr<ASocket>& socket,
+            const std::string& commandName) noexcept;
+        void handleResponse(std::unique_ptr<ASocket>& socket,
+            const std::string& response) noexcept;
+    protected:
+        std::unique_ptr<CommandFactory> _commandFactory;
     };
 } // namespace network //
 #endif /* !PROTOCOLHANDLER_HPP_ */

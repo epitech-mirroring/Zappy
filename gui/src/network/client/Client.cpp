@@ -10,38 +10,43 @@
 using namespace network;
 
 Client::Client(const std::string& hostname, unsigned int port)
-    :   _hostname(hostname)
-    ,   _port(port)
-    ,   _socket(std::make_unique<TCPSocket>())
-    ,   _protocolHandler(std::make_unique<ProtocolHandler>()) {}
+    : _hostname(hostname), _port(port),
+      _socket(std::make_unique<TCPSocket>()),
+      _protocolHandler(std::make_unique<ProtocolHandler>())
+{
+}
 
-void Client::handleConnection() {
+void Client::handleConnection()
+{
     _socket->connect(_hostname, _port);
 
-    std::string welcomeMessage = _socket->receive();
-    if (welcomeMessage.find("WELCOME") == std::string::npos) {
-        throw std::runtime_error("Failed to receive welcome message from server");
+    auto welcomeMessages = _socket->receive();
+    for (const auto& welcomeMessage : welcomeMessages) {
+        if (welcomeMessage.find("WELCOME") == std::string::npos) {
+            throw std::runtime_error(                               //change to an IException
+                "Failed to receive welcome message from server");
+        }
+        std::cout << "Welcome Message: " << welcomeMessage << std::endl;
     }
-    std::cout << "Welcome Message: " << welcomeMessage << std::endl;
     _socket->send("GRAPHIC\n");
-    std::cout << "GRAPHIC sent" << std::endl;
     processServerMessages();
 }
 
-void Client::handleDisconnection() {
+void Client::handleDisconnection()
+{
     _socket->close();
 }
 
-void Client::sendCommand(const std::string &commandName) {
-    _protocolHandler->handleCommunication(_socket, commandName);
+void Client::sendCommand(const std::string &commandName)
+{
+    _protocolHandler->handleCommand(_socket, commandName);
 }
 
-void Client::processServerMessages() {
+void Client::processServerMessages()
+{
     while (true) {
-        std::string response = _socket->receive();
-        if (response.empty()) {
-            break;
-        }
-        _protocolHandler->handleCommunication(_socket, response);
+        auto responses = _socket->receive();
+        for (const auto& response : responses)
+            _protocolHandler->handleResponse(_socket, response);
     }
 }

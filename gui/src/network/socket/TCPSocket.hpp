@@ -14,6 +14,7 @@
     #include <netinet/in.h>
     #include <arpa/inet.h>
     #include <unistd.h>
+    #include <vector>
     #include "network/socket/ASocket.hpp"
     #include "exception/SocketException.hpp"
 
@@ -48,7 +49,7 @@ namespace network {
          * @brief Receive data from the server
          * @return std::string (data received)
          */
-        [[nodiscard]] std::string receive() final;
+        [[nodiscard]] std::vector<std::string> receive() final;
     protected:
         int _sockfd;    // Socket file descriptor
         struct sockaddr_in serv_addr;   // Server address

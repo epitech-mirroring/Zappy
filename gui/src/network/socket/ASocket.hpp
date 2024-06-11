@@ -42,7 +42,7 @@ namespace network {
          * @brief Receive data from the server
          * @return std::string (data received)
          */
-        [[nodiscard]] virtual std::string receive() = 0;
+        [[nodiscard]] virtual std::vector<std::string> receive() = 0;
     };
 } // namespace network //
 #endif /* !ASOCKET_HPP_ */

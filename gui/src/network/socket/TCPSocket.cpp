@@ -32,8 +32,7 @@ void TCPSocket::connect(const std::string &hostname, unsigned int port)
 
     if (inet_pton(AF_INET, hostname.c_str(), &serv_addr.sin_addr) <= 0)
         throw zappy::SocketException("SOCKET ERROR: Invalid address");
-    if (::connect(_sockfd,
-        (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
+    if (::connect(_sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
         throw zappy::SocketException("SOCKET ERROR: Connection failed");
 }
 
@@ -50,22 +49,23 @@ void TCPSocket::send(const std::string &data)
     ::send(_sockfd, data.c_str(), data.size(), 0);
 }
 
-std::string TCPSocket::receive() {
-    std::string data;
-    char buffer[4096];
-    int bytesRead = 0;
+std::vector<std::string> TCPSocket::receive()
+{
+    char buffer[4096] = {0};
+    int bytesRead = ::recv(_sockfd, buffer, sizeof(buffer), 0);
 
-    while (true) {
-        bytesRead = ::recv(_sockfd, buffer, sizeof(buffer), 0);
-        if (bytesRead < 0) {
-            throw zappy::SocketException("SOCKET ERROR: Reading failed");
-        } else if (bytesRead == 0) {
-            break;
-        }
-        data.append(buffer, bytesRead);
-        if (data.find('\n') != std::string::npos) {
-            break;
-        }
+    if (bytesRead < 0)
+        throw zappy::SocketException("SOCKET ERROR: Reading failed");
+
+    std::string receivedData(buffer, bytesRead);
+    std::vector<std::string> messages;
+    size_t pos = 0;
+    std::string delimiter = "\n";
+    while ((pos = receivedData.find(delimiter)) != std::string::npos) {
+        messages.push_back(receivedData.substr(0, pos));
+        receivedData.erase(0, pos + delimiter.length());
     }
-    return data;
+    if (!receivedData.empty())
+        messages.push_back(receivedData);
+    return messages;
 }
