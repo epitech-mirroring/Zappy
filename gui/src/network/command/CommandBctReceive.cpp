@@ -26,10 +26,6 @@ void CommandBctReceive::execute(std::unique_ptr<ASocket>& socket,
     unsigned int x, y, q0, q1, q2, q3, q4, q5, q6;
 
     responseStream >> commandName >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
-    if (commandName != "bct") {
-        std::cerr << "Invalid command: " << commandName << std::endl;
-        return;
-    }
     auto& tile = _world->getTileAt(x, y);
     tile.clearObjects();
 
@@ -47,7 +43,7 @@ void CommandBctReceive::execute(std::unique_ptr<ASocket>& socket,
         tile.addObject(new GUI::Phiras());
     for (unsigned int i = 0; i < q6; ++i)
         tile.addObject(new GUI::Thystame());
-    std::cout << "Tile " << x << ", " << y << " updated with resources" << std::endl;
+    // std::cout << "Tile " << x << ", " << y << " updated with resources" << std::endl;
 }
 
 std::unique_ptr<ICommand> CommandBctReceive::clone() const

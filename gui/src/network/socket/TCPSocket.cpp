@@ -57,16 +57,16 @@ std::vector<std::string> TCPSocket::receive()
     if (bytesRead < 0)
         throw zappy::SocketException("SOCKET ERROR: Reading failed");
 
-    std::string receivedData(buffer, bytesRead);
+    _partialBuffer.append(buffer, bytesRead);
+
     std::vector<std::string> messages;
     size_t pos = 0;
     std::string delimiter = "\n";
-    while ((pos = receivedData.find(delimiter)) != std::string::npos) {
-        messages.push_back(receivedData.substr(0, pos));
-        receivedData.erase(0, pos + delimiter.length());
+
+    while ((pos = _partialBuffer.find(delimiter)) != std::string::npos) {
+        messages.push_back(_partialBuffer.substr(0, pos));
+        _partialBuffer.erase(0, pos + delimiter.length());
     }
-    if (!receivedData.empty())
-        messages.push_back(receivedData);
     return messages;
 }
 

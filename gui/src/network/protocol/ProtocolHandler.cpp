@@ -33,8 +33,8 @@ void ProtocolHandler::handleResponse(std::unique_ptr<ASocket>& socket,
     responseStream >> responseName;
 
     auto command = _commandFactory->getResponseCommand(responseName);
-    if (command)
+    if (command) {
         command->execute(socket, response);
-    else
+    } else
         std::cerr << "Unknown response: " << response << std::endl;
 }

@@ -64,6 +64,7 @@ namespace network {
     protected:
         int _sockfd;    ///< Socket file descriptor
         struct sockaddr_in serv_addr;   ///< Server address
+        std::string _partialBuffer; // Partial buffer
     };
 } // namespace network //
 #endif /* !TCPSOCKET_HPP_ */
