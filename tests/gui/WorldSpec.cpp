@@ -124,3 +124,81 @@ TEST(TileTest, GetObjects) {
     ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere1), objects.end());
     ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere2), objects.end());
 }
+
+TEST(TileTest, AddMultipleObjects) {
+    GUI::Position pos(1, 1);
+    GUI::Tile tile(pos);
+    GUI::Deraumere deraumere1;
+    GUI::Deraumere deraumere2;
+
+    tile.addObject(&deraumere1);
+    tile.addObject(&deraumere2);
+
+    auto objects = tile.getObjects();
+    ASSERT_EQ(objects.size(), 2);
+    ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere1), objects.end());
+    ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere2), objects.end());
+}
+
+TEST(TileTest, RemoveObjectNotPresent) {
+    GUI::Position pos(1, 1);
+    GUI::Tile tile(pos);
+    GUI::Deraumere deraumere1;
+    GUI::Deraumere deraumere2;
+
+    tile.addObject(&deraumere1);
+    tile.removeObject(&deraumere2);
+
+    auto objects = tile.getObjects();
+    ASSERT_EQ(objects.size(), 1);
+    ASSERT_EQ(objects.front(), &deraumere1);
+}
+
+TEST(TileTest, AddAndRemoveMultipleObjects) {
+    GUI::Position pos(1, 1);
+    GUI::Tile tile(pos);
+    GUI::Deraumere deraumere1;
+    GUI::Deraumere deraumere2;
+    GUI::Deraumere deraumere3;
+
+    tile.addObject(&deraumere1);
+    tile.addObject(&deraumere2);
+    tile.addObject(&deraumere3);
+
+    tile.removeObject(&deraumere2);
+
+    auto objects = tile.getObjects();
+    ASSERT_EQ(objects.size(), 2);
+    ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere1), objects.end());
+    ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere3), objects.end());
+    ASSERT_EQ(std::find(objects.begin(), objects.end(), &deraumere2), objects.end());
+}
+
+TEST(TileTest, RemoveAllObjects) {
+    GUI::Position pos(1, 1);
+    GUI::Tile tile(pos);
+    GUI::Deraumere deraumere1;
+    GUI::Deraumere deraumere2;
+
+    tile.addObject(&deraumere1);
+    tile.addObject(&deraumere2);
+
+    tile.removeObject(&deraumere1);
+    tile.removeObject(&deraumere2);
+
+    auto objects = tile.getObjects();
+    ASSERT_EQ(objects.size(), 0);
+}
+
+TEST(TileTest, AddSameObjectMultipleTimes) {
+    GUI::Position pos(1, 1);
+    GUI::Tile tile(pos);
+    GUI::Deraumere deraumere;
+
+    tile.addObject(&deraumere);
+    tile.addObject(&deraumere);
+
+    auto objects = tile.getObjects();
+    ASSERT_EQ(objects.size(), 2);
+    ASSERT_EQ(std::count(objects.begin(), objects.end(), &deraumere), 2);
+}
