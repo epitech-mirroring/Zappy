@@ -13,3 +13,8 @@ Sibur::Sibur(Position tile)
     :   AStone(0.1, tile)
 {
 }
+
+std::string Sibur::getType() const noexcept
+{
+    return "Sibur";
+}

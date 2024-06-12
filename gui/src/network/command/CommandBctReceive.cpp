@@ -43,7 +43,6 @@ void CommandBctReceive::execute(std::unique_ptr<ASocket>& socket,
         tile.addObject(new GUI::Phiras());
     for (unsigned int i = 0; i < q6; ++i)
         tile.addObject(new GUI::Thystame());
-    // std::cout << "Tile " << x << ", " << y << " updated with resources" << std::endl;
 }
 
 std::unique_ptr<ICommand> CommandBctReceive::clone() const

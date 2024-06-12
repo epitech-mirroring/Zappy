@@ -42,6 +42,12 @@ namespace GUI {
          */
         [[nodiscard]] Position& getPosition() noexcept;
 
+        /**
+         * @brief Get the Type of the object
+         * @return std::string type of the object
+         */
+        [[nodiscard]] virtual std::string getType() const noexcept = 0;
+
     protected:
         float _density;         // density of the object
         Position _position;     // tile where the object is (x, y)

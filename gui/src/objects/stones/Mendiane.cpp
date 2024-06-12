@@ -13,3 +13,8 @@ Mendiane::Mendiane(Position tile)
     :   AStone(0.1, tile)
 {
 }
+
+std::string Mendiane::getType() const noexcept
+{
+    return "Mendiane";
+}

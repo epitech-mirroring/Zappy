@@ -22,6 +22,12 @@ namespace GUI {
          * @brief Destroy the Thystame object
          */
         virtual ~Thystame() noexcept = default;
+
+        /**
+         * @brief Get the Type of the object
+         * @return std::string type of the object
+         */
+        [[nodiscard]] std::string getType() const noexcept final;
     };
 } // namespace GUI //
 #endif /* !THYSTAME_HPP_ */

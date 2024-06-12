@@ -13,3 +13,8 @@ Deraumere::Deraumere(Position tile)
     :   AStone(0.15, tile)
 {
 }
+
+std::string Deraumere::getType() const noexcept
+{
+    return "Deraumere";
+}
