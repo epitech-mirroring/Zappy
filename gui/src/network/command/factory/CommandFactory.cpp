@@ -14,19 +14,6 @@ CommandFactory::CommandFactory(GUI::World &world)
     _commands["msz"] = std::make_unique<CommandMapSize>();
     _responseCommands["msz"] = std::make_unique<CommandMapSizeResponse>();
 
-    for (auto &command : _commands) {
-        if (auto worldCommand = dynamic_cast<IWorldCommand
-            *>(command.second.get())) {
-            worldCommand->linkWorld(&world);
-        }
-    }
-    for (auto &command : _responseCommands) {
-        if (auto worldCommand = dynamic_cast<IWorldCommand
-            *>(command.second.get())) {
-            worldCommand->linkWorld(&world);
-        }
-    }
-
     _commands["bct"] = std::make_unique<CommandBct>();
     _responseCommands["bct"] = std::make_unique<CommandBctReceive>();
 

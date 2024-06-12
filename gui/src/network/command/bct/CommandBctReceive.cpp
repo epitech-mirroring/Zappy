@@ -45,6 +45,7 @@ void CommandBctReceive::execute(std::unique_ptr<ASocket>& socket,
         tile.addObject(new GUI::Thystame());
 }
 
+
 std::unique_ptr<ICommand> CommandBctReceive::clone() const
 {
     return std::make_unique<CommandBctReceive>(*this);
