@@ -26,7 +26,6 @@ void Client::handleConnection()
             throw std::runtime_error(                               //change to an IException
                 "Failed to receive welcome message from server");
         }
-        std::cout << "Welcome Message: " << welcomeMessage << std::endl;
     }
     _socket->send("GRAPHIC\n");
     processServerMessages();

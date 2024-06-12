@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** Tribes
+** Teams
 */
 
-#ifndef TRIBES_
-    #define TRIBES_
+#ifndef TEAMS_
+    #define TEAMS_
 
     #include <iostream>
     #include <list>
@@ -14,36 +14,36 @@
 
 namespace GUI
 {
-    class Tribes
+    class Teams
     {
         public:
             /**
-             * @brief Create Tribe object
+             * @brief Create Team object
              */
-            Tribes(std::string name = "");
+            Teams(std::string name = "");
             /**
-             * @brief Create Tribe object
+             * @brief Create Team object
              */
-            ~Tribes() = default;
+            ~Teams() = default;
 
             /**
-             * @brief Set name of the tribe
-             * @param name std::string of tribe's name
+             * @brief Set name of the team
+             * @param name std::string of team's name
              */
             void setName(std::string name);
             /**
-             * @brief Get tribe's name
-             * @return std::string of tribe's name
+             * @brief Get team's name
+             * @return std::string of team's name
              */
             [[nodiscard]] std::string getName();
 
             /**
-             * @brief Add new trantorian to tribe
+             * @brief Add new trantorian to team
              * @param Trantorian object
              */
             void addTrantorian(GUI::Trantorian trantorian);
             /**
-             * @brief Get list of trantorian in the tribe
+             * @brief Get list of trantorian in the team
              * @return list of trantorian objects
              */
             [[nodiscard]] std::list<GUI::Trantorian> getTrantorianList();
@@ -54,4 +54,4 @@ namespace GUI
     };
 } // namespace GUI
 
-#endif // TRIBES_
+#endif // TEAMS_
