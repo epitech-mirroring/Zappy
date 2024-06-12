@@ -17,7 +17,8 @@ int main(int ac, char **av)
         return 84;
 
     GUI::World world(0, 0);
-    network::Client client(args.getHostname(), args.getPort(), world);
+    GUI::Teams teams;
+    network::Client client(args.getHostname(), args.getPort(), world, teams);
 
     try {
         client.handleConnection();

@@ -20,7 +20,7 @@ namespace network {
          * @brief Construct a new Protocol Handler object
          * @param world Reference to the World object
          */
-        ProtocolHandler(GUI::World &world) noexcept;
+        ProtocolHandler(GUI::World &world, GUI::Teams &teams) noexcept;
 
         /**
          * @brief Destroy the Protocol Handler object

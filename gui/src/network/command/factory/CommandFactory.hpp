@@ -16,6 +16,8 @@
     #include "network/command/msz/CommandMapSizeResponse.hpp"
     #include "network/command/bct/CommandBct.hpp"
     #include "network/command/bct/CommandBctReceive.hpp"
+    #include "network/command/tna/CommandTna.hpp"
+    #include "network/command/tna/CommandTnaReceive.hpp"
     #include <network/command/interface/IWorldCommand.hpp>
 
 namespace network {
@@ -24,7 +26,7 @@ namespace network {
         /**
          * @brief Construct a new Command Factory object
          */
-        CommandFactory(GUI::World &world);
+        CommandFactory(GUI::World &world, GUI::Teams &teams);
         /**
          * @brief Destroy the Command Factory object
          */

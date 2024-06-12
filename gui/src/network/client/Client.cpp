@@ -9,10 +9,10 @@
 
 using namespace network;
 
-Client::Client(const std::string& hostname, unsigned int port, GUI::World& world)
+Client::Client(const std::string& hostname, unsigned int port, GUI::World& world, GUI::Teams& teams)
     : _hostname(hostname), _port(port),
       _socket(std::make_unique<TCPSocket>()),
-      _protocolHandler(std::make_unique<ProtocolHandler>(world))
+      _protocolHandler(std::make_unique<ProtocolHandler>(world, teams))
 {
 }
 

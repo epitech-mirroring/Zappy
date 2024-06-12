@@ -22,7 +22,7 @@ namespace GUI
              */
             Teams(std::string name = "");
             /**
-             * @brief Create Team object
+             * @brief Destroy Team object
              */
             ~Teams() = default;
 
@@ -31,26 +31,50 @@ namespace GUI
              * @param name std::string of team's name
              */
             void setName(std::string name);
+
             /**
              * @brief Get team's name
              * @return std::string of team's name
              */
-            [[nodiscard]] std::string getName();
+            [[nodiscard]] std::string getName() const;
 
             /**
              * @brief Add new trantorian to team
-             * @param Trantorian object
+             * @param trantorian GUI::Trantorian object
              */
             void addTrantorian(GUI::Trantorian trantorian);
+
             /**
              * @brief Get list of trantorian in the team
              * @return list of trantorian objects
              */
-            [[nodiscard]] std::list<GUI::Trantorian> getTrantorianList();
+            [[nodiscard]] std::list<GUI::Trantorian> getTrantorianList() const;
+
+            /**
+             * @brief Add team to teams list
+             * @param team GUI::Teams object
+             */
+            static void addTeamToTeamsList(const GUI::Teams& team);
+
+            /**
+             * @brief Get list of teams
+             * @return list of teams objects
+             */
+            static std::list<GUI::Teams>& getTeamsList();
+
+            /**
+             * @brief Get team by name
+             * @param name std::string of team's name
+             * @return Teams object
+             */
+            static Teams getTeamByName(const std::string& name);
 
         private:
             std::string _name;
             std::list<GUI::Trantorian> _trantorians;
+
+            // Static member to hold all teams
+            static std::list<GUI::Teams> _teams;
     };
 } // namespace GUI
 
