@@ -32,7 +32,7 @@ namespace network {
         /**
          * @brief Clone the command
          */
-        std::unique_ptr<ICommand> clone() const override;
+        [[nodiscard]] std::unique_ptr<ICommand> clone() const override;
 
         void linkWorld(GUI::World *world) override;
     };

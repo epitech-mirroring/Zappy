@@ -32,12 +32,12 @@ namespace network {
          * @brief Get the Command object
          * @param commandName (name of the command)
          */
-        std::unique_ptr<ICommand> getCommand(const std::string &commandName);
+        [[nodiscard]] std::unique_ptr<ICommand> getCommand(const std::string &commandName);
         /**
          * @brief Get the Response Command object
          * @param responseName (name of the response)
          */
-        std::unique_ptr<ICommand> getResponseCommand(const
+        [[nodiscard]] std::unique_ptr<ICommand> getResponseCommand(const
             std::string &responseName);
 
     protected:
