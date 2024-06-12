@@ -28,6 +28,8 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/factory/CommandFactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/CommandMapSize.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/CommandMapSizeResponse.cpp
+    # TILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.cpp
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
@@ -58,5 +60,6 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/interface/ICommand.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/CommandMapSize.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/CommandMapSizeResponse.hpp
-
+    # TILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.hpp
 )

@@ -1,102 +1,126 @@
-/*
-** EPITECH PROJECT, 2024
-** Zappy
-** File description:
-** WorldTest
-*/
-
 #include <gtest/gtest.h>
 #include <memory>
 #include "world/World.hpp"
+#include "tiles/Tile.hpp"
 #include "objects/stones/Deraumere.hpp"
-#include "objects/stones/Linemate.hpp"
 
 TEST(WorldTest, Constructor) {
-    GUI::World world(100, 200);
-    ASSERT_EQ(100, world.getWidth());
-    ASSERT_EQ(200, world.getHeight());
+    GUI::World world(10, 10);
+    ASSERT_EQ(world.getWidth(), 10);
+    ASSERT_EQ(world.getHeight(), 10);
 }
 
 TEST(WorldTest, SetWidth) {
-    GUI::World world(100, 200);
-    world.setWidth(300);
-    ASSERT_EQ(300, world.getWidth());
+    GUI::World world(10, 10);
+    world.setWidth(20);
+    ASSERT_EQ(world.getWidth(), 20);
 }
 
 TEST(WorldTest, SetHeight) {
-    GUI::World world(100, 200);
-    world.setHeight(400);
-    ASSERT_EQ(400, world.getHeight());
+    GUI::World world(10, 10);
+    world.setHeight(20);
+    ASSERT_EQ(world.getHeight(), 20);
 }
 
 TEST(WorldTest, AddObject) {
-    GUI::World world(100, 200);
+    GUI::World world(10, 10);
     GUI::Deraumere deraumere;
-    world.addObject(&deraumere);
-    ASSERT_EQ(1, world.getObjects().size());
+    GUI::Position pos(5, 5);
+
+    world.addObject(&deraumere, pos);
+
+    auto objectsAtTile = world.getObjectsAt(pos);
+    ASSERT_EQ(objectsAtTile.size(), 1);
+    ASSERT_EQ(objectsAtTile.front(), &deraumere);
 }
 
 TEST(WorldTest, RemoveObject) {
-    GUI::World world(100, 200);
+    GUI::World world(10, 10);
     GUI::Deraumere deraumere;
-    world.addObject(&deraumere);
-    world.removeObject(&deraumere);
-    ASSERT_EQ(0, world.getObjects().size());
-}
+    GUI::Position pos(5, 5);
 
-TEST(WorldTest, GetObjectsAt) {
-    GUI::World world(100, 200);
-    GUI::Deraumere deraumere;
-    deraumere.getPosition().setX(10);
-    deraumere.getPosition().setY(20);
-    world.addObject(&deraumere);
-    auto objectsAt = world.getObjectsAt(GUI::Position(10, 20));
-    ASSERT_EQ(1, objectsAt.size());
-}
+    world.addObject(&deraumere, pos);
+    world.removeObject(&deraumere, pos);
 
-TEST(WorldTest, NoObjectsAt) {
-    GUI::World world(100, 200);
-    GUI::Deraumere deraumere;
-    deraumere.getPosition().setX(10);
-    deraumere.getPosition().setY(20);
-    world.addObject(&deraumere);
-    auto objectsAt = world.getObjectsAt(GUI::Position(30, 40));
-    ASSERT_EQ(0, objectsAt.size());
-}
-
-TEST(WorldTest, MultipleObjectsAt) {
-    GUI::World world(100, 200);
-    GUI::Deraumere deraumere;
-    GUI::Linemate linemate;
-    deraumere.getPosition().setX(10);
-    deraumere.getPosition().setY(20);
-    linemate.getPosition().setX(10);
-    linemate.getPosition().setY(20);
-    world.addObject(&deraumere);
-    world.addObject(&linemate);
-    auto objectsAt = world.getObjectsAt(GUI::Position(10, 20));
-    ASSERT_EQ(2, objectsAt.size());
+    auto objectsAtTile = world.getObjectsAt(pos);
+    ASSERT_EQ(objectsAtTile.size(), 0);
 }
 
 TEST(WorldTest, GetObjects) {
-    GUI::World world(100, 200);
-    GUI::Deraumere deraumere;
-    GUI::Linemate linemate;
-    world.addObject(&deraumere);
-    world.addObject(&linemate);
+    GUI::World world(10, 10);
+    GUI::Deraumere deraumere1;
+    GUI::Deraumere deraumere2;
+    GUI::Position pos1(5, 5);
+    GUI::Position pos2(6, 6);
+
+    world.addObject(&deraumere1, pos1);
+    world.addObject(&deraumere2, pos2);
+
     auto objects = world.getObjects();
-    ASSERT_EQ(2, objects.size());
+    ASSERT_EQ(objects.size(), 2);
+    ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere1), objects.end());
+    ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere2), objects.end());
 }
 
-TEST(WorldTest, AddAndRemoveMultipleObjects) {
-    GUI::World world(100, 200);
+TEST(WorldTest, SetWorldSize) {
+    GUI::World world(5, 5);
+    world.setWorldSize(10, 10);
+
+    ASSERT_EQ(world.getWidth(), 10);
+    ASSERT_EQ(world.getHeight(), 10);
+
     GUI::Deraumere deraumere;
-    GUI::Linemate linemate;
-    world.addObject(&deraumere);
-    world.addObject(&linemate);
-    ASSERT_EQ(2, world.getObjects().size());
-    world.removeObject(&deraumere);
-    ASSERT_EQ(1, world.getObjects().size());
-    world.removeObject(&linemate);
-    ASSERT_EQ(0, world.getObjects().size());
+    GUI::Position pos(9, 9);
+    world.addObject(&deraumere, pos);
+
+    auto objectsAtTile = world.getObjectsAt(pos);
+    ASSERT_EQ(objectsAtTile.size(), 1);
+    ASSERT_EQ(objectsAtTile.front(), &deraumere);
+}
+
+TEST(TileTest, Constructor) {
+    GUI::Position pos(1, 1);
+    GUI::Tile tile(pos);
+
+    ASSERT_EQ(tile.getPosition().getX(), 1);
+    ASSERT_EQ(tile.getPosition().getY(), 1);
+}
+
+TEST(TileTest, AddObject) {
+    GUI::Position pos(1, 1);
+    GUI::Tile tile(pos);
+    GUI::Deraumere deraumere;
+
+    tile.addObject(&deraumere);
+
+    auto objects = tile.getObjects();
+    ASSERT_EQ(objects.size(), 1);
+    ASSERT_EQ(objects.front(), &deraumere);
+}
+
+TEST(TileTest, RemoveObject) {
+    GUI::Position pos(1, 1);
+    GUI::Tile tile(pos);
+    GUI::Deraumere deraumere;
+
+    tile.addObject(&deraumere);
+    tile.removeObject(&deraumere);
+
+    auto objects = tile.getObjects();
+    ASSERT_EQ(objects.size(), 0);
+}
+
+TEST(TileTest, GetObjects) {
+    GUI::Position pos(1, 1);
+    GUI::Tile tile(pos);
+    GUI::Deraumere deraumere1;
+    GUI::Deraumere deraumere2;
+
+    tile.addObject(&deraumere1);
+    tile.addObject(&deraumere2);
+
+    auto objects = tile.getObjects();
+    ASSERT_EQ(objects.size(), 2);
+    ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere1), objects.end());
+    ASSERT_NE(std::find(objects.begin(), objects.end(), &deraumere2), objects.end());
 }

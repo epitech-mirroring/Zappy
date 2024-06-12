@@ -8,8 +8,8 @@
 #ifndef WORLD_HPP_
     #define WORLD_HPP_
 
-    #include <list>
-    #include "objects/interface/IObject.hpp"
+    #include <vector>
+    #include "tiles/Tile.hpp"
 
 namespace GUI {
     class World {
@@ -20,6 +20,7 @@ namespace GUI {
          * @param height (height of the world y)
         */
         World(unsigned int width, unsigned int height);
+
         /**
          * @brief Destroy the World object
         */
@@ -50,39 +51,41 @@ namespace GUI {
         [[nodiscard]] unsigned int getHeight() const;
 
         /**
-         * @brief Add an object to the world
+         * @brief Add an object to the world at a specific position
          * @param object (object to add)
+         * @param pos (position to add the object)
         */
-        void addObject(IObject *object);
+        void addObject(IObject *object, Position pos);
+
         /**
          * @brief Remove an object from the world
          * @param object (object to remove)
         */
-        void removeObject(IObject *object);
-
-        /**
-         * @brief Set the size of the world
-         * @param width (width of the world x)
-         * @param height (height of the world y)
-        */
-        void setWorldSize(unsigned int width, unsigned int height);
+        void removeObject(IObject *object, Position pos);
 
         /**
          * @brief Get the list of objects in the world
          * @return std::list<IObject *> (list of objects)
         */
         [[nodiscard]] std::list<IObject *> getObjects() const;
+
         /**
          * @brief Get the list of objects at a specific tile
-         * @param tile (Position object that contains uint X and unint Y as protected)
+         * @param tile (Position object that contains uint X and uint Y as protected)
         */
-        [[nodiscard]] std::list <IObject *> getObjectsAt(Position tile) const;
+        [[nodiscard]] std::list<IObject *> getObjectsAt(Position tile) const;
+
+        /**
+         * @brief Set the size of the world and initialize tiles
+         * @param width (width of the world x)
+         * @param height (height of the world y)
+        */
+        void setWorldSize(unsigned int width, unsigned int height);
 
     protected:
-        unsigned int _width;         // width of the world
-        unsigned int _height;        // height of the world
-
-        std::list<IObject *> _objects;  // list of objects in the world
+        unsigned int _width;  // width of the world
+        unsigned int _height; // height of the world
+        std::vector<std::vector<Tile>> _tiles;  // 2D vector of tiles
     };
-} // namespace GUI //
+} // namespace GUI
 #endif /* !WORLD_HPP_ */

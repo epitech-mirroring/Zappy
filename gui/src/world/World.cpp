@@ -10,9 +10,9 @@
 using namespace GUI;
 
 World::World(unsigned int width, unsigned int height)
-    :   _width(width)
-    ,   _height(height)
+    : _width(width), _height(height)
 {
+    setWorldSize(width, height);
 }
 
 void World::setWidth(unsigned int width)
@@ -35,36 +35,50 @@ unsigned int World::getHeight() const
     return _height;
 }
 
-void World::addObject(IObject *object)
+void World::addObject(IObject *object, Position pos)
 {
-    _objects.push_back(object);
+    if (pos.getX() < _width && pos.getY() < _height) {
+        _tiles[pos.getX()][pos.getY()].addObject(object);
+    }
 }
 
-void World::removeObject(IObject *object)
+void World::removeObject(IObject *object, Position pos)
 {
-    _objects.remove(object);
+    if (pos.getX() < _width && pos.getY() < _height) {
+        _tiles[pos.getX()][pos.getY()].removeObject(object);
+    }
 }
 
 std::list<IObject *> World::getObjects() const
 {
-    return _objects;
-}
-
-std::list <IObject *> World::getObjectsAt(Position tile) const
-{
     std::list<IObject *> objects;
-
-    for (auto object : _objects) {
-        if (object->getPosition().getX() == tile.getX() &&
-            object->getPosition().getY() == tile.getY()) {
-            objects.push_back(object);
+    for (const auto& row : _tiles) {
+        for (const auto& tile : row) {
+            auto tileObjects = tile.getObjects();
+            objects.insert(objects.end(), tileObjects.begin(), tileObjects.end());
         }
     }
     return objects;
+}
+
+std::list<IObject *> World::getObjectsAt(Position tile) const
+{
+    if (tile.getX() < _width && tile.getY() < _height) {
+        return _tiles[tile.getX()][tile.getY()].getObjects();
+    }
+    return {};
 }
 
 void World::setWorldSize(unsigned int width, unsigned int height)
 {
     _width = width;
     _height = height;
+    _tiles.resize(width);
+
+    for (unsigned int i = 0; i < width; ++i) {
+        _tiles[i].resize(height, Tile(Position(i, 0)));
+        for (unsigned int j = 0; j < height; ++j) {
+            _tiles[i][j] = Tile(Position(i, j));
+        }
+    }
 }
