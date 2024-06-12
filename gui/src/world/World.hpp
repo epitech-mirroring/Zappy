@@ -60,31 +60,46 @@ namespace GUI {
         /**
          * @brief Remove an object from the world
          * @param object (object to remove)
-        */
+         */
         void removeObject(IObject *object, Position pos);
 
         /**
          * @brief Get the list of objects in the world
          * @return std::list<IObject *> (list of objects)
-        */
+         */
         [[nodiscard]] std::list<IObject *> getObjects() const;
 
         /**
          * @brief Get the list of objects at a specific tile
          * @param tile (Position object that contains uint X and uint Y as protected)
-        */
+         */
         [[nodiscard]] std::list<IObject *> getObjectsAt(Position tile) const;
 
         /**
          * @brief Set the size of the world and initialize tiles
          * @param width (width of the world x)
          * @param height (height of the world y)
-        */
+         */
         void setWorldSize(unsigned int width, unsigned int height);
+
+        /**
+         * @brief Get the tiles of the world
+         * @return const std::vector<std::vector<Tile>>& (2D vector of tiles)
+         */
+        [[nodiscard]] const std::vector<std::vector<Tile>>& getTiles() const;
+
+        /**
+         * @brief Get the tile at the specified position
+         * @param x (x coordinate)
+         * @param y (y coordinate)
+         * @return Tile& (reference to the tile)
+         */
+        Tile& getTileAt(unsigned int x, unsigned int y);
 
     protected:
         unsigned int _width;  // width of the world
         unsigned int _height; // height of the world
+
         std::vector<std::vector<Tile>> _tiles;  // 2D vector of tiles
     };
 } // namespace GUI

@@ -42,6 +42,11 @@ namespace GUI {
          */
         [[nodiscard]] std::list<IObject *> getObjects() const;
 
+        /**
+         * @brief Clear all objects on the tile
+         */
+        void clearObjects();
+
     protected:
         std::list<IObject *> _objects;  // list of objects on the tile
         Position _pos;                  // position of the tile

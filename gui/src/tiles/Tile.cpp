@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2024
-** Zappy
-** File description:
-** Tile
-*/
-
 #include "Tile.hpp"
 
 using namespace GUI;
@@ -32,4 +25,9 @@ void Tile::removeObject(IObject *object)
 std::list<IObject *> Tile::getObjects() const
 {
     return _objects;
+}
+
+void Tile::clearObjects()
+{
+    _objects.clear();
 }

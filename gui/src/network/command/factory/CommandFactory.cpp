@@ -26,6 +26,22 @@ CommandFactory::CommandFactory(GUI::World &world)
             worldCommand->linkWorld(&world);
         }
     }
+
+    _commands["bct"] = std::make_unique<CommandBct>();
+    _responseCommands["bct"] = std::make_unique<CommandBctReceive>();
+
+    for (auto &command : _commands) {
+        if (auto worldCommand = dynamic_cast<IWorldCommand
+            *>(command.second.get())) {
+            worldCommand->linkWorld(&world);
+        }
+    }
+    for (auto &command : _responseCommands) {
+        if (auto worldCommand = dynamic_cast<IWorldCommand
+            *>(command.second.get())) {
+            worldCommand->linkWorld(&world);
+        }
+    }
 }
 
 std::unique_ptr<ICommand> CommandFactory::getCommand(const

@@ -82,3 +82,13 @@ void World::setWorldSize(unsigned int width, unsigned int height)
         }
     }
 }
+
+const std::vector<std::vector<Tile>>& World::getTiles() const
+{
+    return _tiles;
+}
+
+Tile& World::getTileAt(unsigned int x, unsigned int y)
+{
+    return _tiles[x][y];
+}

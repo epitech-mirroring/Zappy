@@ -14,6 +14,8 @@
     #include "network/command/interface/ICommand.hpp"
     #include "network/command/CommandMapSize.hpp"
     #include "network/command/CommandMapSizeResponse.hpp"
+    #include "network/command/CommandBct.hpp"
+    #include "network/command/CommandBctReceive.hpp"
     #include <network/command/interface/IWorldCommand.hpp>
 
 namespace network {
