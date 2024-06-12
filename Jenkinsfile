@@ -31,7 +31,7 @@ pipeline {
                         def line = error.split(':')[1]
                         def type = error.split(':')[2]
                         def code = error.split(':')[3]
-                        if (code != 'C-F4' && file != './server/include/server.h') {
+                        if (code != 'C-L4') {
                             error_count++
                             unstable "File: ${file}, Line: ${line}, Type: ${type}, Code: ${code}"
                         }

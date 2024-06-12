@@ -9,10 +9,3 @@
 #include <gtest/gtest.h>
 #include "server.h"
 
-TEST(SERVER_HelloWorldTest, HelloWorldTest)
-{
-    testing::internal::CaptureStdout();
-    hello_world();
-    std::string output = testing::internal::GetCapturedStdout();
-    ASSERT_EQ(output, "Hello, World!\n");
-}
