@@ -26,7 +26,6 @@ void destroy(server_t *server)
 {
     destroy_game(server->game);
     array_destructor(server->clients);
-    destroy_number(server->nb_ticks);
     free(server);
 }
 
@@ -40,7 +39,7 @@ server_t *init(unsigned short port, array_t *teams,
     server->game = init_game(teams, map_size, nb_max_clients);
     server->clients = array_constructor(sizeof(client_t),
         (void *)&destroy_client);
-    server->nb_ticks = create_number_with_int(0);
+    server->nb_ticks = 0;
     server->port = port;
     server->max_fd = 0;
     server->fd = socket(AF_INET, SOCK_STREAM, 0);

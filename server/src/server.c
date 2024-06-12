@@ -19,6 +19,7 @@ void add_client(server_t *server, int fd)
     client_t *client = init_client(fd, UNKNOWN);
 
     client->socket = fd;
+    buffer_write(client->buffer_answered, "WELCOME\n");
     array_push_back(server->clients, client);
     if (fd > server->max_fd)
         server->max_fd = fd;
@@ -107,6 +108,7 @@ void new_clients_check(server_t *server, client_t *client)
             return;
         } else {
             client->type = AI;
+            //handle new ia client
         }
     }
 
