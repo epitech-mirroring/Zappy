@@ -17,11 +17,5 @@ int main(int ac, char **av)
     // add_client(server, 6);
     // remove_client(server, 6);
     // destroy(server);
-    // number_t *number1 = create_number_with_int(0);
-    // number_t *number2 = create_number_with_int(1);
-
-    // add_numbers(number1, number2);
-    // destroy_number(number1);
-    // destroy_number(number2);
     return 0;
 }

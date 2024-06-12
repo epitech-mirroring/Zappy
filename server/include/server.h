@@ -16,7 +16,6 @@
     #include "array.h"
     #include "client.h"
     #include "buffer.h"
-    #include "number.h"
     #ifdef __cplusplus
 extern "C" {
     #endif // __cplusplus
@@ -33,7 +32,7 @@ extern "C" {
         array_t *clients;
 
         size_t single_tick_time; // in microseconds
-        number_t *nb_ticks; // number of ticks
+        long long nb_ticks; // number of ticks
 
         unsigned short port;
         int max_fd;

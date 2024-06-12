@@ -56,7 +56,7 @@ void tick(server_t *server, __suseconds_t time_since_last_tick)
     for (int i = 0; i < nb_ticks; i++) {
         game_tick(server->game);
     }
-    add_int_to_number(server->nb_ticks, nb_ticks);
+    server->nb_ticks += nb_ticks;
 }
 
 void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds)
