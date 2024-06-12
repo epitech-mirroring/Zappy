@@ -36,9 +36,9 @@ void Client::handleDisconnection()
     _socket->close();
 }
 
-void Client::sendCommand(const std::string &commandName)
+void Client::sendCommand(const std::string &commandName, const std::string &args)
 {
-    _protocolHandler->handleCommand(_socket, commandName);
+    _protocolHandler->handleCommand(_socket, commandName, args);
 }
 
 void Client::processServerMessages()

@@ -44,7 +44,7 @@ namespace network {
          * @brief Send a command to the server
          * @param commandName Name of the command
          */
-        void sendCommand(const std::string &commandName);
+        void sendCommand(const std::string &commandName, const std::string &args);
 
         /**
          * @brief Process the server messages and handle them with the protocol handler

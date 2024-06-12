@@ -18,6 +18,8 @@
     #include "network/command/bct/CommandBctReceive.hpp"
     #include "network/command/tna/CommandTna.hpp"
     #include "network/command/tna/CommandTnaReceive.hpp"
+    #include "network/command/ppo/CommandPpo.hpp"
+    #include "network/command/ppo/CommandPpoReceive.hpp"
     #include <network/command/interface/IWorldCommand.hpp>
 
 namespace network {

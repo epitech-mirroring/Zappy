@@ -10,6 +10,12 @@
 
     #include "network/command/interface/ICommand.hpp"
     #include "trantorians/Teams.hpp"
+    #include <functional>
+    #include <sstream>
+    #include <memory>
+    #include <vector>
+    #include <string>
+    #include "network/socket/ASocket.hpp"
 
 namespace network {
     class ITeamsCommand : public ICommand {

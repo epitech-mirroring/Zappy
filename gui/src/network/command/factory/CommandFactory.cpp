@@ -20,6 +20,9 @@ CommandFactory::CommandFactory(GUI::World &world, GUI::Teams &teams)
     _commands["tna"] = std::make_unique<CommandTna>();
     _responseCommands["tna"] = std::make_unique<CommandTnaReceive>();
 
+    _commands["ppo"] = std::make_unique<CommandPpo>();
+    _responseCommands["ppo"] = std::make_unique<CommandPpoReceive>();
+
     for (auto &command : _commands) {
         if (auto worldCommand = dynamic_cast<IWorldCommand *>(command.second.get()))
             worldCommand->linkWorld(&world);

@@ -12,8 +12,8 @@ using namespace network;
 void CommandMapSize::execute(std::unique_ptr<ASocket>& socket,
     const std::string& data)
 {
-    std::string request = "msz\n";
-    socket->send(request);
+    std::string command = "msz\n";
+    socket->send(command);
 }
 
 std::unique_ptr<ICommand> CommandMapSize::clone() const

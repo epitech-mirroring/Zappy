@@ -32,7 +32,8 @@ namespace network {
          * @param socket Socket of the client
          * @param commandName Name of the command
          */
-        void handleCommand(std::unique_ptr<ASocket>& socket, const std::string& commandName) noexcept;
+        void handleCommand(std::unique_ptr<ASocket>& socket, const std::string& commandName,
+            const std::string& args) noexcept;
 
         /**
          * @brief Handle the response

@@ -37,6 +37,8 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/bct/CommandBctReceive.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/tna/CommandTna.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/tna/CommandTnaReceive.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/ppo/CommandPpo.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/ppo/CommandPpoReceive.cpp
     # TILES
     ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.cpp
   PUBLIC
@@ -79,6 +81,8 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/bct/CommandBctReceive.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/tna/CommandTna.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/command/tna/CommandTnaReceive.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/ppo/CommandPpo.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/ppo/CommandPpoReceive.hpp
     # TILES
     ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.hpp
 )

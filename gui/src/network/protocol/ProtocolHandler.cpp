@@ -16,11 +16,12 @@ ProtocolHandler::ProtocolHandler(GUI::World &world,
 }
 
 void ProtocolHandler::handleCommand(std::unique_ptr<ASocket>& socket,
-    const std::string& commandName) noexcept
+    const std::string& commandName, const std::string& args) noexcept
 {
     auto command = _commandFactory->getCommand(commandName);
+    std::string data = commandName + " " + args + "\n";
     if (command) {
-        command->execute(socket, "");
+        command->execute(socket, data);
     } else {
         std::cerr << "Unknown command: " << commandName << std::endl;
     }
