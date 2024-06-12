@@ -7,11 +7,26 @@
 */
 
 #include "server.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+static void connect_server(server_t *server)
+{
+    struct sockaddr_in *addr = malloc(sizeof(struct sockaddr_in));
+
+    addr->sin_family = AF_INET;
+    addr->sin_port = htons(server->port);
+    addr->sin_addr.s_addr = INADDR_ANY;
+    bind(server->fd, (struct sockaddr *)&addr, sizeof(addr));
+    listen(server->fd, MAX_USERS);
+
+}
 
 void destroy(server_t *server)
 {
     destroy_game(server->game);
     array_destructor(server->clients);
+    destroy_number(server->nb_ticks);
     free(server);
 }
 
@@ -28,6 +43,7 @@ server_t *init(unsigned short port, array_t *teams,
     server->nb_ticks = create_number_with_int(0);
     server->port = port;
     server->max_fd = 0;
+    server->fd = socket(AF_INET, SOCK_STREAM, 0);
     return server;
 }
 
@@ -41,4 +57,30 @@ void tick(server_t *server, __suseconds_t time_since_last_tick)
         game_tick(server->game);
     }
     add_int_to_number(server->nb_ticks, nb_ticks);
+}
+
+void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds)
+{
+    client_t *client;
+
+    FD_ZERO(readfds);
+    FD_ZERO(writefds);
+    FD_SET(server->fd, readfds);
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        client = (client_t *)array_get_at(server->clients, i);
+        FD_SET(client->socket, readfds);
+        FD_SET(client->socket, writefds);
+    }
+}
+
+void handle_new_connections(server_t *server, fd_set *readfds)
+{
+    int new_fd = 0;
+    struct sockaddr_in addr;
+    socklen_t size = sizeof(addr);
+
+    if (FD_ISSET(server->fd, readfds)) {
+        new_fd = accept(server->fd, (struct sockaddr *)&addr, &size);
+        add_client(server, new_fd);
+    }
 }

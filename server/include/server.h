@@ -10,6 +10,7 @@
     #define ZAPPY_SERVER_H
 
     #define MAX_COMMAND_SIZE 1024
+    #define MAX_USERS 10000
 
     #include "game.h"
     #include "array.h"
@@ -36,6 +37,7 @@ extern "C" {
 
         unsigned short port;
         int max_fd;
+        int fd;
     } server_t;
 
     /**
@@ -67,7 +69,6 @@ extern "C" {
      *
      * @param server The server
      * @param fd The file descriptor of the client
-     * @param message The message received from the client
      */
     void add_client(server_t *server, int fd);
 
@@ -78,30 +79,6 @@ extern "C" {
      * @param fd The file descriptor of the client
      */
     void remove_client(server_t *server, int fd);
-
-    /**
-     * @brief Send a message to a client
-     *
-     * @param server The server
-     * @param fd The file descriptor of the client
-     * @param message The message to send
-     */
-    void send_message(server_t *server, int fd, char *message);
-
-    /**
-     * @brief Send a message to all clients
-     *
-     * @param server The server
-     * @param message The message to send
-     */
-    void send_message_to_all(server_t *server, char *message);
-
-    /**
-     * @brief Read client messages that have not been read yet
-     *
-     * @param server The server
-     */
-    void read_clients_messages(server_t *server);
 
     /**
      * @brief Read a client message
@@ -140,6 +117,23 @@ extern "C" {
      * @param tick The time from the last call of Tick in microseconds
      */
     void tick(server_t *server, __suseconds_t time_since_last_tick);
+
+    /**
+     * @brief Fill the fd_set with the file descriptors of the clients
+     * and the server
+     * @param server The server
+     * @param readfds The fd_set for the read file descriptors
+     * @param writefds The fd_set for the write file descriptors
+     */
+    void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds);
+
+    /**
+     * @brief Handle new connections
+     *
+     * @param server The server
+     * @param readfds The fd_set for the read file descriptors
+     */
+    void handle_new_connections(server_t *server, fd_set *readfds);
 
     #ifdef __cplusplus
 }

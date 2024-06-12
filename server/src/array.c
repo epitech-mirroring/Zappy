@@ -28,6 +28,8 @@ void array_set_at(array_t *array, int index, void *element)
 
 void array_destructor(array_t *array)
 {
+    if (array == NULL)
+        return;
     array_clear(array);
     free(array->data);
     free(array);
@@ -48,7 +50,7 @@ array_t *array_constructor(size_t elementSize,
     array_t *array = malloc(sizeof(array_t));
 
     array->element_destructor = element_destructor;
-    array->data = malloc(elementSize);
+    array->data = NULL;
     array->elementSize = elementSize;
     return array;
 }

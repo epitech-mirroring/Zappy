@@ -8,22 +8,28 @@
 
 #include "server.h"
 #include "actions.h"
+#include <bits/waitflags.h>
+#include <sys/select.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <string.h>
 
-static void add_client(server_t *server, int fd)
+void add_client(server_t *server, int fd)
 {
     client_t *client = init_client(fd, UNKNOWN);
 
     client->socket = fd;
-    array_push(server->clients, &client);
+    array_push_back(server->clients, client);
     if (fd > server->max_fd)
         server->max_fd = fd;
 }
 
-static void remove_client(server_t *server, int fd)
+void remove_client(server_t *server, int fd)
 {
     client_t *client;
+    size_t size = array_get_size(server->clients);
 
-    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+    for (size_t i = 0; i < size; i++) {
         client = (client_t *)array_get_at(server->clients, i);
         if (client->socket == fd) {
             array_remove(server->clients, i);
@@ -70,14 +76,12 @@ void run(server_t *server)
     while (1) {
         tv.tv_sec = 0;
         tv.tv_usec = get_closest_action(server);
-        FD_ZERO(&readfds);
-        FD_ZERO(&writefds);
-        FD_SET(server->max_fd, &readfds);
-        FD_SET(server->max_fd, &writefds);
+        fill_fd_set(server, &readfds, &writefds);
         if (select(server->max_fd + 1, &readfds, &writefds, NULL, &tv) == -1)
             return;
+        handle_new_connections(server, &readfds);
+        while (waitpid(-1, NULL, WNOHANG) > 0);
         tick(server, tv.tv_usec);
-        // add client management
     }
 }
 

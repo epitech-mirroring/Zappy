@@ -6,6 +6,21 @@
 */
 
 #include "buffer.h"
+#include <string.h>
+
+static bool can_write(buffer_t *buffer, size_t size)
+{
+    if (size >= buffer->capacity)
+        return false;
+    for (int i = buffer->write_index; i != buffer->read_index; i++) {
+        if (i == buffer->capacity)
+            i = 0;
+        size--;
+    }
+    if (size > 0)
+        return false;
+    return true;
+}
 
 buffer_t *create_buffer(size_t capacity)
 {
@@ -20,7 +35,7 @@ buffer_t *create_buffer(size_t capacity)
 
 void buffer_write(buffer_t *buffer, char *data)
 {
-    int len = strlen(data);
+    size_t len = strlen(data);
 
     if (!can_write(buffer, len))
         return;
@@ -66,18 +81,4 @@ void buffer_destroy(buffer_t *buffer)
 {
     free(buffer->buffer);
     free(buffer);
-}
-
-static bool can_write(buffer_t *buffer, size_t size)
-{
-    if (size >= buffer->capacity)
-        return false;
-    for (int i = buffer->write_index; i != buffer->read_index; i++) {
-        if (i == buffer->capacity)
-            i = 0;
-        size--;
-    }
-    if (size > 0)
-        return false;
-    return true;
 }

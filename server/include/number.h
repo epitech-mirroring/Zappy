@@ -12,10 +12,10 @@
 extern "C" {
     #endif // __cplusplus
 
-    enum operation_e {
-        ADD = 0,
-        SUBTRACT = 1
-    };
+    typedef enum {
+        ADD,
+        SUBTRACT
+    } operation_e;
 
     /**
      * @struct number_s
@@ -50,21 +50,21 @@ extern "C" {
      */
     void destroy_number(number_t *number);
 
+    //add number doc
+
     /**
-     * @brief Add two infinite numbers.
+     * @brief Add number2 to number1.
      *
-     * @param number1 The first number.
-     * @param number2 The second number.
-     * @return The sum of the two numbers.
+     * @param number1 The first infinite number.
+     * @param number2 The second infinite number.
      */
     void add_numbers(number_t *number1, number_t *number2);
 
     /**
-     * @brief Subtract two infinite numbers.
+     * @brief Subtract number2 to number1.
      *
-     * @param number1 The first number.
-     * @param number2 The second number.
-     * @return The difference of the two numbers.
+     * @param number1 The first infinite number.
+     * @param number2 The second infinite number.
      */
     void subtract_numbers(number_t *number1, number_t *number2);
 
