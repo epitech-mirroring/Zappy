@@ -35,17 +35,21 @@ static void write_to_clients(server_t *server)
 static int create_socket(server_t *server)
 {
     struct sockaddr_in *addr = malloc(sizeof(struct sockaddr_in));
+    int opt = 1;
 
+    server->fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (server->fd == -1)
+        return -1;
     addr->sin_family = AF_INET;
     addr->sin_port = htons(server->port);
     addr->sin_addr.s_addr = INADDR_ANY;
-    if (setsockopt(server->fd, SOL_SOCKET, SO_REUSEADDR, &(int){1},
-                   sizeof(int)) < 0)
-        return;
-    if (bind(server->fd, (struct sockaddr *)addr, sizeof(struct sockaddr_in)) < 0)
-        return;
-    listen(server->fd, MAX_USERS);
-
+    if (setsockopt(server->fd, SOL_SOCKET, SO_REUSEADDR, &opt,
+                   sizeof(opt)) == -1)
+        return -1;
+    if (bind(server->fd, (struct sockaddr *)addr, sizeof(*addr)) == -1 ||
+            listen(server->fd, MAX_USERS) == -1)
+        return -1;
+    return 0;
 }
 
 void destroy(server_t *server)
