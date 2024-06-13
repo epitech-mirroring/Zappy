@@ -7,8 +7,13 @@
 */
 
 #ifndef ZAPPY_MAP_H
+
+    #include <array.h>
+
     #define ZAPPY_MAP_H
     #ifdef __cplusplus
+
+
 extern "C" {
     #endif // __cplusplus
     /**
@@ -18,8 +23,8 @@ extern "C" {
      * Each tile has an x and y coordinate.
      */
     typedef struct coordinates_s {
-        int x;
-        int y;
+        size_t x;
+        size_t y;
     } coordinates_t;
 
     /**
@@ -30,13 +35,13 @@ extern "C" {
      * linemate, deraumere, sibur, mendiane, phiras, and thystame.
      */
     typedef struct resources_s {
-        int food_count;
-        int linemate_count;
-        int deraumere_count;
-        int sibur_count;
-        int mendiane_count;
-        int phiras_count;
-        int thystame_count;
+        size_t food_count;
+        size_t linemate_count;
+        size_t deraumere_count;
+        size_t sibur_count;
+        size_t mendiane_count;
+        size_t phiras_count;
+        size_t thystame_count;
     } resources_t;
 
     /**
@@ -59,10 +64,68 @@ extern "C" {
      * The map has a width, a height, and a 2D array of tiles.
      */
     typedef struct map_s {
-        int width;
-        int height;
-        tile_t **tiles;
+        size_t width;
+        size_t height;
+        array_t *tiles;
     } map_t;
+
+    /**
+     * @brief Init a new map.
+     *
+     * @param width The width of the map.
+     * @param height The height of the map.
+     * @return The new map.
+     */
+    map_t *init_map(size_t width, size_t height);
+
+    /**
+     * @brief deslete a map.
+     *
+     * @param map The map to free.
+     */
+    void destroy_map(map_t *map);
+
+    /**
+     * @brief Get a tile from the map.
+     *
+     * @param map The map.
+     * @param x The x coordinate of the tile.
+     * @param y The y coordinate of the tile.
+     * @return The tile.
+     */
+    tile_t *get_tile(map_t *map, size_t x, size_t y);
+
+    /**
+     * @brief Get a tile from the map.
+     *
+     * @param map The map.
+     * @param coordinates The coordinates of the tile.
+     * @return The tile.
+     */
+    tile_t *get_tile_by_coordinates(map_t *map, coordinates_t coordinates);
+
+    /**
+     * @brief Init a new tile.
+     *
+     * @param x The x coordinate of the tile.
+     * @param y The y coordinate of the tile.
+     * @return The new tile.
+     */
+    tile_t *init_tile(size_t x, size_t y);
+
+    /**
+     * @brief Destroy a tile.
+     *
+     * @param tile The tile to destroy.
+     */
+    void destroy_tile(tile_t *tile);
+
+    /**
+     * @brief Init a new resources.
+     *
+     * @return The new resources.
+     */
+    resources_t init_resources(void);
 
     #ifdef __cplusplus
 }
