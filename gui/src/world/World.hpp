@@ -19,7 +19,7 @@ namespace GUI {
          * @param width (width of the world x)
          * @param height (height of the world y)
         */
-        World(unsigned int width, unsigned int height);
+        World(unsigned int width = 0, unsigned int height = 0);
 
         /**
          * @brief Destroy the World object

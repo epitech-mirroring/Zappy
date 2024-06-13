@@ -13,8 +13,3 @@ Thystame::Thystame(Position tile)
     :   AStone(0.05, tile)
 {
 }
-
-std::string Thystame::getType() const noexcept
-{
-    return "Thystame";
-}

@@ -9,7 +9,6 @@
     #define IOBJECT_HPP_
 
     #include "position/Position.hpp"
-    #include <string>
 
 namespace GUI {
     class IObject {
@@ -41,12 +40,6 @@ namespace GUI {
          * @return Position& tile where the object is (modifiable)
          */
         [[nodiscard]] virtual Position& getPosition() noexcept = 0;
-
-        /**
-         * @brief Get the Type of the object
-         * @return std::string type of the object
-         */
-        [[nodiscard]] virtual std::string getType() const noexcept = 0;
     };
 }  // namespace GUI
 #endif /* !IOBJECT_HPP_ */

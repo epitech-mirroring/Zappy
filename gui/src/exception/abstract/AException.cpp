@@ -7,7 +7,7 @@
 
 #include "AException.hpp"
 
-using namespace zappy;
+using namespace GUI;
 
 AException::AException(std::string message, std::string type) noexcept
     : _message{std::move(message)}

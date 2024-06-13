@@ -19,12 +19,6 @@ namespace GUI {
          */
         Mendiane(Position tile = Position(0, 0));
         virtual ~Mendiane() noexcept = default;
-
-        /**
-         * @brief Get the Type of the object
-         * @return std::string type of the object
-         */
-        [[nodiscard]] std::string getType() const noexcept final;
     };
 } // namespace GUI //
 #endif /* !MENDIANE_HPP_ */

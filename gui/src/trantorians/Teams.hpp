@@ -10,12 +10,11 @@
 
     #include <iostream>
     #include <list>
-    #include "Trantorian.hpp"
 
-namespace GUI
-{
-    class Teams
-    {
+namespace GUI {
+    class Trantorian; // Forward declaration
+
+    class Teams {
         public:
             /**
              * @brief Create Team object
@@ -42,7 +41,7 @@ namespace GUI
              * @brief Add new trantorian to team
              * @param trantorian GUI::Trantorian object
              */
-            void addTrantorian(GUI::Trantorian trantorian);
+            void addTrantorian(GUI::Trantorian& trantorian);
 
             /**
              * @brief Get list of trantorian in the team
@@ -67,7 +66,7 @@ namespace GUI
              * @param name std::string of team's name
              * @return Teams object
              */
-            static Teams getTeamByName(const std::string& name);
+            static Teams* getTeamByName(const std::string& name);
 
         private:
             std::string _name;
@@ -77,5 +76,7 @@ namespace GUI
             static std::list<GUI::Teams> _teams;
     };
 } // namespace GUI
+
+#include "Trantorian.hpp"
 
 #endif // TEAMS_

@@ -7,7 +7,9 @@
 
 #include <iostream>
 #include "handle_args/HandleArgs.hpp"
-#include "network/client/Client.hpp"
+#include "game/Game.hpp"
+
+using namespace GUI;
 
 int main(int ac, char **av)
 {
@@ -15,17 +17,8 @@ int main(int ac, char **av)
 
     if (args.checkArgs(ac, av))
         return 84;
-
-    GUI::World world(0, 0);
-    GUI::Teams teams;
-    network::Client client(args.getHostname(), args.getPort(), world, teams);
-
-    try {
-        client.handleConnection();
-    } catch (const std::exception &e) {
-        client.handleDisconnection();
-        std::cerr << e.what() << std::endl;
-        return 84;
-    }
+    GUI::Game game(args.getHostname(), args.getPort());
+    game.initGame();
+    game.runGame();
     return 0;
 }

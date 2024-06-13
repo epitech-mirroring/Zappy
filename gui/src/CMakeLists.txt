@@ -23,24 +23,15 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.cpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.cpp
     # POSITION
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.cpp
     # NETWORK
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/client/Client.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/ProtocolHandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.cpp
-    # COMMANDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/factory/CommandFactory.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/msz/CommandMapSize.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/msz/CommandMapSizeResponse.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/bct/CommandBct.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/bct/CommandBctReceive.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/tna/CommandTna.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/tna/CommandTnaReceive.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/ppo/CommandPpo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/ppo/CommandPpoReceive.cpp
-    # TILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/Client.cpp
+    # GUI
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
+
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
@@ -66,23 +57,13 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.hpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.hpp
     # POSITION
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
     # NETWORK
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/client/Client.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol/ProtocolHandler.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/ASocket.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.hpp
-    # COMMANDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/factory/CommandFactory.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/interface/ICommand.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/msz/CommandMapSize.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/msz/CommandMapSizeResponse.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/bct/CommandBct.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/bct/CommandBctReceive.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/tna/CommandTna.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/tna/CommandTnaReceive.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/ppo/CommandPpo.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/network/command/ppo/CommandPpoReceive.hpp
-    # TILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/Client.hpp
+    # GUI
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
 )

@@ -7,7 +7,7 @@
 
 #include "SocketException.hpp"
 
-using namespace zappy;
+using namespace network;
 
 SocketException::SocketException(std::string message)
     : AException{std::move(message), "SocketException"}

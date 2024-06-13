@@ -13,8 +13,3 @@ Food::Food(Position tile)
     :   AObject(0.5, tile)
 {
 }
-
-std::string Food::getType() const noexcept
-{
-    return "Food";
-}

@@ -13,6 +13,8 @@
     #include "../position/Position.hpp"
 
 namespace GUI {
+    class Teams; // Forward declaration
+
     class Trantorian {
         public:
             /**
@@ -37,14 +39,14 @@ namespace GUI {
 
             /**
              * @brief Set trantorian team
-             * @param teamName
+             * @param team
              */
-            void setTeam(std::string teamName);
+            void setTeam(Teams* team);
             /**
              * @brief Get trantorian team
-             * @return std::string w/ team's name
+             * @return Teams* pointer to team
              */
-            [[nodiscard]] std::string getTeam();
+            [[nodiscard]] Teams* getTeam();
 
             /**
              * @brief Set trantorian's lifetime
@@ -103,7 +105,7 @@ namespace GUI {
 
         private:
             GUI::Position _position;
-            std::string _team;
+            Teams* _team;
             int _lifetimeRemaining;
             bool _alive;
             bool _action;

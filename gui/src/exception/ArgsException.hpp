@@ -10,7 +10,7 @@
 
     #include "abstract/AException.hpp"
 
-namespace zappy {
+namespace GUI {
     class ArgsException : public AException {
     public:
         /**

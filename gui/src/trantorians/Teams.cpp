@@ -26,9 +26,10 @@ std::string Teams::getName() const
     return _name;
 }
 
-void Teams::addTrantorian(Trantorian trantorian)
+void Teams::addTrantorian(Trantorian& trantorian)
 {
-    _trantorians.emplace_back(std::move(trantorian));
+    trantorian.setTeam(this);
+    _trantorians.emplace_back(trantorian);
 }
 
 std::list<Trantorian> Teams::getTrantorianList() const
@@ -51,11 +52,11 @@ std::list<Teams>& Teams::getTeamsList()
     return _teams;
 }
 
-Teams Teams::getTeamByName(const std::string& name)
+Teams* Teams::getTeamByName(const std::string& name)
 {
     for (auto &team : _teams) {
         if (team.getName() == name)
-            return team;
+            return &team;
     }
-    return Teams();
+    return nullptr;
 }

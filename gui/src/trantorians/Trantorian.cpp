@@ -6,16 +6,24 @@
 */
 
 #include "Trantorian.hpp"
+#include "Teams.hpp"
 
 GUI::Trantorian::Trantorian(std::string teamName, int x, int y)
+    : _team(nullptr)
 {
-    _team = teamName;
-    _position.setX(x);
-    _position.setY(y);
+    setPosition(x, y);
     _alive = true;
     _action = false;
     _level = 1;
     _lifetimeRemaining = 100;
+
+    if (!teamName.empty()) {
+        auto team = Teams::getTeamByName(teamName);
+        if (team) {
+            setTeam(team);
+            team->addTrantorian(*this);
+        }
+    }
 }
 
 void GUI::Trantorian::setAction(bool action)
@@ -79,12 +87,12 @@ GUI::Position GUI::Trantorian::getPosition()
     return _position;
 }
 
-void GUI::Trantorian::setTeam(std::string teamName)
+void GUI::Trantorian::setTeam(Teams* team)
 {
-    _team = teamName;
+    _team = team;
 }
 
-std::string GUI::Trantorian::getTeam()
+GUI::Teams* GUI::Trantorian::getTeam()
 {
     return _team;
 }

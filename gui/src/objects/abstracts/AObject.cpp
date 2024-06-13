@@ -29,8 +29,3 @@ Position& AObject::getPosition() noexcept
 {
     return _position;
 }
-
-std::string AObject::getType() const noexcept
-{
-    return "AObject";
-}

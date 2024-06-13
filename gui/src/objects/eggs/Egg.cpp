@@ -39,8 +39,3 @@ void Egg::setIsEjected(bool isEjected)
 {
     _isEjected = isEjected;
 }
-
-std::string Egg::getType() const noexcept
-{
-    return "Egg";
-}
