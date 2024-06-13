@@ -43,6 +43,7 @@ server_t *init(unsigned short port, array_t *teams,
     server->port = port;
     server->max_fd = 0;
     server->fd = socket(AF_INET, SOCK_STREAM, 0);
+    connect_server(server);
     return server;
 }
 
@@ -65,6 +66,7 @@ void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds)
     FD_ZERO(readfds);
     FD_ZERO(writefds);
     FD_SET(server->fd, readfds);
+    server->max_fd = find_max_fd(server);
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
         client = (client_t *)array_get_at(server->clients, i);
         FD_SET(client->socket, readfds);

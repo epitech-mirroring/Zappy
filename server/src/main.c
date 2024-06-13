@@ -103,6 +103,7 @@ int main(int ac, char **av)
         return 84;
     server->single_tick_time = single_tick_time;
     run(server);
+    printf("Server is running\n");
     destroy(server);
     return 0;
 }
