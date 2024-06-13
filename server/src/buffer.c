@@ -7,17 +7,11 @@
 
 #include "buffer.h"
 #include <string.h>
+#include <stdio.h>
 
 static bool can_write(buffer_t *buffer, size_t size)
 {
-    if (size >= buffer->capacity)
-        return false;
-    for (int i = buffer->write_index; i != buffer->read_index; i++) {
-        if (i == buffer->capacity)
-            i = 0;
-        size--;
-    }
-    if (size > 0 && buffer->write_index != buffer->read_index)
+    if (buffer->write_index + size >= buffer->capacity)
         return false;
     return true;
 }
@@ -35,16 +29,36 @@ buffer_t *create_buffer(size_t capacity)
 
 void buffer_write(buffer_t *buffer, char *data)
 {
-    size_t len = strlen(data);
+    //printf("buffer before write: %s\n", buffer->buffer);
+    printf("buffer->write_index: %d\n", buffer->write_index);
+    size_t data_size = strlen(data);
+    printf("data_size: %d\n", data_size);
 
-    if (!can_write(buffer, len))
+    if (!can_write(buffer, data_size))
         return;
-    for (int i = 0; i < len; i++) {
-        if (buffer->write_index == buffer->capacity)
-            buffer->write_index = 0;
+    if (data[0] == '\0' || data[0] == '\n' || data[0] == '\r')
+        return;
+    for (size_t i = 0; i < data_size; i++) {
+        if (data[i] == 10 || data[i] == 13)
+            continue;
         buffer->buffer[buffer->write_index] = data[i];
         buffer->write_index++;
+        if (buffer->write_index == buffer->capacity)
+            buffer->write_index = 0;
     }
+    buffer->buffer[buffer->write_index] = '\0';
+    buffer->write_index++;
+    printf("buffer->write_index: %d\n", buffer->write_index);
+   for (size_t i = 0; i < 30; i++) {
+       if (i == buffer->write_index)
+           printf("W->");
+       if (i == buffer->read_index)
+           printf("R->");
+       else
+           printf("   ");
+       printf("data[%d]: %d(%c)\n", i, buffer->buffer[i], buffer->buffer[i]);
+   }
+    //printf("buffer after write: %s\n", buffer->buffer);
 }
 
 char *buffer_get_next(buffer_t *buffer)
