@@ -98,13 +98,10 @@ void new_clients_check(server_t *server, client_t *client)
     if (client->type == UNKNOWN) {
         if (strcmp(message, "GRAPHIC") == 0) {
             client->type = GRAPHIC;
-            return;
         } else {
             client->type = AI;
             array_push_back(server->game->clients_without_team, client);
-            return;
         }
-        buffer_write(client->buffer_answered, "ko\n");
     }
 }
 

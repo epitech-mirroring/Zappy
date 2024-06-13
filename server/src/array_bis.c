@@ -35,7 +35,6 @@ void array_remove(array_t *array, size_t index)
     }
     free(array->data);
     array->data = tmp_data;
-    array->element_destructor(tmp);
 }
 
 void array_insert(array_t *array, void *element, int index)

@@ -15,6 +15,25 @@
 #include "team.h"
 #include "trantorian.h"
 
+static void handle_new_client(game_t *game)
+{
+    client_t *client = NULL;
+    char *msg = NULL;
+
+    for (size_t i = 0; i < array_get_size(game->clients_without_team); i++) {
+        client = (client_t *)array_get_at(game->clients_without_team, i);
+        msg = buffer_get_next(client->buffer_asked);
+        if (msg == NULL)
+            continue;
+        if (can_create_trantorian(game, msg)) {
+            create_trantorians(game, get_team_by_name(game->teams, msg));
+            array_remove(game->clients_without_team, i);
+        } else {
+            buffer_write(client->buffer_answered, "ko\n");
+        }
+    }
+}
+
 game_t *init_game(char *teams, size_t map_size[2], size_t team_max_size)
 {
     game_t *game = malloc(sizeof(game_t));
@@ -57,7 +76,6 @@ static team_t *get_team_by_name(array_t *teams, char *team_name)
     }
     return NULL;
 }
-
 
 void create_trantorians(game_t *game, team_t *team)
 {
