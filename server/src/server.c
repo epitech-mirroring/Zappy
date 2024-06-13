@@ -73,6 +73,7 @@ void run(server_t *server)
         if (select(server->max_fd + 1, &readfds, &writefds, NULL, tv2) == -1)
             return;
         handle_new_connections(server, &readfds);
+
         read_clients_messages(server, &readfds);
         while (waitpid(-1, NULL, WNOHANG) > 0);
         tick(server, tv.tv_usec);
@@ -82,8 +83,7 @@ void run(server_t *server)
 void read_client_message(server_t *server, client_t *client)
 {
     char buffer[1024] = {0};
-    int ret = read(client->socket, buffer, MAX_COMMAND_SIZE);
-
+    size_t ret = read(client->socket, buffer, MAX_COMMAND_SIZE);
     if (ret <= 0)
         return;
     printf("buffer: %s\n", buffer);
