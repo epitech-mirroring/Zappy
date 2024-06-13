@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Project
 ** File description:
-** No file there , just an epitech header example .
+** No file there , just an epitech header example.
 ** You can even have multiple lines if you want !
 */
 
@@ -73,7 +73,6 @@ void run(server_t *server)
         if (select(server->max_fd + 1, &readfds, &writefds, NULL, tv2) == -1)
             return;
         handle_new_connections(server, &readfds);
-
         read_clients_messages(server, &readfds);
         while (waitpid(-1, NULL, WNOHANG) > 0);
         tick(server, tv.tv_usec);
@@ -102,10 +101,11 @@ void new_clients_check(server_t *server, client_t *client)
             return;
         } else {
             client->type = AI;
-            //handle new ia client
+            array_push_back(server->game->clients_without_team, client);
+            return;
         }
+        buffer_write(client->buffer_answered, "ko\n");
     }
-
 }
 
 int find_max_fd(server_t *server)

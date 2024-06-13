@@ -30,6 +30,8 @@ extern "C" {
         array_t *teams;
         array_t *eggs; //array of pointers to eggs stored in the map
         array_t *trantorians;
+        array_t *clients_without_team;
+        size_t team_max_size;
 
         map_t *map;
     } game_t;
@@ -42,7 +44,7 @@ extern "C" {
      * @param team_max_size The maximum size of a team
      * @return game_t* The game
      */
-    game_t *init_game(array_t *teams, size_t map_size[2],
+    game_t *init_game(char *teams, size_t map_size[2],
         size_t team_max_size);
 
     /**

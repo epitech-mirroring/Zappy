@@ -28,6 +28,14 @@ extern "C" {
         char *name;
     } team_t;
 
+    /**
+     * @brief Initialize a team
+     *
+     * @param name The name of the team
+     * @return team_t* The new team
+     */
+    team_t *init_team(char *name);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
