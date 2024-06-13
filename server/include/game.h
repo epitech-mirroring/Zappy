@@ -17,6 +17,7 @@ extern "C" {
     #include "egg.h"
     #include <stdbool.h>
     #include "client.h"
+    #include "team.h"
 
     /**
      * @struct game_s
@@ -32,6 +33,8 @@ extern "C" {
         array_t *trantorians;
         array_t *clients_without_team;
         size_t team_max_size;
+        bool win;
+        char *winning_team;
 
         map_t *map;
     } game_t;
@@ -44,7 +47,7 @@ extern "C" {
      * @param team_max_size The maximum size of a team
      * @return game_t* The game
      */
-    game_t *init_game(char *teams, size_t map_size[2],
+    game_t *init_game(array_t *teams, size_t map_size[2],
         size_t team_max_size);
 
     /**
@@ -77,7 +80,7 @@ extern "C" {
      * @param team_name The name of the team
      * @param client The client that wants to create a Trantorian
      */
-    void create_trantorian(game_t *game, char *team_name, client_t *client);
+    void create_trantorian(game_t *game, team_t *team, client_t *client);
 
     #ifdef __cplusplus
 }

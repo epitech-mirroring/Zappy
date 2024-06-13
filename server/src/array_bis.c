@@ -51,8 +51,10 @@ void array_clear(array_t *array)
 {
     size_t size = array_get_size(array);
 
-    for (size_t i = 0; i < size; i++)
-        array->element_destructor(array->data[i]);
+    if (array->element_destructor != NULL)
+        for (size_t i = 0; i < size; i++) {
+            array->element_destructor(array->data[i]);
+        }
     free(array->data);
     array->data = calloc(1, array->elementSize);
 }
