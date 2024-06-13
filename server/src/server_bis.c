@@ -32,7 +32,7 @@ static void write_to_clients(server_t *server)
     }
 }
 
-static void connect_server(server_t *server)
+static int create_socket(server_t *server)
 {
     struct sockaddr_in *addr = malloc(sizeof(struct sockaddr_in));
 
@@ -55,8 +55,8 @@ void destroy(server_t *server)
     free(server);
 }
 
-server_t *init(unsigned short port, array_t *teams,
-    size_t map_size[2], size_t nb_max_clients)
+server_t *create_server(unsigned short port, array_t *teams,
+                        size_t map_size[2], size_t nb_max_clients)
 {
     server_t *server = malloc(sizeof(server_t));
 
@@ -68,8 +68,8 @@ server_t *init(unsigned short port, array_t *teams,
     server->nb_ticks = 0;
     server->port = port;
     server->max_fd = 0;
-    server->fd = socket(AF_INET, SOCK_STREAM, 0);
-    connect_server(server);
+    if (create_socket(server) == -1)
+        return NULL;
     return server;
 }
 

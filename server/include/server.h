@@ -46,8 +46,8 @@ extern "C" {
      * @param freq The frequency of the server
      * @return server_t* The server
      */
-    server_t *init(unsigned short port, array_t *teams,
-        size_t map_size[2], size_t nb_max_clients);
+    server_t *create_server(unsigned short port, array_t *teams,
+                            size_t map_size[2], size_t nb_max_clients);
 
     /**
      * @brief Destroy a server

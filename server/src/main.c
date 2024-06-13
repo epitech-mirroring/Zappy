@@ -98,7 +98,7 @@ int main(int ac, char **av)
     if (map_size == NULL || port == -1 || nb_max_clients == -1
         || single_tick_time == -1 || teams == NULL)
         return 84;
-    server = init(port, teams, map_size, nb_max_clients);
+    server = create_server(port, teams, map_size, nb_max_clients);
     if (server == NULL)
         return 84;
     server->single_tick_time = single_tick_time;
