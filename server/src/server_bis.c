@@ -9,6 +9,7 @@
 #include "server.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <string.h>
 
 static void write_to_client(client_t *client)
 {
