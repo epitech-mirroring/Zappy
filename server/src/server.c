@@ -50,7 +50,7 @@ static void read_clients_messages(server_t *server, fd_set *readfds)
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
         client = (client_t *)array_get_at(server->clients, i);
-        if (FD_ISSET(client->socket, readfds));
+        if (FD_ISSET(client->socket, readfds))
             read_client_message(server, client);
     }
 }
