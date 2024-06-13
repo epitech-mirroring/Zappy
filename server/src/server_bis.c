@@ -17,7 +17,11 @@ static void connect_server(server_t *server)
     addr->sin_family = AF_INET;
     addr->sin_port = htons(server->port);
     addr->sin_addr.s_addr = INADDR_ANY;
-    bind(server->fd, (struct sockaddr *)&addr, sizeof(addr));
+    if (setsockopt(server->fd, SOL_SOCKET, SO_REUSEADDR, &(int){1},
+                   sizeof(int)) < 0)
+        return;
+    if (bind(server->fd, (struct sockaddr *)addr, sizeof(struct sockaddr_in)) < 0)
+        return;
     listen(server->fd, MAX_USERS);
 
 }
