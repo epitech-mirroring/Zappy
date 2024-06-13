@@ -25,6 +25,15 @@ extern "C" {
         resources_t resources;
     } inventory_t;
 
+    /**
+     * @brief Function to create a new inventory
+     *
+     * This function creates a new inventory for a Trantorian.
+     * The inventory is initialized with 10 food units.
+     * @return inventory_t* The new inventory
+    */
+    inventory_t init_inventory(void);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
