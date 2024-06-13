@@ -69,7 +69,8 @@ static void handle_new_client(game_t *game)
         if (msg == NULL)
             continue;
         if (can_create_trantorian(game, msg)) {
-            create_trantorian(game, get_team_by_name(game->teams, msg), client);
+            create_trantorian(game,
+                get_team_by_name(game->teams, msg), client);
             trantorian = (trantorian_t *)array_get_at
                 (game->trantorians, array_get_size(game->trantorians) - 1);
             new_client_ping(game, client,
@@ -91,7 +92,7 @@ game_t *init_game(array_t *teams, size_t map_size[2], size_t team_max_size)
     game->eggs = array_constructor(sizeof(egg_t), (void *)&destroy_egg);
     game->trantorians = array_constructor(sizeof(trantorian_t), NULL);
     game->team_max_size = team_max_size;
-    game->map =  init_map(map_size[0], map_size[1]);
+    game->map = init_map(map_size[0], map_size[1]);
     return game;
 }
 

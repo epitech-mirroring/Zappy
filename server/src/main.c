@@ -72,7 +72,8 @@ static size_t find_single_tick_time(int ac, char **av)
 static array_t *find_teams(int ac, char **av)
 {
     int i = 1;
-    array_t *teams = array_constructor(sizeof(team_t *), NULL); //need to implement team destructor
+    array_t *teams = array_constructor(sizeof(team_t *),
+        (void *)&destroy_team);
 
     for (; i < ac; i++) {
         if (strcmp(av[i], "-n") == 0)
@@ -81,7 +82,7 @@ static array_t *find_teams(int ac, char **av)
     if (i >= ac)
         return NULL;
     for (i++; i < ac && av[i][0] != '-'; i++) {
-        array_push_back(teams, NULL); // need to implement team constructor
+        array_push_back(teams, init_team(av[i]));
     }
     return teams;
 }

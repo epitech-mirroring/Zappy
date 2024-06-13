@@ -47,7 +47,7 @@ extern "C" {
      * @return server_t* The server
      */
     server_t *create_server(unsigned short port, array_t *teams,
-                            size_t map_size[2], size_t nb_max_clients);
+        size_t map_size[2], size_t nb_max_clients);
 
     /**
      * @brief Destroy a server
@@ -96,35 +96,11 @@ extern "C" {
     void new_clients_check(server_t *server, client_t *client);
 
     /**
-     * @brief Get the closet action of a client
-     *
-     * @param server The server
-     */
-    __suseconds_t get_closest_action(server_t *server);
-
-    /**
      * @brief Find the max file descriptor
      *
      * @param server The server
      */
     int find_max_fd(server_t *server);
-
-    /**
-     * @brief Tick the server
-     *
-     * @param server The server
-     * @param tick The time from the last call of Tick in microseconds
-     */
-    void tick(server_t *server, __suseconds_t time_since_last_tick);
-
-    /**
-     * @brief Fill the fd_set with the file descriptors of the clients
-     * and the server
-     * @param server The server
-     * @param readfds The fd_set for the read file descriptors
-     * @param writefds The fd_set for the write file descriptors
-     */
-    void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds);
 
     /**
      * @brief Handle new connections
@@ -133,6 +109,13 @@ extern "C" {
      * @param readfds The fd_set for the read file descriptors
      */
     void handle_new_connections(server_t *server, fd_set *readfds);
+
+    /**
+     * @brief write to clients
+     *
+     * @param server The server
+     */
+    void write_to_clients(server_t *server);
 
     #ifdef __cplusplus
 }

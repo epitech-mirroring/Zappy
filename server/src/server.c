@@ -15,33 +15,30 @@
 #include <string.h>
 #include <errno.h>
 
-void add_client(server_t *server, int fd)
+static void write_to_client(client_t *client)
 {
-    client_t *client = init_client(fd, UNKNOWN);
+    char *message = buffer_get_next(client->buffer_answered);
 
-    client->socket = fd;
-    buffer_write(client->buffer_answered, "WELCOME\n");
-    array_push_back(server->clients, client);
-    if (fd > server->max_fd)
-        server->max_fd = fd;
+    for (; message != NULL; message =
+        buffer_get_next(client->buffer_answered)) {
+        send(client->socket, message, strlen(message), 0);
+        free(message);
+    }
 }
 
-void remove_client(server_t *server, int fd)
+static void tick(server_t *server, __suseconds_t time_since_last_tick)
 {
-    client_t *client;
-    size_t size = array_get_size(server->clients);
+    int nb_ticks = time_since_last_tick / server->single_tick_time;
 
-    for (size_t i = 0; i < size; i++) {
-        client = (client_t *)array_get_at(server->clients, i);
-        if (client->socket == fd) {
-            array_remove(server->clients, i);
-            break;
-        }
+    if (nb_ticks <= 0)
+        return;
+    if (time_since_last_tick == -1)
+        nb_ticks = 0;
+    for (int i = 0; i < nb_ticks; i++) {
+        game_tick(server->game);
     }
-    if (fd == server->max_fd) {
-        server->max_fd = 0;
-        server->max_fd = find_max_fd(server);
-    }
+    write_to_clients(server);
+    server->nb_ticks += nb_ticks;
 }
 
 static void read_clients_messages(server_t *server, fd_set *readfds)
@@ -52,6 +49,43 @@ static void read_clients_messages(server_t *server, fd_set *readfds)
         client = (client_t *)array_get_at(server->clients, i);
         if (FD_ISSET(client->socket, readfds))
             read_client_message(server, client);
+    }
+}
+
+static __suseconds_t get_closest_action(server_t *server)
+{
+    __suseconds_t closest_action = -1;
+    __suseconds_t action;
+    trantorian_t *trantorian;
+    client_t *client;
+
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        client = (client_t *)array_get_at(server->clients, i);
+        if (client->type != AI)
+            continue;
+        trantorian =
+            (trantorian_t *)array_get_at(server->game->trantorians, i);
+            action = (__suseconds_t)trantorian->waiting_tick
+                * server->single_tick_time * 1000;
+            if ((closest_action == -1 || action < closest_action)
+                && action >= 0)
+                closest_action = action;
+    }
+    return closest_action;
+}
+
+static void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds)
+{
+    client_t *client;
+
+    FD_ZERO(readfds);
+    FD_ZERO(writefds);
+    FD_SET(server->fd, readfds);
+    server->max_fd = find_max_fd(server);
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        client = (client_t *)array_get_at(server->clients, i);
+        FD_SET(client->socket, readfds);
+        FD_SET(client->socket, writefds);
     }
 }
 
@@ -79,10 +113,21 @@ void run(server_t *server)
     }
 }
 
+void write_to_clients(server_t *server)
+{
+    client_t *client;
+
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        client = (client_t *)array_get_at(server->clients, i);
+        write_to_client(client);
+    }
+}
+
 void read_client_message(server_t *server, client_t *client)
 {
     char buffer[1024] = {0};
     size_t ret = read(client->socket, buffer, MAX_COMMAND_SIZE);
+
     if (ret <= 0)
         return;
     printf("buffer: %s\n", buffer);
@@ -116,26 +161,4 @@ int find_max_fd(server_t *server)
             max_fd = client->socket;
     }
     return max_fd;
-}
-
-__suseconds_t get_closest_action(server_t *server)
-{
-    __suseconds_t closest_action = -1;
-    __suseconds_t action;
-    trantorian_t *trantorian;
-    client_t *client;
-
-    for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client = (client_t *)array_get_at(server->clients, i);
-        if (client->type != AI)
-            continue;
-        trantorian =
-            (trantorian_t *)array_get_at(server->game->trantorians, i);
-            action = (__suseconds_t)trantorian->waiting_tick
-                * server->single_tick_time * 1000;
-            if ((closest_action == -1 || action < closest_action)
-                && action >= 0)
-                closest_action = action;
-    }
-    return closest_action;
 }

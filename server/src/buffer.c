@@ -29,10 +29,7 @@ buffer_t *create_buffer(size_t capacity)
 
 void buffer_write(buffer_t *buffer, char *data)
 {
-    //printf("buffer before write: %s\n", buffer->buffer);
-    printf("buffer->write_index: %d\n", buffer->write_index);
     size_t data_size = strlen(data);
-    printf("data_size: %d\n", data_size);
 
     if (!can_write(buffer, data_size))
         return;
@@ -48,17 +45,6 @@ void buffer_write(buffer_t *buffer, char *data)
     }
     buffer->buffer[buffer->write_index] = '\0';
     buffer->write_index++;
-    printf("buffer->write_index: %d\n", buffer->write_index);
-   for (size_t i = 0; i < 30; i++) {
-       if (i == buffer->write_index)
-           printf("W->");
-       if (i == buffer->read_index)
-           printf("R->");
-       else
-           printf("   ");
-       printf("data[%d]: %d(%c)\n", i, buffer->buffer[i], buffer->buffer[i]);
-   }
-    //printf("buffer after write: %s\n", buffer->buffer);
 }
 
 char *buffer_get_next(buffer_t *buffer)
