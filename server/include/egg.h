@@ -26,6 +26,22 @@ extern "C" {
         coordinates_t coordinates;
     } egg_t;
 
+    /**
+     * @brief Initialize an egg
+     *
+     * @param team_uuid The team UUID
+     * @param coordinates The coordinates of the egg
+     * @return egg_t* The new egg
+     */
+    egg_t *init_egg(uuid_t team_uuid, coordinates_t coordinates);
+
+    /**
+     * @brief Destroy an egg
+     *
+     * @param egg The egg to destroy
+     */
+    void destroy_egg(egg_t *egg);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
