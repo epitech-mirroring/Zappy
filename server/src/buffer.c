@@ -17,7 +17,7 @@ static bool can_write(buffer_t *buffer, size_t size)
             i = 0;
         size--;
     }
-    if (size > 0)
+    if (size > 0 && buffer->write_index != buffer->read_index)
         return false;
     return true;
 }
@@ -26,7 +26,7 @@ buffer_t *create_buffer(size_t capacity)
 {
     buffer_t *buffer = malloc(sizeof(buffer_t));
 
-    buffer->buffer = malloc(capacity);
+    buffer->buffer = calloc(capacity, sizeof(char));
     buffer->capacity = capacity;
     buffer->read_index = 0;
     buffer->write_index = 0;
@@ -57,7 +57,9 @@ char *buffer_get_next(buffer_t *buffer)
             i = 0;
         data_size++;
     }
-    data = malloc(data_size + 1);
+    if (data_size == 0)
+        return NULL;
+    data = calloc(data_size + 1, sizeof(char));
     for (size_t i = 0; buffer->buffer[buffer->read_index] != '\0'; i++) {
         if (buffer->read_index == buffer->capacity)
             buffer->read_index = 0;
@@ -65,7 +67,6 @@ char *buffer_get_next(buffer_t *buffer)
         buffer->buffer[buffer->read_index] = '\0';
         buffer->read_index++;
     }
-    data[data_size] = '\0';
     return data;
 }
 

@@ -33,7 +33,6 @@ void destroy_client(client_t *client)
     free(client);
 }
 
-//TODO make a case when the buffer is full
 void add_message(client_t *client, char *message)
 {
     if (client == NULL)

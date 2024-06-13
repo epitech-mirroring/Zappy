@@ -10,6 +10,27 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+static void write_to_client(client_t *client)
+{
+    char *message = buffer_get_next(client->buffer_answered);
+
+    for (; message != NULL; message =
+        buffer_get_next(client->buffer_answered)) {
+        send(client->socket, message, strlen(message), 0);
+        free(message);
+    }
+}
+
+static void write_to_clients(server_t *server)
+{
+    client_t *client;
+
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        client = (client_t *)array_get_at(server->clients, i);
+        write_to_client(client);
+    }
+}
+
 static void connect_server(server_t *server)
 {
     struct sockaddr_in *addr = malloc(sizeof(struct sockaddr_in));
@@ -57,9 +78,12 @@ void tick(server_t *server, __suseconds_t time_since_last_tick)
 
     if (nb_ticks <= 0)
         return;
+    if (time_since_last_tick == -1)
+        nb_ticks = 0;
     for (int i = 0; i < nb_ticks; i++) {
         game_tick(server->game);
     }
+    write_to_clients(server);
     server->nb_ticks += nb_ticks;
 }
 

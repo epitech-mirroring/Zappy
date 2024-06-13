@@ -44,28 +44,14 @@ void remove_client(server_t *server, int fd)
     }
 }
 
-static void send_message(server_t *server, int fd, char *message)
-{
-    dprintf(fd, "%s\n", message);
-}
-
-static void send_message_to_all(server_t *server, char *message)
+static void read_clients_messages(server_t *server, fd_set *readfds)
 {
     client_t *client;
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
         client = (client_t *)array_get_at(server->clients, i);
-        send_message(server, client->socket, message);
-    }
-}
-
-static void read_clients_messages(server_t *server)
-{
-    client_t *client;
-
-    for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client = (client_t *)array_get_at(server->clients, i);
-        read_client_message(server, client);
+        if (FD_ISSET(client->socket, readfds));
+            read_client_message(server, client);
     }
 }
 
@@ -80,16 +66,14 @@ void run(server_t *server)
         tv.tv_sec = 0;
         tv.tv_usec = get_closest_action(server);
         fill_fd_set(server, &readfds, &writefds);
-        if (tv.tv_usec == 0)
+        if (tv.tv_usec == -1)
             tv2 = NULL;
         else
             tv2 = &tv;
-        printf("test\n");
-        if (select(server->max_fd + 1, &readfds, &writefds, NULL, tv2) == -1) {
+        if (select(server->max_fd + 1, &readfds, &writefds, NULL, tv2) == -1)
             return;
-        }
-        printf("tick\n");
         handle_new_connections(server, &readfds);
+        read_clients_messages(server, &readfds);
         while (waitpid(-1, NULL, WNOHANG) > 0);
         tick(server, tv.tv_usec);
     }
@@ -102,6 +86,7 @@ void read_client_message(server_t *server, client_t *client)
 
     if (ret <= 0)
         return;
+    printf("buffer: %s\n", buffer);
     add_message(client, buffer);
 }
 
@@ -138,11 +123,15 @@ int find_max_fd(server_t *server)
 
 __suseconds_t get_closest_action(server_t *server)
 {
-    __suseconds_t closest_action = 0;
+    __suseconds_t closest_action = -1;
     __suseconds_t action;
     trantorian_t *trantorian;
+    client_t *client;
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        client = (client_t *)array_get_at(server->clients, i);
+        if (client->type != AI)
+            continue;
         trantorian =
             (trantorian_t *)array_get_at(server->game->trantorians, i);
             action = (__suseconds_t)trantorian->waiting_tick
