@@ -16,7 +16,13 @@
 namespace network {
     class ICommand {
     public:
+        /**
+         * @brief Construct a new ICommand object
+         */
         ICommand() noexcept = default;
+        /**
+         * @brief Destroy the ICommand object
+         */
         virtual ~ICommand() noexcept = default;
 
         /**
