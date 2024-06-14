@@ -87,6 +87,28 @@ static array_t *find_teams(int ac, char **av)
     return teams;
 }
 
+int check_teams(array_t *teams)
+{
+    team_t *team;
+    int check = 0;
+
+    if (array_get_size(teams) == 0)
+        return 84;
+    for (size_t i = 0; i < array_get_size(teams); i++) {
+        team = (team_t *)array_get_at(teams, i);
+        if (team->name == NULL || strcmp(team->name, "GRAPHIC") == 0)
+            return 84;
+        check = 0;
+        for (size_t j = i + 1; j < array_get_size(teams); j++) {
+            check += strcmp(team->name,
+                ((team_t *)array_get_at(teams, j))->name);
+        }
+        if (check != 0)
+            return 84;
+    }
+    return 0;
+}
+
 int main(int ac, char **av)
 {
     size_t *map_size = find_map_size(ac, av);
@@ -97,7 +119,7 @@ int main(int ac, char **av)
     server_t *server;
 
     if (map_size == NULL || port == -1 || nb_max_clients == -1
-        || single_tick_time == -1 || teams == NULL)
+        || single_tick_time == -1 || check_teams(teams) == 84)
         return 84;
     server = create_server(port, teams, map_size, nb_max_clients);
     if (server == NULL)

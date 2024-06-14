@@ -26,6 +26,7 @@ extern "C" {
         uuid_t uuid;
         array_t *trantorians;
         char *name;
+        size_t free_places;
     } team_t;
 
     /**
