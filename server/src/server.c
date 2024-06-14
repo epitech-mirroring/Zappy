@@ -34,6 +34,7 @@ static void tick(server_t *server, __suseconds_t time_since_last_tick)
         return;
     if (time_since_last_tick == -1)
         nb_ticks = 0;
+    handle_new_client(server->game);
     for (int i = 0; i < nb_ticks; i++) {
         game_tick(server->game);
     }
@@ -47,8 +48,10 @@ static void read_clients_messages(server_t *server, fd_set *readfds)
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
         client = (client_t *)array_get_at(server->clients, i);
-        if (FD_ISSET(client->socket, readfds))
+        if (FD_ISSET(client->socket, readfds)) {
             read_client_message(server, client);
+            new_clients_check(server, client);
+        }
     }
 }
 
@@ -57,19 +60,14 @@ static __suseconds_t get_closest_action(server_t *server) //pass  __suseconds_t 
     __suseconds_t closest_action = -1;
     __suseconds_t action;
     trantorian_t *trantorian;
-    client_t *client;
 
-    for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client = (client_t *)array_get_at(server->clients, i);
-        if (client->type != AI)
+    for (size_t i = 0; i < array_get_size(server->game->trantorians); i++) {
+        trantorian = (trantorian_t *)array_get_at(server->game->trantorians, i);
+        if (array_get_size(trantorian->actions) == 0)
             continue;
-        trantorian =
-            (trantorian_t *)array_get_at(server->game->trantorians, i);
-            action = (__suseconds_t)trantorian->waiting_tick
-                * server->single_tick_time * 1000;
-            if ((closest_action == -1 || action < closest_action)
-                && action >= 0)
-                closest_action = action;
+        action = trantorian->waiting_tick * server->single_tick_time;
+        if (action != -1 && (closest_action == -1 || action < closest_action))
+            closest_action = action;
     }
     return closest_action;
 }
@@ -130,24 +128,25 @@ void read_client_message(server_t *server, client_t *client)
 
     if (ret <= 0)
         return;
-    printf("buffer: %s\n", buffer);
     add_message(client, buffer);
 }
 
 void new_clients_check(server_t *server, client_t *client)
 {
-    char *message = get_next_message(client);
+    char *message;
 
+    if (client->type != UNKNOWN) {
+        return;
+    }
+    message = get_next_message(client);
     if (!message)
         return;
-    if (client->type == UNKNOWN) {
-        if (strcmp(message, "GRAPHIC") == 0) {
-            client->type = GRAPHIC;
-        } else {
-            client->type = AI;
-            buffer_write(client->buffer_asked, message);
-            array_push_back(server->game->clients_without_team, client);
-        }
+    if (strcmp(message, "GRAPHIC") == 0) {
+        client->type = GRAPHIC;
+    } else {
+        client->type = AI;
+        buffer_write(client->buffer_asked, message);
+        array_push_back(server->game->clients_without_team, client);
     }
 }
 

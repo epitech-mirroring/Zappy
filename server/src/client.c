@@ -35,16 +35,23 @@ void destroy_client(client_t *client)
 
 void add_message(client_t *client, char *message)
 {
+    char *new_message = calloc(sizeof(char), strlen(message) - 1);
     if (client == NULL)
         return;
-    buffer_write(client->buffer_asked, message);
+    for (int i = 0; message[i] != '\0'; i++) {
+        if (message[i] == '\n' || message[i] == '\r')
+            continue;
+        new_message[i] = message[i];
+    }
+    buffer_write(client->buffer_asked, new_message);
+    free(new_message);
 }
 
 char *get_next_message(client_t *client)
 {
     if (client == NULL)
         return (NULL);
-    return (buffer_get_next(client->buffer_asked));
+    return buffer_get_next(client->buffer_asked);
 }
 
 client_type_t get_type(client_t *client)

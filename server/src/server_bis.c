@@ -42,10 +42,15 @@ server_t *create_server(unsigned short port, array_t *teams,
     size_t map_size[2], size_t nb_max_clients)
 {
     server_t *server = malloc(sizeof(server_t));
+    team_t *team;
 
     if (!server)
         return NULL;
-    server->game = init_game(teams, map_size, nb_max_clients);
+    for (size_t i = 0; i < array_get_size(teams); i++) {
+        team = (team_t *)array_get_at(teams, i);
+        team->free_places = nb_max_clients;
+    }
+    server->game = init_game(teams, map_size);
     server->clients = array_constructor(sizeof(client_t),
         (void *)&destroy_client);
     server->nb_ticks = 0;

@@ -127,6 +127,13 @@ extern "C" {
      */
     void generate_ressources(map_t *map);
 
+    /**
+     * @brief Init the resources of a tile.
+     *
+     * @return The resources.
+     */
+    resources_t init_resources(void);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

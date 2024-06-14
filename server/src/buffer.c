@@ -36,12 +36,12 @@ void buffer_write(buffer_t *buffer, char *data)
     if (data[0] == '\0' || data[0] == '\n' || data[0] == '\r')
         return;
     for (size_t i = 0; i < data_size; i++) {
-        if (data[i] == 10 || data[i] == 13)
+        if (buffer->write_index == buffer->capacity)
+            buffer->write_index = 0;
+        if (data[i] == 13)
             continue;
         buffer->buffer[buffer->write_index] = data[i];
         buffer->write_index++;
-        if (buffer->write_index == buffer->capacity)
-            buffer->write_index = 0;
     }
     buffer->buffer[buffer->write_index] = '\0';
     buffer->write_index++;
@@ -67,6 +67,7 @@ char *buffer_get_next(buffer_t *buffer)
         buffer->buffer[buffer->read_index] = '\0';
         buffer->read_index++;
     }
+    buffer->read_index++;
     return data;
 }
 

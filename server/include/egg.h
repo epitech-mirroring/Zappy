@@ -51,13 +51,6 @@ extern "C" {
      */
     egg_t *generate_egg(uuid_t team_uuid, map_t *map);
 
-    /**
-     * @brief Genrate the start eggs for the game
-     *
-     * @param game The game
-     */
-    void generate_start_eggs(game_t *game);
-
     #ifdef __cplusplus
 }
     #endif // __cplusplus

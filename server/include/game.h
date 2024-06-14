@@ -15,9 +15,9 @@ extern "C" {
     #include "map.h"
     #include "trantorian.h"
     #include "egg.h"
-    #include <stdbool.h>
     #include "client.h"
     #include "team.h"
+    #include <stdbool.h>
 
     /**
      * @struct game_s
@@ -62,15 +62,6 @@ extern "C" {
     void game_tick(game_t *game);
 
     /**
-     * @brief Check if a team can create a Trantorian
-     *
-     * @param game The game
-     * @param team_name The name of the team
-     * @return bool true if the team is not full, false otherwise
-     */
-    bool can_create_trantorian(game_t *game, char *team_name);
-
-    /**
      * @brief Create a Trantorian for a team
      *
      * @param game The game
@@ -78,6 +69,20 @@ extern "C" {
      * @param client The client that wants to create a Trantorian
      */
     void create_trantorian(game_t *game, team_t *team, client_t *client);
+
+    /**
+     * @brief Genrate the start eggs for the game
+     *
+     * @param game The game
+     */
+    void generate_start_eggs(game_t *game);
+
+    /**
+     * @brief Handle a new client
+     *
+     * @param game The game
+     */
+    void handle_new_client(game_t *game);
 
     #ifdef __cplusplus
 }

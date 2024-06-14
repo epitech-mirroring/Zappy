@@ -90,7 +90,7 @@ static array_t *find_teams(int ac, char **av)
 int check_teams(array_t *teams)
 {
     team_t *team;
-    int check = 0;
+    int check = 1;
 
     if (array_get_size(teams) == 0)
         return 84;
@@ -98,12 +98,12 @@ int check_teams(array_t *teams)
         team = (team_t *)array_get_at(teams, i);
         if (team->name == NULL || strcmp(team->name, "GRAPHIC") == 0)
             return 84;
-        check = 0;
-        for (size_t j = i + 1; j < array_get_size(teams); j++) {
-            check += strcmp(team->name,
+        check = 1;
+        for (size_t j = i + 1; j < array_get_size(teams) && check != 0; j++) {
+            check == strcmp(team->name,
                 ((team_t *)array_get_at(teams, j))->name);
         }
-        if (check != 0)
+        if (check == 0)
             return 84;
     }
     return 0;
@@ -118,6 +118,7 @@ int main(int ac, char **av)
     array_t *teams = find_teams(ac, av);
     server_t *server;
 
+    srand(time(NULL));
     if (map_size == NULL || port == -1 || nb_max_clients == -1
         || single_tick_time == -1 || check_teams(teams) == 84)
         return 84;
@@ -126,7 +127,6 @@ int main(int ac, char **av)
         return 84;
     server->single_tick_time = single_tick_time;
     run(server);
-    printf("Server is running\n");
     destroy(server);
     return 0;
 }
