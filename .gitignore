@@ -197,3 +197,4 @@ robots/src/__pycache__/__init__.cpython-310.pyc
 robots/src/__pycache__/Objects.cpython-310.pyc
 robots/tests/__pycache__/__init__.cpython-310.pyc
 robots/tests/__pycache__/Objects_test.cpython-310-pytest-8.2.2.pyc
+robots/tests/__pycache__/Objects_test.cpython-311-pytest-8.2.2.pyc

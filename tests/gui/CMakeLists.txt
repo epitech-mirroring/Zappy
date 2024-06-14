@@ -7,4 +7,5 @@ target_sources(zappy_tests
         ${CMAKE_CURRENT_LIST_DIR}/WorldSpec.cpp
         ${CMAKE_CURRENT_LIST_DIR}/ObjectsPositionsSpec.cpp
         ${CMAKE_CURRENT_LIST_DIR}/TeamsSpec.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/TilesSpec.cpp
 )

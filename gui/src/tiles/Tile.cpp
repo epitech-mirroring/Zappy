@@ -46,7 +46,6 @@ IObject* Tile::createObjectByType(ResourceType type, Position pos)
     }
 }
 
-
 void Tile::updateTileContent(std::string tileContent)
 {
     std::istringstream iss(tileContent);
@@ -73,7 +72,7 @@ void Tile::updateTileContent(std::string tileContent)
             auto it = _objects.begin();
             while (currentQuantity > desiredQuantity && it != _objects.end()) {
                 if ((*it)->getType() == type) {
-                    removeObject(*it);
+                    delete *it;
                     it = _objects.erase(it);
                     currentQuantity--;
                 } else {
