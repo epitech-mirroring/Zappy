@@ -83,27 +83,3 @@ void Game::initTimeUnit(std::vector<std::string> data)
     }
     std::cout << "GUI LOG: Time unit set (" << _timeUnit << ")" << std::endl;
 }
-
-// void Game::createTeams(std::vector<std::string> data)
-// {
-//     if (!_teams) {
-//         _teams = std::make_shared<Teams>();
-//     }
-
-//     for (auto &line : data) {
-//         std::istringstream iss(line);
-//         std::vector<std::string> tokens;
-//         std::string token;
-//         while (std::getline(iss, token, ' ')) {
-//             tokens.push_back(token);
-//         }
-//         if (tokens[0] == "tna") {
-//             std::string teamName = tokens[1];
-//             if (_teams->getTeamByName(teamName) == nullptr) {
-//                 Teams newTeam(teamName);
-//                 _teams->addTeamToTeamsList(newTeam);
-//                 std::cout << "GUI LOG: Team created (" << teamName << ")" << std::endl;
-//             }
-//         }
-//     }
-// }
