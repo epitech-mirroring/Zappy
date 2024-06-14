@@ -29,6 +29,12 @@ target_sources(zappy_gui_lib
     # NETWORK
     ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/Client.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol_handler/ProtocolHandler.cpp
+    ## COMMANDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/factory/CommandFactory.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/bct/CommandBCT.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/bct/CommandBCT.cpp
+
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
 
@@ -64,6 +70,11 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/ASocket.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/Client.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol_handler/ProtocolHandler.hpp
+    ## COMMANDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/factory/CommandFactory.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/bct/CommandBCT.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/bct/CommandBCT.hpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
 )
