@@ -52,7 +52,7 @@ static void read_clients_messages(server_t *server, fd_set *readfds)
     }
 }
 
-static __suseconds_t get_closest_action(server_t *server)
+static __suseconds_t get_closest_action(server_t *server) //pass  __suseconds_t to long
 {
     __suseconds_t closest_action = -1;
     __suseconds_t action;
@@ -145,6 +145,7 @@ void new_clients_check(server_t *server, client_t *client)
             client->type = GRAPHIC;
         } else {
             client->type = AI;
+            buffer_write(client->buffer_asked, message);
             array_push_back(server->game->clients_without_team, client);
         }
     }
