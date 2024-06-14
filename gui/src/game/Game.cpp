@@ -40,7 +40,31 @@ void Game::runGame()
     network::ProtocolHandler protocolHandler(commandFactory);
 
     commandFactory.setCallback("bct", [this](std::istringstream &iss) {
-        std::cout << "GUI LOG: Received BCT command" << std::endl;
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+        while (std::getline(iss2, token, ' ')) {
+            tokens.push_back(token);
+        }
+        int x = std::stoi(tokens[1]);
+        int y = std::stoi(tokens[2]);
+        for (auto &tiles : _world.getTiles()) {
+            for (auto &tile : tiles) {
+                if (tile.getPosition().getX() == x && tile.getPosition().getY() == y) {
+                    std::string tileContent = "";
+                    for (int i = 3; i < 10; i++) {
+                        tileContent += tokens[i] + " ";
+                    }
+                    tile.updateTileContent(tileContent);
+                    std::cout << "GUI LOG: Tile (" << x << ", " << y << ") updated" << std::endl;
+                    for (auto &object : tile.getObjects()) {
+                        std::cout << "GUI LOG: Object " << object->getType() << " at (" << x << ", " << y << ")" << std::endl;
+                    }
+                    break;
+                }
+            }
+        }
     });
 
     while (!WindowShouldClose()) {
@@ -48,7 +72,7 @@ void Game::runGame()
         ClearBackground(BLUE);
         data = _client.readData();
         protocolHandler.handleData(data);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, BLACK);
+        DrawText("Congrats! You created your first window!", 420, 360, 20, BLACK);
         EndDrawing();
         data.clear();
     }
@@ -68,9 +92,16 @@ void Game::createWorld(std::vector<std::string> data)
             _world = World(std::stoi(tokens[1]), std::stoi(tokens[2]));
             break;
         }
+        for (int y = 0; y < _world.getHeight(); y++) {
+            for (int x = 0; x < _world.getWidth(); x++) {
+                _world.addTile(Tile(Position(x, y)));
+            }
+        }
     }
     std::cout << "GUI LOG: World created (" << _world.getHeight() << ", "
         << _world.getWidth() << ")" << std::endl;
+    std::cout << "GUI LOG: Tiles created (" << (_world.getTiles().size()
+        * _world.getTiles().size()) << ")" << std::endl;
 }
 
 void Game::initTimeUnit(std::vector<std::string> data)

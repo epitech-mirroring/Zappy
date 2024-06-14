@@ -9,15 +9,44 @@
     #define TILE_HPP_
 
     #include <list>
-    #include "objects/interface/IObject.hpp"
+    #include <string>
+    #include <sstream>
+    #include <vector>
+    #include <iostream>
+    #include <algorithm>
+    #include <unordered_map>
     #include "position/Position.hpp"
+    #include "objects/interface/IObject.hpp"
+    #include "objects/food/Food.hpp"
+    #include "objects/stones/Linemate.hpp"
+    #include "objects/stones/Deraumere.hpp"
+    #include "objects/stones/Sibur.hpp"
+    #include "objects/stones/Mendiane.hpp"
+    #include "objects/stones/Phiras.hpp"
+    #include "objects/stones/Thystame.hpp"
 
 namespace GUI {
     class Tile {
     public:
+        enum ResourceType {
+            FOOD,
+            LINEMATE,
+            DERAUMERE,
+            SIBUR,
+            MENDIANE,
+            PHIRAS,
+            THYSTAME,
+            RESOURCE_COUNT
+        };
+        /**
+         * @brief Construct a new Tile object
+         * @param pos (position of the tile)
+         */
         Tile(Position pos);
+        /**
+         * @brief Destroy the Tile object
+         */
         ~Tile() = default;
-
         /**
          * @brief Get the Position of the tile
          * @return Position (position of the tile)
@@ -46,6 +75,9 @@ namespace GUI {
          * @brief Clear all objects on the tile
          */
         void clearObjects();
+
+        void updateTileContent(std::string tileContent);
+        IObject* createObjectByType(ResourceType type, Position pos);
 
     protected:
         std::list<IObject *> _objects;  // list of objects on the tile
