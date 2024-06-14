@@ -42,6 +42,22 @@ extern "C" {
      */
     void destroy_egg(egg_t *egg);
 
+    /**
+     * @brief Generate a new egg with random coordinates
+     *
+     * @param team_uuid The team UUID
+     * @param map The map
+     * @return egg_t* The new egg
+     */
+    egg_t *generate_egg(uuid_t team_uuid, map_t *map);
+
+    /**
+     * @brief Genrate the start eggs for the game
+     *
+     * @param game The game
+     */
+    void generate_start_eggs(game_t *game);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
