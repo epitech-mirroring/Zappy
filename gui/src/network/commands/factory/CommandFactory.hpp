@@ -42,6 +42,17 @@ namespace network {
         void setCallback(const std::string& commandName,
             ICommand::Callback callback);
 
+        /**
+         * @brief Execute the command
+         * @param std::istringstream &iss, the command to execute
+         */
+        void execute(std::istringstream& iss) override;
+
+        /**
+         * @brief Clone the command
+         */
+        std::unique_ptr<ICommand> clone() const override;
+
     private:
         std::unordered_map<std::string,
             std::unique_ptr<ICommand>> _commands;

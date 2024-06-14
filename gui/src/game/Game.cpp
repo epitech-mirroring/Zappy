@@ -36,12 +36,18 @@ void Game::initGame()
 void Game::runGame()
 {
     std::vector<std::string> data;
+    network::CommandFactory commandFactory;
+    network::ProtocolHandler protocolHandler(commandFactory);
+
+    commandFactory.setCallback("bct", [this](std::istringstream &iss) {
+        std::cout << "GUI LOG: Received BCT command" << std::endl;
+    });
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
         data = _client.readData();
-        //handle the data following the protocol. (start by handling bct, then tna)
+        protocolHandler.handleData(data);
         DrawText("Congrats! You created your first window!", 190, 200, 20, BLACK);
         EndDrawing();
         data.clear();
@@ -59,12 +65,12 @@ void Game::createWorld(std::vector<std::string> data)
             tokens.push_back(token);
         }
         if (tokens[0] == "msz") {
-            _world = std::make_shared<World>(std::stoi(tokens[1]), std::stoi(tokens[2]));
+            _world = World(std::stoi(tokens[1]), std::stoi(tokens[2]));
             break;
         }
     }
-    std::cout << "GUI LOG: World created (" << _world.get()->getHeight() << ", "
-        << _world.get()->getWidth() << ")" << std::endl;
+    std::cout << "GUI LOG: World created (" << _world.getHeight() << ", "
+        << _world.getWidth() << ")" << std::endl;
 }
 
 void Game::initTimeUnit(std::vector<std::string> data)

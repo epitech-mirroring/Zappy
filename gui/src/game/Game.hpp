@@ -8,11 +8,13 @@
 #ifndef GAME_HPP_
 #define GAME_HPP_
 
+    #include <sstream>
     #include <raylib.h>
     #include "world/World.hpp"
     #include "trantorians/Teams.hpp"
     #include "network/Client.hpp"
-    #include <sstream>
+    #include "network/commands/factory/CommandFactory.hpp"
+    #include "network/protocol_handler/ProtocolHandler.hpp"
 
 namespace GUI {
 class Game {
@@ -27,8 +29,8 @@ class Game {
         void initTimeUnit(std::vector<std::string> data); //create the time unit by receiving the TNA command
 
     private:
-        std::shared_ptr<World> _world;
-        std::shared_ptr<Teams> _teams;
+        World _world;
+        Teams _teams;
         network::Client _client;
         unsigned int _timeUnit;
 };
