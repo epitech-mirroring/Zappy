@@ -29,3 +29,8 @@ Position& AObject::getPosition() noexcept
 {
     return _position;
 }
+
+unsigned int AObject::getType() noexcept
+{
+    return 999;
+}

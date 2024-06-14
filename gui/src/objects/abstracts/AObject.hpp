@@ -42,6 +42,12 @@ namespace GUI {
          */
         [[nodiscard]] Position& getPosition() noexcept;
 
+        /**
+         * @brief Get the Type of the object
+         * @return unsigned int (type of the object (follow the protocol))
+         */
+        [[nodiscard]] unsigned int getType() noexcept;
+
     protected:
         float _density;         // density of the object
         Position _position;     // tile where the object is (x, y)

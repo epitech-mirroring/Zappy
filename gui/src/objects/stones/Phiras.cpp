@@ -13,3 +13,8 @@ Phiras::Phiras(Position tile)
     :   AStone(0.08, tile)
 {
 }
+
+unsigned int Phiras::getType() noexcept
+{
+    return 5;
+}

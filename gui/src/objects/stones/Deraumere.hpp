@@ -22,6 +22,12 @@ namespace GUI {
          * @brief Destroy the Deraumere object
          */
         virtual ~Deraumere() noexcept = default;
+
+        /**
+         * @brief Get the Type of the object
+         * @return unsigned int (type of the object (follow the protocol))
+         */
+        [[nodiscard]] unsigned int getType() noexcept final;
     };
 } // namespace GUI //
 #endif /* !DERAUMERE_HPP_ */

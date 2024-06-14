@@ -13,3 +13,8 @@ Food::Food(Position tile)
     :   AObject(0.5, tile)
 {
 }
+
+unsigned int Food::getType() noexcept
+{
+    return 0;
+}

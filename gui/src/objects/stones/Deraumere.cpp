@@ -13,3 +13,8 @@ Deraumere::Deraumere(Position tile)
     :   AStone(0.15, tile)
 {
 }
+
+unsigned int Deraumere::getType() noexcept
+{
+    return 2;
+}

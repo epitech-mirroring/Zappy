@@ -40,6 +40,13 @@ namespace GUI {
          * @return Position& tile where the object is (modifiable)
          */
         [[nodiscard]] virtual Position& getPosition() noexcept = 0;
+
+
+        /**
+         * @brief Get the Type of the object
+         * @return unsigned int (type of the object (follow the protocol))
+         */
+        [[nodiscard]] virtual unsigned int getType() noexcept = 0;
     };
 }  // namespace GUI
 #endif /* !IOBJECT_HPP_ */
