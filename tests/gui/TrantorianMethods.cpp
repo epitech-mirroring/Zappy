@@ -2,12 +2,13 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** trantorian_methods tests
+** TrantorianMethods
 */
 
 #include <gtest/gtest.h>
 #include <climits>
 #include "trantorians/Trantorian.hpp"
+#include "trantorians/Teams.hpp"
 #include "position/Position.hpp"
 
 using namespace GUI;
@@ -26,14 +27,14 @@ TEST(trantorian_methods, PositionSetterAndGetters) {
 }
 
 TEST(trantorian_methods, TeamSetterAndGetters) {
+    Teams team1("Epitech");
+    Teams team2("Zappy");
     Trantorian player;
-    std::string res = "Epitech";
-    std::string new_res = "Zappy";
 
-    player.setTeam("Epitech");
-    EXPECT_EQ(player.getTeam(), res);
-    player.setTeam("Zappy");
-    EXPECT_EQ(player.getTeam(), new_res);
+    player.setTeam(&team1);
+    EXPECT_EQ(player.getTeam()->getName(), team1.getName());
+    player.setTeam(&team2);
+    EXPECT_EQ(player.getTeam()->getName(), team2.getName());
 }
 
 TEST(trantorian_methods, LifetimeSetterAndGetters) {
@@ -134,16 +135,17 @@ TEST(trantorian_methods, PositionDefault) {
 
 TEST(trantorian_methods, TeamDefault) {
     Trantorian player;
-    EXPECT_EQ(player.getTeam(), "");
+    EXPECT_EQ(player.getTeam(), nullptr);
 }
 
 TEST(trantorian_methods, MultipleProperties) {
+    Teams team("Zappy");
     Trantorian player;
-    player.setTeam("Zappy");
+    player.setTeam(&team);
     player.setLevel(5);
     player.setIsAlive(false);
 
-    EXPECT_EQ(player.getTeam(), "Zappy");
+    EXPECT_EQ(player.getTeam()->getName(), "Zappy");
     EXPECT_EQ(player.getLevel(), 5);
     EXPECT_EQ(player.getIsAlive(), false);
 }

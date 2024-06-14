@@ -103,6 +103,14 @@ namespace GUI {
              */
             [[nodiscard]] int getLevel();
 
+            /**
+             * @brief Compare two trantorians
+             * @param other
+             * @return true if equal, false if not
+             */
+            [[nodiscard]]
+            bool operator==(const Trantorian& other) const;
+
         private:
             GUI::Position _position;
             Teams* _team;

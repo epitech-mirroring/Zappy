@@ -96,3 +96,15 @@ GUI::Teams* GUI::Trantorian::getTeam()
 {
     return _team;
 }
+
+bool GUI::Trantorian::operator==(const Trantorian& other) const
+{
+    return _position.getX() == other._position.getX() &&
+           _position.getY() == other._position.getY() &&
+           _team == other._team &&
+           _lifetimeRemaining == other._lifetimeRemaining &&
+           _alive == other._alive &&
+           _action == other._action &&
+           _id == other._id &&
+           _level == other._level;
+}
