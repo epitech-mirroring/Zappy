@@ -9,6 +9,53 @@
 #include "map.h"
 #include "egg.h"
 
+static void generate_stones(map_t *map, int x, int y)
+{
+    for (int i = 0; i < (map->height * map->width) / 10; i++) {
+        x = rand() % map->width;
+        y = rand() % map->height;
+        get_tile(map, x, y)->resources.mendiane_count += 1;
+    }
+    for (int i = 0; i < (map->height * map->width) / 8; i++) {
+        x = rand() % map->width;
+        y = rand() % map->height;
+        get_tile(map, x, y)->resources.phiras_count += 1;
+    }
+    for (int i = 0; i < (map->height * map->width) / 5; i++) {
+        x = rand() % map->width;
+        y = rand() % map->height;
+        get_tile(map, x, y)->resources.thystame_count += 1;
+    }
+    for (int i = 0; i < (map->height * map->width) / 10; i++) {
+        x = rand() % map->width;
+        y = rand() % map->height;
+        get_tile(map, x, y)->resources.sibur_count += 1;
+    }
+}
+
+void generate_ressources(map_t *map)
+{
+    int x = 0;
+    int y = 0;
+
+    for (int i = 0; i < (map->height * map->width) / 50; i++) {
+        x = rand() % map->width;
+        y = rand() % map->height;
+        get_tile(map, x, y)->resources.food_count += 1;
+    }
+    for (int i = 0; i < (map->height * map->width) / 30; i++) {
+        x = rand() % map->width;
+        y = rand() % map->height;
+        get_tile(map, x, y)->resources.linemate_count += 1;
+    }
+    for (int i = 0; i < (map->height * map->width) / 15; i++) {
+        x = rand() % map->width;
+        y = rand() % map->height;
+        get_tile(map, x, y)->resources.deraumere_count += 1;
+    }
+    generate_stones(map, x, y);
+}
+
 map_t *init_map(size_t width, size_t height)
 {
     map_t *map = malloc(sizeof(map_t));

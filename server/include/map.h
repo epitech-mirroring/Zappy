@@ -121,11 +121,11 @@ extern "C" {
     void destroy_tile(tile_t *tile);
 
     /**
-     * @brief Init a new resources.
+     * @brief Generate ressources on the map for one tick.
      *
-     * @return The new resources.
+     * @param map The map.
      */
-    resources_t init_resources(void);
+    void generate_ressources(map_t *map);
 
     #ifdef __cplusplus
 }

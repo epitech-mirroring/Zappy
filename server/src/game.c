@@ -33,7 +33,7 @@ static void new_client_ping(game_t *game, client_t *client,
 {
     char *msg = NULL;
 
-    msg = int_to_str(game->team_max_size - array_get_size(team->trantorians));
+    msg = int_to_str(team->free_places);
     strcat(msg, "\n");
     buffer_write(client->buffer_answered, msg);
     free(msg);
@@ -81,7 +81,7 @@ static void handle_new_client(game_t *game)
     }
 }
 
-game_t *init_game(array_t *teams, size_t map_size[2], size_t team_max_size)
+game_t *init_game(array_t *teams, size_t map_size[2])
 {
     game_t *game = malloc(sizeof(game_t));
 
@@ -90,9 +90,10 @@ game_t *init_game(array_t *teams, size_t map_size[2], size_t team_max_size)
         array_push_back(game->teams, array_get_at(teams, i));
     }
     game->eggs = array_constructor(sizeof(egg_t), (void *)&destroy_egg);
+    generate_start_eggs(game);
     game->trantorians = array_constructor(sizeof(trantorian_t), NULL);
-    game->team_max_size = team_max_size;
     game->map = init_map(map_size[0], map_size[1]);
+    generate_ressources(game->map);
     return game;
 }
 
@@ -112,6 +113,7 @@ void game_tick(game_t *game)
     trantorian_t *trantorian = NULL;
 
     handle_new_client(game);
+    generate_ressources(game->map);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
         // trantorian_tick(trantorian); //TODO: Implement trantorian_tick
@@ -137,7 +139,10 @@ void create_trantorian(game_t *game, team_t *team, client_t *client)
         (game->eggs, i))->coordinates, client);
     if (trantorian == NULL)
         return;
-    array_push_back(team->trantorians, trantorian);
+    array_push_back(team->trantorians, trantorian->uuid);
+    array_push_back(game->trantorians, trantorian);
+    array_remove(game->eggs, i);
+    team->free_places--;
 }
 
 bool can_create_trantorian(game_t *game, char *team_name)
@@ -146,7 +151,7 @@ bool can_create_trantorian(game_t *game, char *team_name)
 
     if (team == NULL)
         return false;
-    if (array_get_size(team->trantorians) >= game->team_max_size)
+    if (team->free_places <= 0)
         return false;
     for (size_t i = 0; i < array_get_size(game->eggs); i++) {
         if (uuid_compare(((egg_t *)array_get_at
