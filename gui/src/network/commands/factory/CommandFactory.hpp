@@ -9,6 +9,7 @@
     #define COMMANDFACTORY_HPP_
 
     #include "network/commands/bct/CommandBCT.hpp"
+    #include "network/commands/tna/CommandTNA.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>

@@ -62,6 +62,21 @@ void Game::runGame()
         }
     });
 
+    commandFactory.setCallback("tna", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        Teams team(tokens[1]);
+        _teams.addTeamToTeamsList(team);
+        std::list<Teams> teams = Teams::getTeamsList();
+        std::cout << "GUI LOG: There is " << teams.size() << " teams" << std::endl;
+    });
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);

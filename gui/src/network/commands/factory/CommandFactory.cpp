@@ -19,6 +19,7 @@ using namespace network;
 CommandFactory::CommandFactory()
 {
     _commands["bct"] = std::make_unique<CommandBCT>();
+    _commands["tna"] = std::make_unique<CommandTNA>();
 }
 
 std::unique_ptr<ICommand> CommandFactory::createCommand(const std::string&
