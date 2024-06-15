@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** Zappy
+** File description:
+** Tile
+*/
+
 #include "Tile.hpp"
 
 using namespace GUI;
