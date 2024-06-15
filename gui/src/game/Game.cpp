@@ -44,24 +44,19 @@ void Game::runGame()
         std::istringstream iss2(data);
         std::vector<std::string> tokens;
         std::string token;
-        while (std::getline(iss2, token, ' ')) {
+
+        while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
-        }
+
         int x = std::stoi(tokens[1]);
         int y = std::stoi(tokens[2]);
+
         for (auto &tiles : _world.getTiles()) {
             for (auto &tile : tiles) {
                 if (tile.getPosition().getX() == x && tile.getPosition().getY() == y) {
-                    std::string tileContent = "";
-                    for (int i = 3; i < 10; i++) {
-                        tileContent += tokens[i] + " ";
-                    }
-                    tile.updateTileContent(tileContent);
-                    std::cout << "GUI LOG: Tile (" << x << ", " << y << ") updated" << std::endl;
-                    for (auto &object : tile.getObjects()) {
-                        std::cout << "GUI LOG: Object " << object->getType() << " at (" << x << ", " << y << ")" << std::endl;
-                    }
-                    break;
+                    tile.updateTileContent(tokens);
+                    std::cout << "GUI LOG: Content of the Tile (" << x << ", "
+                        << y << ") updated" << std::endl;
                 }
             }
         }

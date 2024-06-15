@@ -47,6 +47,16 @@ namespace GUI {
          * @return unsigned int (type of the object (follow the protocol))
          */
         [[nodiscard]] virtual unsigned int getType() noexcept = 0;
+
+        /**
+         * @brief get the quantity of the object
+         */
+        [[nodiscard]] virtual unsigned int getQuantity() noexcept = 0;
+
+        /**
+         * @brief Set the Quantity of the object
+         */
+        virtual void setQuantity(unsigned int quantity) noexcept = 0;
     };
 }  // namespace GUI
 #endif /* !IOBJECT_HPP_ */

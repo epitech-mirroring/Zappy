@@ -17,149 +17,174 @@
 
 using namespace GUI;
 
-TEST(TileMethods, GetPosition) {
-    Position pos(10, 20);
-    Tile tile(pos);
-    EXPECT_EQ(tile.getPosition().getX(), 10);
-    EXPECT_EQ(tile.getPosition().getY(), 20);
+class TileTest : public ::testing::Test {
+protected:
+    TileTest() : tile(Position(0, 0)) {}
+
+    Tile tile;
+};
+
+TEST_F(TileTest, GetPosition) {
+    Position pos = tile.getPosition();
+    EXPECT_EQ(pos.getX(), 0);
+    EXPECT_EQ(pos.getY(), 0);
+
+    Tile tile2(Position(5, 10));
+    Position pos2 = tile2.getPosition();
+    EXPECT_EQ(pos2.getX(), 5);
+    EXPECT_EQ(pos2.getY(), 10);
 }
 
-TEST(TileMethods, AddObject) {
-    Position pos(0, 0);
-    Tile tile(pos);
-    IObject* food = new Food(pos);
+TEST_F(TileTest, AddObject) {
+    IObject* food = new Food(Position(0, 0));
     tile.addObject(food);
     auto objects = tile.getObjects();
     EXPECT_EQ(objects.size(), 1);
     EXPECT_EQ(objects.front(), food);
+
+    IObject* linemate = new Linemate(Position(0, 0));
+    tile.addObject(linemate);
+    objects = tile.getObjects();
+    EXPECT_EQ(objects.size(), 2);
+    EXPECT_EQ(objects.back(), linemate);
+
     delete food;
+    delete linemate;
 }
 
-TEST(TileMethods, RemoveObject) {
-    Position pos(0, 0);
-    Tile tile(pos);
-    IObject* food = new Food(pos);
-    tile.addObject(food);
-    tile.removeObject(food);
-    auto objects = tile.getObjects();
-    EXPECT_EQ(objects.size(), 0);
-    delete food;
-}
-
-TEST(TileMethods, ClearObjects) {
-    Position pos(0, 0);
-    Tile tile(pos);
-    IObject* food = new Food(pos);
-    IObject* linemate = new Linemate(pos);
+TEST_F(TileTest, RemoveObject) {
+    IObject* food = new Food(Position(0, 0));
+    IObject* linemate = new Linemate(Position(0, 0));
     tile.addObject(food);
     tile.addObject(linemate);
+
+    tile.removeObject(food);
+    auto objects = tile.getObjects();
+    EXPECT_EQ(objects.size(), 1);
+    EXPECT_EQ(objects.front(), linemate);
+
+    tile.removeObject(linemate);
+    objects = tile.getObjects();
+    EXPECT_EQ(objects.size(), 0);
+
+    delete food;
+    delete linemate;
+}
+
+TEST_F(TileTest, ClearObjects) {
+    IObject* food = new Food(Position(0, 0));
+    IObject* linemate = new Linemate(Position(0, 0));
+    IObject* dera = new Deraumere(Position(0, 0));
+    tile.addObject(food);
+    tile.addObject(linemate);
+    tile.addObject(dera);
+
     tile.clearObjects();
     auto objects = tile.getObjects();
     EXPECT_EQ(objects.size(), 0);
+
     delete food;
     delete linemate;
+    delete dera;
 }
 
-TEST(TileMethods, CreateObjectByType) {
-    Position pos(0, 0);
-    Tile tile(pos);
-    IObject* food = tile.createObjectByType(Tile::FOOD, pos);
-    EXPECT_EQ(food->getType(), 0);
+TEST_F(TileTest, CreateObjectByType) {
+    IObject* food = tile.createObjectByType(Tile::FOOD, Position(0, 0));
+    EXPECT_NE(food, nullptr);
+    EXPECT_EQ(food->getType(), Tile::FOOD);
     delete food;
 
-    IObject* linemate = tile.createObjectByType(Tile::LINEMATE, pos);
-    EXPECT_EQ(linemate->getType(), 1);
+    IObject* linemate = tile.createObjectByType(Tile::LINEMATE, Position(1, 1));
+    EXPECT_NE(linemate, nullptr);
+    EXPECT_EQ(linemate->getType(), Tile::LINEMATE);
     delete linemate;
+
+    IObject* sibur = tile.createObjectByType(Tile::SIBUR, Position(2, 2));
+    EXPECT_NE(sibur, nullptr);
+    EXPECT_EQ(sibur->getType(), Tile::SIBUR);
+    delete sibur;
 }
 
-TEST(TileMethods, UpdateTileContent_AddObjects) {
-    Position pos(0, 0);
-    Tile tile(pos);
-    std::string content = "1 2 0 0 0 0 0";
-    tile.updateTileContent(content);
-
-    auto objects = tile.getObjects();
-    std::unordered_map<int, int> countMap;
-    for (auto& obj : objects) {
-        countMap[obj->getType()]++;
-    }
-
-    EXPECT_EQ(countMap[0], 1);
-    EXPECT_EQ(countMap[1], 2);
-    EXPECT_EQ(countMap[2], 0);
-}
-
-TEST(TileMethods, UpdateTileContent_RemoveObjects) {
-    Position pos(0, 0);
-    Tile tile(pos);
-    IObject* food = new Food(pos);
-    IObject* linemate1 = new Linemate(pos);
-    IObject* linemate2 = new Linemate(pos);
-    tile.addObject(food);
-    tile.addObject(linemate1);
-    tile.addObject(linemate2);
-
-    std::string content = "1 1 0 0 0 0 0";
-    tile.updateTileContent(content);
-
-    auto objects = tile.getObjects();
-    std::unordered_map<int, int> countMap;
-    for (auto& obj : objects) {
-        countMap[obj->getType()]++;
-    }
-
-    EXPECT_EQ(countMap[0], 1);
-    EXPECT_EQ(countMap[1], 1);
-    EXPECT_EQ(countMap[2], 0);
-
-    for (auto& obj : objects) {
-        delete obj;
-    }
-}
-
-TEST(TileMethods, GetObjects_EmptyTile) {
-    Position pos(0, 0);
-    Tile tile(pos);
-    auto objects = tile.getObjects();
-    EXPECT_EQ(objects.size(), 0);
-}
-
-TEST(TileMethods, AddAndRemoveMultipleObjects) {
-    Position pos(0, 0);
-    Tile tile(pos);
-    IObject* food = new Food(pos);
-    IObject* linemate = new Linemate(pos);
-    IObject* deraumere = new Deraumere(pos);
-
-    tile.addObject(food);
-    tile.addObject(linemate);
-    tile.addObject(deraumere);
-    tile.removeObject(linemate);
+TEST_F(TileTest, UpdateTileContent_AddObjects) {
+    std::vector<std::string> tileContent = {"X", "Y", "1", "0", "1", "0", "0", "0", "0"};
+    tile.updateTileContent(tileContent);
 
     auto objects = tile.getObjects();
     EXPECT_EQ(objects.size(), 2);
-    EXPECT_NE(std::find(objects.begin(), objects.end(), food), objects.end());
-    EXPECT_EQ(std::find(objects.begin(), objects.end(), linemate), objects.end());
-    EXPECT_NE(std::find(objects.begin(), objects.end(), deraumere), objects.end());
 
-    delete food;
-    delete linemate;
-    delete deraumere;
+    int foodCount = 0;
+    int deraumerecount = 0;
+
+    for (auto obj : objects) {
+        if (obj->getType() == Tile::FOOD) {
+            foodCount++;
+        } else if (obj->getType() == Tile::DERAUMERE) {
+            deraumerecount++;
+        }
+        delete obj;
+    }
+
+    EXPECT_EQ(foodCount, 1);
+    EXPECT_EQ(deraumerecount, 1);
 }
 
-TEST(TileMethods, ClearObjects_MultipleCalls) {
-    Position pos(0, 0);
-    Tile tile(pos);
-    IObject* food = new Food(pos);
-    IObject* linemate = new Linemate(pos);
-
+TEST_F(TileTest, UpdateTileContent_RemoveObjects) {
+    IObject* food = new Food(Position(0, 0));
+    IObject* linemate = new Linemate(Position(0, 0));
     tile.addObject(food);
     tile.addObject(linemate);
-    tile.clearObjects();
-    tile.clearObjects();
+
+    std::vector<std::string> tileContent = {"X", "Y", "0", "0", "0", "0", "0", "0", "0"};
+    tile.updateTileContent(tileContent);
 
     auto objects = tile.getObjects();
     EXPECT_EQ(objects.size(), 0);
+
+    delete food;
+    delete linemate;
+}
+
+TEST_F(TileTest, UpdateTileContent_MixedChanges) {
+    std::vector<std::string> initialContent = {"X", "Y", "0", "1", "1", "0", "0", "0", "0"};
+    tile.updateTileContent(initialContent);
+
+    std::list<IObject*> obj = tile.getObjects();
+    EXPECT_EQ(obj.size(), 2);
+    std::cout << "Initial objects: " << obj.size() << std::endl;
+
+    std::vector<std::string> newContent = {"X", "Y", "0", "2", "0", "1", "0", "0", "0"};
+    tile.updateTileContent(newContent);
+
+    std::cout << "New objects: " << tile.getObjects().size() << std::endl;
+    auto objects = tile.getObjects();
+    EXPECT_EQ(objects.size(), 3);
+
+    int linemateCount = 0;
+    int siburCount = 0;
+
+    for (auto obj : objects) {
+        if (obj->getType() == Tile::LINEMATE) {
+            linemateCount++;
+        } else if (obj->getType() == Tile::SIBUR) {
+            siburCount++;
+        }
+        delete obj;
+    }
+
+    EXPECT_EQ(linemateCount, 2);
+    EXPECT_EQ(siburCount, 1);
+}
+
+TEST_F(TileTest, GetObjects) {
+    IObject* food = new Food(Position(0, 0));
+    IObject* linemate = new Linemate(Position(0, 0));
+    tile.addObject(food);
+    tile.addObject(linemate);
+
+    auto objects = tile.getObjects();
+    EXPECT_EQ(objects.size(), 2);
+    EXPECT_TRUE(std::find(objects.begin(), objects.end(), food) != objects.end());
+    EXPECT_TRUE(std::find(objects.begin(), objects.end(), linemate) != objects.end());
 
     delete food;
     delete linemate;

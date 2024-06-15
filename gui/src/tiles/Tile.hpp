@@ -76,7 +76,7 @@ namespace GUI {
          */
         void clearObjects();
 
-        void updateTileContent(std::string tileContent);
+        void updateTileContent(std::vector<std::string> tileContent);
         IObject* createObjectByType(ResourceType type, Position pos);
 
     protected:

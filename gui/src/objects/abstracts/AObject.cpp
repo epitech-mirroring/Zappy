@@ -34,3 +34,13 @@ unsigned int AObject::getType() noexcept
 {
     return 999;
 }
+
+unsigned int AObject::getQuantity() noexcept
+{
+    return 0;
+}
+
+void AObject::setQuantity(unsigned int quantity) noexcept
+{
+    _quantity = quantity;
+}

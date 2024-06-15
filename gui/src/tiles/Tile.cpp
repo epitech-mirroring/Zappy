@@ -53,39 +53,23 @@ IObject* Tile::createObjectByType(ResourceType type, Position pos)
     }
 }
 
-void Tile::updateTileContent(std::string tileContent)
+void Tile::updateTileContent(std::vector<std::string> tileContent)
 {
-    std::istringstream iss(tileContent);
-    std::vector<int> desiredQuantities;
-    std::string token;
+    std::vector<std::string> objects(tileContent.begin() + 2, tileContent.begin() + 9);
 
-    while (std::getline(iss, token, ' '))
-        desiredQuantities.push_back(std::stoi(token));
+    clearObjects();
 
-    std::unordered_map<ResourceType, int> currentQuantities;
-
-    for (auto& obj : _objects)
-        currentQuantities[static_cast<ResourceType>(obj->getType())]++;
-
-    for (int type = 0; type < RESOURCE_COUNT; ++type) {
-        ResourceType resourceType = static_cast<ResourceType>(type);
-        int currentQuantity = currentQuantities[resourceType];
-        int desiredQuantity = desiredQuantities[type];
-
-        if (currentQuantity < desiredQuantity) {
-            for (int i = 0; i < desiredQuantity - currentQuantity; ++i)
-                addObject(createObjectByType(resourceType, _pos));
-        } else if (currentQuantity > desiredQuantity) {
-            auto it = _objects.begin();
-            while (currentQuantity > desiredQuantity && it != _objects.end()) {
-                if ((*it)->getType() == type) {
-                    delete *it;
-                    it = _objects.erase(it);
-                    currentQuantity--;
-                } else {
-                    ++it;
-                }
-            }
+    for (int i = 0; i < objects.size(); i++) {
+        ResourceType type = static_cast<ResourceType>(i);
+        int quantity = std::stoi(objects[i]);
+        while (quantity > 0) {
+            IObject *object = createObjectByType(type, _pos);
+            addObject(object);
+            quantity--;
+        }
+        while (quantity < 0) {
+            removeObject(_objects.back());
+            quantity++;
         }
     }
 }
