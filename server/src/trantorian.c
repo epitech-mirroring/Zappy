@@ -31,3 +31,8 @@ void destroy_trantorian(trantorian_t *trantorian)
     array_destructor(trantorian->actions);
     free(trantorian);
 }
+
+void trantorian_tick(trantorian_t *trantorian)
+{
+    (void)trantorian;
+}

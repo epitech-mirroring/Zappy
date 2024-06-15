@@ -55,14 +55,15 @@ static void read_clients_messages(server_t *server, fd_set *readfds)
     }
 }
 
-static __suseconds_t get_closest_action(server_t *server) //pass  __suseconds_t to long
+static __suseconds_t get_closest_action(server_t *server)
 {
     __suseconds_t closest_action = -1;
     __suseconds_t action;
     trantorian_t *trantorian;
 
     for (size_t i = 0; i < array_get_size(server->game->trantorians); i++) {
-        trantorian = (trantorian_t *)array_get_at(server->game->trantorians, i);
+        trantorian = (trantorian_t *)
+            array_get_at(server->game->trantorians, i);
         if (array_get_size(trantorian->actions) == 0)
             continue;
         action = trantorian->waiting_tick * server->single_tick_time;

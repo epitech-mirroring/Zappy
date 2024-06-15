@@ -45,7 +45,8 @@ static bool can_create_trantorian(game_t *game, char *team_name)
 
 static void trantorian_action(game_t *game, trantorian_t *trantorian)
 {
-    //TODO: Implement trantorian actions
+    (void)game;
+    (void)trantorian;
 }
 
 static char *int_to_str(int nb)
@@ -133,7 +134,7 @@ void game_tick(game_t *game)
     generate_ressources(game->map);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
-        // trantorian_tick(trantorian); //TODO: Implement trantorian_tick
+        trantorian_tick(trantorian);
         if (trantorian->waiting_tick == 0)
             trantorian_action(game, trantorian);
     }

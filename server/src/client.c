@@ -36,6 +36,7 @@ void destroy_client(client_t *client)
 void add_message(client_t *client, char *message)
 {
     char *new_message = calloc(sizeof(char), strlen(message) - 1);
+
     if (client == NULL)
         return;
     for (int i = 0; message[i] != '\0'; i++) {
