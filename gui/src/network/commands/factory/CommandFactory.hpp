@@ -17,6 +17,7 @@
     #include "network/commands/pin/CommandPIN.hpp"
     #include "network/commands/pex/CommandPEX.hpp"
     #include "network/commands/pbc/CommandPBC.hpp"
+    #include "network/commands/pfk/CommandPFK.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>
