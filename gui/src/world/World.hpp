@@ -94,7 +94,7 @@ namespace GUI {
          * @param y (y coordinate)
          * @return Tile& (reference to the tile)
          */
-        Tile& getTileAt(unsigned int x, unsigned int y);
+        [[nodiscard]] Tile& getTileAt(unsigned int x, unsigned int y);
 
         /**
          * @brief Add a tile to the world

@@ -14,10 +14,6 @@ Game::Game(std::string hostname, unsigned int port)
 {
 }
 
-Game::~Game()
-{
-}
-
 void Game::initGame()
 {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);

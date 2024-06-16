@@ -46,7 +46,7 @@ namespace network {
             _callback = std::move(callback);
         }
     protected:
-        Callback _callback;
+        Callback _callback;     // Callback function
     };
 } // namespace network //
 #endif /* !ICOMMAND_HPP_ */

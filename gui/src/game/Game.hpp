@@ -20,20 +20,40 @@
 namespace GUI {
 class Game {
     public:
+        /**
+         * @brief Construct a new Game object
+         * @param hostname Hostname of the server
+         * @param port Port of the server
+         */
         Game(std::string hostname, unsigned int port);
-        ~Game();
+        /**
+         * @brief Destroy the Game object
+         */
+        ~Game() = default;
 
-        void initGame(); // init the game elements (world, tiles, teams, etc)
-        void runGame(); //main loop call the client read here
+        /**
+         * @brief Initialize the game elements (Window, Client, World)
+         */
+        void initGame();
+        /**
+         * @brief Run the game loop
+         */
+        void runGame();
 
-        void createWorld(std::vector<std::string> data); //create the _world object by receveing the MSZ command
-        void initTimeUnit(std::vector<std::string> data); //create the time unit by receiving the TNA command
+        /**
+         * @brief Create the world object
+         */
+        void createWorld(std::vector<std::string> data);
+        /**
+         * @brief initialize the time unit of the game (ticks)
+         */
+        void initTimeUnit(std::vector<std::string> data);
 
     private:
-        World _world;
-        Teams _teams;
-        network::Client _client;
-        unsigned int _timeUnit;
+        World _world;               // World object
+        Teams _teams;               // Teams object
+        network::Client _client;    // Client object
+        unsigned int _timeUnit;     // Time unit of the game
 };
 } // namespace GUI //
 #endif /* !GAME_HPP_ */

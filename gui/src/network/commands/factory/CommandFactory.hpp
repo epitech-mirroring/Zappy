@@ -60,9 +60,9 @@ namespace network {
 
     private:
         std::unordered_map<std::string,
-            std::unique_ptr<ICommand>> _commands;
+            std::unique_ptr<ICommand>> _commands;   // Map of commands
         std::unordered_map<std::string,
-            ICommand::Callback> _callbacks;
+            ICommand::Callback> _callbacks;         // Map of callbacks
     };
 } // namespace network //
 #endif /* !COMMANDFACTORY_HPP_ */

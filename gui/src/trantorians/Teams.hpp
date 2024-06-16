@@ -59,21 +59,21 @@ namespace GUI {
              * @brief Get list of teams
              * @return list of teams objects
              */
-            static std::list<GUI::Teams>& getTeamsList();
+            [[nodiscard]] static std::list<GUI::Teams>& getTeamsList();
 
             /**
              * @brief Get team by name
              * @param name std::string of team's name
              * @return Teams object
              */
-            static Teams* getTeamByName(const std::string& name);
+            [[nodiscard]] static Teams* getTeamByName(const std::string& name);
 
             /**
              * @brief Get trantorian by id
              * @param id int of trantorian's id
              * @return Trantorian object
              */
-            Trantorian getTrantorianById(int id);
+            [[nodiscard]] Trantorian getTrantorianById(int id);
 
         private:
             std::string _name;

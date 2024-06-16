@@ -33,7 +33,12 @@ namespace network {
          */
         void handleDisconnection();
 
+        /**
+         * @brief Send data to the server
+         * @param data Data to send
+         */
         std::vector<std::string> readData();
+
         std::unique_ptr<ASocket> _socket;   ///< Socket of the client
     protected:
         unsigned int _port;     ///< Port of the server
