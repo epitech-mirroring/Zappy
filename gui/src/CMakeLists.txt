@@ -6,6 +6,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/SocketException.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/exception/ClientException.cpp
     # OBJECTS
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.cpp
@@ -38,7 +39,6 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/ppo/CommandPPO.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/plv/CommandPLV.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/msz/CommandMSZ.cpp
-
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
 
@@ -49,6 +49,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/SocketException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/exception/ClientException.hpp
     # OBJECTS
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.hpp

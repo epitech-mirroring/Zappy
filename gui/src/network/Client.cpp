@@ -24,7 +24,7 @@ void Client::handleConnection()
 
     for (const auto& welcomeMessage : welcomeMessages) {
         if (welcomeMessage.find("WELCOME") == std::string::npos) {
-            throw std::runtime_error("Connection failed");  //change to an IException ClientError
+            throw network::ClientException("CLIENT ERROR: Connection failed");
         }
     }
 }

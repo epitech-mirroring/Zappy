@@ -11,6 +11,7 @@
     #include <memory>
     #include <iostream>
     #include "network/socket/TCPSocket.hpp"
+    #include "exception/ClientException.hpp"
 
 namespace network {
     class Client {
