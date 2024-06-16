@@ -10,13 +10,34 @@
 
     #include <iostream>
     #include <utility>
-    #include "../position/Position.hpp"
+    #include <vector>
+    #include <list>
+    #include "position/Position.hpp"
+    #include "objects/interface/IObject.hpp"
+    #include "objects/interface/IObject.hpp"
+    #include "objects/food/Food.hpp"
+    #include "objects/stones/Linemate.hpp"
+    #include "objects/stones/Deraumere.hpp"
+    #include "objects/stones/Sibur.hpp"
+    #include "objects/stones/Mendiane.hpp"
+    #include "objects/stones/Phiras.hpp"
+    #include "objects/stones/Thystame.hpp"
 
 namespace GUI {
     class Teams; // Forward declaration
 
     class Trantorian {
         public:
+          enum ResourceType {
+                FOOD,
+                LINEMATE,
+                DERAUMERE,
+                SIBUR,
+                MENDIANE,
+                PHIRAS,
+                THYSTAME,
+                RESOURCE_COUNT
+            };
             /**
              * @brief Create trantorian object
              */
@@ -118,6 +139,41 @@ namespace GUI {
              */
             void setOrientation(int orientation);
 
+            /**
+            * @brief Get the object by type
+            * @param type (type of the object)
+            * @param pos (Position of the TILE where the object is supposed to be created)
+            * @return IObject* (object)
+            */
+            IObject* createObjectByType(ResourceType type, Position pos);
+
+            /**
+             * @brief Set the trantorian's inventory
+             * @param inventory (vector of strings)
+             * @return void
+             */
+            void setInventory(std::vector<std::string> inventory);
+
+            /**
+             * @brief Clear the trantorian's inventory
+             * @return void
+             */
+            void clearInventory();
+            /**
+             * @brief Add an object to the tile
+             * @param object (object to add)
+             */
+            void addObject(IObject *object);
+            /**
+             * @brief Remove an object from the tile
+             * @param object (object to remove)
+             */
+            void removeObject(IObject *object);
+            /**
+             * @brief Get the inventory of the player
+             * @return list of IObject*
+             */
+            [[nodiscard]] std::list<IObject *> getInventory() const;
         private:
             GUI::Position _position;
             Teams* _team;
@@ -127,6 +183,7 @@ namespace GUI {
             int _id;
             int _level;
             int _orientation;
+            std::list<IObject *> _inventory;
     };
 } // namespace GUI
 

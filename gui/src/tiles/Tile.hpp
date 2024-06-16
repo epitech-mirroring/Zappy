@@ -85,6 +85,7 @@ namespace GUI {
         /**
          * @brief Get the object by type
          * @param type (type of the object)
+         * @param pos (position of the Tile where the object is supposed to be created)
          * @return IObject* (object)
          */
         IObject* createObjectByType(ResourceType type, Position pos);

@@ -149,3 +149,70 @@ TEST(trantorian_methods, MultipleProperties) {
     EXPECT_EQ(player.getLevel(), 5);
     EXPECT_EQ(player.getIsAlive(), false);
 }
+
+TEST(trantorian_methods, setInventory_AddObjects) {
+    std::vector<std::string> objs = {"12", "X", "Y", "1", "0", "1", "0", "0", "0", "0"};
+    Trantorian player(12, 0, 0, 1, 1, "Zappy");
+
+    player.setInventory(objs);
+    auto objects = player.getInventory();
+    EXPECT_EQ(objects.size(), 2);
+
+    int foodCount = 0;
+    int deraumerecount = 0;
+
+    for (auto obj : objects) {
+        if (obj->getType() == Trantorian::FOOD) {
+            foodCount++;
+        } else if (obj->getType() == Trantorian::DERAUMERE) {
+            deraumerecount++;
+        }
+        delete obj;
+    }
+
+    EXPECT_EQ(foodCount, 1);
+    EXPECT_EQ(deraumerecount, 1);
+}
+
+TEST(trantorian_methods, setInventory_RemoveObjects) {
+    Trantorian player(12, 0, 0, 1, 1, "Zappy");
+    IObject* food = new Food(Position(0, 0));
+    IObject* linemate = new Linemate(Position(0, 0));
+    player.addObject(food);
+    player.addObject(linemate);
+
+    std::vector<std::string> objs = {"12", "X", "Y", "0", "0", "0", "0", "0", "0", "0"};
+    player.setInventory(objs);
+
+    auto objects = player.getInventory();
+    EXPECT_EQ(objects.size(), 0);
+}
+
+TEST(trantorian_methods, setInventory_MixedChanges) {
+    Trantorian player(12, 0, 0, 1, 1, "Zappy");
+    IObject* food = new Food(Position(0, 0));
+    IObject* linemate = new Linemate(Position(0, 0));
+    player.addObject(food);
+    player.addObject(linemate);
+
+    std::vector<std::string> objs = {"12", "X", "Y", "1", "0", "1", "0", "0", "0", "0"};
+    player.setInventory(objs);
+
+    auto objects = player.getInventory();
+    EXPECT_EQ(objects.size(), 2);
+
+    int foodCount = 0;
+    int deraumerecount = 0;
+
+    for (auto obj : objects) {
+        if (obj->getType() == Trantorian::FOOD) {
+            foodCount++;
+        } else if (obj->getType() == Trantorian::DERAUMERE) {
+            deraumerecount++;
+        }
+        delete obj;
+    }
+
+    EXPECT_EQ(foodCount, 1);
+    EXPECT_EQ(deraumerecount, 1);
+}

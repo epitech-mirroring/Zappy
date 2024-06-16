@@ -8,7 +8,9 @@
 #include "Trantorian.hpp"
 #include "Teams.hpp"
 
-GUI::Trantorian::Trantorian(int id, int x, int y, int oritentation,
+using namespace GUI;
+
+Trantorian::Trantorian(int id, int x, int y, int oritentation,
     int level, std::string teamName)
         : _id(id), _position(x, y), _orientation(oritentation), _level(level),
         _lifetimeRemaining(100), _alive(true), _action(false), _team(nullptr)
@@ -22,78 +24,78 @@ GUI::Trantorian::Trantorian(int id, int x, int y, int oritentation,
     }
 }
 
-void GUI::Trantorian::setAction(bool action)
+void Trantorian::setAction(bool action)
 {
     _action = action;
 }
 
-bool GUI::Trantorian::getAction()
+bool Trantorian::getAction()
 {
     return _action;
 }
 
-void GUI::Trantorian::setId(int id)
+void Trantorian::setId(int id)
 {
     _id = id;
 }
 
-int GUI::Trantorian::getId()
+int Trantorian::getId()
 {
     return _id;
 }
 
-void GUI::Trantorian::setIsAlive(bool alive)
+void Trantorian::setIsAlive(bool alive)
 {
     _alive = alive;
 }
 
-bool GUI::Trantorian::getIsAlive()
+bool Trantorian::getIsAlive()
 {
     return _alive;
 }
 
-void GUI::Trantorian::setLevel(int level)
+void Trantorian::setLevel(int level)
 {
     _level = level;
 }
 
-int GUI::Trantorian::getLevel()
+int Trantorian::getLevel()
 {
     return _level;
 }
 
-void GUI::Trantorian::setLifetime(int lifetime)
+void Trantorian::setLifetime(int lifetime)
 {
     _lifetimeRemaining = lifetime;
 }
 
-int GUI::Trantorian::getLifetime()
+int Trantorian::getLifetime()
 {
     return _lifetimeRemaining;
 }
 
-void GUI::Trantorian::setPosition(int x, int y)
+void Trantorian::setPosition(int x, int y)
 {
     _position.setX(x);
     _position.setY(y);
 }
 
-GUI::Position GUI::Trantorian::getPosition()
+Position Trantorian::getPosition()
 {
     return _position;
 }
 
-void GUI::Trantorian::setTeam(Teams* team)
+void Trantorian::setTeam(Teams* team)
 {
     _team = team;
 }
 
-GUI::Teams* GUI::Trantorian::getTeam()
+Teams* Trantorian::getTeam()
 {
     return _team;
 }
 
-bool GUI::Trantorian::operator==(const Trantorian& other) const
+bool Trantorian::operator==(const Trantorian& other) const
 {
     return _position.getX() == other._position.getX() &&
            _position.getY() == other._position.getY() &&
@@ -106,7 +108,70 @@ bool GUI::Trantorian::operator==(const Trantorian& other) const
            _orientation == other._orientation;
 }
 
-void GUI::Trantorian::setOrientation(int orientation)
+void Trantorian::setOrientation(int orientation)
 {
     _orientation = orientation;
+}
+
+void Trantorian::setInventory(std::vector<std::string> inventory)
+{
+    std::vector<std::string> objects(inventory.begin() + 3, inventory.begin() + 10);
+
+    clearInventory();
+
+    for (int i = 0; i < objects.size(); i++) {
+        ResourceType type = static_cast<ResourceType>(i);
+        int quantity = std::stoi(objects[i]);
+        while (quantity > 0) {
+            IObject *object = createObjectByType(type, _position);
+            addObject(object);
+            quantity--;
+        }
+        while (quantity < 0) {
+            removeObject(_inventory.back());
+            quantity++;
+        }
+    }
+}
+
+IObject* Trantorian::createObjectByType(ResourceType type, Position pos)
+{
+    switch (type) {
+        case ResourceType::FOOD:
+            return new Food(pos);
+        case ResourceType::LINEMATE:
+            return new Linemate(pos);
+        case ResourceType::DERAUMERE:
+            return new Deraumere(pos);
+        case ResourceType::SIBUR:
+            return new Sibur(pos);
+        case ResourceType::MENDIANE:
+            return new Mendiane(pos);
+        case ResourceType::PHIRAS:
+            return new Phiras(pos);
+        case ResourceType::THYSTAME:
+            return new Thystame(pos);
+        default:
+            return nullptr;
+    }
+}
+
+void Trantorian::clearInventory()
+{
+    _inventory.clear();
+}
+
+void Trantorian::addObject(IObject *object)
+{
+    _inventory.push_back(object);
+}
+
+void Trantorian::removeObject(IObject *object)
+{
+    _inventory.remove(object);
+}
+
+std::list<IObject*> Trantorian::getInventory() const
+{
+    return _inventory;
 }

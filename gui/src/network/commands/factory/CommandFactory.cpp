@@ -24,6 +24,7 @@ CommandFactory::CommandFactory()
     _commands["ppo"] = std::make_unique<CommandPPO>();
     _commands["plv"] = std::make_unique<CommandPLV>();
     _commands["msz"] = std::make_unique<CommandMSZ>();
+    _commands["pin"] = std::make_unique<CommandPIN>();
 }
 
 std::unique_ptr<ICommand> CommandFactory::createCommand(const std::string&

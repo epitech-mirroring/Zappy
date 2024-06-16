@@ -14,6 +14,7 @@
     #include "network/commands/ppo/CommandPPO.hpp"
     #include "network/commands/plv/CommandPLV.hpp"
     #include "network/commands/msz/CommandMSZ.hpp"
+    #include "network/commands/pin/CommandPIN.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>
