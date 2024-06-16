@@ -41,6 +41,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/msz/CommandMSZ.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pin/CommandPIN.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pex/CommandPEX.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pbc/CommandPBC.cpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
 
@@ -88,6 +89,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/msz/CommandMSZ.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pin/CommandPIN.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pex/CommandPEX.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pbc/CommandPBC.hpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
 )

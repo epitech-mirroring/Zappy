@@ -188,6 +188,26 @@ void Game::runGame()
         }
     });
 
+    commandFactory.setCallback("pbc", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == std::stoi(tokens[1])) {
+                    // HANDLE BROADCAST
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " has broadcasted: " << tokens[2] << std::endl;
+                }
+            }
+        }
+    });
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
