@@ -18,7 +18,7 @@
     #include "network/protocol_handler/ProtocolHandler.hpp"
 
 namespace GUI {
-class Game {
+    class Game {
     public:
         /**
          * @brief Construct a new Game object
@@ -54,7 +54,7 @@ class Game {
         Teams _teams;               // Teams object
         network::Client _client;    // Client object
         unsigned int _timeUnit;     // Time unit of the game
-};
+    };
 } // namespace GUI //
 #endif /* !GAME_HPP_ */
 
