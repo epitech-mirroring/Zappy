@@ -19,6 +19,7 @@
     #include "network/commands/pbc/CommandPBC.hpp"
     #include "network/commands/pfk/CommandPFK.hpp"
     #include "network/commands/pie/CommandPIE.hpp"
+    #include "network/commands/pic/CommandPIC.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>

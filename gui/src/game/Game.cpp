@@ -259,6 +259,17 @@ void Game::runGame()
         // HANDLE INCANTATION END
     });
 
+    commandFactory.setCallback("pic", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+        // HANDLE INCANTATION START
+    });
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
