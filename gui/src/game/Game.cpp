@@ -138,6 +138,20 @@ void Game::runGame()
         }
     });
 
+    commandFactory.setCallback("msz", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        _world = World(std::stoi(tokens[1]), std::stoi(tokens[2]));
+        std::cout << "GUI LOG: World size updated (" <<
+            _world.getHeight() << ", " << _world.getWidth() << ")" << std::endl;
+    });
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
