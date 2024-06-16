@@ -12,6 +12,7 @@
     #include "network/commands/tna/CommandTNA.hpp"
     #include "network/commands/pnw/CommandPNW.hpp"
     #include "network/commands/ppo/CommandPPO.hpp"
+    #include "network/commands/plv/CommandPLV.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>

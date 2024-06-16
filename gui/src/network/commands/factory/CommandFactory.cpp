@@ -22,6 +22,7 @@ CommandFactory::CommandFactory()
     _commands["tna"] = std::make_unique<CommandTNA>();
     _commands["pnw"] = std::make_unique<CommandPNW>();
     _commands["ppo"] = std::make_unique<CommandPPO>();
+    _commands["plv"] = std::make_unique<CommandPLV>();
 }
 
 std::unique_ptr<ICommand> CommandFactory::createCommand(const std::string&

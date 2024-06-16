@@ -36,6 +36,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/tna/CommandTNA.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pnw/CommandPNW.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/ppo/CommandPPO.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/plv/CommandPLV.cpp
 
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
@@ -79,6 +80,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/tna/CommandTNA.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pnw/CommandPNW.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/ppo/CommandPPO.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/plv/CommandPLV.hpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
 )
