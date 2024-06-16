@@ -10,6 +10,7 @@
 
     #include "network/commands/bct/CommandBCT.hpp"
     #include "network/commands/tna/CommandTNA.hpp"
+    #include "network/commands/pnw/CommandPNW.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>

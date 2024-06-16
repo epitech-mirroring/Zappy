@@ -8,18 +8,11 @@
 #include "Trantorian.hpp"
 #include "Teams.hpp"
 
-GUI::Trantorian::Trantorian(std::string teamName, int x, int y,
-    unsigned int orientation, int id)
-        : _team(nullptr)
+GUI::Trantorian::Trantorian(int id, int x, int y, int oritentation,
+    int level, std::string teamName)
+        : _id(id), _position(x, y), _orientation(oritentation), _level(level),
+        _lifetimeRemaining(100), _alive(true), _action(false), _team(nullptr)
 {
-    setPosition(x, y);
-    _alive = true;
-    _action = false;
-    _level = 1;
-    _lifetimeRemaining = 100;
-    _orientation = orientation;
-    _id = id;
-
     if (!teamName.empty()) {
         auto team = Teams::getTeamByName(teamName);
         if (team) {

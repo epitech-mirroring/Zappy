@@ -12,6 +12,7 @@
     #include <raylib.h>
     #include "world/World.hpp"
     #include "trantorians/Teams.hpp"
+    #include "trantorians/Trantorian.hpp"
     #include "network/Client.hpp"
     #include "network/commands/factory/CommandFactory.hpp"
     #include "network/protocol_handler/ProtocolHandler.hpp"

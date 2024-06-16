@@ -77,6 +77,26 @@ void Game::runGame()
         std::cout << "GUI LOG: There is " << teams.size() << " teams" << std::endl;
     });
 
+    commandFactory.setCallback("pnw", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        Trantorian player(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3]),
+            std::stoi(tokens[4]), std::stoi(tokens[5]), tokens[7]);
+        for (auto &team : Teams::getTeamsList()) {
+            if (team.getName() == tokens[7]) {
+                team.addTrantorian(player);
+                std::cout << "GUI LOG: Player " << player.getId() << " added to team "
+                    << team.getName() << std::endl;
+            }
+        }
+    });
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
