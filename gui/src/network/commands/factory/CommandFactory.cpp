@@ -21,6 +21,7 @@ CommandFactory::CommandFactory()
     _commands["pex"] = std::make_unique<CommandPEX>();
     _commands["pfk"] = std::make_unique<CommandPFK>();
     _commands["pie"] = std::make_unique<CommandPIE>();
+    _commands["sst"] = std::make_unique<CommandSST>();
 }
 
 std::unique_ptr<ICommand> CommandFactory::createCommand(const std::string&

@@ -270,6 +270,19 @@ void Game::runGame()
         // HANDLE INCANTATION START
     });
 
+    commandFactory.setCallback("sst", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        _timeUnit = std::stoi(tokens[1]);
+        std::cout << "GUI LOG: New time unit set (" << _timeUnit << ")" << std::endl;
+    });
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
