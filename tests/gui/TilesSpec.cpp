@@ -150,12 +150,10 @@ TEST_F(TileTest, UpdateTileContent_MixedChanges) {
 
     std::list<IObject*> obj = tile.getObjects();
     EXPECT_EQ(obj.size(), 2);
-    std::cout << "Initial objects: " << obj.size() << std::endl;
 
     std::vector<std::string> newContent = {"X", "Y", "0", "2", "0", "1", "0", "0", "0"};
     tile.updateTileContent(newContent);
 
-    std::cout << "New objects: " << tile.getObjects().size() << std::endl;
     auto objects = tile.getObjects();
     EXPECT_EQ(objects.size(), 3);
 

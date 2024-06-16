@@ -20,7 +20,8 @@ namespace GUI {
             /**
              * @brief Create trantorian object
              */
-            Trantorian(std::string team = "", int x = 0, int y = 0);
+            Trantorian(std::string team = "", int x = 0, int y = 0,
+                unsigned int orientation = 1, int id = 0);
             /**
              * @brief Destroy trantorian object
              */
@@ -119,6 +120,7 @@ namespace GUI {
             bool _action;
             int _id;
             int _level;
+            unsigned int _orientation;
     };
 } // namespace GUI
 

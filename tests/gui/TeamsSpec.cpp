@@ -80,8 +80,8 @@ TEST(TeamsMethods, GetNonExistentTeamByName) {
 
 TEST(TeamsMethods, RemoveTrantorianFromTeam) {
     Teams team("Epitech");
-    Trantorian player1;
-    Trantorian player2;
+    Trantorian player1("Epitech", 1, 1, 1, 1);
+    Trantorian player2("Epitech", 1, 1, 1, 2);
 
     team.addTrantorian(player1);
     team.addTrantorian(player2);
