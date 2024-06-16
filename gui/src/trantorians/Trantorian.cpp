@@ -105,3 +105,8 @@ bool GUI::Trantorian::operator==(const Trantorian& other) const
            _level == other._level;
            _orientation == other._orientation;
 }
+
+void GUI::Trantorian::setOrientation(int orientation)
+{
+    _orientation = orientation;
+}

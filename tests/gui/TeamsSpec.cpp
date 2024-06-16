@@ -304,3 +304,45 @@ TEST(TeamsMethods, ComplexTeamAndTrantorianInteraction) {
     EXPECT_NE(std::find_if(trantorians1.begin(), trantorians1.end(), [](Trantorian& t) { return t.getId() == 1; }), trantorians1.end());
     EXPECT_NE(std::find_if(trantorians2.begin(), trantorians2.end(), [](Trantorian& t) { return t.getId() == 3; }), trantorians2.end());
 }
+
+TEST(TeamsMethods, GetTrantorianById) {
+    Teams team1("Epitech");
+    Teams team2("Zappy");
+
+    Trantorian player1, player2, player3, player4;
+
+    player1.setId(1);
+    player2.setId(2);
+    player3.setId(3);
+    player4.setId(4);
+
+    team1.addTrantorian(player1);
+    team1.addTrantorian(player2);
+
+    team2.addTrantorian(player3);
+    team2.addTrantorian(player4);
+
+    Trantorian foundPlayer = team1.getTrantorianById(1);
+    EXPECT_EQ(foundPlayer.getId(), 1);
+}
+
+TEST(TeamsMethods, GetNonExistentTrantorianById) {
+    Teams team1("Epitech");
+    Teams team2("Zappy");
+
+    Trantorian player1, player2, player3, player4;
+
+    player1.setId(1);
+    player2.setId(2);
+    player3.setId(3);
+    player4.setId(4);
+
+    team1.addTrantorian(player1);
+    team1.addTrantorian(player2);
+
+    team2.addTrantorian(player3);
+    team2.addTrantorian(player4);
+
+    Trantorian foundPlayer = team1.getTrantorianById(5);
+    EXPECT_EQ(foundPlayer.getId(), -1);
+}

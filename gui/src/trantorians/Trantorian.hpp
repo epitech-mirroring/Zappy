@@ -112,6 +112,12 @@ namespace GUI {
             [[nodiscard]]
             bool operator==(const Trantorian& other) const;
 
+            /**
+             * @brief Set trantorian orientation
+             * @param orientation
+             */
+            void setOrientation(int orientation);
+
         private:
             GUI::Position _position;
             Teams* _team;

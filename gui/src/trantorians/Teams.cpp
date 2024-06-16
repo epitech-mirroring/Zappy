@@ -60,3 +60,12 @@ Teams* Teams::getTeamByName(const std::string& name)
     }
     return nullptr;
 }
+
+Trantorian Teams::getTrantorianById(int id)
+{
+    for (auto &trantorian : _trantorians) {
+        if (trantorian.getId() == id)
+            return trantorian;
+    }
+    return Trantorian();
+}

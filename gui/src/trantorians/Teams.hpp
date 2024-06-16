@@ -68,6 +68,13 @@ namespace GUI {
              */
             static Teams* getTeamByName(const std::string& name);
 
+            /**
+             * @brief Get trantorian by id
+             * @param id int of trantorian's id
+             * @return Trantorian object
+             */
+            Trantorian getTrantorianById(int id);
+
         private:
             std::string _name;
             std::list<GUI::Trantorian> _trantorians;
