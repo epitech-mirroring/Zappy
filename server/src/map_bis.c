@@ -22,8 +22,6 @@ tile_t *init_tile(size_t x, size_t y)
 
 void destroy_tile(tile_t *tile)
 {
-    if (tile == NULL)
-        return;
     array_destructor(tile->eggs);
     free(tile);
 }

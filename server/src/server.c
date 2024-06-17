@@ -8,8 +8,8 @@
 
 #include "server.h"
 #include "actions.h"
-#include <bits/waitflags.h>
 #include <sys/select.h>
+#include <sys/socket.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
@@ -26,7 +26,7 @@ static void write_to_client(client_t *client)
     }
 }
 
-static void tick(server_t *server, __suseconds_t time_since_last_tick)
+static void tick(server_t *server, suseconds_t time_since_last_tick)
 {
     int nb_ticks = time_since_last_tick / server->single_tick_time;
 

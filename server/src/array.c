@@ -28,8 +28,6 @@ void array_set_at(array_t *array, int index, void *element)
 
 void array_destructor(array_t *array)
 {
-    if (array == NULL)
-        return;
     array_clear(array);
     free(array->data);
     free(array);

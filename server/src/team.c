@@ -20,8 +20,6 @@ team_t *init_team(char *name)
 
 void destroy_team(team_t *team)
 {
-    if (team == NULL)
-        return;
     array_destructor(team->trantorians);
     free(team);
 }

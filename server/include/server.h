@@ -16,6 +16,7 @@
     #include "array.h"
     #include "client.h"
     #include "buffer.h"
+    #include <sys/select.h>
     #ifdef __cplusplus
 extern "C" {
     #endif // __cplusplus
@@ -43,7 +44,9 @@ extern "C" {
      * @brief Initialize a server
      *
      * @param port The port on which the server will listen
-     * @param freq The frequency of the server
+     * @param teams The teams in the game
+     * @param map_size The size of the map [width, height]
+     * @param nb_max_clients The maximum number of clients
      * @return server_t* The server
      */
     server_t *create_server(unsigned short port, array_t *teams,
@@ -88,7 +91,7 @@ extern "C" {
     void read_client_message(server_t *server, client_t *client);
 
     /**
-     * @brief Execute client command (only network command)
+     * @brief Identify if a client is a GUI or an IA client
      *
      * @param server The server
      * @param client The client
