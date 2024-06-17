@@ -25,7 +25,6 @@ void Game::initGame()
     std::cout << "GUI LOG: Sent GRAPHIC" << std::endl;
     std::vector<std::string> data = _client.readData();
     createWorld(data);
-    initTimeUnit(data);
     data.clear();
     _camera = {0};
     _camera.position = {0.0f, 10.0f, 10.0f};
@@ -77,6 +76,16 @@ void Game::createWorld(std::vector<std::string> data)
             }
         }
     }
+    initClouds();
+    std::cout << "GUI LOG: World created (" << _world.getHeight() << ", "
+        << _world.getWidth() << ")" << std::endl;
+    std::cout << "GUI LOG: Tiles created (" << (_world.getTiles().size()
+        * _world.getTiles().size()) << ")" << std::endl;
+    std::cout << "GUI LOG: Clouds created (" << _clouds.size() << ")" << std::endl;
+}
+
+void Game::initClouds()
+{
     std::vector<std::string> clouds = {
         "gui/src/assets/clouds/CloudLarge2.obj",
         "gui/src/assets/clouds/CloudMedium2.obj",
@@ -88,11 +97,6 @@ void Game::createWorld(std::vector<std::string> data)
         _clouds.push_back(model);
         _cloudPositions.push_back({static_cast<float>(rand() % 30), 15.0f, static_cast<float>(rand() % 30)});
     }
-    std::cout << "GUI LOG: World created (" << _world.getHeight() << ", "
-        << _world.getWidth() << ")" << std::endl;
-    std::cout << "GUI LOG: Tiles created (" << (_world.getTiles().size()
-        * _world.getTiles().size()) << ")" << std::endl;
-    std::cout << "GUI LOG: Clouds created (" << _clouds.size() << ")" << std::endl;
 }
 
 void Game::DrawTiles(std::vector<std::vector<Tile>> tiles)
@@ -111,25 +115,7 @@ void Game::DrawClouds()
 {
     for (size_t i = 0; i < _clouds.size(); i++) {
         DrawModel(_clouds[i], _cloudPositions[i], 1.0f, WHITE);
-        std::cout << "GUI LOG: Cloud drawn" << std::endl;
     }
-}
-
-void Game::initTimeUnit(std::vector<std::string> data)
-{
-    for (auto &line : data) {
-        std::istringstream iss(line);
-        std::vector<std::string> tokens;
-        std::string token;
-        while (std::getline(iss, token, ' ')) {
-            tokens.push_back(token);
-        }
-        if (tokens[0] == "sgt") {
-            _timeUnit = std::stoi(tokens[1]);
-            break;
-        }
-    }
-    std::cout << "GUI LOG: Time unit set (" << _timeUnit << ")" << std::endl;
 }
 
 void Game::initializeCallbacks()
@@ -380,5 +366,18 @@ void Game::initializeCallbacks()
 
         _timeUnit = std::stoi(tokens[1]);
         std::cout << "GUI LOG: New time unit set (" << _timeUnit << ")" << std::endl;
+    });
+
+    _commandFactory.setCallback("sgt", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        _timeUnit = std::stoi(tokens[1]);
+        std::cout << "GUI LOG: Time unit requested (" << _timeUnit << ")" << std::endl;
     });
 }

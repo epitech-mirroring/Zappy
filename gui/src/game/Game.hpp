@@ -61,6 +61,10 @@ namespace GUI {
         void DrawTiles(std::vector<std::vector<Tile>> tiles);
 
         /**
+         * @brief Initalize the clouds
+         */
+        void initClouds();
+        /**
          * @brief Draw the clouds
          */
         void DrawClouds();

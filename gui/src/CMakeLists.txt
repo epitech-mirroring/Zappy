@@ -46,6 +46,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pie/CommandPIE.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pic/CommandPIC.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sst/CommandSST.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sgt/CommandSGT.cpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
 
@@ -98,6 +99,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pie/CommandPIE.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pic/CommandPIC.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sst/CommandSST.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sgt/CommandSGT.hpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
 )
