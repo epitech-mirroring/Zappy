@@ -41,7 +41,7 @@ namespace GUI {
             /**
              * @brief Create trantorian object
              */
-            Trantorian(int id = -1, int x = 0, int y = 0, int oritentation = 1,
+            Trantorian(std::string id = "null", int x = 0, int y = 0, int oritentation = 1,
                 int level = 1, std::string teamName = "");
             /**
              * @brief Destroy trantorian object
@@ -105,14 +105,14 @@ namespace GUI {
 
             /**
              * @brief Set trantorian id
-             * @param int
+             * @param std::string
              */
-            void setId(int id);
+            void setId(std::string id);
             /**
              * @brief Get trantorian id
              * @return int representing player's id
              */
-            [[nodiscard]] int getId();
+            [[nodiscard]] std::string getId();
 
             /**
              * @brief Set trantorian level
@@ -180,7 +180,7 @@ namespace GUI {
             int _lifetimeRemaining;
             bool _alive;
             bool _action;
-            int _id;
+            std::string _id;
             int _level;
             int _orientation;
             std::list<IObject *> _inventory;

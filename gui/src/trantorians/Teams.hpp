@@ -73,7 +73,7 @@ namespace GUI {
              * @param id int of trantorian's id
              * @return Trantorian object
              */
-            [[nodiscard]] Trantorian getTrantorianById(int id);
+            [[nodiscard]] Trantorian getTrantorianById(std::string id);
 
         private:
             std::string _name;

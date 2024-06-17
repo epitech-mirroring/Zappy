@@ -161,7 +161,7 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        Trantorian player(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3]),
+        Trantorian player(tokens[1], std::stoi(tokens[2]), std::stoi(tokens[3]),
             std::stoi(tokens[4]), std::stoi(tokens[5]), tokens[7]);
         for (auto &team : Teams::getTeamsList()) {
             if (team.getName() == tokens[7]) {
@@ -183,7 +183,7 @@ void Game::initializeCallbacks()
 
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
+                if (trantorian.getId() == tokens[1]) {
                     trantorian.setPosition(std::stoi(tokens[2]), std::stoi(tokens[3]));
                     trantorian.setOrientation(std::stoi(tokens[4]));
                     std::cout << "GUI LOG: Player " << trantorian.getId()
@@ -204,7 +204,7 @@ void Game::initializeCallbacks()
 
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
+                if (trantorian.getId() == tokens[1]) {
                     trantorian.setLevel(std::stoi(tokens[2]));
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " level updated" << std::endl;
@@ -238,7 +238,7 @@ void Game::initializeCallbacks()
 
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
+                if (trantorian.getId() == tokens[1]) {
                     trantorian.setInventory(tokens);
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " level updated" << std::endl;
@@ -258,7 +258,7 @@ void Game::initializeCallbacks()
 
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
+                if (trantorian.getId() == tokens[1]) {
                     // HANDLE EXPULSION
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " has been expulsed" << std::endl;
@@ -278,7 +278,7 @@ void Game::initializeCallbacks()
 
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
+                if (trantorian.getId() == tokens[1]) {
                     // HANDLE BROADCAST
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " has broadcasted: " << tokens[2] << std::endl;
@@ -298,7 +298,7 @@ void Game::initializeCallbacks()
 
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
+                if (trantorian.getId() == tokens[1]) {
                     // HANDLE ACTION LAYING EGG
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " is laying an egg" << std::endl;
@@ -318,7 +318,7 @@ void Game::initializeCallbacks()
 
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
+                if (trantorian.getId() == tokens[1]) {
                     // HANDLE ACTION LAYING EGG
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " is laying an egg" << std::endl;

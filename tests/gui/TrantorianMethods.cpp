@@ -72,12 +72,12 @@ TEST(trantorian_methods, IsAliveSetterAndGetters) {
 
 TEST(trantorian_methods, IdSetterAndGetters) {
     Trantorian player;
-    int res = 4242;
-    int new_res = 8484;
+    std::string res = "4242";
+    std::string new_res = "8484";
 
-    player.setId(4242);
+    player.setId("4242");
     EXPECT_EQ(player.getId(), res);
-    player.setId(8484);
+    player.setId("8484");
     EXPECT_EQ(player.getId(), new_res);
 }
 
@@ -152,7 +152,7 @@ TEST(trantorian_methods, MultipleProperties) {
 
 TEST(trantorian_methods, setInventory_AddObjects) {
     std::vector<std::string> objs = {"12", "X", "Y", "1", "0", "1", "0", "0", "0", "0"};
-    Trantorian player(12, 0, 0, 1, 1, "Zappy");
+    Trantorian player("12", 0, 0, 1, 1, "Zappy");
 
     player.setInventory(objs);
     auto objects = player.getInventory();
@@ -175,7 +175,7 @@ TEST(trantorian_methods, setInventory_AddObjects) {
 }
 
 TEST(trantorian_methods, setInventory_RemoveObjects) {
-    Trantorian player(12, 0, 0, 1, 1, "Zappy");
+    Trantorian player("12", 0, 0, 1, 1, "Zappy");
     IObject* food = new Food(Position(0, 0));
     IObject* linemate = new Linemate(Position(0, 0));
     player.addObject(food);
@@ -189,7 +189,7 @@ TEST(trantorian_methods, setInventory_RemoveObjects) {
 }
 
 TEST(trantorian_methods, setInventory_MixedChanges) {
-    Trantorian player(12, 0, 0, 1, 1, "Zappy");
+    Trantorian player("12", 0, 0, 1, 1, "Zappy");
     IObject* food = new Food(Position(0, 0));
     IObject* linemate = new Linemate(Position(0, 0));
     player.addObject(food);

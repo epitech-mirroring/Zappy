@@ -10,7 +10,7 @@
 
 using namespace GUI;
 
-Trantorian::Trantorian(int id, int x, int y, int oritentation,
+Trantorian::Trantorian(std::string id, int x, int y, int oritentation,
     int level, std::string teamName)
         : _id(id), _position(x, y), _orientation(oritentation), _level(level),
         _lifetimeRemaining(100), _alive(true), _action(false), _team(nullptr)
@@ -34,12 +34,12 @@ bool Trantorian::getAction()
     return _action;
 }
 
-void Trantorian::setId(int id)
+void Trantorian::setId(std::string id)
 {
     _id = id;
 }
 
-int Trantorian::getId()
+std::string Trantorian::getId()
 {
     return _id;
 }
