@@ -78,10 +78,10 @@ void Game::createWorld(std::vector<std::string> data)
         }
     }
     std::vector<std::string> clouds = {
-        "gui/src/assets/CloudLarge2.obj",
-        "gui/src/assets/CloudMedium2.obj",
-        "gui/src/assets/CloudSmall2.obj",
-        "gui/src/assets/CloudSmall3.obj"
+        "gui/src/assets/clouds/CloudLarge2.obj",
+        "gui/src/assets/clouds/CloudMedium2.obj",
+        "gui/src/assets/clouds/CloudSmall2.obj",
+        "gui/src/assets/clouds/CloudSmall3.obj"
     };
     for (int i = 0; i < 10; i++) {
         Model model = LoadModel(clouds[rand() % 4].c_str());
