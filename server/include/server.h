@@ -89,7 +89,7 @@ extern "C" {
     void read_client_message(server_t *server, client_t *client);
 
     /**
-     * @brief Execute client command (only network command)
+     * @brief Identify if a client is a GUI or an IA client
      *
      * @param server The server
      * @param client The client
