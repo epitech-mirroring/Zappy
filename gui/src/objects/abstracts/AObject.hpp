@@ -42,9 +42,26 @@ namespace GUI {
          */
         [[nodiscard]] Position& getPosition() noexcept;
 
+        /**
+         * @brief Get the Type of the object
+         * @return unsigned int (type of the object (follow the protocol))
+         */
+        [[nodiscard]] unsigned int getType() noexcept;
+
+        /**
+         * @brief get the quantity of the object
+         */
+        [[nodiscard]] unsigned int getQuantity() noexcept final;
+
+        /**
+         * @brief Set the Quantity of the object
+         */
+        virtual void setQuantity(unsigned int quantity) noexcept final;
+
     protected:
-        float _density;         // density of the object
-        Position _position;     // tile where the object is (x, y)
+        float _density;          // density of the object
+        Position _position;      // tile where the object is (x, y)
+        unsigned int _quantity;  // quantity of the object
     };
 }  // namespace GUI //
 #endif /* !AOBJECT_HPP_ */

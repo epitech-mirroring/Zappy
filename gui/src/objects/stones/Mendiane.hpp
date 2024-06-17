@@ -19,6 +19,12 @@ namespace GUI {
          */
         Mendiane(Position tile = Position(0, 0));
         virtual ~Mendiane() noexcept = default;
+
+        /**
+         * @brief Get the Type of the object
+         * @return unsigned int (type of the object (follow the protocol))
+         */
+        [[nodiscard]] unsigned int getType() noexcept final;
     };
 } // namespace GUI //
 #endif /* !MENDIANE_HPP_ */

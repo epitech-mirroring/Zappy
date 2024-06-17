@@ -7,17 +7,18 @@
 
 #include <iostream>
 #include "handle_args/HandleArgs.hpp"
-#include "display/Window.hpp"
+#include "game/Game.hpp"
 
 using namespace GUI;
 
 int main(int ac, char **av)
 {
     GUI::HandleArgs args;
-    GUI::Window win;
 
     if (args.checkArgs(ac, av))
         return 84;
-    win.displayWindow();
+    GUI::Game game(args.getHostname(), args.getPort());
+    game.initGame();
+    game.runGame();
     return 0;
 }

@@ -5,6 +5,8 @@ target_sources(zappy_gui_lib
     # EXCEPTIONS
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/exception/SocketException.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/exception/ClientException.cpp
     # OBJECTS
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.cpp
@@ -18,14 +20,34 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/eggs/Egg.cpp
     # TRANTORIAN
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Trantorian.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Tribes.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Teams.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.cpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.cpp
     # POSITION
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.cpp
-    # DISPLAY
-    ${CMAKE_CURRENT_SOURCE_DIR}/display/Window.cpp
+    # NETWORK
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/Client.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol_handler/ProtocolHandler.cpp
+    ## COMMANDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/factory/CommandFactory.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/bct/CommandBCT.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/tna/CommandTNA.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pnw/CommandPNW.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/ppo/CommandPPO.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/plv/CommandPLV.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/msz/CommandMSZ.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pin/CommandPIN.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pex/CommandPEX.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pbc/CommandPBC.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pfk/CommandPFK.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pie/CommandPIE.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pic/CommandPIC.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sst/CommandSST.cpp
+    # GUI
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
 
   PUBLIC
     # ARGS
@@ -33,6 +55,8 @@ target_sources(zappy_gui_lib
     # EXCEPTIONS
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/abstract/AException.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/exception/ArgsException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/exception/SocketException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/exception/ClientException.hpp
     # OBJECTS
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/abstracts/AStone.hpp
@@ -46,13 +70,12 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/objects/eggs/Egg.hpp
     #TRANTORIAN
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Trantorian.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Tribes.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Teams.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.hpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.hpp
     # POSITION
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
-    # DISPLAY
-    ${CMAKE_CURRENT_SOURCE_DIR}/display/Window.hpp
 )

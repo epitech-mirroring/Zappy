@@ -24,12 +24,12 @@ int HandleArgs::checkArgs(int nbArgs, char **args)
             return 0;
         }
         if (nbArgs != 3)
-            throw ArgsException("ARGS ERROR: Invalid number of arguments");
+            throw GUI::ArgsException("ARGS ERROR: Invalid number of arguments");
         if (checkPort(args[1]) == 84)
-            throw ArgsException("ARGS ERROR: Invalid port");
+            throw GUI::ArgsException("ARGS ERROR: Invalid port");
         if (checkHostname(args[2]) == 84)
-            throw ArgsException("ARGS ERROR: Invalid hostname");
-    } catch (const ArgsException &e) {
+            throw GUI::ArgsException("ARGS ERROR: Invalid hostname");
+    } catch (const GUI::ArgsException &e) {
         std::cerr << e.what() << std::endl;
         return 84;
     }
@@ -77,4 +77,14 @@ int HandleArgs::checkHostname(const std::string &hostname)
     }
     _hostname = hostname;
     return 0;
+}
+
+unsigned int HandleArgs::getPort() const
+{
+    return _port;
+}
+
+std::string HandleArgs::getHostname() const
+{
+    return _hostname;
 }

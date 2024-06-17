@@ -13,3 +13,8 @@ Linemate::Linemate(Position tile)
     :   AStone(0.3, tile)
 {
 }
+
+unsigned int Linemate::getType() noexcept
+{
+    return 1;
+}

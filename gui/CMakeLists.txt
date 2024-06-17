@@ -1,5 +1,7 @@
 add_library(zappy_gui_lib STATIC)
 
+find_package(raylib 3.0 REQUIRED)
+
 target_include_directories(zappy_gui_lib PUBLIC src)
 add_subdirectory(src)
 

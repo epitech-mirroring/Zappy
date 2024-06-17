@@ -10,15 +10,39 @@
 
     #include <iostream>
     #include <utility>
-    #include "../position/Position.hpp"
+    #include <vector>
+    #include <list>
+    #include "position/Position.hpp"
+    #include "objects/interface/IObject.hpp"
+    #include "objects/interface/IObject.hpp"
+    #include "objects/food/Food.hpp"
+    #include "objects/stones/Linemate.hpp"
+    #include "objects/stones/Deraumere.hpp"
+    #include "objects/stones/Sibur.hpp"
+    #include "objects/stones/Mendiane.hpp"
+    #include "objects/stones/Phiras.hpp"
+    #include "objects/stones/Thystame.hpp"
 
 namespace GUI {
+    class Teams; // Forward declaration
+
     class Trantorian {
         public:
+          enum ResourceType {
+                FOOD,
+                LINEMATE,
+                DERAUMERE,
+                SIBUR,
+                MENDIANE,
+                PHIRAS,
+                THYSTAME,
+                RESOURCE_COUNT
+            };
             /**
              * @brief Create trantorian object
              */
-            Trantorian(std::string team = "", int x = 0, int y = 0);
+            Trantorian(std::string id = "null", int x = 0, int y = 0, int oritentation = 1,
+                int level = 1, std::string teamName = "");
             /**
              * @brief Destroy trantorian object
              */
@@ -37,14 +61,14 @@ namespace GUI {
 
             /**
              * @brief Set trantorian team
-             * @param teamName
+             * @param team
              */
-            void setTeam(std::string teamName);
+            void setTeam(Teams* team);
             /**
              * @brief Get trantorian team
-             * @return std::string w/ team's name
+             * @return Teams* pointer to team
              */
-            [[nodiscard]] std::string getTeam();
+            [[nodiscard]] Teams* getTeam();
 
             /**
              * @brief Set trantorian's lifetime
@@ -81,14 +105,14 @@ namespace GUI {
 
             /**
              * @brief Set trantorian id
-             * @param int
+             * @param std::string
              */
-            void setId(int id);
+            void setId(std::string id);
             /**
              * @brief Get trantorian id
              * @return int representing player's id
              */
-            [[nodiscard]] int getId();
+            [[nodiscard]] std::string getId();
 
             /**
              * @brief Set trantorian level
@@ -101,14 +125,65 @@ namespace GUI {
              */
             [[nodiscard]] int getLevel();
 
+            /**
+             * @brief Compare two trantorians
+             * @param other
+             * @return true if equal, false if not
+             */
+            [[nodiscard]]
+            bool operator==(const Trantorian& other) const;
+
+            /**
+             * @brief Set trantorian orientation
+             * @param orientation
+             */
+            void setOrientation(int orientation);
+
+            /**
+            * @brief Get the object by type
+            * @param type (type of the object)
+            * @param pos (Position of the TILE where the object is supposed to be created)
+            * @return IObject* (object)
+            */
+            IObject* createObjectByType(ResourceType type, Position pos);
+
+            /**
+             * @brief Set the trantorian's inventory
+             * @param inventory (vector of strings)
+             * @return void
+             */
+            void setInventory(std::vector<std::string> inventory);
+
+            /**
+             * @brief Clear the trantorian's inventory
+             * @return void
+             */
+            void clearInventory();
+            /**
+             * @brief Add an object to the tile
+             * @param object (object to add)
+             */
+            void addObject(IObject *object);
+            /**
+             * @brief Remove an object from the tile
+             * @param object (object to remove)
+             */
+            void removeObject(IObject *object);
+            /**
+             * @brief Get the inventory of the player
+             * @return list of IObject*
+             */
+            [[nodiscard]] std::list<IObject *> getInventory() const;
         private:
             GUI::Position _position;
-            std::string _team;
+            Teams* _team;
             int _lifetimeRemaining;
             bool _alive;
             bool _action;
-            int _id;
+            std::string _id;
             int _level;
+            int _orientation;
+            std::list<IObject *> _inventory;
     };
 } // namespace GUI
 

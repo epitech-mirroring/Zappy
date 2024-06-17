@@ -13,3 +13,8 @@ Thystame::Thystame(Position tile)
     :   AStone(0.05, tile)
 {
 }
+
+unsigned int Thystame::getType() noexcept
+{
+    return 6;
+}
