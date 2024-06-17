@@ -29,22 +29,27 @@ void Client::handleConnection()
     }
 }
 
-
 std::vector<std::string> Client::readData()
 {
     fd_set readfds;
     int sockfd = _socket->getSockfd();
+    struct timeval timeout;
+
+    timeout.tv_sec = 0.1;
+    timeout.tv_usec = 0;
 
     FD_ZERO(&readfds);
     FD_SET(sockfd, &readfds);
 
-    int activity = select(sockfd + 1, &readfds, nullptr, nullptr, nullptr);
-
-    if (activity < 0 && errno != EINTR) {
-        std::cerr << "Select error" << std::endl;
+    int activity = select(sockfd + 1, &readfds, nullptr, nullptr, &timeout);
+    if (activity < 0) {
+        if (errno != EINTR) {
+            std::cerr << "Select error: " << strerror(errno) << std::endl;
+        }
+        return {};
+    } else if (activity == 0) {
         return {};
     }
-
     if (FD_ISSET(sockfd, &readfds)) {
         return _socket->receive();
     }

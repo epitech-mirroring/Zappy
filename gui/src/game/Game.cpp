@@ -17,8 +17,8 @@ Game::Game(std::string hostname, unsigned int port)
 void Game::initGame()
 {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    InitWindow(1280, 720, "Zappy");
-    SetTargetFPS(60);
+    InitWindow(1600, 900, "Zappy");
+    SetTargetFPS(120);
     _client.handleConnection();
     std::cout << "GUI LOG: Connected to the server" << std::endl;
     _client._socket.get()->send("GRAPHIC\n");
@@ -27,272 +27,47 @@ void Game::initGame()
     createWorld(data);
     initTimeUnit(data);
     data.clear();
+    _camera = {0};
+    _camera.position = {0.0f, 10.0f, 10.0f};
+    _camera.target = {0.0f, 0.0f, 0.0f};
+    _camera.up = Vector3{0.0f, 1.0f, 0.0f};
+    _camera.fovy = 90.0f;
+    _camera.projection = CAMERA_PERSPECTIVE;
 }
 
 void Game::runGame()
 {
     std::vector<std::string> data;
-    network::CommandFactory commandFactory;
-    network::ProtocolHandler protocolHandler(commandFactory);
-
-    commandFactory.setCallback("bct", [this](std::istringstream &iss) {
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        int x = std::stoi(tokens[1]);
-        int y = std::stoi(tokens[2]);
-
-        for (auto &tiles : _world.getTiles()) {
-            for (auto &tile : tiles) {
-                if (tile.getPosition().getX() == x && tile.getPosition().getY() == y) {
-                    tile.updateTileContent(tokens);
-                    std::cout << "GUI LOG: Content of the Tile (" << x << ", "
-                        << y << ") updated" << std::endl;
-                }
-            }
-        }
-    });
-
-    commandFactory.setCallback("tna", [this](std::istringstream &iss) {
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        Teams team(tokens[1]);
-        _teams.addTeamToTeamsList(team);
-        std::list<Teams> teams = Teams::getTeamsList();
-        std::cout << "GUI LOG: There is " << teams.size() << " teams" << std::endl;
-    });
-
-    commandFactory.setCallback("pnw", [this](std::istringstream &iss) {
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        Trantorian player(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3]),
-            std::stoi(tokens[4]), std::stoi(tokens[5]), tokens[7]);
-        for (auto &team : Teams::getTeamsList()) {
-            if (team.getName() == tokens[7]) {
-                team.addTrantorian(player);
-                std::cout << "GUI LOG: Player " << player.getId() << " added to team "
-                    << team.getName() << std::endl;
-            }
-        }
-    });
-
-    commandFactory.setCallback("ppo", [this](std::istringstream &iss) {
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
-                    trantorian.setPosition(std::stoi(tokens[2]), std::stoi(tokens[3]));
-                    trantorian.setOrientation(std::stoi(tokens[4]));
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " position updated" << std::endl;
-                }
-            }
-        }
-    });
-
-    commandFactory.setCallback("plv", [this](std::istringstream &iss) {
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
-                    trantorian.setLevel(std::stoi(tokens[2]));
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " level updated" << std::endl;
-                }
-            }
-        }
-    });
-
-    commandFactory.setCallback("msz", [this](std::istringstream &iss) {
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        _world = World(std::stoi(tokens[1]), std::stoi(tokens[2]));
-        std::cout << "GUI LOG: World size updated (" <<
-            _world.getHeight() << ", " << _world.getWidth() << ")" << std::endl;
-    });
-
-    commandFactory.setCallback("pin", [this](std::istringstream &iss) {
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
-                    trantorian.setInventory(tokens);
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " level updated" << std::endl;
-                }
-            }
-        }
-    });
-
-    commandFactory.setCallback("pex", [this](std::istringstream &iss){
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
-                    // HANDLE EXPULSION
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " has been expulsed" << std::endl;
-                }
-            }
-        }
-    });
-
-    commandFactory.setCallback("pbc", [this](std::istringstream &iss){
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
-                    // HANDLE BROADCAST
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " has broadcasted: " << tokens[2] << std::endl;
-                }
-            }
-        }
-    });
-
-    commandFactory.setCallback("pfk", [this](std::istringstream &iss){
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
-                    // HANDLE ACTION LAYING EGG
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " is laying an egg" << std::endl;
-                }
-            }
-        }
-    });
-
-    commandFactory.setCallback("pfk", [this](std::istringstream &iss){
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == std::stoi(tokens[1])) {
-                    // HANDLE ACTION LAYING EGG
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " is laying an egg" << std::endl;
-                }
-            }
-        }
-    });
-
-    commandFactory.setCallback("pie", [this](std::istringstream &iss){
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-        // HANDLE INCANTATION END
-    });
-
-    commandFactory.setCallback("pic", [this](std::istringstream &iss){
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-        // HANDLE INCANTATION START
-    });
-
-    commandFactory.setCallback("sst", [this](std::istringstream &iss){
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        _timeUnit = std::stoi(tokens[1]);
-        std::cout << "GUI LOG: New time unit set (" << _timeUnit << ")" << std::endl;
-    });
+    network::ProtocolHandler protocolHandler(_commandFactory);
+    initializeCallbacks();
 
     while (!WindowShouldClose()) {
+        UpdateCamera(&_camera, CAMERA_FREE);
         BeginDrawing();
-        ClearBackground(BLUE);
+        ClearBackground(WHITE);
+        BeginMode3D(_camera);
+        DrawTiles(_world.getTiles());
+        DrawGrid(20, 10.0f);
         data = _client.readData();
         protocolHandler.handleData(data);
-        DrawText("Congrats! You created your first window!", 420, 360, 20, BLACK);
+        EndMode3D();
+        DrawFPS(10, 10);
         EndDrawing();
         data.clear();
     }
     CloseWindow();
+}
+
+void Game::DrawTiles(std::vector<std::vector<Tile>> tiles)
+{
+    for (auto &tiles : _world.getTiles()) {
+        for (auto &tile : tiles) {
+            DrawCube({static_cast<float>(tile.getPosition().getX()), 0.0f,
+                static_cast<float>(tile.getPosition().getY())}, 1.0f, 1.0f, 1.0f, BLACK);
+            DrawCubeWires({static_cast<float>(tile.getPosition().getX()), 0.0f,
+                static_cast<float>(tile.getPosition().getY())}, 1.0f, 1.0f, 1.0f, YELLOW);
+        }
+    }
 }
 
 void Game::createWorld(std::vector<std::string> data)
@@ -335,4 +110,255 @@ void Game::initTimeUnit(std::vector<std::string> data)
         }
     }
     std::cout << "GUI LOG: Time unit set (" << _timeUnit << ")" << std::endl;
+}
+
+void Game::initializeCallbacks()
+{
+    _commandFactory.setCallback("bct", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        int x = std::stoi(tokens[1]);
+        int y = std::stoi(tokens[2]);
+
+        for (auto &tiles : _world.getTiles()) {
+            for (auto &tile : tiles) {
+                if (tile.getPosition().getX() == x && tile.getPosition().getY() == y) {
+                    tile.updateTileContent(tokens);
+                    std::cout << "GUI LOG: Content of the Tile (" << x << ", "
+                        << y << ") updated" << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("tna", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        Teams team(tokens[1]);
+        _teams.addTeamToTeamsList(team);
+        std::list<Teams> teams = Teams::getTeamsList();
+        std::cout << "GUI LOG: There is " << teams.size() << " teams" << std::endl;
+    });
+
+    _commandFactory.setCallback("pnw", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        Trantorian player(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3]),
+            std::stoi(tokens[4]), std::stoi(tokens[5]), tokens[7]);
+        for (auto &team : Teams::getTeamsList()) {
+            if (team.getName() == tokens[7]) {
+                team.addTrantorian(player);
+                std::cout << "GUI LOG: Player " << player.getId() << " added to team "
+                    << team.getName() << std::endl;
+            }
+        }
+    });
+
+    _commandFactory.setCallback("ppo", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == std::stoi(tokens[1])) {
+                    trantorian.setPosition(std::stoi(tokens[2]), std::stoi(tokens[3]));
+                    trantorian.setOrientation(std::stoi(tokens[4]));
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " position updated" << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("plv", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == std::stoi(tokens[1])) {
+                    trantorian.setLevel(std::stoi(tokens[2]));
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " level updated" << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("msz", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        _world = World(std::stoi(tokens[1]), std::stoi(tokens[2]));
+        std::cout << "GUI LOG: World size updated (" <<
+            _world.getHeight() << ", " << _world.getWidth() << ")" << std::endl;
+    });
+
+    _commandFactory.setCallback("pin", [this](std::istringstream &iss) {
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == std::stoi(tokens[1])) {
+                    trantorian.setInventory(tokens);
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " level updated" << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("pex", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == std::stoi(tokens[1])) {
+                    // HANDLE EXPULSION
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " has been expulsed" << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("pbc", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == std::stoi(tokens[1])) {
+                    // HANDLE BROADCAST
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " has broadcasted: " << tokens[2] << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("pfk", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == std::stoi(tokens[1])) {
+                    // HANDLE ACTION LAYING EGG
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " is laying an egg" << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("pfk", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == std::stoi(tokens[1])) {
+                    // HANDLE ACTION LAYING EGG
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " is laying an egg" << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("pie", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+        // HANDLE INCANTATION END
+    });
+
+    _commandFactory.setCallback("pic", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+        // HANDLE INCANTATION START
+    });
+
+    _commandFactory.setCallback("sst", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        _timeUnit = std::stoi(tokens[1]);
+        std::cout << "GUI LOG: New time unit set (" << _timeUnit << ")" << std::endl;
+    });
 }

@@ -24,6 +24,7 @@
     #include "objects/stones/Mendiane.hpp"
     #include "objects/stones/Phiras.hpp"
     #include "objects/stones/Thystame.hpp"
+    #include <raylib.h>
 
 namespace GUI {
     class Tile {
@@ -88,7 +89,13 @@ namespace GUI {
          * @param pos (position of the Tile where the object is supposed to be created)
          * @return IObject* (object)
          */
-        IObject* createObjectByType(ResourceType type, Position pos);
+        [[nodiscard]] IObject* createObjectByType(ResourceType type, Position pos);
+
+        /**
+         * @brief get the bounds of the tile
+         * @return BoundingBox (bounding box of the tile)
+         */
+        [[nodiscard]] BoundingBox getBounds() const;
 
     protected:
         std::list<IObject *> _objects;  // list of objects on the tile

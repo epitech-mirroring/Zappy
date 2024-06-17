@@ -67,9 +67,5 @@ void Tile::updateTileContent(std::vector<std::string> tileContent)
             addObject(object);
             quantity--;
         }
-        while (quantity < 0) {
-            removeObject(_objects.back());
-            quantity++;
-        }
     }
 }

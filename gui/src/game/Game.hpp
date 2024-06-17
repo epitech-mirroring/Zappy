@@ -49,11 +49,24 @@ namespace GUI {
          */
         void initTimeUnit(std::vector<std::string> data);
 
+        /**
+         * @brief Initialize the callbacks of the game
+         */
+        void initializeCallbacks();
+
+        /**
+         * @brief Draw the tiles of the world
+         * @param tiles std::vector<std::vector<Tile>> tiles
+         */
+        void DrawTiles(std::vector<std::vector<Tile>> tiles);
+
     private:
-        World _world;               // World object
-        Teams _teams;               // Teams object
-        network::Client _client;    // Client object
-        unsigned int _timeUnit;     // Time unit of the game
+        World _world;                            // World object
+        Teams _teams;                            // Teams object
+        Camera _camera;                          // Camera object
+        network::Client _client;                 // Client object
+        network::CommandFactory _commandFactory; // CommandFactory object
+        unsigned int _timeUnit;                  // Time unit of the game
     };
 } // namespace GUI //
 #endif /* !GAME_HPP_ */
