@@ -7,9 +7,10 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "client.h"
 #include "buffer.h"
-
 
 client_t *init_client(int socket, client_type_t type)
 {
