@@ -65,6 +65,20 @@ pipeline {
             }
             steps {
                 ansiColor('xterm') {
+                    // Install Raylib
+                    sh '''
+                    if [ ! -d "/usr/local/include/raylib" ]; then
+                        wget https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+                        tar -xzf ${RAYLIB_VERSION}.tar.gz
+                        cd raylib-${RAYLIB_VERSION}
+                        mkdir build
+                        cd build
+                        cmake ..
+                        make
+                        sudo make install
+                    fi
+                    '''
+
                     // Clean before building
                     sh 'make fclean'
 
@@ -125,7 +139,6 @@ pipeline {
 
                 // Add the mirror
                 sh "git remote add mirror ${MIRROR_URL}"
-
 
                 // Switch to the main branch
                 sh "git checkout main"
