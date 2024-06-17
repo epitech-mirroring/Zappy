@@ -95,6 +95,7 @@ pipeline {
             }
             steps {
                 // Run the tests
+                sh 'apt install libgtest-dev -y'
                 sh 'make tests_run'
 
                 junit(testResults: "test_detail.xml", allowEmptyResults : true)
