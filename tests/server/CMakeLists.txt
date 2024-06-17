@@ -1,3 +1,1 @@
-target_sources(zappy_tests
-  PRIVATE
-)
+# target_sources(zappy_tests)

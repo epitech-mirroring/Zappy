@@ -12,10 +12,11 @@
     #define MAX_COMMAND_SIZE 1024
     #define MAX_USERS 10000
 
-    #include "game.h"
+#include "game.h"
     #include "array.h"
     #include "client.h"
     #include "buffer.h"
+    #include <sys/select.h>
     #ifdef __cplusplus
 extern "C" {
     #endif // __cplusplus

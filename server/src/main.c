@@ -6,10 +6,11 @@
 ** You can even have multiple lines if you want !
 */
 
+#include <string.h>
+#include <time.h>
 #include "server.h"
 #include "team.h"
 #include "array.h"
-#include <string.h>
 
 static size_t *find_map_size(int ac, char **av)
 {
@@ -100,7 +101,7 @@ int check_teams(array_t *teams)
             return 84;
         check = 1;
         for (size_t j = i + 1; j < array_get_size(teams) && check != 0; j++) {
-            check == strcmp(team->name,
+            check = strcmp(team->name,
                 ((team_t *)array_get_at(teams, j))->name);
         }
         if (check == 0)
@@ -119,7 +120,7 @@ int main(int ac, char **av)
     server_t *server;
 
     srand(time(NULL));
-    if (map_size == NULL || port == -1 || nb_max_clients == -1
+    if (map_size == NULL || nb_max_clients == -1
         || single_tick_time == -1 || check_teams(teams) == 84)
         return 84;
     server = create_server(port, teams, map_size, nb_max_clients);

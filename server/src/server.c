@@ -8,7 +8,6 @@
 
 #include "server.h"
 #include "actions.h"
-#include <bits/waitflags.h>
 #include <sys/select.h>
 #include <sys/socket.h>
 #include <sys/wait.h>

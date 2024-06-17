@@ -1,7 +1,9 @@
 add_library(zappy_server_lib STATIC)
 
 target_include_directories(zappy_server_lib PUBLIC include)
-target_link_libraries(zappy_server_lib PRIVATE -luuid)
+target_include_directories(zappy_server_lib PRIVATE /usr/local/include)
+target_link_directories(zappy_server_lib PRIVATE /usr/local/lib)
+target_link_libraries(zappy_server_lib PRIVATE uuid)
 add_subdirectory(src)
 add_subdirectory(include)
 
