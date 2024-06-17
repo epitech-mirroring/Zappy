@@ -6,7 +6,6 @@ target_sources(zappy_server_lib
         ${CMAKE_CURRENT_SOURCE_DIR}/client.c
         ${CMAKE_CURRENT_SOURCE_DIR}/egg.c
         ${CMAKE_CURRENT_SOURCE_DIR}/game.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/hello_world.c
         ${CMAKE_CURRENT_SOURCE_DIR}/inventory.c
         ${CMAKE_CURRENT_SOURCE_DIR}/main.c
         ${CMAKE_CURRENT_SOURCE_DIR}/map_bis.c
