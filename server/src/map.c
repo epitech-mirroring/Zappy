@@ -73,8 +73,6 @@ map_t *init_map(size_t width, size_t height)
 
 void destroy_map(map_t *map)
 {
-    if (map == NULL)
-        return;
     array_destructor(map->tiles);
     free(map);
 }

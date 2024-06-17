@@ -26,8 +26,6 @@ trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
 
 void destroy_trantorian(trantorian_t *trantorian)
 {
-    if (trantorian == NULL)
-        return;
     array_destructor(trantorian->actions);
     free(trantorian);
 }

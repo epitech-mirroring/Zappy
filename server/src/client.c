@@ -27,8 +27,6 @@ client_t *init_client(int socket, client_type_t type)
 
 void destroy_client(client_t *client)
 {
-    if (client == NULL)
-        return;
     buffer_destroy(client->buffer_asked);
     buffer_destroy(client->buffer_answered);
     free(client);

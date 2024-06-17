@@ -17,12 +17,17 @@ static size_t *find_map_size(int ac, char **av)
     int i = 1;
     size_t *map_size;
 
-    for (; i < ac && strcmp(av[i], "-x") != 0; i++);
+    while (i < ac && strcmp(av[i], "-x") != 0) {
+        i++;
+    }
     if (i >= ac)
         return NULL;
     map_size = malloc(sizeof(size_t) * 2);
     map_size[0] = atoi(av[i + 1]);
-    for (i = 1; i < ac && strcmp(av[i], "-y") != 0; i++);
+    i = 1;
+    while (i < ac && strcmp(av[i], "-y") != 0) {
+        i++;
+    }
     if (i >= ac) {
         free(map_size);
         return NULL;

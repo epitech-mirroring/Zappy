@@ -117,8 +117,6 @@ game_t *init_game(array_t *teams, size_t map_size[2])
 
 void destroy_game(game_t *game)
 {
-    if (game == NULL)
-        return;
     array_destructor(game->teams);
     array_destructor(game->eggs);
     array_destructor(game->trantorians);

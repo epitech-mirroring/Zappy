@@ -44,7 +44,9 @@ extern "C" {
      * @brief Initialize a server
      *
      * @param port The port on which the server will listen
-     * @param freq The frequency of the server
+     * @param teams The teams in the game
+     * @param map_size The size of the map [width, height]
+     * @param nb_max_clients The maximum number of clients
      * @return server_t* The server
      */
     server_t *create_server(unsigned short port, array_t *teams,
