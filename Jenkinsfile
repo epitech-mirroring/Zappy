@@ -5,6 +5,7 @@ pipeline {
         PRIVATE_KEY = credentials('EPITECH_SSH_KEY')
         PUBLIC_KEY = credentials('EPITECH_SSH_PUBKEY')
         MIRROR_URL = 'git@github.com:EpitechPromo2027/B-YEP-400-NAN-4-1-zappy-quentin.tennerel.git'
+        RAYLIB_VERSION = '3.0.0'
     }
     stages {
         stage('📥 Checkout') {
