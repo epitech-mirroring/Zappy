@@ -47,6 +47,7 @@ extern "C" {
         array_t *actions;
         enum direction_e direction;
         size_t waiting_tick;
+        size_t nb_waiting_actions;
         client_t *client;
     } trantorian_t;
 
@@ -72,6 +73,14 @@ extern "C" {
      * @param trantorian The trantorian to tick
      */
     void trantorian_tick(trantorian_t *trantorian);
+
+     /**
+     * @brief Return a string representation of the inventory
+     *
+     * @param inventory The inventory to represent
+     * @return char* The string representation of the inventory
+    */
+    char *inventory_to_str(trantorian_t *trantorian);
 
     #ifdef __cplusplus
 }
