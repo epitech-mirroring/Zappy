@@ -82,6 +82,22 @@ extern "C" {
     */
     char *inventory_to_str(trantorian_t *trantorian);
 
+    /**
+     * @brief Return a string representation of the trantorian position
+     *
+     * @param trantorian The trantorian to represent
+     * @return char* The string representation of the trantorian position
+    */
+    char *trantorian_pos_to_str(trantorian_t *trantorian);
+
+    /**
+     * @brief Return a string representation of the trantorian level
+     *
+     * @param trantorian The trantorian to represent
+     * @return char* The string representation of the trantorian level
+    */
+    char *trantorian_level_to_str(trantorian_t *trantorian);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
