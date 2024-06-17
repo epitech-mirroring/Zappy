@@ -44,10 +44,10 @@ void Game::runGame()
     while (!WindowShouldClose()) {
         UpdateCamera(&_camera, CAMERA_FREE);
         BeginDrawing();
-        ClearBackground(WHITE);
+        ClearBackground(BLUE);
         BeginMode3D(_camera);
         DrawTiles(_world.getTiles());
-        DrawGrid(20, 10.0f);
+        DrawClouds();
         data = _client.readData();
         protocolHandler.handleData(data);
         EndMode3D();
@@ -56,18 +56,6 @@ void Game::runGame()
         data.clear();
     }
     CloseWindow();
-}
-
-void Game::DrawTiles(std::vector<std::vector<Tile>> tiles)
-{
-    for (auto &tiles : _world.getTiles()) {
-        for (auto &tile : tiles) {
-            DrawCube({static_cast<float>(tile.getPosition().getX()), 0.0f,
-                static_cast<float>(tile.getPosition().getY())}, 1.0f, 1.0f, 1.0f, BLACK);
-            DrawCubeWires({static_cast<float>(tile.getPosition().getX()), 0.0f,
-                static_cast<float>(tile.getPosition().getY())}, 1.0f, 1.0f, 1.0f, YELLOW);
-        }
-    }
 }
 
 void Game::createWorld(std::vector<std::string> data)
@@ -89,10 +77,42 @@ void Game::createWorld(std::vector<std::string> data)
             }
         }
     }
+    std::vector<std::string> clouds = {
+        "gui/src/assets/CloudLarge2.obj",
+        "gui/src/assets/CloudMedium2.obj",
+        "gui/src/assets/CloudSmall2.obj",
+        "gui/src/assets/CloudSmall3.obj"
+    };
+    for (int i = 0; i < 10; i++) {
+        Model model = LoadModel(clouds[rand() % 4].c_str());
+        _clouds.push_back(model);
+        _cloudPositions.push_back({static_cast<float>(rand() % 30), 15.0f, static_cast<float>(rand() % 30)});
+    }
     std::cout << "GUI LOG: World created (" << _world.getHeight() << ", "
         << _world.getWidth() << ")" << std::endl;
     std::cout << "GUI LOG: Tiles created (" << (_world.getTiles().size()
         * _world.getTiles().size()) << ")" << std::endl;
+    std::cout << "GUI LOG: Clouds created (" << _clouds.size() << ")" << std::endl;
+}
+
+void Game::DrawTiles(std::vector<std::vector<Tile>> tiles)
+{
+    for (auto &tiles : _world.getTiles()) {
+        for (auto &tile : tiles) {
+            DrawCube({static_cast<float>(tile.getPosition().getX()), 0.0f,
+                static_cast<float>(tile.getPosition().getY())}, 1.0f, 1.0f, 1.0f, GREEN);
+            DrawCubeWires({static_cast<float>(tile.getPosition().getX()), 0.0f,
+                static_cast<float>(tile.getPosition().getY())}, 1.0f, 1.0f, 1.0f, WHITE);
+        }
+    }
+}
+
+void Game::DrawClouds()
+{
+    for (size_t i = 0; i < _clouds.size(); i++) {
+        DrawModel(_clouds[i], _cloudPositions[i], 1.0f, WHITE);
+        std::cout << "GUI LOG: Cloud drawn" << std::endl;
+    }
 }
 
 void Game::initTimeUnit(std::vector<std::string> data)

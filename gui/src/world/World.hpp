@@ -105,7 +105,6 @@ namespace GUI {
     protected:
         unsigned int _width;  // width of the world
         unsigned int _height; // height of the world
-
         std::vector<std::vector<Tile>> _tiles;  // 2D vector of tiles
     };
 } // namespace GUI

@@ -60,6 +60,11 @@ namespace GUI {
          */
         void DrawTiles(std::vector<std::vector<Tile>> tiles);
 
+        /**
+         * @brief Draw the clouds
+         */
+        void DrawClouds();
+
     private:
         World _world;                            // World object
         Teams _teams;                            // Teams object
@@ -67,6 +72,8 @@ namespace GUI {
         network::Client _client;                 // Client object
         network::CommandFactory _commandFactory; // CommandFactory object
         unsigned int _timeUnit;                  // Time unit of the game
+        std::vector<Model> _clouds;              // Clouds models
+        std::vector<Vector3> _cloudPositions;    // Clouds positions
     };
 } // namespace GUI //
 #endif /* !GAME_HPP_ */
