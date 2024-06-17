@@ -83,7 +83,7 @@ void Game::createWorld(std::vector<std::string> data)
         "gui/src/assets/clouds/CloudSmall2.obj",
         "gui/src/assets/clouds/CloudSmall3.obj"
     };
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 7; i++) {
         Model model = LoadModel(clouds[rand() % 4].c_str());
         _clouds.push_back(model);
         _cloudPositions.push_back({static_cast<float>(rand() % 30), 15.0f, static_cast<float>(rand() % 30)});
