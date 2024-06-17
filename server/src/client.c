@@ -55,12 +55,3 @@ char *get_next_message(client_t *client)
         return NULL;
     return buffer_get_next(client->buffer_asked);
 }
-
-client_type_t get_type(client_t *client)
-{
-    if (client->type == GRAPHIC)
-        return GRAPHIC;
-    else if (client->type == AI)
-        return AI;
-    return UNKNOWN;
-}
