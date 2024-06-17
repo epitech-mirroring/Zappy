@@ -5,7 +5,6 @@ pipeline {
         PRIVATE_KEY = credentials('EPITECH_SSH_KEY')
         PUBLIC_KEY = credentials('EPITECH_SSH_PUBKEY')
         MIRROR_URL = 'git@github.com:EpitechPromo2027/B-YEP-400-NAN-4-1-zappy-quentin.tennerel.git'
-        RAYLIB_VERSION = '3.0.0'
     }
     stages {
         stage('📥 Checkout') {
@@ -65,20 +64,6 @@ pipeline {
             }
             steps {
                 ansiColor('xterm') {
-                    // Install Raylib
-                    sh '''
-                    if [ ! -d "/usr/local/include/raylib" ]; then
-                        wget https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
-                        tar -xzf ${RAYLIB_VERSION}.tar.gz
-                        cd raylib-${RAYLIB_VERSION}
-                        mkdir build
-                        cd build
-                        cmake ..
-                        make
-                        sudo make install
-                    fi
-                    '''
-
                     // Clean before building
                     sh 'make fclean'
 
@@ -139,6 +124,7 @@ pipeline {
 
                 // Add the mirror
                 sh "git remote add mirror ${MIRROR_URL}"
+
 
                 // Switch to the main branch
                 sh "git checkout main"
