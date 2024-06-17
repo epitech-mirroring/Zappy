@@ -78,4 +78,26 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.hpp
     # POSITION
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
+    # NETWORK
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/ASocket.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/socket/TCPSocket.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/Client.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/protocol_handler/ProtocolHandler.hpp
+    ## COMMANDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/factory/CommandFactory.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/bct/CommandBCT.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/tna/CommandTNA.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pnw/CommandPNW.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/ppo/CommandPPO.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/plv/CommandPLV.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/msz/CommandMSZ.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pin/CommandPIN.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pex/CommandPEX.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pbc/CommandPBC.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pfk/CommandPFK.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pie/CommandPIE.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pic/CommandPIC.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sst/CommandSST.hpp
+    # GUI
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
 )
