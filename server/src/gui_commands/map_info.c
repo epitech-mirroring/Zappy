@@ -14,6 +14,10 @@ char *tile_to_string(tile_t *tile)
 {
     char *str = calloc(1024, sizeof(char));
 
+    if (tile == NULL) {
+        sprintf(str, "sbp\n");
+        return str;
+    }
     sprintf(str, "bct %i %i %i %i\n", tile->coordinates.x,
         tile->coordinates.y, hashmap_get(tile->resources.resources, "food"),
         hashmap_get(tile->resources.resources, "linemate"), hashmap_get(

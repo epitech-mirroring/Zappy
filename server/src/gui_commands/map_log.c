@@ -7,22 +7,25 @@
 */
 
 #include "game.h"
+#include "map.h"
 
-void msz_log_gui(game_t *game)
+void msz_log_gui(game_t *game, char *arg)
 {
     char *str = map_dimensions_to_string(game->map);
 
     array_push_back(game->gui_log, str);
 }
 
-void bct_log_gui(game_t *game, coordinates_t coordinates)
+void bct_log_gui(game_t *game, char *arg)
 {
-    char *str = map_tile_to_string(game->map, coordinates);
+    coordinates_t coordinates = {0, 0};
+    char *str = NULL;
 
+    str = tile_to_string(get_tile_by_coordinates(game->map, coordinates));
     array_push_back(game->gui_log, str);
 }
 
-void mct_log_gui(game_t *game)
+void mct_log_gui(game_t *game, char *arg)
 {
     char *str = map_to_string(game->map);
 

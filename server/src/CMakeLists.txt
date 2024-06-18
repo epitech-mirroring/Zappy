@@ -1,7 +1,16 @@
 target_sources(zappy_server_lib
     PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/basic_log.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/broadcast.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/egg_log.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/gui.c
         ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/map_info.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/map_log.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/pic_log.c
         ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/player_info.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/player_log.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/ressource_log.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/time_log.c
         ${CMAKE_CURRENT_SOURCE_DIR}/array.c
         ${CMAKE_CURRENT_SOURCE_DIR}/array_bis.c
         ${CMAKE_CURRENT_SOURCE_DIR}/buffer.c

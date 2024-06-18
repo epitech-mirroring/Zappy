@@ -8,7 +8,7 @@
 
 #include "server.h"
 
-void sgt_log_gui(server_t *server)
+void sgt_log_gui(server_t *server, char *arg)
 {
     char *str = calloc(1024, sizeof(char));
     int freq = 1000000 / server->single_tick_time;

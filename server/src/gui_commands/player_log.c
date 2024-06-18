@@ -122,11 +122,11 @@ void pin_log_gui(game_t *game, char *arg)
         if (uuid_compare(trantorian->uuid, uuid) == 0)
             break;
     }
-    str = trantorian_inventory_to_str(trantorian);
+    str = inventory_to_str(trantorian);
     array_push_back(game->gui_log, str);
 }
 
-void tna_log_gui(game_t *game)
+void tna_log_gui(game_t *game, char *arg)
 {
     char *str = teams_to_string(game->teams);
 

@@ -7,6 +7,7 @@
 */
 
 #include "server.h"
+#include "gui.h"
 #include "actions.h"
 #include <sys/select.h>
 #include <sys/socket.h>
@@ -38,6 +39,8 @@ static void tick(server_t *server, suseconds_t time_since_last_tick)
     for (int i = 0; i < nb_ticks; i++) {
         game_tick(server->game);
     }
+    run_gui_commands(server);
+    update_graphic_clients_buffer(server);
     write_to_clients(server);
     server->nb_ticks += nb_ticks;
 }
