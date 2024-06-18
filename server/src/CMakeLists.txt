@@ -1,5 +1,7 @@
 target_sources(zappy_server_lib
     PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/map_info.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/player_info.c
         ${CMAKE_CURRENT_SOURCE_DIR}/array.c
         ${CMAKE_CURRENT_SOURCE_DIR}/array_bis.c
         ${CMAKE_CURRENT_SOURCE_DIR}/buffer.c

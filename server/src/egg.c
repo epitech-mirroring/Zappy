@@ -14,6 +14,7 @@ egg_t *init_egg(uuid_t team_uuid, coordinates_t coordinates)
     egg_t *egg = malloc(sizeof(egg_t));
 
     uuid_copy(egg->team_uuid, team_uuid);
+    uuid_generate(egg->uuid);
     egg->coordinates = coordinates;
     return egg;
 }

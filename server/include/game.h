@@ -32,6 +32,7 @@ extern "C" {
         array_t *eggs; //array of pointers to eggs stored in the map
         array_t *trantorians;
         array_t *clients_without_team;
+        array_t *gui_log;
         bool win;
         char *winning_team;
 
