@@ -14,7 +14,7 @@ Linemate::Linemate(Position tile)
 {
 }
 
-std::string Linemate::getType() const noexcept
+unsigned int Linemate::getType() noexcept
 {
-    return "Linemate";
+    return 1;
 }

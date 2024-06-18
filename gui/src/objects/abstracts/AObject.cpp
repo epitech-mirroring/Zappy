@@ -30,7 +30,17 @@ Position& AObject::getPosition() noexcept
     return _position;
 }
 
-std::string AObject::getType() const noexcept
+unsigned int AObject::getType() noexcept
 {
-    return "AObject";
+    return 999;
+}
+
+unsigned int AObject::getQuantity() noexcept
+{
+    return 0;
+}
+
+void AObject::setQuantity(unsigned int quantity) noexcept
+{
+    _quantity = quantity;
 }

@@ -19,7 +19,7 @@ namespace GUI {
          * @param width (width of the world x)
          * @param height (height of the world y)
         */
-        World(unsigned int width, unsigned int height);
+        World(unsigned int width = 0, unsigned int height = 0);
 
         /**
          * @brief Destroy the World object
@@ -86,7 +86,7 @@ namespace GUI {
          * @brief Get the tiles of the world
          * @return const std::vector<std::vector<Tile>>& (2D vector of tiles)
          */
-        [[nodiscard]] const std::vector<std::vector<Tile>>& getTiles() const;
+        [[nodiscard]] std::vector<std::vector<Tile>>& getTiles();
 
         /**
          * @brief Get the tile at the specified position
@@ -94,12 +94,17 @@ namespace GUI {
          * @param y (y coordinate)
          * @return Tile& (reference to the tile)
          */
-        Tile& getTileAt(unsigned int x, unsigned int y);
+        [[nodiscard]] Tile& getTileAt(unsigned int x, unsigned int y);
+
+        /**
+         * @brief Add a tile to the world
+         * @param tile (tile to add)
+         */
+        void addTile(Tile tile);
 
     protected:
         unsigned int _width;  // width of the world
         unsigned int _height; // height of the world
-
         std::vector<std::vector<Tile>> _tiles;  // 2D vector of tiles
     };
 } // namespace GUI

@@ -14,7 +14,7 @@ Thystame::Thystame(Position tile)
 {
 }
 
-std::string Thystame::getType() const noexcept
+unsigned int Thystame::getType() noexcept
 {
-    return "Thystame";
+    return 6;
 }

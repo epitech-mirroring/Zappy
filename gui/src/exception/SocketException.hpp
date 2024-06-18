@@ -10,8 +10,8 @@
 
     #include "abstract/AException.hpp"
 
-namespace zappy {
-    class SocketException : public AException {
+namespace network {
+    class SocketException : public GUI::AException {
     public:
         /**
          * @brief Construct a new SocketException object

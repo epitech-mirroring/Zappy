@@ -9,7 +9,6 @@
     #define IOBJECT_HPP_
 
     #include "position/Position.hpp"
-    #include <string>
 
 namespace GUI {
     class IObject {
@@ -42,11 +41,22 @@ namespace GUI {
          */
         [[nodiscard]] virtual Position& getPosition() noexcept = 0;
 
+
         /**
          * @brief Get the Type of the object
-         * @return std::string type of the object
+         * @return unsigned int (type of the object (follow the protocol))
          */
-        [[nodiscard]] virtual std::string getType() const noexcept = 0;
+        [[nodiscard]] virtual unsigned int getType() noexcept = 0;
+
+        /**
+         * @brief get the quantity of the object
+         */
+        [[nodiscard]] virtual unsigned int getQuantity() noexcept = 0;
+
+        /**
+         * @brief Set the Quantity of the object
+         */
+        virtual void setQuantity(unsigned int quantity) noexcept = 0;
     };
 }  // namespace GUI
 #endif /* !IOBJECT_HPP_ */

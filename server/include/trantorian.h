@@ -13,6 +13,8 @@
     #include <uuid/uuid.h>
     #include "inventory.h"
     #include "actions.h"
+    #include "client.h"
+
     #ifdef __cplusplus
 extern "C" {
     #endif // __cplusplus
@@ -44,7 +46,32 @@ extern "C" {
         inventory_t inventory;
         array_t *actions;
         enum direction_e direction;
+        size_t waiting_tick;
+        client_t *client;
     } trantorian_t;
+
+    /**
+     * @brief Initialize a trantorian
+     *
+     * @param coordinates The coordinates of the trantorian
+     * @param client The client associated with the trantorian
+     * @return trantorian_t* The trantorian
+     */
+    trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client);
+
+    /**
+     * @brief Destroy a trantorian
+     *
+     * @param trantorian The trantorian to destroy
+     */
+    void destroy_trantorian(trantorian_t *trantorian);
+
+    /**
+     * @brief Trantorian tick
+     *
+     * @param trantorian The trantorian to tick
+     */
+    void trantorian_tick(trantorian_t *trantorian);
 
     #ifdef __cplusplus
 }

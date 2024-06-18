@@ -14,7 +14,7 @@ Phiras::Phiras(Position tile)
 {
 }
 
-std::string Phiras::getType() const noexcept
+unsigned int Phiras::getType() noexcept
 {
-    return "Phiras";
+    return 5;
 }

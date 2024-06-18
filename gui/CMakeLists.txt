@@ -1,5 +1,7 @@
 add_library(zappy_gui_lib STATIC)
 
+find_package(raylib 3.0 REQUIRED)
+
 target_include_directories(zappy_gui_lib PUBLIC src)
 add_subdirectory(src)
 
@@ -9,4 +11,4 @@ if (TESTS)
 endif ()
 
 add_executable(zappy_gui src/main.cpp)
-target_link_libraries(zappy_gui zappy_gui_lib)
+target_link_libraries(zappy_gui zappy_gui_lib raylib)

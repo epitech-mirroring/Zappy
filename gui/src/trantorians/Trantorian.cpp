@@ -6,85 +6,200 @@
 */
 
 #include "Trantorian.hpp"
+#include "Teams.hpp"
 
-GUI::Trantorian::Trantorian(std::string teamName, int x, int y)
+using namespace GUI;
+
+Trantorian::Trantorian(std::string id, int x, int y, float oritentation,
+    int level, std::string teamName)
+        : _id(id), _position(x, y), _level(level),
+        _lifetimeRemaining(100), _alive(true), _action(false), _team(nullptr)
 {
-    _team = teamName;
-    _position.setX(x);
-    _position.setY(y);
-    _alive = true;
-    _action = false;
-    _level = 1;
-    _lifetimeRemaining = 100;
+    if (!teamName.empty()) {
+        auto team = Teams::getTeamByName(teamName);
+        if (team) {
+            setTeam(team);
+            team->addTrantorian(*this);
+        }
+    }
+    if (oritentation == static_cast<float>(NORTH))
+        _orientation = 0;
+    else if (oritentation == static_cast<float>(EAST))
+        _orientation = 90;
+    else if (oritentation == static_cast<float>(SOUTH))
+        _orientation = 180;
+    else if (oritentation == static_cast<float>(WEST))
+        _orientation = 270;
+    else
+        _orientation = 0;
+    _trantorianModel = LoadModel("gui/src/assets/trantorian/trantorian.obj");
+    _trantorianTexture = LoadTexture("gui/src/assets/trantorian/trantorian.png");
+    _trantorianModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _trantorianTexture;
 }
 
-void GUI::Trantorian::setAction(bool action)
+void Trantorian::setAction(bool action)
 {
     _action = action;
 }
 
-bool GUI::Trantorian::getAction()
+bool Trantorian::getAction()
 {
     return _action;
 }
 
-void GUI::Trantorian::setId(int id)
+void Trantorian::setId(std::string id)
 {
     _id = id;
 }
 
-int GUI::Trantorian::getId()
+std::string Trantorian::getId()
 {
     return _id;
 }
 
-void GUI::Trantorian::setIsAlive(bool alive)
+void Trantorian::setIsAlive(bool alive)
 {
     _alive = alive;
 }
 
-bool GUI::Trantorian::getIsAlive()
+bool Trantorian::getIsAlive()
 {
     return _alive;
 }
 
-void GUI::Trantorian::setLevel(int level)
+void Trantorian::setLevel(int level)
 {
     _level = level;
 }
 
-int GUI::Trantorian::getLevel()
+int Trantorian::getLevel()
 {
     return _level;
 }
 
-void GUI::Trantorian::setLifetime(int lifetime)
+void Trantorian::setLifetime(int lifetime)
 {
     _lifetimeRemaining = lifetime;
 }
 
-int GUI::Trantorian::getLifetime()
+int Trantorian::getLifetime()
 {
     return _lifetimeRemaining;
 }
 
-void GUI::Trantorian::setPosition(int x, int y)
+void Trantorian::setPosition(int x, int y)
 {
     _position.setX(x);
     _position.setY(y);
 }
 
-GUI::Position GUI::Trantorian::getPosition()
+Position Trantorian::getPosition()
 {
     return _position;
 }
 
-void GUI::Trantorian::setTeam(std::string teamName)
+void Trantorian::setTeam(Teams* team)
 {
-    _team = teamName;
+    _team = team;
 }
 
-std::string GUI::Trantorian::getTeam()
+Teams* Trantorian::getTeam()
 {
     return _team;
+}
+
+bool Trantorian::operator==(const Trantorian& other) const
+{
+    return _position.getX() == other._position.getX() &&
+           _position.getY() == other._position.getY() &&
+           _team == other._team &&
+           _lifetimeRemaining == other._lifetimeRemaining &&
+           _alive == other._alive &&
+           _action == other._action &&
+           _id == other._id &&
+           _level == other._level;
+           _orientation == other._orientation;
+}
+
+void Trantorian::setOrientation(float orientation)
+{
+    _orientation = orientation;
+}
+
+float Trantorian::getOrientation()
+{
+    return _orientation;
+}
+
+void Trantorian::setInventory(std::vector<std::string> inventory)
+{
+    std::vector<std::string> objects(inventory.begin() + 3, inventory.begin() + 10);
+
+    clearInventory();
+
+    for (int i = 0; i < objects.size(); i++) {
+        ResourceType type = static_cast<ResourceType>(i);
+        int quantity = std::stoi(objects[i]);
+        while (quantity > 0) {
+            IObject *object = createObjectByType(type, _position);
+            addObject(object);
+            quantity--;
+        }
+        while (quantity < 0) {
+            removeObject(_inventory.back());
+            quantity++;
+        }
+    }
+}
+
+IObject* Trantorian::createObjectByType(ResourceType type, Position pos)
+{
+    switch (type) {
+        case ResourceType::FOOD:
+            return new Food(pos);
+        case ResourceType::LINEMATE:
+            return new Linemate(pos);
+        case ResourceType::DERAUMERE:
+            return new Deraumere(pos);
+        case ResourceType::SIBUR:
+            return new Sibur(pos);
+        case ResourceType::MENDIANE:
+            return new Mendiane(pos);
+        case ResourceType::PHIRAS:
+            return new Phiras(pos);
+        case ResourceType::THYSTAME:
+            return new Thystame(pos);
+        default:
+            return nullptr;
+    }
+}
+
+void Trantorian::clearInventory()
+{
+    _inventory.clear();
+}
+
+void Trantorian::addObject(IObject *object)
+{
+    _inventory.push_back(object);
+}
+
+void Trantorian::removeObject(IObject *object)
+{
+    _inventory.remove(object);
+}
+
+std::list<IObject*> Trantorian::getInventory() const
+{
+    return _inventory;
+}
+
+Model Trantorian::getModel() const
+{
+    return _trantorianModel;
+}
+
+Texture2D Trantorian::getTexture() const
+{
+    return _trantorianTexture;
 }

@@ -26,7 +26,31 @@ extern "C" {
         uuid_t uuid;
         array_t *trantorians;
         char *name;
+        size_t free_places;
     } team_t;
+
+    /**
+     * @brief Initialize a team
+     *
+     * @param name The name of the team
+     * @return team_t* The new team
+     */
+    team_t *init_team(char *name);
+
+    /**
+     * @brief Destroy a team
+     *
+     * @param team The team to destroy
+     */
+    void destroy_team(team_t *team);
+
+    /**
+     * @brief Add a Trantorian to a team
+     *
+     * @param team The team
+     * @param trantorian The Trantorian to add
+     */
+    void add_trantorian_to_team(team_t *team, uuid_t trantorian);
 
     #ifdef __cplusplus
 }

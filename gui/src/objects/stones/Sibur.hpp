@@ -25,9 +25,9 @@ namespace GUI {
 
         /**
          * @brief Get the Type of the object
-         * @return std::string type of the object
+         * @return unsigned int (type of the object (follow the protocol))
          */
-        [[nodiscard]] std::string getType() const noexcept final;
+        [[nodiscard]] unsigned int getType() noexcept final;
     };
 } // namespace GUI //
 #endif /* !SIBUR_HPP_ */

@@ -14,7 +14,7 @@ Sibur::Sibur(Position tile)
 {
 }
 
-std::string Sibur::getType() const noexcept
+unsigned int Sibur::getType() noexcept
 {
-    return "Sibur";
+    return 3;
 }

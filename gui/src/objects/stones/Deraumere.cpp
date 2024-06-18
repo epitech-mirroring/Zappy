@@ -14,7 +14,7 @@ Deraumere::Deraumere(Position tile)
 {
 }
 
-std::string Deraumere::getType() const noexcept
+unsigned int Deraumere::getType() noexcept
 {
-    return "Deraumere";
+    return 2;
 }

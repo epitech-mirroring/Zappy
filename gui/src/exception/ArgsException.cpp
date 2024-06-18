@@ -7,7 +7,7 @@
 
 #include "ArgsException.hpp"
 
-using namespace zappy;
+using namespace GUI;
 
 ArgsException::ArgsException(std::string message)
     : AException{std::move(message), "ArgsException"}

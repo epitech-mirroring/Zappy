@@ -14,7 +14,7 @@ Mendiane::Mendiane(Position tile)
 {
 }
 
-std::string Mendiane::getType() const noexcept
+unsigned int Mendiane::getType() noexcept
 {
-    return "Mendiane";
+    return 4;
 }

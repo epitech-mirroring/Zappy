@@ -14,7 +14,7 @@ Food::Food(Position tile)
 {
 }
 
-std::string Food::getType() const noexcept
+unsigned int Food::getType() noexcept
 {
-    return "Food";
+    return 0;
 }
