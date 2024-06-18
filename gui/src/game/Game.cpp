@@ -47,6 +47,7 @@ void Game::runGame()
         BeginMode3D(_camera);
         DrawTiles(_world.getTiles());
         DrawClouds();
+        DrawTrantorians();
         data = _client.readData();
         protocolHandler.handleData(data);
         EndMode3D();
@@ -54,6 +55,7 @@ void Game::runGame()
         EndDrawing();
         data.clear();
     }
+    cleanupModels();
     CloseWindow();
 }
 
@@ -118,6 +120,24 @@ void Game::DrawClouds()
     }
 }
 
+void Game::DrawTrantorians()
+{
+    for (auto &team : Teams::getTeamsList()) {
+        for (auto &trantorian : team.getTrantorianList()) {
+            DrawModel(trantorian.getModel(), {static_cast<float>(trantorian.getPosition().getX()),
+                0.5f, static_cast<float>(trantorian.getPosition().getY())}, 1.0f, WHITE);
+            std::cout << "GUI LOG: Player " << trantorian.getId() << " drawn" << std::endl;
+        }
+    }
+}
+
+void Game::cleanupModels() {
+    for (auto &model : _clouds) {
+        UnloadModel(model);
+    }
+    _clouds.clear();
+}
+
 void Game::initializeCallbacks()
 {
     _commandFactory.setCallback("bct", [this](std::istringstream &iss) {
@@ -164,19 +184,22 @@ void Game::initializeCallbacks()
         std::vector<std::string> tokens;
         std::string token;
 
-        while (std::getline(iss2, token, ' '))
+        while (std::getline(iss2, token, ' ')) {
             tokens.push_back(token);
+        }
 
         Trantorian player(tokens[1], std::stoi(tokens[2]), std::stoi(tokens[3]),
-            std::stoi(tokens[4]), std::stoi(tokens[5]), tokens[7]);
-        for (auto &team : Teams::getTeamsList()) {
-            if (team.getName() == tokens[7]) {
+            std::stoi(tokens[4]), std::stoi(tokens[5]), tokens[6]);
+        auto &teamsList = Teams::getTeamsList();
+        for (auto &team : teamsList) {
+            if (team.getName() == tokens[6]) {
                 team.addTrantorian(player);
                 std::cout << "GUI LOG: Player " << player.getId() << " added to team "
-                    << team.getName() << std::endl;
+                        << team.getName() << std::endl;
             }
         }
     });
+
 
     _commandFactory.setCallback("ppo", [this](std::istringstream &iss) {
         std::string data = iss.str();

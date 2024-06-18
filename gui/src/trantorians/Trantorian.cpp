@@ -22,6 +22,9 @@ Trantorian::Trantorian(std::string id, int x, int y, int oritentation,
             team->addTrantorian(*this);
         }
     }
+    _trantorianModel = LoadModel("gui/src/assets/trantorian/trantorian.obj");
+    _trantorianTexture = LoadTexture("gui/src/assets/trantorian/trantorian.png");
+    _trantorianModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _trantorianTexture;
 }
 
 void Trantorian::setAction(bool action)
@@ -174,4 +177,14 @@ void Trantorian::removeObject(IObject *object)
 std::list<IObject*> Trantorian::getInventory() const
 {
     return _inventory;
+}
+
+Model Trantorian::getModel() const
+{
+    return _trantorianModel;
+}
+
+Texture2D Trantorian::getTexture() const
+{
+    return _trantorianTexture;
 }

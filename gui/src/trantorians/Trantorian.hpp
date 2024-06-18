@@ -12,6 +12,7 @@
     #include <utility>
     #include <vector>
     #include <list>
+    #include <raylib.h>
     #include "position/Position.hpp"
     #include "objects/interface/IObject.hpp"
     #include "objects/interface/IObject.hpp"
@@ -174,6 +175,15 @@ namespace GUI {
              * @return list of IObject*
              */
             [[nodiscard]] std::list<IObject *> getInventory() const;
+
+            /**
+             * @brief Get the Model object
+             */
+            [[nodiscard]] Model getModel() const;
+            /**
+             * @brief Get the Texture object
+             */
+            [[nodiscard]] Texture2D getTexture() const;
         private:
             GUI::Position _position;
             Teams* _team;
@@ -184,6 +194,8 @@ namespace GUI {
             int _level;
             int _orientation;
             std::list<IObject *> _inventory;
+            Model _trantorianModel;
+            Texture2D _trantorianTexture;
     };
 } // namespace GUI
 

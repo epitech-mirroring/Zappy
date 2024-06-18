@@ -69,6 +69,16 @@ namespace GUI {
          */
         void DrawClouds();
 
+        /**
+         * @brief Draw the trantorians
+         */
+        void DrawTrantorians();
+
+        /**
+         * @brief Cleanup the models
+         */
+        void cleanupModels();
+
     private:
         World _world;                            // World object
         Teams _teams;                            // Teams object
