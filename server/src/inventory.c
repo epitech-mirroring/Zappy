@@ -25,9 +25,12 @@ char *inventory_to_str(trantorian_t *trantorian)
 
     sprintf(str, "pin %li %i %i %i %i %i %i %i %i %i\n", trantorian->uuid,
     trantorian->coordinates.x, trantorian->coordinates.y,
-    inventory.resources.food_count, inventory.resources.linemate_count,
-    inventory.resources.deraumere_count, inventory.resources.sibur_count,
-    inventory.resources.mendiane_count, inventory.resources.phiras_count,
-    inventory.resources.thystame_count);
+    hashmap_get(inventory.resources.resources, "food"),
+    hashmap_get(inventory.resources.resources, "linemate"),
+    hashmap_get(inventory.resources.resources, "deraumere"),
+    hashmap_get(inventory.resources.resources, "sibur"),
+    hashmap_get(inventory.resources.resources, "mendiane"),
+    hashmap_get(inventory.resources.resources, "phiras"),
+    hashmap_get(inventory.resources.resources, "thystame"));
     return str;
 }
