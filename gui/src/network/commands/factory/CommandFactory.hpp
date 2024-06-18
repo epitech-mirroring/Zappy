@@ -22,6 +22,7 @@
     #include "network/commands/pic/CommandPIC.hpp"
     #include "network/commands/sst/CommandSST.hpp"
     #include "network/commands/sgt/CommandSGT.hpp"
+    #include "network/commands/pdi/CommandPDI.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>

@@ -412,4 +412,24 @@ void Game::initializeCallbacks()
         _timeUnit = std::stoi(tokens[1]);
         std::cout << "GUI LOG: Time unit requested (" << _timeUnit << ")" << std::endl;
     });
+
+    _commandFactory.setCallback("pdi", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == tokens[1]) {
+                    trantorian.setIsAlive(false);
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " died" << std::endl;
+                }
+            }
+        }
+    });
 }
