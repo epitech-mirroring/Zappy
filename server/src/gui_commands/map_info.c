@@ -19,13 +19,13 @@ char *tile_to_string(tile_t *tile)
         return str;
     }
     sprintf(str, "bct %i %i %i %i\n", tile->coordinates.x,
-        tile->coordinates.y, hashmap_get(tile->resources.resources, "food"),
-        hashmap_get(tile->resources.resources, "linemate"), hashmap_get(
-            tile->resources.resources, "deraumere"), hashmap_get(
-            tile->resources.resources, "sibur"), hashmap_get(
-            tile->resources.resources, "mendiane"), hashmap_get(
-            tile->resources.resources, "phiras"), hashmap_get(
-            tile->resources.resources, "thystame"));
+        tile->coordinates.y, hashmap_get(tile->resources, "food"),
+        hashmap_get(tile->resources, "linemate"), hashmap_get(
+            tile->resources, "deraumere"), hashmap_get(
+            tile->resources, "sibur"), hashmap_get(
+            tile->resources, "mendiane"), hashmap_get(
+            tile->resources, "phiras"), hashmap_get(
+            tile->resources, "thystame"));
     return str;
 }
 
