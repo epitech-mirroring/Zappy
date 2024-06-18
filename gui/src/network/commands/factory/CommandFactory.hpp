@@ -25,6 +25,7 @@
     #include "network/commands/pdi/CommandPDI.hpp"
     #include "network/commands/pdr/CommandPDR.hpp"
     #include "network/commands/pgt/CommandPGT.hpp"
+    #include "network/commands/enw/CommandENW.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>

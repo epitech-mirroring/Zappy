@@ -476,4 +476,24 @@ void Game::initializeCallbacks()
             }
         }
     });
+
+    _commandFactory.setCallback("enw", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == tokens[1]) {
+                    // HANDLE ACTION LAYING EGG
+                    std::cout << "GUI LOG: Egg " << token[1]
+                        << " has been layed by player " << token[2] << std::endl;
+                }
+            }
+        }
+    });
 }
