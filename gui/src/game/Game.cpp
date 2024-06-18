@@ -75,11 +75,11 @@ void Game::DrawObjects(std::list<IObject *> objects)
 {
     for (auto &object : _world.getObjects()) {
         if (object->getType() == 0) {
-            DrawSphere({static_cast<float>(object->getPosition().getX()), 0.0f,
-                static_cast<float>(object->getPosition().getY())}, 1.0f, RED);
+            DrawSphere({static_cast<float>(object->getPosition().getX()), 1.0f,
+                static_cast<float>(object->getPosition().getY())}, 0.3f, RED);
         } else {
-            DrawSphere({static_cast<float>(object->getPosition().getX()), 0.0f,
-                static_cast<float>(object->getPosition().getY())}, 1.0f, BLUE);
+            DrawSphere({static_cast<float>(object->getPosition().getX()), 1.0f,
+                static_cast<float>(object->getPosition().getY())}, 0.3f, BLUE);
         }
     }
 }
