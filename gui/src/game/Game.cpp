@@ -43,18 +43,24 @@ void Game::runGame()
 
     while (!WindowShouldClose()) {
         UpdateCamera(&_camera, CAMERA_FREE);
+
         BeginDrawing();
         ClearBackground(WHITE);
         BeginMode3D(_camera);
+
         DrawTiles(_world.getTiles());
         DrawGrid(20, 10.0f);
         DrawObjects(_world.getObjects());
+
         data = _client.readData();
-        protocolHandler.handleData(data);
+        if (!data.empty()) {
+            protocolHandler.handleData(data);
+            data.clear();
+        }
+
         EndMode3D();
         DrawFPS(10, 10);
         EndDrawing();
-        data.clear();
     }
     CloseWindow();
 }
@@ -71,15 +77,15 @@ void Game::DrawTiles(std::vector<std::vector<Tile>> tiles)
     }
 }
 
-void Game::DrawObjects(std::list<IObject *> objects)
+void Game::DrawObjects(std::list<IObject*> objects)
 {
-    for (auto &object : _world.getObjects()) {
-        if (object->getType() == 0) {
-            DrawSphere({static_cast<float>(object->getPosition().getX()), 1.0f,
-                static_cast<float>(object->getPosition().getY())}, 0.3f, RED);
+    for (auto& object : objects) {
+        if (object->getType() == Trantorian::ResourceType::FOOD) {
+            DrawSphere({ static_cast<float>(object->getPosition().getX()), 1.0f,
+                         static_cast<float>(object->getPosition().getY()) }, 0.03f, RED);
         } else {
-            DrawSphere({static_cast<float>(object->getPosition().getX()), 1.0f,
-                static_cast<float>(object->getPosition().getY())}, 0.3f, BLUE);
+            DrawSphere({ static_cast<float>(object->getPosition().getX()), 1.0f,
+                         static_cast<float>(object->getPosition().getY()) }, 0.03f, GREEN);
         }
     }
 }
@@ -140,10 +146,15 @@ void Game::initializeCallbacks()
         int x = std::stoi(tokens[1]);
         int y = std::stoi(tokens[2]);
 
+        std::vector<std::string> tileContent;
+        for (size_t i = 3; i < tokens.size(); i++) {
+            tileContent.push_back(tokens[i]);
+        }
+
         for (auto &tiles : _world.getTiles()) {
             for (auto &tile : tiles) {
                 if (tile.getPosition().getX() == x && tile.getPosition().getY() == y) {
-                    tile.updateTileContent(tokens);
+                    tile.updateTileContent(tileContent);
                     std::cout << "GUI LOG: Content of the Tile (" << x << ", "
                         << y << ") updated" << std::endl;
                 }

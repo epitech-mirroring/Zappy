@@ -82,7 +82,7 @@ namespace GUI {
          * @param type (type of the object)
          * @return IObject* (object)
          */
-        void updateTileContent(std::vector<std::string> tileContent);
+        void updateTileContent(const std::vector<std::string>& tileContent);
         /**
          * @brief Get the object by type
          * @param type (type of the object)

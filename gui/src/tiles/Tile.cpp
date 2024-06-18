@@ -53,19 +53,47 @@ IObject* Tile::createObjectByType(ResourceType type, Position pos)
     }
 }
 
-void Tile::updateTileContent(std::vector<std::string> tileContent)
+void Tile::updateTileContent(const std::vector<std::string>& tileContent)
 {
-    std::vector<std::string> objects(tileContent.begin() + 2, tileContent.begin() + 9);
+    if (tileContent.size() != 7) {
+        throw std::runtime_error("Invalid tile content size");
+    }
 
-    clearObjects();
+    std::vector<int> newCounts(ResourceType::RESOURCE_COUNT, 0);
 
-    for (int i = 0; i < objects.size(); i++) {
+    for (size_t i = 0; i < 7; ++i) {
+        newCounts[i] = std::stoi(tileContent[i]);
+    }
+
+    std::unordered_map<ResourceType, int> currentCounts;
+    std::unordered_map<ResourceType, std::list<IObject*>::iterator> objectIterators;
+
+    for (auto it = _objects.begin(); it != _objects.end(); ++it) {
+        ResourceType type = static_cast<ResourceType>((*it)->getType());
+        currentCounts[type]++;
+        objectIterators[type] = it;
+    }
+
+    for (int i = 0; i < newCounts.size(); ++i) {
         ResourceType type = static_cast<ResourceType>(i);
-        int quantity = std::stoi(objects[i]);
-        while (quantity > 0) {
-            IObject *object = createObjectByType(type, _pos);
-            addObject(object);
-            quantity--;
+        int difference = newCounts[i] - currentCounts[type];
+
+        if (difference > 0) {
+            for (int j = 0; j < difference; ++j) {
+                IObject* object = createObjectByType(type, _pos);
+                if (object != nullptr) {
+                    _objects.push_back(object);
+                }
+            }
+        } else if (difference < 0) {
+            for (int j = 0; j < -difference; ++j) {
+                auto it = objectIterators.find(type);
+                if (it != objectIterators.end() && it->second != _objects.end()) {
+                    delete *(it->second);
+                    _objects.erase(it->second);
+                    objectIterators.erase(it);
+                }
+            }
         }
     }
 }
