@@ -20,11 +20,12 @@ static void write_to_client(client_t *client)
 {
     char *message = buffer_get_next(client->buffer_answered);
 
-    for (; message != NULL; message =
-        buffer_get_next(client->buffer_answered)) {
+    while (message != NULL) {
         send(client->socket, message, strlen(message), 0);
         free(message);
+        message = buffer_get_next(client->buffer_answered);
     }
+    free(message);
 }
 
 static void tick(server_t *server, suseconds_t time_since_last_tick)
@@ -48,6 +49,7 @@ static void tick(server_t *server, suseconds_t time_since_last_tick)
 static void read_clients_messages(server_t *server, fd_set *readfds)
 {
     client_t *client;
+    client_t *tmp;
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
         client = (client_t *)array_get_at(server->clients, i);

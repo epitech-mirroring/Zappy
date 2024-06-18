@@ -47,6 +47,7 @@ void update_graphic_clients_buffer(server_t *server)
         msg = (char *)array_get_at(server->game->gui_log, i);
         update_graphic_client_buffer(server->clients, msg);
     }
+    array_clear(server->game->gui_log);
 }
 
 static char *cut_str(char * str, int start)
@@ -107,4 +108,16 @@ void run_gui_commands(server_t *server)
             run_gui_command(server, client, msg);
         }
     }
+}
+
+void new_client_unknow_team(game_t *game, client_t *client,
+    char *msg, size_t index)
+{
+    if (strcmp(msg, "GRAPHIC") == 0) {
+        client->type = GRAPHIC;
+        array_push_back(game->gui_clients, client);
+        array_remove(game->clients_without_team, index);
+        return;
+    }
+    buffer_write(client->buffer_answered, "ko\n");
 }
