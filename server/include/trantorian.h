@@ -19,18 +19,17 @@
 extern "C" {
     #endif // __cplusplus
 
-    /**
-     * @struct coordinates_s
-     *
-     * This structure represents the coordinates of a tile on the map.
-     * Each tile has an x and y coordinate.
-     */
     enum direction_e {
         NORTH,
         EAST,
         SOUTH,
         WEST
     };
+
+    typedef struct direction_to_string_s {
+        enum direction_e direction;
+        char *str;
+    } direction_to_string_t;
 
     /**
      * @struct trantorian_s
