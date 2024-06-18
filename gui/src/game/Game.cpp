@@ -48,6 +48,7 @@ void Game::runGame()
         BeginMode3D(_camera);
         DrawTiles(_world.getTiles());
         DrawGrid(20, 10.0f);
+        DrawObjects(_world.getObjects());
         data = _client.readData();
         protocolHandler.handleData(data);
         EndMode3D();
@@ -66,6 +67,19 @@ void Game::DrawTiles(std::vector<std::vector<Tile>> tiles)
                 static_cast<float>(tile.getPosition().getY())}, 1.0f, 1.0f, 1.0f, BLACK);
             DrawCubeWires({static_cast<float>(tile.getPosition().getX()), 0.0f,
                 static_cast<float>(tile.getPosition().getY())}, 1.0f, 1.0f, 1.0f, YELLOW);
+        }
+    }
+}
+
+void Game::DrawObjects(std::list<IObject *> objects)
+{
+    for (auto &object : _world.getObjects()) {
+        if (object->getType() == 0) {
+            DrawSphere({static_cast<float>(object->getPosition().getX()), 0.0f,
+                static_cast<float>(object->getPosition().getY())}, 1.0f, RED);
+        } else {
+            DrawSphere({static_cast<float>(object->getPosition().getX()), 0.0f,
+                static_cast<float>(object->getPosition().getY())}, 1.0f, BLUE);
         }
     }
 }

@@ -16,6 +16,7 @@
     #include "network/Client.hpp"
     #include "network/commands/factory/CommandFactory.hpp"
     #include "network/protocol_handler/ProtocolHandler.hpp"
+    #include "objects/interface/IObject.hpp"
 
 namespace GUI {
     class Game {
@@ -59,6 +60,12 @@ namespace GUI {
          * @param tiles std::vector<std::vector<Tile>> tiles
          */
         void DrawTiles(std::vector<std::vector<Tile>> tiles);
+
+        /**
+         * @brief Draw the objects of the world
+         * @param objects std::vector<std::vector<Tile>> objects
+         */
+        void DrawObjects(std::list<IObject *> objects);
 
     private:
         World _world;                            // World object
