@@ -35,8 +35,8 @@ void generate_ressources(map_t *map)
             x = rand() % map->width;
             y = rand() % map->height;
             tile = get_tile(map, x, y);
-            nb = hashmap_get(tile->resources.resources, resources_map[i].name);
-            hashmap_put(tile->resources.resources,
+            nb = hashmap_get(tile->resources, resources_map[i].name);
+            hashmap_put(tile->resources,
                 resources_map[i].name, nb + 1);
         }
     }

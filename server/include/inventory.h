@@ -22,7 +22,7 @@ extern "C" {
     */
     typedef struct inventory_s {
         int food_time; // need to find accurate variable name
-        resources_t resources;
+        hashmap_t *resources;
     } inventory_t;
 
     /**

@@ -37,17 +37,6 @@ extern "C" {
     } coordinates_t;
 
     /**
-     * @struct s_resources
-     *
-     * This structure represents the resources on a tile on the map.
-     * Each tile has a quantity of food,
-     * linemate, deraumere, sibur, mendiane, phiras, and thystame.
-     */
-    typedef struct resources_s {
-        hashmap_t *resources;
-    } resources_t;
-
-    /**
      * @struct tile_s
      *
      * This structure represents a tile on the map.
@@ -56,7 +45,7 @@ extern "C" {
     typedef struct tile_s {
         coordinates_t coordinates;
         int player_count;
-        resources_t resources;
+        hashmap_t *resources;
         array_t *eggs;
     } tile_t;
 
@@ -135,7 +124,7 @@ extern "C" {
      *
      * @return The resources.
      */
-    resources_t init_resources(void);
+    hashmap_t *init_resources(void);
 
     #ifdef __cplusplus
 }

@@ -26,17 +26,17 @@ void destroy_tile(tile_t *tile)
     free(tile);
 }
 
-resources_t init_resources(void)
+hashmap_t *init_resources(void)
 {
-    resources_t resources;
+    hashmap_t *resources;
 
-    resources.resources = create_hashmap();
-    hashmap_put(resources.resources, "food", 0);
-    hashmap_put(resources.resources, "linemate", 0);
-    hashmap_put(resources.resources, "deraumere", 0);
-    hashmap_put(resources.resources, "sibur", 0);
-    hashmap_put(resources.resources, "mendiane", 0);
-    hashmap_put(resources.resources, "phiras", 0);
-    hashmap_put(resources.resources, "thystame", 0);
+    resources = create_hashmap();
+    hashmap_put(resources, "food", 0);
+    hashmap_put(resources, "linemate", 0);
+    hashmap_put(resources, "deraumere", 0);
+    hashmap_put(resources, "sibur", 0);
+    hashmap_put(resources, "mendiane", 0);
+    hashmap_put(resources, "phiras", 0);
+    hashmap_put(resources, "thystame", 0);
     return resources;
 }
