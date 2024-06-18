@@ -29,8 +29,7 @@ CommandFactory::CommandFactory()
     _commands["pdr"] = std::make_unique<CommandPDR>();
     _commands["pgt"] = std::make_unique<CommandPGT>();
     _commands["enw"] = std::make_unique<CommandENW>();
-    // ENW an egg was layed by a player
-    // EBO player connection for an egg
+    _commands["ebo"] = std::make_unique<CommandEBO>();
     // EDI death of an egg
     // SEG end of game
     // SMG message from the server

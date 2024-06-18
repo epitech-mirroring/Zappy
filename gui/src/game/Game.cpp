@@ -496,4 +496,17 @@ void Game::initializeCallbacks()
             }
         }
     });
+
+    _commandFactory.setCallback("ebo", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE PLAYER CONNECTION FOR AN EGG
+        std::cout << "GUI LOG: Player connection for " << token[1] << " Egg" << std::endl;
+    });
 }
