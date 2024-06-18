@@ -97,6 +97,15 @@ extern "C" {
     */
     char *trantorian_level_to_str(trantorian_t *trantorian);
 
+    /**
+     * @brief Return a string representation of the new player connection
+     *
+     * @param trantorian The trantorian to represent
+     * @param team The team of the trantorian
+     * @return char* The string representation of the new player connection
+    */
+    char *new_player_connection_log(trantorian_t *trantorian, char *team);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

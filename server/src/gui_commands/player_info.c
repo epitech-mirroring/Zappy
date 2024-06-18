@@ -7,6 +7,7 @@
 */
 
 #include "trantorian.h"
+#include "team.h"
 
 const direction_to_string_t DIRECTION_TO_STRING[] = {
     {NORTH, "NORTH"},
@@ -44,5 +45,18 @@ char *trantorian_level_to_str(trantorian_t *trantorian)
 
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "plv %s %d\n", uuid, trantorian->level);
+    return str;
+}
+
+char *new_player_connection_log(trantorian_t *trantorian, char *team)
+{
+    char *str = malloc(sizeof(char) * 100);
+    char *uuid = calloc(37, sizeof(char));
+    char *direction = get_direction_str(trantorian->direction);
+
+    uuid_unparse(trantorian->uuid, uuid);
+    sprintf(str, "pnw %s %d %d %s %d %s\n", uuid, trantorian->coordinates.x,
+        trantorian->coordinates.y, direction, trantorian->level,
+        team);
     return str;
 }
