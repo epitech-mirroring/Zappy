@@ -116,6 +116,14 @@ extern "C" {
     void pin_log_gui(game_t *game, char *arg);
 
     /**
+     * @brief pex command
+     *
+     * @param game The game
+     * @param trantorian The trantorian
+     */
+    void pex_log_gui(game_t *game, trantorian_t *trantorian);
+
+    /**
      * @brief pbc command
      *
      * @param game The game
