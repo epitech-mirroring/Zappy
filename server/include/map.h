@@ -8,14 +8,23 @@
 
 #ifndef ZAPPY_MAP_H
 
-    #include <array.h>
+    #include "array.h"
+    #include "hashmap.h"
 
     #define ZAPPY_MAP_H
+
+
     #ifdef __cplusplus
 
 
 extern "C" {
     #endif // __cplusplus
+
+    typedef struct ressources_map_s {
+        char *name;
+        int density;
+    } ressources_map_t;
+
     /**
      * @struct coordinates_s
      *
@@ -35,13 +44,7 @@ extern "C" {
      * linemate, deraumere, sibur, mendiane, phiras, and thystame.
      */
     typedef struct resources_s {
-        size_t food_count;
-        size_t linemate_count;
-        size_t deraumere_count;
-        size_t sibur_count;
-        size_t mendiane_count;
-        size_t phiras_count;
-        size_t thystame_count;
+        hashmap_t *resources;
     } resources_t;
 
     /**

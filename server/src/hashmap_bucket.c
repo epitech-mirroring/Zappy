@@ -8,7 +8,7 @@
 
 #include "hashmap.h"
 
-bucket_t *create_bucket(char *key, void *data)
+bucket_t *create_bucket(char *key, int data)
 {
     bucket_t *bucket = malloc(sizeof(bucket_t));
 
@@ -23,6 +23,5 @@ bucket_t *create_bucket(char *key, void *data)
 void destroy_bucket(bucket_t *bucket)
 {
     free(bucket->key);
-    free(bucket->data);
     free(bucket);
 }

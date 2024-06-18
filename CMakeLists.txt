@@ -13,6 +13,7 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 option(SERVER "Build the server" ON)
+option(TESTS "Build the tests" ON)
 option(GUI "Build the GUI" ON)
 
 if (SERVER)

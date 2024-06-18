@@ -1,4 +1,3 @@
-
 /*
 ** EPITECH PROJECT, 2023
 ** zappy
@@ -8,6 +7,7 @@
 */
 
 #include "hashmap.h"
+#include <string.h>
 
 hashmap_t *create_hashmap(void)
 {
@@ -24,12 +24,12 @@ int hashcode(char *key)
 {
     int hash = 0;
 
-    for (int i = 0; i < my_strlen(key); i++)
+    for (int i = 0; i < strlen(key); i++)
         hash += key[i];
     return hash % 100;
 }
 
-void hashmap_put(hashmap_t *map, char *key, void *data)
+void hashmap_put(hashmap_t *map, char *key, int data)
 {
     int hash = hashcode(key);
     bucket_t *bucket = malloc(sizeof(bucket_t));
@@ -41,34 +41,15 @@ void hashmap_put(hashmap_t *map, char *key, void *data)
     map->size++;
 }
 
-void *hashmap_get(hashmap_t *map, char *key)
+int hashmap_get(hashmap_t *map, char *key)
 {
     int hash = hashcode(key);
     bucket_t *bucket = map->buckets[hash];
 
     while (bucket != NULL) {
-        if (my_strcmp(bucket->key, key) == 0)
+        if (strcmp(bucket->key, key) == 0)
             return bucket->data;
         bucket = bucket->next;
     }
-    return NULL;
-}
-
-void hashmap_remove(hashmap_t *map, char *key)
-{
-    int hash = hashcode(key);
-    bucket_t *bucket = map->buckets[hash];
-    bucket_t *prev = NULL;
-
-    while (bucket != NULL) {
-        if (my_strcmp(bucket->key, key) == 0) {
-            prev == NULL ? (map->buckets[hash] = bucket->next)
-            : (prev->next = bucket->next);
-            map->size--;
-            free(bucket);
-            return;
-        }
-        prev = bucket;
-        bucket = bucket->next;
-    }
+    return -1;
 }

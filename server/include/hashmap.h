@@ -27,7 +27,7 @@ extern "C" {
      */
     typedef struct bucket {
         char *key;
-        void *data;
+        int data;
         struct bucket *next;
     } bucket_t;
 
@@ -40,7 +40,7 @@ extern "C" {
      * @param data The data of the bucket
      * @return bucket_t* The new bucket
      */
-    bucket_t *create_bucket(char *key, void *data);
+    bucket_t *create_bucket(char *key, int data);
 
     /**
      * @brief Function to destroy a bucket
@@ -100,7 +100,7 @@ extern "C" {
      * @param key The key of the element
      * @param data The data of the element
      */
-    void hashmap_put(hashmap_t *map, char *key, void *data);
+    void hashmap_put(hashmap_t *map, char *key, int data);
 
     /**
      * @brief Function to get an element from the hashmap
@@ -111,17 +111,7 @@ extern "C" {
      * @param key The key of the element
      * @return void* The data of the element
      */
-    void *hashmap_get(hashmap_t *map, char *key);
-
-    /**
-     * @brief Function to remove an element from the hashmap
-     *
-     * This function removes an element from the hashmap.
-     * The element has a key.
-     * @param map The hashmap
-     * @param key The key of the element
-     */
-    void hashmap_remove(hashmap_t *map, char *key);
+    int hashmap_get(hashmap_t *map, char *key);
 
     /**
      * @brief Function to check if the hashmap contains an element
@@ -142,15 +132,6 @@ extern "C" {
      * @return bool True if the hashmap is empty, false otherwise
      */
     bool is_hashmap_empty(hashmap_t *map);
-
-    /**
-     * @brief Function to get the size of the hashmap
-     *
-     * This function gets the size of the hashmap.
-     * @param map The hashmap
-     * @return int The size of the hashmap
-     */
-    char **hashmap_to_array(hashmap_t *map);
 
     #ifdef __cplusplus
 }

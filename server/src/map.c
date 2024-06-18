@@ -9,51 +9,37 @@
 #include "map.h"
 #include "egg.h"
 
-static void generate_stones(map_t *map, int x, int y)
-{
-    for (int i = 0; i < (map->height * map->width) / 10; i++) {
-        x = rand() % map->width;
-        y = rand() % map->height;
-        get_tile(map, x, y)->resources.mendiane_count += 1;
-    }
-    for (int i = 0; i < (map->height * map->width) / 8; i++) {
-        x = rand() % map->width;
-        y = rand() % map->height;
-        get_tile(map, x, y)->resources.phiras_count += 1;
-    }
-    for (int i = 0; i < (map->height * map->width) / 5; i++) {
-        x = rand() % map->width;
-        y = rand() % map->height;
-        get_tile(map, x, y)->resources.thystame_count += 1;
-    }
-    for (int i = 0; i < (map->height * map->width) / 10; i++) {
-        x = rand() % map->width;
-        y = rand() % map->height;
-        get_tile(map, x, y)->resources.sibur_count += 1;
-    }
-}
+const ressources_map_t resources_map[] = {
+    { "food", 50 },
+    { "linemate", 30 },
+    { "deraumere", 15 },
+    { "sibur", 10 },
+    { "mendiane", 10 },
+    { "phiras", 8 },
+    { "thystame", 5 },
+    { NULL, 0 }
+};
 
 void generate_ressources(map_t *map)
 {
-    int x = 0;
-    int y = 0;
+    tile_t *tile = NULL;
+    int nb = 0;
+    int nb_ressources = 0;
+    size_t x = 0;
+    size_t y = 0;
 
-    for (int i = 0; i < (map->height * map->width) / 50; i++) {
-        x = rand() % map->width;
-        y = rand() % map->height;
-        get_tile(map, x, y)->resources.food_count += 1;
+    for (size_t i = 0; resources_map[i].name != NULL; i++) {
+        nb_ressources = resources_map[i].density *
+            map->width * map->height / 100;
+        for (int j = 0; j < nb_ressources; j++) {
+            x = rand() % map->width;
+            y = rand() % map->height;
+            tile = get_tile(map, x, y);
+            nb = hashmap_get(tile->resources.resources, resources_map[i].name);
+            hashmap_put(tile->resources.resources,
+                resources_map[i].name, nb + 1);
+        }
     }
-    for (int i = 0; i < (map->height * map->width) / 30; i++) {
-        x = rand() % map->width;
-        y = rand() % map->height;
-        get_tile(map, x, y)->resources.linemate_count += 1;
-    }
-    for (int i = 0; i < (map->height * map->width) / 15; i++) {
-        x = rand() % map->width;
-        y = rand() % map->height;
-        get_tile(map, x, y)->resources.deraumere_count += 1;
-    }
-    generate_stones(map, x, y);
 }
 
 map_t *init_map(size_t width, size_t height)
