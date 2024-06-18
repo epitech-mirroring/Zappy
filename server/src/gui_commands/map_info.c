@@ -38,7 +38,7 @@ char *map_to_string(map_t *map)
             tile = get_tile(map, x, y);
             tmp = tile_to_string(tile);
             prev = strdup(str);
-            sprintf(str, "%s%s", prev, tile_to_string(tile));
+            sprintf(str, "%s%s", prev, tmp);
             free(tmp);
             free(prev);
         }
