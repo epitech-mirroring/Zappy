@@ -24,6 +24,17 @@ CommandFactory::CommandFactory()
     _commands["sst"] = std::make_unique<CommandSST>();
     _commands["sgt"] = std::make_unique<CommandSGT>();
     _commands["pdi"] = std::make_unique<CommandPDI>();
+    _commands["pbc"] = std::make_unique<CommandPBC>();
+    _commands["pic"] = std::make_unique<CommandPIC>();
+    _commands["pdr"] = std::make_unique<CommandPDR>();
+    // PGT ressource collecting
+    // ENW an egg was layed by a player
+    // EBO player connection for an egg
+    // EDI death of an egg
+    // SEG end of game
+    // SMG message from the server
+    // SUC unkown command
+    // SBP command parameter
 }
 
 std::unique_ptr<ICommand> CommandFactory::createCommand(const std::string&
