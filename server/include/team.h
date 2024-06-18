@@ -52,6 +52,14 @@ extern "C" {
      */
     void add_trantorian_to_team(team_t *team, uuid_t trantorian);
 
+    /**
+     * @brief Return a string with the name of all the teams
+     *
+     * @param teams The array of teams
+     * @return char* The string with the names of the teams
+     */
+    char *teams_to_string(array_t *teams);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
