@@ -39,10 +39,16 @@ namespace GUI {
                 THYSTAME,
                 RESOURCE_COUNT
             };
+            enum Orientation {
+                NORTH = 1,
+                EAST = 2,
+                SOUTH = 3,
+                WEST = 4
+            };
             /**
              * @brief Create trantorian object
              */
-            Trantorian(std::string id = "null", int x = 0, int y = 0, int oritentation = 1,
+            Trantorian(std::string id = "null", int x = 0, int y = 0, float orientation = NORTH,
                 int level = 1, std::string teamName = "");
             /**
              * @brief Destroy trantorian object
@@ -138,7 +144,12 @@ namespace GUI {
              * @brief Set trantorian orientation
              * @param orientation
              */
-            void setOrientation(int orientation);
+            void setOrientation(float orientation);
+
+            /**
+             * @brief Get trantorian orientation
+             */
+            [[nodiscard]] float getOrientation();
 
             /**
             * @brief Get the object by type
@@ -184,6 +195,7 @@ namespace GUI {
              * @brief Get the Texture object
              */
             [[nodiscard]] Texture2D getTexture() const;
+
         private:
             GUI::Position _position;
             Teams* _team;
@@ -192,11 +204,10 @@ namespace GUI {
             bool _action;
             std::string _id;
             int _level;
-            int _orientation;
+            float _orientation;
             std::list<IObject *> _inventory;
             Model _trantorianModel;
             Texture2D _trantorianTexture;
     };
-} // namespace GUI
-
+} // namespace GUI  //
 #endif // TRANTORIAN_

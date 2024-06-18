@@ -97,7 +97,8 @@ void Game::initClouds()
     for (int i = 0; i < 7; i++) {
         Model model = LoadModel(clouds[rand() % 4].c_str());
         _clouds.push_back(model);
-        _cloudPositions.push_back({static_cast<float>(rand() % 30), 15.0f, static_cast<float>(rand() % 30)});
+        _cloudPositions.push_back({static_cast<float>(rand() % 30),
+            15.0f, static_cast<float>(rand() % 30)});
     }
 }
 
@@ -124,8 +125,16 @@ void Game::DrawTrantorians()
 {
     for (auto &team : Teams::getTeamsList()) {
         for (auto &trantorian : team.getTrantorianList()) {
-            DrawModel(trantorian.getModel(), {static_cast<float>(trantorian.getPosition().getX()),
-                0.5f, static_cast<float>(trantorian.getPosition().getY())}, 1.0f, WHITE);
+            Vector3 position = {
+                static_cast<float>(trantorian.getPosition().getX()),
+                0.5f,
+                static_cast<float>(trantorian.getPosition().getY())
+            };
+
+            Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+            Vector3 scale = {1.0f, 1.0f, 1.0f};
+
+            DrawModelEx(trantorian.getModel(), position, rotationAxis, trantorian.getOrientation(), scale, WHITE);
             std::cout << "GUI LOG: Player " << trantorian.getId() << " drawn" << std::endl;
         }
     }
@@ -189,7 +198,7 @@ void Game::initializeCallbacks()
         }
 
         Trantorian player(tokens[1], std::stoi(tokens[2]), std::stoi(tokens[3]),
-            std::stoi(tokens[4]), std::stoi(tokens[5]), tokens[6]);
+            std::stof(tokens[4]), std::stoi(tokens[5]), tokens[6]);
         auto &teamsList = Teams::getTeamsList();
         for (auto &team : teamsList) {
             if (team.getName() == tokens[6]) {
@@ -214,7 +223,7 @@ void Game::initializeCallbacks()
             for (auto &trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == tokens[1]) {
                     trantorian.setPosition(std::stoi(tokens[2]), std::stoi(tokens[3]));
-                    trantorian.setOrientation(std::stoi(tokens[4]));
+                    trantorian.setOrientation(std::stof(tokens[4]));
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " position updated" << std::endl;
                 }

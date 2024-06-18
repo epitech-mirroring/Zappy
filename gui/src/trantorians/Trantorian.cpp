@@ -10,9 +10,9 @@
 
 using namespace GUI;
 
-Trantorian::Trantorian(std::string id, int x, int y, int oritentation,
+Trantorian::Trantorian(std::string id, int x, int y, float oritentation,
     int level, std::string teamName)
-        : _id(id), _position(x, y), _orientation(oritentation), _level(level),
+        : _id(id), _position(x, y), _level(level),
         _lifetimeRemaining(100), _alive(true), _action(false), _team(nullptr)
 {
     if (!teamName.empty()) {
@@ -22,6 +22,16 @@ Trantorian::Trantorian(std::string id, int x, int y, int oritentation,
             team->addTrantorian(*this);
         }
     }
+    if (oritentation == static_cast<float>(NORTH))
+        _orientation = 0;
+    else if (oritentation == static_cast<float>(EAST))
+        _orientation = 90;
+    else if (oritentation == static_cast<float>(SOUTH))
+        _orientation = 180;
+    else if (oritentation == static_cast<float>(WEST))
+        _orientation = 270;
+    else
+        _orientation = 0;
     _trantorianModel = LoadModel("gui/src/assets/trantorian/trantorian.obj");
     _trantorianTexture = LoadTexture("gui/src/assets/trantorian/trantorian.png");
     _trantorianModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _trantorianTexture;
@@ -111,9 +121,14 @@ bool Trantorian::operator==(const Trantorian& other) const
            _orientation == other._orientation;
 }
 
-void Trantorian::setOrientation(int orientation)
+void Trantorian::setOrientation(float orientation)
 {
     _orientation = orientation;
+}
+
+float Trantorian::getOrientation()
+{
+    return _orientation;
 }
 
 void Trantorian::setInventory(std::vector<std::string> inventory)
