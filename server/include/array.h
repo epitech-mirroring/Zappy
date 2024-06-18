@@ -63,8 +63,9 @@ extern "C" {
      *
      * @param array the array to get the element from
      * @param index the index to get the element from
+     * @return the element at the index
      */
-    void array_get_at(array_t *array, size_t index);
+    void *array_get_at(array_t *array, size_t index);
 
     /**
      * @brief Gets the size of the array

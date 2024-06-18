@@ -28,7 +28,7 @@ all: zappy_server zappy_ai zappy_gui
 
 zappy_server:
 	@mkdir -p build
-	@cmake -S . -B build -DSERVER=ON -DGUI=OFF
+	@cmake -S . -B build -DSERVER=ON -DGUI=OFF -DTESTS=OFF
 	@cmake --build build --target zappy_server
 	@cp build/server/zappy_server .
 	@printf "$(SUCCESS)$(GREEN)  🚀  Zappy server built \

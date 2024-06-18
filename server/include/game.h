@@ -15,8 +15,9 @@ extern "C" {
     #include "map.h"
     #include "trantorian.h"
     #include "egg.h"
-    #include <stdbool.h>
     #include "client.h"
+    #include "team.h"
+    #include <stdbool.h>
 
     /**
      * @struct game_s
@@ -30,6 +31,9 @@ extern "C" {
         array_t *teams;
         array_t *eggs; //array of pointers to eggs stored in the map
         array_t *trantorians;
+        array_t *clients_without_team;
+        bool win;
+        char *winning_team;
 
         map_t *map;
     } game_t;
@@ -39,11 +43,9 @@ extern "C" {
      *
      * @param teams The name of the teams in the game
      * @param map_size The size of the map [width, height]
-     * @param team_max_size The maximum size of a team
      * @return game_t* The game
      */
-    game_t *init_game(array_t *teams, size_t map_size[2],
-        size_t team_max_size);
+    game_t *init_game(array_t *teams, size_t map_size[2]);
 
     /**
      * @brief Destroy a game
@@ -60,22 +62,27 @@ extern "C" {
     void game_tick(game_t *game);
 
     /**
-     * @brief Check if a team can create a Trantorian
-     *
-     * @param game The game
-     * @param team_name The name of the team
-     * @return bool true if the team is not full, false otherwise
-     */
-    bool can_create_trantorian(game_t *game, char *team_name);
-
-    /**
      * @brief Create a Trantorian for a team
      *
      * @param game The game
      * @param team_name The name of the team
      * @param client The client that wants to create a Trantorian
      */
-    void create_trantorian(game_t *game, char *team_name, client_t *client);
+    void create_trantorian(game_t *game, team_t *team, client_t *client);
+
+    /**
+     * @brief Genrate the start eggs for the game
+     *
+     * @param game The game
+     */
+    void generate_start_eggs(game_t *game);
+
+    /**
+     * @brief Handle a new client
+     *
+     * @param game The game
+     */
+    void handle_new_client(game_t *game);
 
     #ifdef __cplusplus
 }

@@ -1,4 +1,14 @@
 target_sources(zappy_server_lib
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/server.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/client.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/actions.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/array.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/egg.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/game.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/inventory.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/map.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/server.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/team.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/trantorian.h
 )

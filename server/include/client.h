@@ -25,6 +25,7 @@ extern "C" {
     typedef enum client_type_e {
         AI = 0,
         GRAPHIC = 1,
+        UNKNOWN = 2
     } client_type_t;
 
     /**
@@ -80,14 +81,6 @@ extern "C" {
      * @return client_type_t The type of the client
      */
     client_type_t get_type(client_t *client);
-
-    /**
-     * @brief Get the socket of the client
-     *
-     * @param client The target client
-     * @return int The socket of the client
-     */
-    int get_socket(client_t *client);
 
     #ifdef __cplusplus
 }
