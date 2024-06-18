@@ -27,7 +27,7 @@ CommandFactory::CommandFactory()
     _commands["pbc"] = std::make_unique<CommandPBC>();
     _commands["pic"] = std::make_unique<CommandPIC>();
     _commands["pdr"] = std::make_unique<CommandPDR>();
-    // PGT ressource collecting
+    _commands["pgt"] = std::make_unique<CommandPGT>();
     // ENW an egg was layed by a player
     // EBO player connection for an egg
     // EDI death of an egg

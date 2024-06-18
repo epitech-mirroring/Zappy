@@ -49,6 +49,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sgt/CommandSGT.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pdi/CommandPDI.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pdr/CommandPDR.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pgt/CommandPGT.cpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
 
@@ -104,6 +105,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sgt/CommandSGT.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pdi/CommandPDI.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pdr/CommandPDR.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pgt/CommandPGT.hpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
 )

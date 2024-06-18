@@ -454,4 +454,26 @@ void Game::initializeCallbacks()
             }
         }
     });
+
+    _commandFactory.setCallback("pgt", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == tokens[1]) {
+                    for (auto &inventory : trantorian.getInventory()) {
+                        // HANDLE RESSOURCE COLLECTING
+                    }
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " has collected: " << tokens[2] << std::endl;
+                }
+            }
+        }
+    });
 }
