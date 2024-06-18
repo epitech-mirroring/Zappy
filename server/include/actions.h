@@ -36,6 +36,22 @@ extern "C" {
         INCANTATION
     };
 
+/**
+ * @struct action_s
+ *
+ * This structure is used to store the action that a trantorian can do
+ * and the time it takes to do it
+ * @param action the action that the trantorian can do
+ * @param time the time it takes to do the action
+ * @param action_name the name of the action
+*/
+
+    typedef struct action_s {
+        enum action_e action;
+        size_t time;
+        char *action_name;
+    } action_t;
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

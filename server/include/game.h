@@ -97,6 +97,127 @@ extern "C" {
     void new_client_unknow_team(game_t *game,
         client_t *client, char *team_name, size_t index);
 
+    // IA actions
+
+    /**
+ * @struct action_fnc_s
+ *
+ * This structure is used to store the function pointer that will be
+ * called when the trantorian does an action
+ * @param action the action that the trantorian can do
+ * @param fnc the function pointer that will be called
+ */
+
+    typedef struct action_fnc_s {
+        enum action_e action;
+        void (*fnc)(game_t *game, trantorian_t *trantorian);
+    } action_fnc_t;
+
+    /**
+     * @brief forward function, move the trantorian forward
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void forward(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief right function, move the trantorian to the right
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void right(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief left function, move the trantorian to the left
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void left(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief look function, look around the trantorian
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void look(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief inventory function, display the inventory of the trantorian
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void inventory(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief broadcast function, broadcast a message to the other trantorians
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void broadcast(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief connect_nbr function, display
+     * the number of free places in the team
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void connect_nbr(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief fork function, create an egg
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void fork_ia(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief eject function, eject the trantorian from the tile
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void eject(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief take function, take an object from the tile
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void take(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief set function, set an object on the tile
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void set(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief incantation function, start the incantation
+     *
+     * @param game the game structure
+     * @param trantorian the trantorian structure
+     */
+    void incantation(game_t *game, trantorian_t *trantorian);
+
+    /**
+     * @brief find_trantorian_action function,
+     * find the action asked by the trantorians
+     *
+     * @param game the game structure
+     */
+    void find_trantorians_action(game_t *game);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

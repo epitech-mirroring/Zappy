@@ -17,7 +17,7 @@ trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
     trantorian->coordinates = coordinates;
     trantorian->level = 1;
     trantorian->inventory = init_inventory();
-    trantorian->actions = array_constructor(1, NULL);
+    trantorian->actions = array_constructor(sizeof(action_t), NULL);
     trantorian->direction = NORTH;
     trantorian->waiting_tick = 0;
     trantorian->client = client;

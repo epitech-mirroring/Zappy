@@ -15,6 +15,22 @@
 #include "team.h"
 #include "trantorian.h"
 
+const action_fnc_t actions_fnc[] = {
+    {FORWARD, &forward},
+    {RIGHT, &right},
+    {LEFT, &left},
+    {LOOK, &look},
+    {INVENTORY, &inventory},
+    {BROADCAST, &broadcast},
+    {CONNECT_NBR, &connect_nbr},
+    {FORK, &fork_ia},
+    {EJECT, &eject},
+    {TAKE, &take},
+    {SET, &set},
+    {INCANTATION, &incantation},
+    {-1, NULL}
+};
+
 static team_t *get_team_by_name(array_t *teams, char *team_name)
 {
     team_t *team = NULL;
@@ -45,8 +61,18 @@ static bool can_create_trantorian(game_t *game, char *team_name)
 
 static void trantorian_action(game_t *game, trantorian_t *trantorian)
 {
-    (void)game;
-    (void)trantorian;
+    size_t i = 0;
+    action_t action;
+
+    while (actions_fnc[i].action != -1) {
+        action = *(action_t *)array_get_at(trantorian->actions, 0);
+        if (actions_fnc[i].action == action.action) {
+            actions_fnc[i].fnc(game, trantorian);
+            array_remove(trantorian->actions, 0);
+            return;
+        }
+        i++;
+    }
 }
 
 static char *int_to_str(int nb)
@@ -123,7 +149,10 @@ void destroy_game(game_t *game)
     array_destructor(game->eggs);
     array_destructor(game->trantorians);
     array_destructor(game->clients_without_team);
+    array_destructor(game->gui_log);
+    array_destructor(game->gui_clients);
     destroy_map(game->map);
+    free(game->winning_team);
     free(game);
 }
 
@@ -132,6 +161,7 @@ void game_tick(game_t *game)
     trantorian_t *trantorian = NULL;
 
     generate_ressources(game->map);
+    find_trantorians_action(game);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
         trantorian_tick(trantorian);
