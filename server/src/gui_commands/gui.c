@@ -50,7 +50,7 @@ void update_graphic_clients_buffer(server_t *server)
     array_clear(server->game->gui_log);
 }
 
-static char *cut_str(char * str, int start)
+static char *cut_str(char *str, int start)
 {
     char *new_str;
     int i = 0;
@@ -68,7 +68,6 @@ static char *cut_str(char * str, int start)
     }
     new_str[i] = '\0';
     return new_str;
-
 }
 
 static void run_gui_command(server_t *server, client_t *client, char *msg)
