@@ -7,16 +7,17 @@
 
 #include <gtest/gtest.h>
 #include <climits>
-#include "trantorians/Trantorian.hpp"
-#include "trantorians/Teams.hpp"
+#include "mocks/MockTrantorians.hpp"
+#include "mocks/MockTeams.hpp"
 #include "position/Position.hpp"
 
 using namespace GUI;
 
 TEST(trantorian_methods, PositionSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     Position res(42, 84);
     Position new_res(-42, -84);
+
 
     player.setPosition(42, 84);
     EXPECT_EQ(player.getPosition().getX(), res.getX());
@@ -27,9 +28,9 @@ TEST(trantorian_methods, PositionSetterAndGetters) {
 }
 
 TEST(trantorian_methods, TeamSetterAndGetters) {
-    Teams team1("Epitech");
-    Teams team2("Zappy");
-    Trantorian player;
+    MockTeams team1("Epitech");
+    MockTeams team2("Zappy");
+    MockTrantorians player;
 
     player.setTeam(&team1);
     EXPECT_EQ(player.getTeam()->getName(), team1.getName());
@@ -38,7 +39,7 @@ TEST(trantorian_methods, TeamSetterAndGetters) {
 }
 
 TEST(trantorian_methods, LifetimeSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     int res = 42;
     int new_res = 84;
 
@@ -49,7 +50,7 @@ TEST(trantorian_methods, LifetimeSetterAndGetters) {
 }
 
 TEST(trantorian_methods, LevelSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     int res = 42;
     int new_res = 84;
 
@@ -60,7 +61,7 @@ TEST(trantorian_methods, LevelSetterAndGetters) {
 }
 
 TEST(trantorian_methods, IsAliveSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     bool res = false;
     bool new_res = true;
 
@@ -71,7 +72,7 @@ TEST(trantorian_methods, IsAliveSetterAndGetters) {
 }
 
 TEST(trantorian_methods, IdSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     std::string res = "4242";
     std::string new_res = "8484";
 
@@ -82,7 +83,7 @@ TEST(trantorian_methods, IdSetterAndGetters) {
 }
 
 TEST(trantorian_methods, ActionSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     bool res = true;
     bool new_res = false;
 
@@ -93,13 +94,13 @@ TEST(trantorian_methods, ActionSetterAndGetters) {
 }
 
 TEST(trantorian_methods, NegativeLifetime) {
-    Trantorian player;
+    MockTrantorians player;
     player.setLifetime(-42);
     EXPECT_EQ(player.getLifetime(), -42);
 }
 
 TEST(trantorian_methods, PositionBoundaryValues) {
-    Trantorian player;
+    MockTrantorians player;
     Position max_res(INT_MAX, INT_MAX);
     Position min_res(INT_MIN, INT_MIN);
 
@@ -113,7 +114,7 @@ TEST(trantorian_methods, PositionBoundaryValues) {
 }
 
 TEST(trantorian_methods, LevelBoundaryValues) {
-    Trantorian player;
+    MockTrantorians player;
     player.setLevel(INT_MAX);
     EXPECT_EQ(player.getLevel(), INT_MAX);
 
@@ -122,25 +123,25 @@ TEST(trantorian_methods, LevelBoundaryValues) {
 }
 
 TEST(trantorian_methods, IsAliveDefault) {
-    Trantorian player;
+    MockTrantorians player;
     EXPECT_EQ(player.getIsAlive(), true);
 }
 
 TEST(trantorian_methods, PositionDefault) {
-    Trantorian player;
+    MockTrantorians player;
     Position default_res(0, 0);
     EXPECT_EQ(player.getPosition().getX(), default_res.getX());
     EXPECT_EQ(player.getPosition().getY(), default_res.getY());
 }
 
 TEST(trantorian_methods, TeamDefault) {
-    Trantorian player;
+    MockTrantorians player;
     EXPECT_EQ(player.getTeam(), nullptr);
 }
 
 TEST(trantorian_methods, MultipleProperties) {
-    Teams team("Zappy");
-    Trantorian player;
+    MockTeams team("Zappy");
+    MockTrantorians player;
     player.setTeam(&team);
     player.setLevel(5);
     player.setIsAlive(false);
@@ -152,7 +153,7 @@ TEST(trantorian_methods, MultipleProperties) {
 
 TEST(trantorian_methods, setInventory_AddObjects) {
     std::vector<std::string> objs = {"12", "X", "Y", "1", "0", "1", "0", "0", "0", "0"};
-    Trantorian player("12", 0, 0, 1, 1, "Zappy");
+    MockTrantorians player("12", 0, 0, 1, 1, "Zappy");
 
     player.setInventory(objs);
     auto objects = player.getInventory();
@@ -162,9 +163,9 @@ TEST(trantorian_methods, setInventory_AddObjects) {
     int deraumerecount = 0;
 
     for (auto obj : objects) {
-        if (obj->getType() == Trantorian::FOOD) {
+        if (obj->getType() == MockTrantorians::FOOD) {
             foodCount++;
-        } else if (obj->getType() == Trantorian::DERAUMERE) {
+        } else if (obj->getType() == MockTrantorians::DERAUMERE) {
             deraumerecount++;
         }
         delete obj;
@@ -175,7 +176,7 @@ TEST(trantorian_methods, setInventory_AddObjects) {
 }
 
 TEST(trantorian_methods, setInventory_RemoveObjects) {
-    Trantorian player("12", 0, 0, 1, 1, "Zappy");
+    MockTrantorians player("12", 0, 0, 1, 1, "Zappy");
     IObject* food = new Food(Position(0, 0));
     IObject* linemate = new Linemate(Position(0, 0));
     player.addObject(food);
@@ -189,7 +190,7 @@ TEST(trantorian_methods, setInventory_RemoveObjects) {
 }
 
 TEST(trantorian_methods, setInventory_MixedChanges) {
-    Trantorian player("12", 0, 0, 1, 1, "Zappy");
+    MockTrantorians player("12", 0, 0, 1, 1, "Zappy");
     IObject* food = new Food(Position(0, 0));
     IObject* linemate = new Linemate(Position(0, 0));
     player.addObject(food);
@@ -205,9 +206,9 @@ TEST(trantorian_methods, setInventory_MixedChanges) {
     int deraumerecount = 0;
 
     for (auto obj : objects) {
-        if (obj->getType() == Trantorian::FOOD) {
+        if (obj->getType() == MockTrantorians::FOOD) {
             foodCount++;
-        } else if (obj->getType() == Trantorian::DERAUMERE) {
+        } else if (obj->getType() == MockTrantorians::DERAUMERE) {
             deraumerecount++;
         }
         delete obj;

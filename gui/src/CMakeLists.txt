@@ -49,7 +49,9 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sgt/CommandSGT.cpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
-
+    # TESTS
+    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockTrantorians.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockTeams.cpp
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
@@ -102,4 +104,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sgt/CommandSGT.hpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
+    # TESTS
+    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockTrantorians.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockTeams.hpp
 )
