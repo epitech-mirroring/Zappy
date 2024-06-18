@@ -1,4 +1,20 @@
 target_sources(zappy_server_lib
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/hello_world.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/array.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/array_bis.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/buffer.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/client.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/egg.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/game.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/hashmap_bucket.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/hashmap_op.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/hashmap_others.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/inventory.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/main.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/map_bis.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/map.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/server_bis.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/server.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/team.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/trantorian.c
 )

@@ -89,7 +89,7 @@ pipeline {
         stage ('🧪 Tests') {
             agent {
                 docker {
-                    image 'epitechcontent/epitest-docker:latest'
+                    image 'epitechcontent/epitest-docker:gradle'
                     args '-v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/jenkins/.local:/.local -v /var/lib/jenkins/.cache:/.cache'
                 }
             }

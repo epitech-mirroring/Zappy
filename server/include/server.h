@@ -9,10 +9,14 @@
 #ifndef ZAPPY_SERVER_H
     #define ZAPPY_SERVER_H
 
+    #define MAX_COMMAND_SIZE 1024
+    #define MAX_USERS 10000
+
     #include "game.h"
     #include "array.h"
     #include "client.h"
     #include "buffer.h"
+    #include <sys/select.h>
     #ifdef __cplusplus
 extern "C" {
     #endif // __cplusplus
@@ -28,22 +32,25 @@ extern "C" {
         game_t *game;
         array_t *clients;
 
-        size_t single_tick_time;
-        size_t prev_tick_time;
-        size_t nb_ticks;
+        size_t single_tick_time; // in microseconds
+        long long nb_ticks; // number of ticks
 
         unsigned short port;
+        int max_fd;
+        int fd;
     } server_t;
 
     /**
      * @brief Initialize a server
      *
      * @param port The port on which the server will listen
-     * @param freq The frequency of the server
+     * @param teams The teams in the game
+     * @param map_size The size of the map [width, height]
+     * @param nb_max_clients The maximum number of clients
      * @return server_t* The server
      */
-    server_t *init(unsigned short port, size_t freq,
-        array_t *teams, int map_size[2]);
+    server_t *create_server(unsigned short port, array_t *teams,
+        size_t map_size[2], size_t nb_max_clients);
 
     /**
      * @brief Destroy a server
@@ -64,9 +71,8 @@ extern "C" {
      *
      * @param server The server
      * @param fd The file descriptor of the client
-     * @param message The message received from the client
      */
-    void add_client(server_t *server, int fd, char *message);
+    void add_client(server_t *server, int fd);
 
     /**
      * @brief Remove a client from the server
@@ -77,30 +83,6 @@ extern "C" {
     void remove_client(server_t *server, int fd);
 
     /**
-     * @brief Send a message to a client
-     *
-     * @param server The server
-     * @param fd The file descriptor of the client
-     * @param message The message to send
-     */
-    void send_message(server_t *server, int fd, char *message);
-
-    /**
-     * @brief Send a message to all clients
-     *
-     * @param server The server
-     * @param message The message to send
-     */
-    void send_message_to_all(server_t *server, char *message);
-
-    /**
-     * @brief Read client messages that have not been read yet
-     *
-     * @param server The server
-     */
-    void read_clients_messages(server_t *server);
-
-    /**
      * @brief Read a client message
      *
      * @param server The server
@@ -109,12 +91,34 @@ extern "C" {
     void read_client_message(server_t *server, client_t *client);
 
     /**
-     * @brief Execute client command (only network command)
+     * @brief Identify if a client is a GUI or an IA client
      *
      * @param server The server
      * @param client The client
      */
-    void execute_client_command(server_t *server, client_t *client);
+    void new_clients_check(server_t *server, client_t *client);
+
+    /**
+     * @brief Find the max file descriptor
+     *
+     * @param server The server
+     */
+    int find_max_fd(server_t *server);
+
+    /**
+     * @brief Handle new connections
+     *
+     * @param server The server
+     * @param readfds The fd_set for the read file descriptors
+     */
+    void handle_new_connections(server_t *server, fd_set *readfds);
+
+    /**
+     * @brief write to clients
+     *
+     * @param server The server
+     */
+    void write_to_clients(server_t *server);
 
     #ifdef __cplusplus
 }

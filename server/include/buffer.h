@@ -60,15 +60,6 @@ extern "C" {
      */
     void buffer_destroy(buffer_t *buffer);
 
-    /**
-     * @brief Check if the buffer can write
-     *
-     * @param buffer The buffer to check
-     * @param size The size to check
-     * @return bool true if the buffer can write, false otherwise
-     */
-    bool can_write(buffer_t *buffer, size_t size);
-
     #ifdef __cplusplus
 }
 
