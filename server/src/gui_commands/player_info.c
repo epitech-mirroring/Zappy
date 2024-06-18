@@ -65,5 +65,4 @@ void pnw_log_gui(game_t *game, trantorian_t *trantorian, char *team_name)
     char *str = new_player_connection_log(trantorian, team_name);
 
     array_push_back(game->gui_log, str);
-    free(str);
 }

@@ -14,7 +14,6 @@ void seg_log_gui(game_t *game, char *team_name)
 
     sprintf(str, "seg %s\n", team_name);
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 void smg_log_gui(game_t *game, char *msg)
@@ -23,7 +22,6 @@ void smg_log_gui(game_t *game, char *msg)
 
     sprintf(str, "smg %s\n", msg);
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 void suc_log_gui(game_t *game)
@@ -32,5 +30,4 @@ void suc_log_gui(game_t *game)
 
     sprintf(str, "suc\n");
     array_push_back(game->gui_log, str);
-    free(str);
 }

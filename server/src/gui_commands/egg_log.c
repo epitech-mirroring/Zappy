@@ -16,7 +16,6 @@ void pfk_log_gui(game_t *game, trantorian_t *trantorian)
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "pfk #%s\n", uuid);
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 void enw_log_gui(game_t *game, egg_t *egg, trantorian_t *trantorian)
@@ -30,7 +29,6 @@ void enw_log_gui(game_t *game, egg_t *egg, trantorian_t *trantorian)
     sprintf(str, "enw #%s #%s %d %d\n", uuid_egg, uuid_player,
         egg->coordinates.x, egg->coordinates.y);
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 void ebo_log_gui(game_t *game, egg_t *egg)
@@ -41,7 +39,6 @@ void ebo_log_gui(game_t *game, egg_t *egg)
     uuid_unparse(egg->uuid, uuid);
     sprintf(str, "ebo #%s\n", uuid);
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 void edi_log_gui(game_t *game, egg_t *egg)
@@ -52,5 +49,4 @@ void edi_log_gui(game_t *game, egg_t *egg)
     uuid_unparse(egg->uuid, uuid);
     sprintf(str, "edi #%s\n", uuid);
     array_push_back(game->gui_log, str);
-    free(str);
 }

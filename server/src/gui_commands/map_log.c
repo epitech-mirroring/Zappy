@@ -13,7 +13,6 @@ void msz_log_gui(game_t *game)
     char *str = map_dimensions_to_string(game->map);
 
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 void bct_log_gui(game_t *game, coordinates_t coordinates)
@@ -21,7 +20,6 @@ void bct_log_gui(game_t *game, coordinates_t coordinates)
     char *str = map_tile_to_string(game->map, coordinates);
 
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 void mct_log_gui(game_t *game)
@@ -29,5 +27,4 @@ void mct_log_gui(game_t *game)
     char *str = map_to_string(game->map);
 
     array_push_back(game->gui_log, str);
-    free(str);
 }

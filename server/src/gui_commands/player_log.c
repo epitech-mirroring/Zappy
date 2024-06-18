@@ -52,7 +52,6 @@ void ppo_log_gui(game_t *game, char *arg)
     }
     str = trantorian_pos_to_str(trantorian);
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 static bool check_plv_arg(game_t *game, char *arg)
@@ -89,7 +88,6 @@ void plv_log_gui(game_t *game, char *arg)
     }
     str = trantorian_level_to_str(trantorian);
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 static bool check_pin_arg(game_t *game, char *arg)
@@ -126,7 +124,6 @@ void pin_log_gui(game_t *game, char *arg)
     }
     str = trantorian_inventory_to_str(trantorian);
     array_push_back(game->gui_log, str);
-    free(str);
 }
 
 void tna_log_gui(game_t *game)
@@ -134,5 +131,4 @@ void tna_log_gui(game_t *game)
     char *str = teams_to_string(game->teams);
 
     array_push_back(game->gui_log, str);
-    free(str);
 }
