@@ -73,7 +73,7 @@ extern "C" {
      */
     void trantorian_tick(trantorian_t *trantorian);
 
-     /**
+    /**
      * @brief Return a string representation of the inventory
      *
      * @param inventory The inventory to represent

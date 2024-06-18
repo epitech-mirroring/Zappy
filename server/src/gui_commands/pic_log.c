@@ -8,7 +8,8 @@
 
 #include "game.h"
 
-void pic_log_gui(game_t *game, array_t *trantorians, size_t level, coordinates_t pos)
+void pic_log_gui(game_t *game, array_t *trantorians,
+    size_t level, coordinates_t pos)
 {
     char *str = calloc(1024, sizeof(char));
     char *uuid = NULL;

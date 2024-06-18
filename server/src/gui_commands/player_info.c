@@ -47,7 +47,8 @@ char *trantorian_level_to_str(trantorian_t *trantorian)
     return str;
 }
 
-static char *new_player_connection_log_gui(trantorian_t *trantorian, char *team)
+static char *new_player_connection_log_gui(trantorian_t *trantorian,
+    char *team)
 {
     char *str = malloc(sizeof(char) * 100);
     char *uuid = calloc(37, sizeof(char));

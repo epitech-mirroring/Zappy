@@ -140,7 +140,8 @@ extern "C" {
      * @param level The level of the incantation
      * @param pos The position of the incantation
      */
-    void pic_log_gui(game_t *game, array_t *trantorians, size_t level, coordinates_t pos);
+    void pic_log_gui(game_t *game, array_t *trantorians,
+        size_t level, coordinates_t pos);
 
     /**
      * @brief pfk command
