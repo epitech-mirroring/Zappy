@@ -23,6 +23,7 @@ extern "C" {
      */
     typedef struct egg_s {
         uuid_t team_uuid;
+        uuid_t uuid;
         coordinates_t coordinates;
     } egg_t;
 

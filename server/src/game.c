@@ -94,7 +94,7 @@ void handle_new_client(game_t *game)
                 get_team_by_name(game->teams, msg), trantorian->coordinates);
             array_remove(game->clients_without_team, i);
         } else
-            buffer_write(client->buffer_answered, "ko\n");
+            new_client_unknow_team(game, client, msg, i);
     }
 }
 
@@ -103,6 +103,8 @@ game_t *init_game(array_t *teams, size_t map_size[2])
     game_t *game = malloc(sizeof(game_t));
 
     game->teams = array_constructor(sizeof(team_t), (void *)&destroy_team);
+    game->gui_log = array_constructor(sizeof(char *), (void *)&free);
+    game->gui_clients = array_constructor(sizeof(client_t), NULL);
     for (size_t i = 0; i < array_get_size(teams); i++) {
         array_push_back(game->teams, array_get_at(teams, i));
     }
