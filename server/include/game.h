@@ -36,6 +36,7 @@ extern "C" {
         array_t *gui_clients;
         bool win;
         char *winning_team;
+        int food_spwan;
 
         map_t *map;
     } game_t;

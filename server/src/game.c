@@ -64,6 +64,8 @@ static void trantorian_action(game_t *game, trantorian_t *trantorian)
     size_t i = 0;
     action_t action;
 
+    if (array_get_size(trantorian->actions) == 0)
+        return;
     while (actions_fnc[i].action != -1) {
         action = *(action_t *)array_get_at(trantorian->actions, 0);
         if (actions_fnc[i].action == action.action) {
@@ -140,6 +142,8 @@ game_t *init_game(array_t *teams, size_t map_size[2])
     generate_start_eggs(game);
     generate_ressources(game->map);
     game->clients_without_team = array_constructor(sizeof(client_t), NULL);
+    game->win = false;
+    game->food_spwan = 0;
     return game;
 }
 
@@ -160,7 +164,13 @@ void game_tick(game_t *game)
 {
     trantorian_t *trantorian = NULL;
 
-    generate_ressources(game->map);
+    game->food_spwan++;
+    if (game->food_spwan == 20) {
+        generate_ressources(game->map);
+        game->food_spwan = 0;
+    }
+    if (game->win || array_get_size(game->trantorians) == 0)
+        return;
     find_trantorians_action(game);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);

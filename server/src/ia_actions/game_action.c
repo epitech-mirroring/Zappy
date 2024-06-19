@@ -26,6 +26,16 @@ const action_t actions[] = {
     {-1, -1, NULL}
 };
 
+action_t *dup_action(size_t i)
+{
+    action_t *action = malloc(sizeof(action_t));
+
+    action->action = actions[i].action;
+    action->action_name = strdup(actions[i].action_name);
+    action->time = actions[i].time;
+    return action;
+}
+
 static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
 {
     char *msg = buffer_get_next(trantorian->client->buffer_asked);
@@ -35,18 +45,14 @@ static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
     while (msg != NULL) {
         for (i = 0; actions[i].action != -1 &&
             strcmp(actions[i].action_name, msg); i++);
-        if (actions[i].action_name == NULL)
-            continue;
-        if (array_get_size(trantorian->actions) >= 10) {
-            buffer_write(trantorian->client->buffer_answered,
-                "ko\n");
-            break;
+        if (array_get_size(trantorian->actions) >= 10 ||
+            actions[i].action_name == NULL) {
+            buffer_write(trantorian->client->buffer_answered, "ko\n");
+        } else {
+            action = dup_action(i);
+            array_push_back(trantorian->actions, action);
         }
-        action = malloc(sizeof(action_t));
-        action->action = actions[i].action;
-        action->time = actions[i].time;
-        action->action_name = strdup(actions[i].action_name);
-        array_push_back(trantorian->actions, action);
+        msg = buffer_get_next(trantorian->client->buffer_asked);
     }
 }
 

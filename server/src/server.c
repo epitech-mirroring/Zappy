@@ -28,15 +28,16 @@ static void write_to_client(client_t *client)
     free(message);
 }
 
-static void tick(server_t *server, suseconds_t time_since_last_tick)
+static void tick(server_t *server)
 {
-    int nb_ticks = time_since_last_tick / server->single_tick_time;
+    suseconds_t actual_time = time(NULL) * 1000000 + 0;
+    int nb_ticks = (actual_time - server->prev_tick_time)
+         / server->single_tick_time;
 
+    // printf("nb_ticks: %d\n", nb_ticks);
+    handle_new_client(server->game);
     if (nb_ticks <= 0)
         return;
-    if (time_since_last_tick == -1)
-        nb_ticks = 0;
-    handle_new_client(server->game);
     for (int i = 0; i < nb_ticks; i++) {
         game_tick(server->game);
     }
@@ -101,6 +102,7 @@ void run(server_t *server)
     fd_set writefds;
 
     while (1) {
+        server->prev_tick_time = time(NULL) * 1000000 + 0;
         tv.tv_sec = 0;
         tv.tv_usec = get_closest_action(server);
         fill_fd_set(server, &readfds, &writefds);
@@ -113,7 +115,7 @@ void run(server_t *server)
         handle_new_connections(server, &readfds);
         read_clients_messages(server, &readfds);
         while (waitpid(-1, NULL, WNOHANG) > 0);
-        tick(server, tv.tv_usec);
+        tick(server);
     }
 }
 
