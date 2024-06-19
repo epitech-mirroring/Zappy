@@ -8,23 +8,6 @@
 
 #include "game.h"
 
-// const direction_to_string_t DIRECTION_TO_STRING[] = {
-//     {NORTH, "NORTH"},
-//     {EAST, "EAST"},
-//     {SOUTH, "SOUTH"},
-//     {WEST, "WEST"},
-//     {-1, NULL}
-// };
-
-// static char *get_direction_str(enum direction_e direction)
-// {
-//     for (int i = 0; DIRECTION_TO_STRING[i].direction != -1; i++) {
-//         if (DIRECTION_TO_STRING[i].direction == direction)
-//             return DIRECTION_TO_STRING[i].str;
-//     }
-//     return NULL;
-// }
-
 char *trantorian_pos_to_str(trantorian_t *trantorian)
 {
     char *str = malloc(sizeof(char) * 100);
@@ -34,6 +17,7 @@ char *trantorian_pos_to_str(trantorian_t *trantorian)
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "ppo %s %d %d %s\n", uuid, trantorian->coordinates.x,
         trantorian->coordinates.y, direction);
+    free(uuid);
     return str;
 }
 
@@ -44,6 +28,7 @@ char *trantorian_level_to_str(trantorian_t *trantorian)
 
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "plv %s %d\n", uuid, trantorian->level);
+    free(uuid);
     return str;
 }
 
@@ -58,6 +43,7 @@ static char *new_player_connection_log_gui(trantorian_t *trantorian,
     sprintf(str, "pnw %s %d %d %s %d %s\n", uuid, trantorian->coordinates.x,
         trantorian->coordinates.y, direction, trantorian->level,
         team);
+    free(uuid);
     return str;
 }
 

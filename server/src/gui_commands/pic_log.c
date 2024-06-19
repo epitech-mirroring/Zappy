@@ -12,7 +12,7 @@ void pic_log_gui(game_t *game, array_t *trantorians,
     size_t level, coordinates_t pos)
 {
     char *str = calloc(1024, sizeof(char));
-    char *uuid = NULL;
+    char *uuid = calloc(37, sizeof(char));
     trantorian_t *trantorian = NULL;
 
     sprintf(str, "pic %lu %lu %lu %s\n", pos.x, pos.y, level);
@@ -23,4 +23,5 @@ void pic_log_gui(game_t *game, array_t *trantorians,
     }
     sprintf(str, "%s\n", str);
     array_push_back(game->gui_log, str);
+    free(uuid);
 }

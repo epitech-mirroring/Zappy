@@ -11,19 +11,21 @@
 void pdr_log_gui(game_t *game, trantorian_t *trantorian, size_t nb)
 {
     char *str = calloc(1024, sizeof(char));
-    char *uuid = NULL;
+    char *uuid = calloc(37, sizeof(char));
 
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "pdr %s %i\n", uuid, nb);
     array_push_back(game->gui_log, str);
+    free(uuid);
 }
 
 void pgt_log_gui(game_t *game, trantorian_t *trantorian, size_t nb)
 {
     char *str = calloc(1024, sizeof(char));
-    char *uuid = NULL;
+    char *uuid = calloc(37, sizeof(char));
 
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "pgt %s %i\n", uuid, nb);
     array_push_back(game->gui_log, str);
+    free(uuid);
 }

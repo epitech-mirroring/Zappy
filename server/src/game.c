@@ -94,7 +94,7 @@ static void new_client_ping(game_t *game, client_t *client,
 {
     char *msg = calloc(1024, sizeof(char));
     char *uuid = calloc(37, sizeof(char));
-    const char *dir = strdup(get_direction_str(trantorian->direction));
+    char *dir = strdup(get_direction_str(trantorian->direction));
     coordinates_t pos = trantorian->coordinates;
 
     snprintf(msg, 1024, "%i\n", team->free_places);

@@ -40,7 +40,7 @@ static void tick(server_t *server)
     for (int i = 0; i < nb_ticks; i++) {
         game_tick(server->game);
     }
-    check_dead_client(server, server->game);
+    check_dead_client(server);
     run_gui_commands(server);
     update_graphic_clients_buffer(server);
     write_to_clients(server);

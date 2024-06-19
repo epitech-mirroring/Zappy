@@ -121,6 +121,13 @@ extern "C" {
      */
     void write_to_clients(server_t *server);
 
+    /**
+     * @brief remove the useless clients
+     *
+     * @param server The server
+     */
+    void check_dead_client(server_t *server);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

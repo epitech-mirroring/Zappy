@@ -219,6 +219,21 @@ extern "C" {
      */
     void find_trantorians_action(game_t *game);
 
+    /**
+     * @brief Check trantorians need to be set as dead
+     *
+     * @param game the game structure
+     */
+    void check_dead_trantorians(game_t *game);
+
+    /**
+     * @brief Destroy an egg when it's ejected
+     *
+     * @param game The game
+     * @param egg The egg to destroy
+     */
+    void eject_egg(game_t *game, egg_t *egg);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
