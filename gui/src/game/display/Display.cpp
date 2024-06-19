@@ -14,7 +14,7 @@ Display::Display(World &world, Teams &teams)
 {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(1600, 900, "Zappy");
-    SetTargetFPS(120);
+    SetTargetFPS(12000);
     initClouds();
     _camera = {0};
     _camera.position = {0.0f, 10.0f, 10.0f};
@@ -148,7 +148,7 @@ void Display::DrawObjects(std::list<IObject*> objects)
         float posX = static_cast<float>(object->getPosition().getX()) + offset.first;
         float posZ = static_cast<float>(object->getPosition().getY()) + offset.second;
 
-        float scale = 0.06f + 0.01f * object->getQuantity();
+        float scale = 0.06f + 0.07f * object->getQuantity();
         DrawCube({posX, 0.5f, posZ}, scale, scale, scale, color);
     }
 }
