@@ -32,9 +32,8 @@ static void tick(server_t *server)
 {
     suseconds_t actual_time = time(NULL) * 1000000 + 0;
     int nb_ticks = (actual_time - server->prev_tick_time)
-         / server->single_tick_time;
+        / server->single_tick_time;
 
-    // printf("nb_ticks: %d\n", nb_ticks);
     handle_new_client(server->game);
     if (nb_ticks <= 0)
         return;
@@ -103,7 +102,6 @@ void run(server_t *server)
 
     while (1) {
         server->prev_tick_time = time(NULL) * 1000000 + 0;
-        tv.tv_sec = 0;
         tv.tv_usec = get_closest_action(server);
         fill_fd_set(server, &readfds, &writefds);
         if (tv.tv_usec == -1)
