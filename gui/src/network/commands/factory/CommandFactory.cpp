@@ -32,6 +32,7 @@ CommandFactory::CommandFactory()
     _commands["ebo"] = std::make_unique<CommandEBO>();
     _commands["edi"] = std::make_unique<CommandEDI>();
     _commands["seg"] = std::make_unique<CommandSEG>();
+    _commands["smg"] = std::make_unique<CommandSMG>();
     // SMG message from the server
     // SUC unkown command
     // SBP command parameter
