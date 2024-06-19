@@ -24,10 +24,6 @@ Display::Display(World &world, Teams &teams)
     _camera.projection = CAMERA_PERSPECTIVE;
 }
 
-Display::~Display()
-{
-}
-
 void Display::cleanupModels()
 {
     for (auto &model : _clouds) {

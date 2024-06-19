@@ -27,7 +27,7 @@ namespace GUI {
         /**
          * @brief Destroy the Display object
         */
-        ~Display();
+        ~Display() = default;
 
         void displayElements();
 
