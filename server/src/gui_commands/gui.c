@@ -59,8 +59,11 @@ static char *cut_str(char *str, int start)
         return NULL;
     if (start < 0)
         return NULL;
+    printf("str: %s\n", str);
+    printf("start = %d\n", start);
     if (start >= strlen(str))
         return NULL;
+    printf("c\n");
     new_str = malloc(sizeof(char) * (strlen(str) - start + 1));
     for (i = 0; str[start] != '\0' && str[start] != '\n'; i++) {
         new_str[i] = str[start];
@@ -72,8 +75,8 @@ static char *cut_str(char *str, int start)
 
 static void run_gui_command(server_t *server, client_t *client, char *msg)
 {
+    char *arg = cut_str(msg, 4);
     char *cmd = strtok(msg, " \n");
-    char *arg = cut_str(msg, strlen(cmd) + 1);
 
     for (size_t i = 0; gui_commands[i].cmd != NULL; i++) {
         if (strcmp(gui_commands[i].cmd, cmd) == 0) {
