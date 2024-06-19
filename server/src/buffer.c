@@ -11,7 +11,20 @@
 
 static bool can_write(buffer_t *buffer, size_t size)
 {
-    if (buffer->write_index + size >= buffer->capacity)
+    // if (buffer->write_index + size >= buffer->capacity)
+    //     return false;
+    size_t i = buffer->write_index;
+
+    if (i == buffer->write_index) {
+        i++;
+        size--;
+    }
+    for (; i != buffer->read_index && size > 0; i++) {
+        if (i >= buffer->capacity)
+            i = 0;
+        size--;
+    }
+    if (size > 0)
         return false;
     return true;
 }
@@ -33,11 +46,13 @@ void buffer_write(buffer_t *buffer, char *data)
 
     if (!can_write(buffer, data_size))
         return;
+    printf("%s\n", data);
     if (data[0] == '\0' || data[0] == '\n' || data[0] == '\r')
         return;
     for (size_t i = 0; i < data_size; i++) {
-        if (buffer->write_index == buffer->capacity)
+        if (buffer->write_index == buffer->capacity) {
             buffer->write_index = 0;
+        }
         if (data[i] == 13)
             continue;
         buffer->buffer[buffer->write_index] = data[i];
@@ -45,6 +60,11 @@ void buffer_write(buffer_t *buffer, char *data)
     }
     buffer->buffer[buffer->write_index] = '\0';
     buffer->write_index++;
+    for (size_t i = 0; i < buffer->capacity; i++) {
+        if (buffer->buffer[i] == '\0')
+            continue;;
+        printf("buffer[%ld] = %c\n", i, buffer->buffer[i]);
+    }
 }
 
 char *buffer_get_next(buffer_t *buffer)
