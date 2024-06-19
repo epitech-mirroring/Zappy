@@ -30,7 +30,7 @@ CommandFactory::CommandFactory()
     _commands["pgt"] = std::make_unique<CommandPGT>();
     _commands["enw"] = std::make_unique<CommandENW>();
     _commands["ebo"] = std::make_unique<CommandEBO>();
-    // EDI death of an egg
+    _commands["edi"] = std::make_unique<CommandEDI>();
     // SEG end of game
     // SMG message from the server
     // SUC unkown command
