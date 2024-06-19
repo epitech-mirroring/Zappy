@@ -26,8 +26,6 @@ Display::Display(World &world, Teams &teams)
 
 Display::~Display()
 {
-    cleanupModels();
-    CloseWindow();
 }
 
 void Display::cleanupModels()
