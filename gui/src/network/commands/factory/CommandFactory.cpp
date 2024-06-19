@@ -31,7 +31,7 @@ CommandFactory::CommandFactory()
     _commands["enw"] = std::make_unique<CommandENW>();
     _commands["ebo"] = std::make_unique<CommandEBO>();
     _commands["edi"] = std::make_unique<CommandEDI>();
-    // SEG end of game
+    _commands["seg"] = std::make_unique<CommandSEG>();
     // SMG message from the server
     // SUC unkown command
     // SBP command parameter

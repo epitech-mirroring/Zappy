@@ -522,4 +522,17 @@ void Game::initializeCallbacks()
         // HANDLE DEATH FOR AN EGG
         std::cout << "GUI LOG: Death of " << token[1] << " Egg" << std::endl;
     });
+
+    _commandFactory.setCallback("seg", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE END OF GAME
+        std::cout << "GUI LOG: Team " << token[1] << " end the game" << std::endl;
+    });
 }

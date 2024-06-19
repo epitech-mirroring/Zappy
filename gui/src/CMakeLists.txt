@@ -53,6 +53,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/enw/CommandENW.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/ebo/CommandEBO.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/edi/CommandEDI.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/seg/CommandSEG.cpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
 
@@ -112,6 +113,7 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/enw/CommandENW.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/ebo/CommandEBO.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/edi/CommandEDI.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/seg/CommandSEG.hpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
 )
