@@ -15,10 +15,10 @@ namespace GUI {
     public:
         /**
          * @brief Construct a new AStone object
-         * @param density
+         * @param quantity
          * @param tile
          */
-        AStone(float density, Position tile);
+        AStone(unsigned int quantity, Position tile);
         /**
          * @brief Destroy the AStone object
          */

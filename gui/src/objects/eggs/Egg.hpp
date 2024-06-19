@@ -56,7 +56,6 @@ namespace GUI {
         std::string _teamName;      // team name
         int _ownerID;               // ownerID (player who laid it) default -1
         bool _isEjected;            // is egg ejected
-
     };
 } // namespace GUI //
 #endif /* !EGG_HPP_ */

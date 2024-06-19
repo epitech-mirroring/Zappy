@@ -96,10 +96,11 @@ void Display::DrawTrantorians()
 void Display::DrawTileInfo()
 {
     if (_selectedTile != nullptr) {
-        DrawRectangle(10, GetScreenHeight() - 110, 300, 100, Fade(BLACK, 0.5f));
+        DrawRectangle(10, (GetScreenHeight() - 110), 300, 250, Fade(BLACK, 0.5f));
         DrawText(TextFormat("Tile Position: (%d, %d)", _selectedTile->getPosition().getX(),
             _selectedTile->getPosition().getY()), 20, GetScreenHeight() - 100, 20, WHITE);
-        DrawText("Additional data here", 20, GetScreenHeight() - 70, 20, WHITE);
+        DrawText("Items: ", 20, GetScreenHeight() - 70, 20, WHITE);
+        // then loop through the objects and display their names and quantity
     }
 }
 
