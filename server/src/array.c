@@ -11,7 +11,7 @@ size_t array_get_size(array_t *array)
 {
     size_t size = 0;
 
-    if (array->data == NULL)
+    if (array == NULL || array->data == NULL)
         return 0;
     while (array->data[size] != NULL)
         size++;
@@ -20,7 +20,7 @@ size_t array_get_size(array_t *array)
 
 void array_set_at(array_t *array, int index, void *element)
 {
-    if (index >= array_get_size(array))
+    if (array == NULL || index >= array_get_size(array))
         return;
     array->element_destructor(array->data[index]);
     array->data[index] = element;
@@ -28,18 +28,35 @@ void array_set_at(array_t *array, int index, void *element)
 
 void array_destructor(array_t *array)
 {
-    array_clear(array);
+    size_t size = 0;
+
+    if (array == NULL)
+        return;
+    size = array_get_size(array);
+    for (size_t i = 0; i < size; i++) {
+        if (array->element_destructor != NULL)
+            array->element_destructor(array->data[i]);
+    }
     free(array->data);
     free(array);
 }
 
 void array_resize(array_t *array, size_t newSize)
 {
-    if (newSize < array_get_size(array))
-        for (int i = newSize; i < array_get_size(array); i++)
+    void **tmp = calloc(newSize + 1, array->elementSize);
+
+    if (array == NULL) {
+        free(tmp);
+        return;
+    }
+    for (int i = 0; i < newSize; i++) {
+        if (i < array_get_size(array))
+            tmp[i] = array->data[i];
+        else
             array->element_destructor(array->data[i]);
-    array->data = realloc(array->data, array->elementSize * (newSize + 1));
-    array->data[newSize] = NULL;
+    }
+    free(array->data);
+    array->data = tmp;
 }
 
 array_t *array_constructor(size_t elementSize,
