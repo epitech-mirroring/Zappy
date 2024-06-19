@@ -55,7 +55,6 @@ void trantorian_tick(trantorian_t *trantorian)
         } else {
             trantorian->inventory.food_time = 126;
             hashmap_set(trantorian->inventory.resources, "food", nb_food - 1);
-            printf("%i\n", hashmap_get(trantorian->inventory.resources, "food"));
         }
     }
     trantorian->inventory.food_time--;

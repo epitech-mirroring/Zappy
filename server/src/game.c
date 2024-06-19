@@ -68,6 +68,8 @@ static void trantorian_action(game_t *game, trantorian_t *trantorian)
         return;
     if (trantorian->waiting_tick > 0)
         return;
+    if (trantorian->is_dead)
+        return;
     while (actions_fnc[i].action != -1) {
         action = *(action_t *)array_get_at(trantorian->actions, 0);
         if (actions_fnc[i].action == action.action) {
@@ -176,12 +178,12 @@ void game_tick(game_t *game)
     }
     if (game->win || array_get_size(game->trantorians) == 0)
         return;
+    check_dead_trantorians(game);
     find_trantorians_action(game);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
         trantorian_tick(trantorian);
-        if (trantorian->waiting_tick == 0)
-            trantorian_action(game, trantorian);
+        trantorian_action(game, trantorian);
     }
 }
 
