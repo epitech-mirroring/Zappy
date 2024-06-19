@@ -30,6 +30,7 @@ const action_t actions[] = {
 static void find_cmd_and_param(char *msg, char *cmd, char *param)
 {
     size_t i = 0;
+
     if (msg == NULL) {
         cmd = NULL;
         param = NULL;
