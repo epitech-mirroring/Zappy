@@ -70,7 +70,8 @@ void find_trantorians_action(game_t *game)
 void check_dead_trantorians(game_t *game)
 {
     trantorian_t *trantorian = NULL;
-    char *msg = NULL;
+    char *msg = malloc(sizeof(char) * 5);
+
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
         if (trantorian->is_dead) {
@@ -82,4 +83,5 @@ void check_dead_trantorians(game_t *game)
             i--;
         }
     }
+    free(msg);
 }
