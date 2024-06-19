@@ -47,6 +47,7 @@ extern "C" {
         enum direction_e direction;
         size_t waiting_tick;
         size_t nb_waiting_actions;
+        bool is_dead;
         client_t *client;
     } trantorian_t;
 

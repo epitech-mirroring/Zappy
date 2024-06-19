@@ -29,6 +29,8 @@ trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
     trantorian->direction = NORTH;
     trantorian->waiting_tick = 0;
     trantorian->client = client;
+    trantorian->nb_waiting_actions = 0;
+    trantorian->is_dead = false;
     return trantorian;
 }
 
@@ -40,7 +42,23 @@ void destroy_trantorian(trantorian_t *trantorian)
 
 void trantorian_tick(trantorian_t *trantorian)
 {
-    (void)trantorian;
+    int nb_food = hashmap_get(trantorian->inventory.resources, "food");
+
+    if (trantorian->is_dead)
+        return;
+    if (trantorian->waiting_tick > 0)
+        trantorian->waiting_tick--;
+    if (trantorian->inventory.food_time == 0) {
+        if (nb_food == 0) {
+            trantorian->is_dead = true;
+            return;
+        } else {
+            trantorian->inventory.food_time = 126;
+            hashmap_set(trantorian->inventory.resources, "food", nb_food - 1);
+            printf("%i\n", hashmap_get(trantorian->inventory.resources, "food"));
+        }
+    }
+    trantorian->inventory.food_time--;
 }
 
 char *get_direction_str(enum direction_e direction)

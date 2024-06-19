@@ -66,6 +66,8 @@ static void trantorian_action(game_t *game, trantorian_t *trantorian)
 
     if (array_get_size(trantorian->actions) == 0)
         return;
+    if (trantorian->waiting_tick > 0)
+        return;
     while (actions_fnc[i].action != -1) {
         action = *(action_t *)array_get_at(trantorian->actions, 0);
         if (actions_fnc[i].action == action.action) {
