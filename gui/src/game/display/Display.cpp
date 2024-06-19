@@ -96,11 +96,16 @@ void Display::DrawTrantorians()
 void Display::DrawTileInfo()
 {
     if (_selectedTile != nullptr) {
-        DrawRectangle(10, (GetScreenHeight() - 110), 300, 250, Fade(BLACK, 0.5f));
-        DrawText(TextFormat("Tile Position: (%d, %d)", _selectedTile->getPosition().getX(),
-            _selectedTile->getPosition().getY()), 20, GetScreenHeight() - 100, 20, WHITE);
-        DrawText("Items: ", 20, GetScreenHeight() - 70, 20, WHITE);
-        // then loop through the objects and display their names and quantity
+        int yPosition = 360;
+
+        DrawRectangle(10, 290, 300, 250, Fade(BLACK, 0.5f));
+        DrawText(TextFormat("Tile Position: (X: %d, Y: %d)", _selectedTile->getPosition().getX(),
+            _selectedTile->getPosition().getY()), 20, 300, 20, WHITE);
+        DrawText("Items:", 20, 330, 20, WHITE);
+        for (auto& object : _selectedTile->getObjects()) {
+            DrawText(TextFormat("%s: %d", object->getName().c_str(), object->getQuantity()), 20, yPosition, 20, WHITE);
+            yPosition += 30;
+        }
     }
 }
 
@@ -113,17 +118,39 @@ void Display::updateCamera()
 {
     UpdateCamera(&_camera, CAMERA_FREE);
 }
+
 void Display::DrawObjects(std::list<IObject*> objects)
 {
-    // for (auto& object : objects) {
-    //     if (object->getType() == Trantorian::ResourceType::FOOD) {
-    //         DrawSphere({ static_cast<float>(object->getPosition().getX()), 1.0f,
-    //                      static_cast<float>(object->getPosition().getY()) }, 0.03f, RED);
-    //     } else {
-    //         DrawSphere({ static_cast<float>(object->getPosition().getX()), 1.0f,
-    //                      static_cast<float>(object->getPosition().getY()) }, 0.03f, GREEN);
-    //     }
-    // }
+    std::unordered_map<int, std::pair<float, float>> typeOffsets = {
+        {Trantorian::ResourceType::FOOD, {0.0f, 0.0f}},
+        {Trantorian::ResourceType::LINEMATE, {-0.3f, -0.3f}},
+        {Trantorian::ResourceType::DERAUMERE, {0.3f, 0.3f}},
+        {Trantorian::ResourceType::SIBUR, {-0.3f, 0.3f}},
+        {Trantorian::ResourceType::MENDIANE, {0.3f, -0.3f}},
+        {Trantorian::ResourceType::PHIRAS, {-0.2f, 0.0f}},
+        {Trantorian::ResourceType::THYSTAME, {0.2f, 0.0f}}
+    };
+
+    std::unordered_map<int, Color> typeColors = {
+        {Trantorian::ResourceType::FOOD, RED},
+        {Trantorian::ResourceType::LINEMATE, BROWN},
+        {Trantorian::ResourceType::DERAUMERE, BLUE},
+        {Trantorian::ResourceType::SIBUR, YELLOW},
+        {Trantorian::ResourceType::MENDIANE, ORANGE},
+        {Trantorian::ResourceType::PHIRAS, PURPLE},
+        {Trantorian::ResourceType::THYSTAME, PINK}
+    };
+
+    for (auto& object : objects) {
+        auto offset = typeOffsets[object->getType()];
+        auto color = typeColors[object->getType()];
+
+        float posX = static_cast<float>(object->getPosition().getX()) + offset.first;
+        float posZ = static_cast<float>(object->getPosition().getY()) + offset.second;
+
+        float scale = 0.06f + 0.01f * object->getQuantity();
+        DrawCube({posX, 0.5f, posZ}, scale, scale, scale, color);
+    }
 }
 
 void Display::displayElements()
@@ -136,6 +163,7 @@ void Display::displayElements()
     DrawTiles(_world.getTiles());
     DrawClouds();
     DrawTrantorians();
+    DrawObjects(_world.getObjects());
     EndMode3D();
     DrawFPS(10, 10);
     DrawTileInfo();
