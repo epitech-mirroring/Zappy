@@ -8,22 +8,22 @@
 
 #include "game.h"
 
-const direction_to_string_t DIRECTION_TO_STRING[] = {
-    {NORTH, "NORTH"},
-    {EAST, "EAST"},
-    {SOUTH, "SOUTH"},
-    {WEST, "WEST"},
-    {-1, NULL}
-};
+// const direction_to_string_t DIRECTION_TO_STRING[] = {
+//     {NORTH, "NORTH"},
+//     {EAST, "EAST"},
+//     {SOUTH, "SOUTH"},
+//     {WEST, "WEST"},
+//     {-1, NULL}
+// };
 
-static char *get_direction_str(enum direction_e direction)
-{
-    for (int i = 0; DIRECTION_TO_STRING[i].direction != -1; i++) {
-        if (DIRECTION_TO_STRING[i].direction == direction)
-            return DIRECTION_TO_STRING[i].str;
-    }
-    return NULL;
-}
+// static char *get_direction_str(enum direction_e direction)
+// {
+//     for (int i = 0; DIRECTION_TO_STRING[i].direction != -1; i++) {
+//         if (DIRECTION_TO_STRING[i].direction == direction)
+//             return DIRECTION_TO_STRING[i].str;
+//     }
+//     return NULL;
+// }
 
 char *trantorian_pos_to_str(trantorian_t *trantorian)
 {

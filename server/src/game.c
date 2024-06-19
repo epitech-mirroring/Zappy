@@ -86,20 +86,23 @@ static char *int_to_str(int nb)
 }
 
 static void new_client_ping(game_t *game, client_t *client,
-    team_t *team, coordinates_t pos)
+    team_t *team, trantorian_t *trantorian)
 {
-    char *msg = NULL;
+    char *msg = calloc(1024, sizeof(char));
+    char *uuid = calloc(37, sizeof(char));
+    const char *dir = strdup(get_direction_str(trantorian->direction));
+    coordinates_t pos = trantorian->coordinates;
 
-    msg = int_to_str(team->free_places);
-    strcat(msg, "\n");
+    snprintf(msg, 1024, "%i\n", team->free_places);
     buffer_write(client->buffer_answered, msg);
-    free(msg);
-    msg = int_to_str(pos.x);
-    strcat(msg, " ");
-    strcat(msg, int_to_str(pos.y));
-    strcat(msg, "\n");
+    snprintf(msg, 1024, "%i %i\n", pos.x, pos.y);
     buffer_write(client->buffer_answered, msg);
-    free(msg);
+    uuid_unparse(trantorian->uuid, uuid);
+    snprintf(msg, 1024, "pnw %s %d %d %s %d %s\n", uuid, pos.x, pos.y,
+        dir, 1, team->name);
+    array_push_back(game->gui_log, msg);
+    free(dir);
+    free(uuid);
 }
 
 void handle_new_client(game_t *game)
@@ -119,7 +122,7 @@ void handle_new_client(game_t *game)
             trantorian = (trantorian_t *)array_get_at
                 (game->trantorians, array_get_size(game->trantorians) - 1);
             new_client_ping(game, client,
-                get_team_by_name(game->teams, msg), trantorian->coordinates);
+                get_team_by_name(game->teams, msg), trantorian);
             array_remove(game->clients_without_team, i);
         } else
             new_client_unknow_team(game, client, msg, i);

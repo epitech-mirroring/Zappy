@@ -9,6 +9,14 @@
 #include "trantorian.h"
 #include "actions.h"
 
+const direction_to_string_t DIRECTION_TO_STRING[] = {
+    {NORTH, "NORTH"},
+    {EAST, "EAST"},
+    {SOUTH, "SOUTH"},
+    {WEST, "WEST"},
+    {-1, NULL}
+};
+
 trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
 {
     trantorian_t *trantorian = malloc(sizeof(trantorian_t));
@@ -33,4 +41,13 @@ void destroy_trantorian(trantorian_t *trantorian)
 void trantorian_tick(trantorian_t *trantorian)
 {
     (void)trantorian;
+}
+
+char *get_direction_str(enum direction_e direction)
+{
+    for (int i = 0; DIRECTION_TO_STRING[i].direction != -1; i++) {
+        if (DIRECTION_TO_STRING[i].direction == direction)
+            return DIRECTION_TO_STRING[i].str;
+    }
+    return NULL;
 }

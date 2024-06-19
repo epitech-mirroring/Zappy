@@ -26,7 +26,7 @@ const action_t actions[] = {
     {-1, -1, NULL}
 };
 
-action_t *dup_action(size_t i)
+static action_t *dup_action(size_t i)
 {
     action_t *action = malloc(sizeof(action_t));
 
