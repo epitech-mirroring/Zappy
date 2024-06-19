@@ -344,4 +344,166 @@ void Game::initializeCallbacks()
         _timeUnit = std::stoi(tokens[1]);
         std::cout << "GUI LOG: Time unit requested (" << _timeUnit << ")" << std::endl;
     });
+
+    _commandFactory.setCallback("pdi", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == tokens[1]) {
+                    trantorian.setIsAlive(false);
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " died" << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("pdr", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == tokens[1]) {
+                    for (auto &inventory : trantorian.getInventory()) {
+                        // HANDLE RESSOURCE DROPPING
+                    }
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " has dropped: " << tokens[2] << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("pgt", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == tokens[1]) {
+                    for (auto &inventory : trantorian.getInventory()) {
+                        // HANDLE RESSOURCE COLLECTING
+                    }
+                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                        << " has collected: " << tokens[2] << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("enw", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == tokens[1]) {
+                    // HANDLE ACTION LAYING EGG
+                    std::cout << "GUI LOG: Egg " << token[1]
+                        << " has been layed by player " << token[2] << std::endl;
+                }
+            }
+        }
+    });
+
+    _commandFactory.setCallback("ebo", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE PLAYER CONNECTION FOR AN EGG
+        std::cout << "GUI LOG: Player connection for " << token[1] << " Egg" << std::endl;
+    });
+
+    _commandFactory.setCallback("edi", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE DEATH FOR AN EGG
+        std::cout << "GUI LOG: Death of " << token[1] << " Egg" << std::endl;
+    });
+
+    _commandFactory.setCallback("seg", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE END OF GAME
+        std::cout << "GUI LOG: Team " << token[1] << " end the game" << std::endl;
+    });
+
+    _commandFactory.setCallback("smg", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE MESSAGE FROM THE SERVER
+        std::cout << "GUI LOG: Message from the server: " << token[1] << std::endl;
+    });
+
+    _commandFactory.setCallback("suc", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE UNKNOWN COMMAND
+        std::cout << "GUI LOG: Unkown command" << std::endl;
+    });
+
+    _commandFactory.setCallback("sbp", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE COMMAND PARAMETER
+        std::cout << "GUI LOG: Command parameter requested" << std::endl;
+    });
 }
