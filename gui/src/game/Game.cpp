@@ -561,4 +561,17 @@ void Game::initializeCallbacks()
         // HANDLE UNKNOWN COMMAND
         std::cout << "GUI LOG: Unkown command" << std::endl;
     });
+
+    _commandFactory.setCallback("sbp", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE COMMAND PARAMETER
+        std::cout << "GUI LOG: Command parameter requested" << std::endl;
+    });
 }

@@ -34,7 +34,7 @@ CommandFactory::CommandFactory()
     _commands["seg"] = std::make_unique<CommandSEG>();
     _commands["smg"] = std::make_unique<CommandSMG>();
     _commands["suc"] = std::make_unique<CommandSUC>();
-    // SBP command parameter
+    _commands["sbp"] = std::make_unique<CommandSBP>();
 }
 
 std::unique_ptr<ICommand> CommandFactory::createCommand(const std::string&

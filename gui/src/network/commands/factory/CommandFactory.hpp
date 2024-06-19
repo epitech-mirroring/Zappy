@@ -31,6 +31,7 @@
     #include "network/commands/seg/CommandSEG.hpp"
     #include "network/commands/smg/CommandSMG.hpp"
     #include "network/commands/suc/CommandSUC.hpp"
+    #include "network/commands/sbp/CommandSBP.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>
