@@ -548,4 +548,17 @@ void Game::initializeCallbacks()
         // HANDLE MESSAGE FROM THE SERVER
         std::cout << "GUI LOG: Message from the server: " << token[1] << std::endl;
     });
+
+    _commandFactory.setCallback("suc", [this](std::istringstream &iss){
+        std::string data = iss.str();
+        std::istringstream iss2(data);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (std::getline(iss2, token, ' '))
+            tokens.push_back(token);
+
+        // HANDLE UNKNOWN COMMAND
+        std::cout << "GUI LOG: Unkown command" << std::endl;
+    });
 }
