@@ -29,9 +29,11 @@ extern "C" {
      */
     typedef struct game_s {
         array_t *teams;
-        array_t *eggs; //array of pointers to eggs stored in the map
+        array_t *eggs;
         array_t *trantorians;
         array_t *clients_without_team;
+        array_t *gui_log;
+        array_t *gui_clients;
         bool win;
         char *winning_team;
 
@@ -83,6 +85,17 @@ extern "C" {
      * @param game The game
      */
     void handle_new_client(game_t *game);
+
+    /**
+     * @brief Handle a new client that ask for an unknown team
+     *
+     * @param game The game
+     * @param client The client
+     * @param team_name The name of the team
+     * @param index The index of the client in the array
+     */
+    void new_client_unknow_team(game_t *game,
+        client_t *client, char *team_name, size_t index);
 
     #ifdef __cplusplus
 }

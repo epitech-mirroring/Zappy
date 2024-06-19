@@ -19,18 +19,17 @@
 extern "C" {
     #endif // __cplusplus
 
-    /**
-     * @struct coordinates_s
-     *
-     * This structure represents the coordinates of a tile on the map.
-     * Each tile has an x and y coordinate.
-     */
     enum direction_e {
         NORTH,
         EAST,
         SOUTH,
         WEST
     };
+
+    typedef struct direction_to_string_s {
+        enum direction_e direction;
+        char *str;
+    } direction_to_string_t;
 
     /**
      * @struct trantorian_s
@@ -47,6 +46,7 @@ extern "C" {
         array_t *actions;
         enum direction_e direction;
         size_t waiting_tick;
+        size_t nb_waiting_actions;
         client_t *client;
     } trantorian_t;
 
@@ -72,6 +72,39 @@ extern "C" {
      * @param trantorian The trantorian to tick
      */
     void trantorian_tick(trantorian_t *trantorian);
+
+    /**
+     * @brief Return a string representation of the inventory
+     *
+     * @param inventory The inventory to represent
+     * @return char* The string representation of the inventory
+    */
+    char *inventory_to_str(trantorian_t *trantorian);
+
+    /**
+     * @brief Return a string representation of the trantorian position
+     *
+     * @param trantorian The trantorian to represent
+     * @return char* The string representation of the trantorian position
+    */
+    char *trantorian_pos_to_str(trantorian_t *trantorian);
+
+    /**
+     * @brief Return a string representation of the trantorian level
+     *
+     * @param trantorian The trantorian to represent
+     * @return char* The string representation of the trantorian level
+    */
+    char *trantorian_level_to_str(trantorian_t *trantorian);
+
+    /**
+     * @brief Return a string representation of the new player connection
+     *
+     * @param trantorian The trantorian to represent
+     * @param team The team of the trantorian
+     * @return char* The string representation of the new player connection
+    */
+    char *new_player_connection_log(trantorian_t *trantorian, char *team);
 
     #ifdef __cplusplus
 }

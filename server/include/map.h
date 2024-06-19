@@ -113,6 +113,30 @@ extern "C" {
     void destroy_tile(tile_t *tile);
 
     /**
+     * @brief Return a string with the tile informations.
+     *
+     * @param tile The tile.
+     * @return The string.
+     */
+    char *tile_to_string(tile_t *tile);
+
+    /**
+     * @brief Return a string with the map informations.
+     *
+     * @param map The map.
+     * @return The string.
+     */
+    char *map_to_string(map_t *map);
+
+    /**
+     * @brief Return a string with the map dimensions.
+     *
+     * @param map The map.
+     * @return The string.
+     */
+    char *map_dimensions_to_string(map_t *map);
+
+    /**
      * @brief Generate ressources on the map for one tick.
      *
      * @param map The map.
