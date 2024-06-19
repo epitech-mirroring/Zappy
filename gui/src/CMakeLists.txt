@@ -47,6 +47,16 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pic/CommandPIC.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sst/CommandSST.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sgt/CommandSGT.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pdi/CommandPDI.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pdr/CommandPDR.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pgt/CommandPGT.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/enw/CommandENW.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/ebo/CommandEBO.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/edi/CommandEDI.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/seg/CommandSEG.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/smg/CommandSMG.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/suc/CommandSUC.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sbp/CommandSBP.cpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/display/Display.cpp
@@ -104,6 +114,16 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pic/CommandPIC.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sst/CommandSST.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sgt/CommandSGT.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pdi/CommandPDI.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pdr/CommandPDR.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/pgt/CommandPGT.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/enw/CommandENW.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/ebo/CommandEBO.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/edi/CommandEDI.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/seg/CommandSEG.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/smg/CommandSMG.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/suc/CommandSUC.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/network/commands/sbp/CommandSBP.hpp
     # GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/display/Display.hpp
