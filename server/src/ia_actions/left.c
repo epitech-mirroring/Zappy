@@ -9,8 +9,37 @@
 #include "game.h"
 #include "actions.h"
 
+static void turn(trantorian_t *trantorian)
+{
+    if (trantorian->direction == NORTH) {
+        trantorian->direction = WEST;
+        return;
+    }
+    if (trantorian->direction == WEST) {
+        trantorian->direction = SOUTH;
+        return;
+    }
+    if (trantorian->direction == SOUTH) {
+        trantorian->direction = EAST;
+        return;
+    }
+    if (trantorian->direction == EAST)
+        trantorian->direction = NORTH;
+}
+
 void left(game_t *game, trantorian_t *trantorian)
 {
-    (void)game;
-    (void)trantorian;
+    char *msg = malloc(sizeof(char) * 100);
+
+    if (trantorian->param != NULL) {
+        sprintf(msg, "ko\n");
+        buffer_write(trantorian->client->buffer_answered, msg);
+        free(msg);
+        free(trantorian->param);
+        return;
+    }
+    turn(trantorian);
+    sprintf(msg, "ok\n");
+    buffer_write(trantorian->client->buffer_answered, msg);
+    free(msg);
 }

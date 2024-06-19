@@ -49,6 +49,7 @@ extern "C" {
         size_t nb_waiting_actions;
         bool is_dead;
         client_t *client;
+        char *param;
     } trantorian_t;
 
     /**
