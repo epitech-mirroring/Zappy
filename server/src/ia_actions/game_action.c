@@ -64,7 +64,11 @@ static void dup_action(trantorian_t *trantorian, size_t i, char *param)
     action->action_name = strdup(actions[i].action_name);
     action->time = actions[i].time;
     array_push_back(trantorian->actions, action);
-    trantorian->param = strdup(param);
+    if (strlen(param) > 0) {
+        trantorian->param = strdup(param);
+    } else {
+        trantorian->param = NULL;
+    }
 }
 
 static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
