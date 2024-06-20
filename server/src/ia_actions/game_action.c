@@ -91,7 +91,6 @@ static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
     char *cmd = calloc(1024, sizeof(char));
     char *param = calloc(1024, sizeof(char));
     size_t i = 0;
-    action_t *action = NULL;
 
     while (msg != NULL) {
         find_cmd_and_param(msg, cmd, param);
