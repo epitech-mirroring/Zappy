@@ -1,4 +1,5 @@
-from src import AbstractAction, NetworkManager, Bot
+from . import AbstractAction
+from .. import NetworkManager, Bot
 import os
 
 

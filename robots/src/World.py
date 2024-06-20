@@ -1,4 +1,4 @@
-from src import AbstractObject
+from . import AbstractObject
 
 
 class World:

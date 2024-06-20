@@ -1,4 +1,4 @@
-from src import AbstractAction
+from . import AbstractAction
 
 
 class Forward(AbstractAction):

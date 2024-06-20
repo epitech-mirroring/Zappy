@@ -1,5 +1,6 @@
-from src import AbstractAction, AbstractObject
-from src.actions.Look import parse_item
+from . import AbstractAction
+from .. import AbstractObject
+from Look import parse_item
 
 
 class Inventory(AbstractAction):

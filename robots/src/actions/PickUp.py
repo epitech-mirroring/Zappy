@@ -1,4 +1,5 @@
-from src import AbstractAction, AbstractObject
+from . import AbstractAction
+from .. import AbstractObject
 
 
 class PickUp(AbstractAction):

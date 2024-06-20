@@ -1,4 +1,4 @@
-from src import Bot
+from .. import Bot
 
 
 class AbstractAction:

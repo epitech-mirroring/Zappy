@@ -1,4 +1,5 @@
-from src import AbstractAction, AbstractObject, Food, Linemate, Deraumere, \
+from . import AbstractAction
+from .. import AbstractObject, Food, Linemate, Deraumere, \
     Sibur, Mendiane, Phiras, Thystame
 
 

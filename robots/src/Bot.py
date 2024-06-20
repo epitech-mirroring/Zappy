@@ -2,13 +2,13 @@ import threading
 import time
 from enum import Enum
 
-from src import NetworkManager, World, AbstractObject, Food
-from src.actions import AbstractAction
-from src.actions.Forward import Forward
-from src.actions.Look import Look
-from src.actions.PickUp import PickUp
-from src.actions.Right import Right
-from src.actions.Left import Left
+from . import NetworkManager, World, AbstractObject, Food
+from .actions import AbstractAction
+from .actions.Forward import Forward
+from .actions.Look import Look
+from .actions.PickUp import PickUp
+from .actions.Right import Right
+from .actions.Left import Left
 
 
 class Inventory:
