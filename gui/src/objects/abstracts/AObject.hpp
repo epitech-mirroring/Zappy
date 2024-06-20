@@ -58,7 +58,7 @@ namespace GUI {
         /**
          * @brief get the name of the object
          */
-        [[nodiscard]] virtual std::string getName() const noexcept = 0;
+        [[nodiscard]] virtual std::string getName() const noexcept;
 
     protected:
         Position _position;      // tile where the object is (x, y)
