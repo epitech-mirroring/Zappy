@@ -10,6 +10,8 @@
 
     #include <iostream>
     #include "objects/abstracts/AObject.hpp"
+    #include "position/Position.hpp"
+    #include "raylib.h"
 
 namespace GUI {
     class Egg : public AObject {
@@ -52,10 +54,31 @@ namespace GUI {
         */
         void setIsEjected(bool isEjected);
 
+        /**
+         * @brief Set egg position
+         * @param int x position and y position
+         * @return void (nothing to return)
+        */
+        void setPosition(int x, int y);
+
+        /**
+         * @brief Get egg position
+         * @return Position
+        */
+        [[nodiscard]] Position& getPosition() noexcept;
+
+        /**
+         * @brief Get egg 3d model
+         * @return Model type from raylib
+        */
+        [[nodiscard]] Model getModel();
+
     protected:
         std::string _teamName;      // team name
         int _ownerID;               // ownerID (player who laid it) default -1
         bool _isEjected;            // is egg ejected
+        Position _position;         // position of the egg
+        Model _eggModel;            // 3d model for the egg
     };
 } // namespace GUI //
 #endif /* !EGG_HPP_ */
