@@ -2,7 +2,7 @@ try:
     import unittest2 as unittest
 except ImportError:
     import unittest
-from robots import src as lib
+from src import Objects as lib
 
 
 class ObjectsTest(unittest.TestCase):
