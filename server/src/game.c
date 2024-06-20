@@ -208,7 +208,5 @@ void create_trantorian(game_t *game, team_t *team, client_t *client)
     array_push_back(team->trantorians, trantorian->uuid);
     array_push_back(game->trantorians, trantorian);
     ebo_log_gui(game, egg);
-    array_remove(game->eggs, i);
-    destroy_egg(egg);
-    team->free_places--;
+    player_spawn(egg, team, game, i);
 }

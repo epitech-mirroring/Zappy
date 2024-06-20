@@ -13,45 +13,53 @@
 static void eject_north(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
+    coordinates_t prev = trantorian->coordinates;
 
     if (trantorian->coordinates.y == 0)
         trantorian->coordinates.y = game->map->height - 1;
     else
         trantorian->coordinates.y--;
     sprintf(msg, "eject: %s\n", get_direction_str(NORTH));
+    update_pos(prev, trantorian->coordinates, game->map);
 }
 
 static void eject_east(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
+    coordinates_t prev = trantorian->coordinates;
 
     if (trantorian->coordinates.x == game->map->width - 1)
         trantorian->coordinates.x = 0;
     else
         trantorian->coordinates.x++;
     sprintf(msg, "eject: %s\n", get_direction_str(EAST));
+    update_pos(prev, trantorian->coordinates, game->map);
 }
 
 static void eject_south(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
+    coordinates_t prev = trantorian->coordinates;
 
     if (trantorian->coordinates.y == game->map->height - 1)
         trantorian->coordinates.y = 0;
     else
         trantorian->coordinates.y++;
     sprintf(msg, "eject: %s\n", get_direction_str(SOUTH));
+    update_pos(prev, trantorian->coordinates, game->map);
 }
 
 static void eject_west(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
+    coordinates_t prev = trantorian->coordinates;
 
     if (trantorian->coordinates.x == 0)
         trantorian->coordinates.x = game->map->width - 1;
     else
         trantorian->coordinates.x--;
     sprintf(msg, "eject: %s\n", get_direction_str(WEST));
+    update_pos(prev, trantorian->coordinates, game->map);
 }
 
 static void eject_eggs(game_t *game, trantorian_t *trantorian)

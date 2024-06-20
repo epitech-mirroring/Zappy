@@ -249,6 +249,16 @@ extern "C" {
      */
     void cast_incantation(game_t *game, trantorian_t *trantorian);
 
+    /**
+     * @brief Update the tile player count when a player spawn
+     *
+     * @param egg The egg that is use by the player for spawn
+     * @param team The team join by the player
+     * @param game The game
+     * @param i The index of the egg in the eggs array
+     */
+    void player_spawn(egg_t *egg, team_t *team, game_t *game, size_t i);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

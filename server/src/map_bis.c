@@ -6,8 +6,7 @@
 ** You can even have multiple lines if you want !
 */
 
-#include "map.h"
-#include "egg.h"
+#include "game.h"
 
 tile_t *init_tile(size_t x, size_t y)
 {
@@ -40,4 +39,24 @@ hashmap_t *init_resources(void)
     hashmap_put(resources, "phiras", 0);
     hashmap_put(resources, "thystame", 0);
     return resources;
+}
+
+void update_pos(coordinates_t prev, coordinates_t now, map_t *map)
+{
+    tile_t *prev_tile = get_tile_by_coordinates(map, prev);
+    tile_t *now_tile = get_tile_by_coordinates(map, now);
+
+    prev_tile->player_count--;
+    now_tile->player_count++;
+}
+
+void player_spawn(egg_t *egg, team_t *team, game_t *game, size_t i)
+{
+    coordinates_t pos = egg->coordinates;
+    tile_t *tile = get_tile_by_coordinates(game->map, pos);
+
+    tile->player_count++;
+    array_remove(game->eggs, i);
+    destroy_egg(egg);
+    team->free_places--;
 }
