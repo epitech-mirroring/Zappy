@@ -10,6 +10,7 @@
 
     #include "tiles/Tile.hpp"
     #include "world/World.hpp"
+    #include "trantorians/Teams.hpp"
 
     #include <raylib.h>
     #include <iostream>
@@ -19,16 +20,21 @@
 namespace GUI {
     class Events {
     public:
-        Events() = default;
+        Events();
         ~Events() = default;
 
         bool CheckCollisionRayBox(Ray ray, BoundingBox box);
 
         void detectHoveredTile(Camera _camera, World &_world);
 
+        void detectHoveredTrantorian(Camera _camera, Teams &_teams);
+
     protected:
-        Tile* _selectedTile = nullptr;           // Selected tile
-        Tile* _hoveredTile = nullptr;            // Selected tile
+        Tile* _selectedTile;
+        Tile* _hoveredTile;
+
+        Trantorian* _selectedTrantorian;
+        Trantorian* _hoveredTrantorian;
     };
-} // namespace GUI //
+} // namespace GUI
 #endif /* !EVENTS_HPP_ */

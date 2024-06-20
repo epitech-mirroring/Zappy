@@ -130,17 +130,17 @@ void Game::initializeCallbacks()
         }
 
         Trantorian player(tokens[1], std::stoi(tokens[2]), std::stoi(tokens[3]),
-            std::stof(tokens[4]), std::stoi(tokens[5]), tokens[6]);
-        auto &teamsList = Teams::getTeamsList();
-        for (auto &team : teamsList) {
+                        std::stof(tokens[4]), std::stoi(tokens[5]));
+
+        for (auto &team : Teams::getTeamsList()) {
             if (team.getName() == tokens[6]) {
                 team.addTrantorian(player);
-                std::cout << "GUI LOG: Player " << player.getId() << " added to team "
-                        << team.getName() << std::endl;
+                std::cout << "GUI LOG: Player " << player.getId() <<
+                    " added to team " << team.getName() << std::endl;
             }
         }
-    });
 
+    });
 
     _commandFactory.setCallback("ppo", [this](std::istringstream &iss) {
         std::string data = iss.str();

@@ -25,8 +25,6 @@
     #include "objects/stones/Thystame.hpp"
 
 namespace GUI {
-    class Teams; // Forward declaration
-
     class Trantorian {
         public:
           enum ResourceType {
@@ -49,7 +47,7 @@ namespace GUI {
              * @brief Create trantorian object
              */
             Trantorian(std::string id = "null", int x = 0, int y = 0, float orientation = NORTH,
-                int level = 1, std::string teamName = "");
+                int level = 1);
             /**
              * @brief Destroy trantorian object
              */
@@ -65,17 +63,6 @@ namespace GUI {
              * @return pair of ints
              */
             [[nodiscard]] GUI::Position getPosition();
-
-            /**
-             * @brief Set trantorian team
-             * @param team
-             */
-            void setTeam(Teams* team);
-            /**
-             * @brief Get trantorian team
-             * @return Teams* pointer to team
-             */
-            [[nodiscard]] Teams* getTeam();
 
             /**
              * @brief Set trantorian's lifetime
@@ -119,7 +106,7 @@ namespace GUI {
              * @brief Get trantorian id
              * @return int representing player's id
              */
-            [[nodiscard]] std::string getId();
+            [[nodiscard]] std::string getId() const;
 
             /**
              * @brief Set trantorian level
@@ -198,7 +185,6 @@ namespace GUI {
 
         private:
             GUI::Position _position;
-            Teams* _team;
             int _lifetimeRemaining;
             bool _alive;
             bool _action;

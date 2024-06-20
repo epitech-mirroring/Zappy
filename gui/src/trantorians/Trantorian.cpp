@@ -6,29 +6,19 @@
 */
 
 #include "Trantorian.hpp"
-#include "Teams.hpp"
 
 using namespace GUI;
 
-Trantorian::Trantorian(std::string id, int x, int y, float oritentation,
-    int level, std::string teamName)
-        : _id(id), _position(x, y), _level(level),
-        _lifetimeRemaining(100), _alive(true), _action(false), _team(nullptr)
+Trantorian::Trantorian(std::string id, int x, int y, float orientation, int level)
+    : _id(id), _position(x, y), _level(level), _lifetimeRemaining(100), _alive(true), _action(false)
 {
-    if (!teamName.empty()) {
-        auto team = Teams::getTeamByName(teamName);
-        if (team) {
-            setTeam(team);
-            team->addTrantorian(*this);
-        }
-    }
-    if (oritentation == static_cast<float>(NORTH))
+    if (orientation == static_cast<float>(NORTH))
         _orientation = 0;
-    else if (oritentation == static_cast<float>(EAST))
+    else if (orientation == static_cast<float>(EAST))
         _orientation = 90;
-    else if (oritentation == static_cast<float>(SOUTH))
+    else if (orientation == static_cast<float>(SOUTH))
         _orientation = 180;
-    else if (oritentation == static_cast<float>(WEST))
+    else if (orientation == static_cast<float>(WEST))
         _orientation = 270;
     else
         _orientation = 0;
@@ -52,7 +42,7 @@ void Trantorian::setId(std::string id)
     _id = id;
 }
 
-std::string Trantorian::getId()
+std::string Trantorian::getId() const
 {
     return _id;
 }
@@ -98,25 +88,14 @@ Position Trantorian::getPosition()
     return _position;
 }
 
-void Trantorian::setTeam(Teams* team)
-{
-    _team = team;
-}
-
-Teams* Trantorian::getTeam()
-{
-    return _team;
-}
-
 bool Trantorian::operator==(const Trantorian& other) const
 {
     return _position.getX() == other._position.getX() &&
            _position.getY() == other._position.getY() &&
-           _team == other._team &&
            _lifetimeRemaining == other._lifetimeRemaining &&
            _alive == other._alive &&
            _action == other._action &&
-           _id == other._id &&
+           this->_id == other._id &&
            _level == other._level;
            _orientation == other._orientation;
 }

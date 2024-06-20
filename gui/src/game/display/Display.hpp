@@ -35,6 +35,7 @@ namespace GUI {
         void DrawClouds();
         void DrawTrantorians();
         void DrawTileInfo();
+        void DrawTrantorianInfo();
         void DrawObjects(std::list<IObject*> objects);
 
         void cleanupModels();
