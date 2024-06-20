@@ -63,7 +63,9 @@ static void gui_log_action_cast(game_t *game,
     if (strcmp(action->action_name, "Fork") == 0) {
         pfk_log_gui(game, trantorian);
     }
-    // handle incantation cast
+    if (strcmp(action->action_name, "Incantation") == 0) {
+        cast_incantation(game, trantorian);
+    }
 }
 
 static void dup_action(trantorian_t *trantorian,
@@ -134,4 +136,32 @@ void check_dead_trantorians(game_t *game)
         }
     }
     free(msg);
+}
+
+bool check_win_team(team_t *team, array_t *trantorians)
+{
+    size_t nb_for_win = 6;
+    trantorian_t *trantorian = NULL;
+
+    for (size_t i = 0; i < array_get_size(trantorians); i++) {
+        trantorian = (trantorian_t *)array_get_at(trantorians, i);
+        if (trantorian->level == 8 && is_in_team(trantorian, team))
+            nb_for_win--;
+    }
+    if (nb_for_win <= 0)
+        return true;
+    return false;
+}
+
+void check_win(game_t *game)
+{
+    team_t *team = NULL;
+
+    for (size_t i = 0; i < array_get_size(game->teams); i++) {
+        team = (team_t *)array_get_at(game->teams, i);
+        if (team->free_places == 0) {
+            array_push_back(game->gui_log, "win\n");
+            return;
+        }
+    }
 }
