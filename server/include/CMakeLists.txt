@@ -11,4 +11,5 @@ target_sources(zappy_server_lib
         ${CMAKE_CURRENT_SOURCE_DIR}/server.h
         ${CMAKE_CURRENT_SOURCE_DIR}/team.h
         ${CMAKE_CURRENT_SOURCE_DIR}/trantorian.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/look.h
 )

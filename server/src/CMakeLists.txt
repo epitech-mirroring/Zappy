@@ -9,7 +9,9 @@ target_sources(zappy_server_lib
         ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/incantation.c
         ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/inventory.c
         ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/left.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/look.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/look/look.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/look/look_direction.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/look/look_utils.c
         ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/right.c
         ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/set.c
         ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/take.c
