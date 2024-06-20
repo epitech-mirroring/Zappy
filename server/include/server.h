@@ -128,6 +128,13 @@ extern "C" {
      */
     void check_dead_client(server_t *server);
 
+    /**
+     * @brief shutdown the server
+     *
+     * @param server The server to shutdown
+     */
+    void shutdown_server(server_t *server);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
