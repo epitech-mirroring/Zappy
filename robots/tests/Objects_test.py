@@ -2,7 +2,8 @@ try:
     import unittest2 as unittest
 except ImportError:
     import unittest
-from src import Objects as lib
+
+from ..src import Objects as lib
 
 
 class ObjectsTest(unittest.TestCase):
