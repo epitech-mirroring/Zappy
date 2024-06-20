@@ -80,3 +80,8 @@ bool Teams::hasTrantorian(const std::string& id) const
     }
     return false;
 }
+
+std::list<Egg> Teams::getEggList() const
+{
+    return _eggs;
+}
