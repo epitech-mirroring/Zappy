@@ -101,7 +101,7 @@ void run(server_t *server)
     fd_set readfds;
     fd_set writefds;
 
-    while (1) {
+    while (!server->game->win) {
         server->prev_tick_time = time(NULL) * 1000000 + 0;
         tv.tv_usec = get_closest_action(server);
         fill_fd_set(server, &readfds, &writefds);

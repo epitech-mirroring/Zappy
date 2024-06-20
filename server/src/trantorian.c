@@ -39,6 +39,8 @@ trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
 void destroy_trantorian(trantorian_t *trantorian)
 {
     array_destructor(trantorian->actions);
+    destroy_hashmap(trantorian->inventory.resources);
+    uuid_clear(trantorian->uuid);
     free(trantorian);
 }
 

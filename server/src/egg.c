@@ -22,8 +22,8 @@ egg_t *init_egg(uuid_t team_uuid, coordinates_t coordinates)
 
 void destroy_egg(egg_t *egg)
 {
-    if (egg == NULL)
-        return;
+    uuid_clear(egg->team_uuid);
+    uuid_clear(egg->uuid);
     free(egg);
 }
 

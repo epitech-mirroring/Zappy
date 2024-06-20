@@ -159,9 +159,10 @@ void check_win(game_t *game)
 
     for (size_t i = 0; i < array_get_size(game->teams); i++) {
         team = (team_t *)array_get_at(game->teams, i);
-        if (team->free_places == 0) {
-            array_push_back(game->gui_log, "win\n");
-            return;
+        if (check_win_team(team, game->trantorians)) {
+            game->win = true;
+            game->winning_team = team->name;
+            seg_log_gui(game, team->name);
         }
     }
 }

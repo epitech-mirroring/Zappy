@@ -16,12 +16,13 @@ tile_t *init_tile(size_t x, size_t y)
     tile->coordinates.x = x;
     tile->coordinates.y = y;
     tile->resources = init_resources();
-    tile->eggs = array_constructor(sizeof(egg_t *), (void *)&destroy_egg);
+    tile->eggs = array_constructor(sizeof(egg_t *), NULL);
     return tile;
 }
 
 void destroy_tile(tile_t *tile)
 {
+    destroy_hashmap(tile->resources);
     array_destructor(tile->eggs);
     free(tile);
 }
