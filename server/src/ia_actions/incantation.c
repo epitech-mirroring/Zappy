@@ -41,7 +41,6 @@ static void ping_all(game_t *game, array_t *trantorians,
     size_t level, coordinates_t pos)
 {
     trantorian_t *tmp = NULL;
-    char *msg = calloc(100 * array_get_size(trantorians), sizeof(char));
 
     pic_log_gui(game, trantorians, level, pos);
     for (size_t i = 0; i < array_get_size(trantorians); i++) {
