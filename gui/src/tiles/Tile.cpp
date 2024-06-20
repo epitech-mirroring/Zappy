@@ -65,33 +65,31 @@ void Tile::updateTileContent(const std::vector<std::string>& tileContent)
         newCounts[i] = std::stoi(tileContent[i]);
     }
 
-    std::unordered_map<ResourceType, int> currentCounts;
-    std::unordered_map<ResourceType, std::list<IObject*>::iterator> objectIterators;
+    std::unordered_map<ResourceType, IObject*> objectMap;
 
-    for (auto it = _objects.begin(); it != _objects.end(); ++it) {
-        ResourceType type = static_cast<ResourceType>((*it)->getType());
-        currentCounts[type]++;
-        objectIterators[type] = it;
+    for (auto& object : _objects) {
+        ResourceType type = static_cast<ResourceType>(object->getType());
+        objectMap[type] = object;
     }
 
     for (int i = 0; i < newCounts.size(); ++i) {
         ResourceType type = static_cast<ResourceType>(i);
-        int difference = newCounts[i] - currentCounts[type];
+        int newQuantity = newCounts[i];
 
-        if (difference > 0) {
-            for (int j = 0; j < difference; ++j) {
+        if (objectMap.find(type) != objectMap.end()) {
+            IObject* object = objectMap[type];
+            if (newQuantity > 0) {
+                object->setQuantity(newQuantity);
+            } else {
+                removeObject(object);
+                delete object;
+            }
+        } else {
+            if (newQuantity > 0) {
                 IObject* object = createObjectByType(type, _pos);
                 if (object != nullptr) {
-                    _objects.push_back(object);
-                }
-            }
-        } else if (difference < 0) {
-            for (int j = 0; j < -difference; ++j) {
-                auto it = objectIterators.find(type);
-                if (it != objectIterators.end() && it->second != _objects.end()) {
-                    delete *(it->second);
-                    _objects.erase(it->second);
-                    objectIterators.erase(it);
+                    object->setQuantity(newQuantity);
+                    addObject(object);
                 }
             }
         }

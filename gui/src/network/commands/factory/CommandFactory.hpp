@@ -21,6 +21,17 @@
     #include "network/commands/pie/CommandPIE.hpp"
     #include "network/commands/pic/CommandPIC.hpp"
     #include "network/commands/sst/CommandSST.hpp"
+    #include "network/commands/sgt/CommandSGT.hpp"
+    #include "network/commands/pdi/CommandPDI.hpp"
+    #include "network/commands/pdr/CommandPDR.hpp"
+    #include "network/commands/pgt/CommandPGT.hpp"
+    #include "network/commands/enw/CommandENW.hpp"
+    #include "network/commands/ebo/CommandEBO.hpp"
+    #include "network/commands/edi/CommandEDI.hpp"
+    #include "network/commands/seg/CommandSEG.hpp"
+    #include "network/commands/smg/CommandSMG.hpp"
+    #include "network/commands/suc/CommandSUC.hpp"
+    #include "network/commands/sbp/CommandSBP.hpp"
 
     #include "network/commands/interface/ICommand.hpp"
     #include <unordered_map>

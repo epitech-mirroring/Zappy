@@ -11,11 +11,11 @@ using namespace network;
 
 void CommandSST::execute(std::istringstream &iss)
 {
-    (void)iss;
-    return;
+    if (_callback)
+        _callback(iss);
 }
 
 std::unique_ptr<ICommand> CommandSST::clone() const
 {
-    return nullptr;
+    return std::make_unique<CommandSST>();
 }

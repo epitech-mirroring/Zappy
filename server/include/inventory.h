@@ -22,8 +22,17 @@ extern "C" {
     */
     typedef struct inventory_s {
         int food_time; // need to find accurate variable name
-        resources_t resources;
+        hashmap_t *resources;
     } inventory_t;
+
+    /**
+     * @brief Function to create a new inventory
+     *
+     * This function creates a new inventory for a Trantorian.
+     * The inventory is initialized with 10 food units.
+     * @return inventory_t* The new inventory
+    */
+    inventory_t init_inventory(void);
 
     #ifdef __cplusplus
 }

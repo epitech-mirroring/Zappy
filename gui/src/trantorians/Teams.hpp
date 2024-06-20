@@ -10,10 +10,10 @@
 
     #include <iostream>
     #include <list>
+    #include "Trantorian.hpp"
+    #include "objects/eggs/Egg.hpp"
 
 namespace GUI {
-    class Trantorian; // Forward declaration
-
     class Teams {
         public:
             /**
@@ -41,13 +41,13 @@ namespace GUI {
              * @brief Add new trantorian to team
              * @param trantorian GUI::Trantorian object
              */
-            void addTrantorian(GUI::Trantorian& trantorian);
+            void addTrantorian(Trantorian& trantorian);
 
             /**
              * @brief Get list of trantorian in the team
              * @return list of trantorian objects
              */
-            [[nodiscard]] std::list<GUI::Trantorian> getTrantorianList() const;
+            [[nodiscard]] std::list<Trantorian> getTrantorianList() const;
 
             /**
              * @brief Add team to teams list
@@ -75,15 +75,20 @@ namespace GUI {
              */
             [[nodiscard]] Trantorian getTrantorianById(std::string id);
 
+            bool hasTrantorian(const std::string& id) const;
+
+            /**
+             * @brief Get list of egg in the team
+             * @return list of egg objects
+             */
+            [[nodiscard]] std::list<Egg> getEggList() const;
+
         private:
             std::string _name;
-            std::list<GUI::Trantorian> _trantorians;
-
-            // Static member to hold all teams
+            std::list<Trantorian> _trantorians;
+            std::list<Egg> _eggs;
             static std::list<GUI::Teams> _teams;
     };
 } // namespace GUI
-
-#include "Trantorian.hpp"
 
 #endif // TEAMS_

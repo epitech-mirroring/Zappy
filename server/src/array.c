@@ -48,7 +48,7 @@ array_t *array_constructor(size_t elementSize,
     array_t *array = malloc(sizeof(array_t));
 
     array->element_destructor = element_destructor;
-    array->data = malloc(elementSize);
+    array->data = NULL;
     array->elementSize = elementSize;
     return array;
 }

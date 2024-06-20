@@ -9,26 +9,27 @@
     #define AOBJECT_HPP_
 
     #include "objects/interface/IObject.hpp"
+    #include <string>
 
 namespace GUI {
     class AObject : public IObject {
     public:
         /**
          * @brief Construct a new AObject object
-         * @param density
+         * @param quantity
          * @param tile
          */
-        AObject(float density, Position tile);
+        AObject(unsigned int quantity, Position tile);
         /**
          * @brief Destroy the AObject object
          */
         virtual ~AObject() noexcept = default;
 
         /**
-         * @brief Get the Density object
-         * @return float (density of the object)
+         * @brief Get the Quantity object
+         * @return unsigned int (Quantity of the object)
          */
-        [[nodiscard]] float getDensity() const noexcept final;
+        [[nodiscard]] unsigned int getQuantity() const noexcept final;
 
         /**
          * @brief Get the Position of the tile where the object is
@@ -49,17 +50,17 @@ namespace GUI {
         [[nodiscard]] unsigned int getType() noexcept;
 
         /**
-         * @brief get the quantity of the object
-         */
-        [[nodiscard]] unsigned int getQuantity() noexcept final;
-
-        /**
          * @brief Set the Quantity of the object
+         * @param quantity (Quantity of the object)
          */
         virtual void setQuantity(unsigned int quantity) noexcept final;
 
+        /**
+         * @brief get the name of the object
+         */
+        [[nodiscard]] virtual std::string getName() const noexcept;
+
     protected:
-        float _density;          // density of the object
         Position _position;      // tile where the object is (x, y)
         unsigned int _quantity;  // quantity of the object
     };

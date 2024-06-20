@@ -22,6 +22,19 @@ CommandFactory::CommandFactory()
     _commands["pfk"] = std::make_unique<CommandPFK>();
     _commands["pie"] = std::make_unique<CommandPIE>();
     _commands["sst"] = std::make_unique<CommandSST>();
+    _commands["sgt"] = std::make_unique<CommandSGT>();
+    _commands["pdi"] = std::make_unique<CommandPDI>();
+    _commands["pbc"] = std::make_unique<CommandPBC>();
+    _commands["pic"] = std::make_unique<CommandPIC>();
+    _commands["pdr"] = std::make_unique<CommandPDR>();
+    _commands["pgt"] = std::make_unique<CommandPGT>();
+    _commands["enw"] = std::make_unique<CommandENW>();
+    _commands["ebo"] = std::make_unique<CommandEBO>();
+    _commands["edi"] = std::make_unique<CommandEDI>();
+    _commands["seg"] = std::make_unique<CommandSEG>();
+    _commands["smg"] = std::make_unique<CommandSMG>();
+    _commands["suc"] = std::make_unique<CommandSUC>();
+    _commands["sbp"] = std::make_unique<CommandSBP>();
 }
 
 std::unique_ptr<ICommand> CommandFactory::createCommand(const std::string&

@@ -6,22 +6,25 @@
 */
 
 #include "Trantorian.hpp"
-#include "Teams.hpp"
 
 using namespace GUI;
 
-Trantorian::Trantorian(std::string id, int x, int y, int oritentation,
-    int level, std::string teamName)
-        : _id(id), _position(x, y), _orientation(oritentation), _level(level),
-        _lifetimeRemaining(100), _alive(true), _action(false), _team(nullptr)
+Trantorian::Trantorian(std::string id, int x, int y, float orientation, int level)
+    : _id(id), _position(x, y), _level(level), _lifetimeRemaining(100), _alive(true), _action(false)
 {
-    if (!teamName.empty()) {
-        auto team = Teams::getTeamByName(teamName);
-        if (team) {
-            setTeam(team);
-            team->addTrantorian(*this);
-        }
-    }
+    if (orientation == static_cast<float>(NORTH))
+        _orientation = 0;
+    else if (orientation == static_cast<float>(EAST))
+        _orientation = 90;
+    else if (orientation == static_cast<float>(SOUTH))
+        _orientation = 180;
+    else if (orientation == static_cast<float>(WEST))
+        _orientation = 270;
+    else
+        _orientation = 0;
+    _trantorianModel = LoadModel("gui/src/assets/trantorian/trantorian.obj");
+    _trantorianTexture = LoadTexture("gui/src/assets/trantorian/trantorian.png");
+    _trantorianModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _trantorianTexture;
 }
 
 void Trantorian::setAction(bool action)
@@ -39,7 +42,7 @@ void Trantorian::setId(std::string id)
     _id = id;
 }
 
-std::string Trantorian::getId()
+std::string Trantorian::getId() const
 {
     return _id;
 }
@@ -85,32 +88,26 @@ Position Trantorian::getPosition()
     return _position;
 }
 
-void Trantorian::setTeam(Teams* team)
-{
-    _team = team;
-}
-
-Teams* Trantorian::getTeam()
-{
-    return _team;
-}
-
 bool Trantorian::operator==(const Trantorian& other) const
 {
     return _position.getX() == other._position.getX() &&
            _position.getY() == other._position.getY() &&
-           _team == other._team &&
            _lifetimeRemaining == other._lifetimeRemaining &&
            _alive == other._alive &&
            _action == other._action &&
-           _id == other._id &&
+           this->_id == other._id &&
            _level == other._level;
            _orientation == other._orientation;
 }
 
-void Trantorian::setOrientation(int orientation)
+void Trantorian::setOrientation(float orientation)
 {
     _orientation = orientation;
+}
+
+float Trantorian::getOrientation()
+{
+    return _orientation;
 }
 
 void Trantorian::setInventory(std::vector<std::string> inventory)
@@ -174,4 +171,14 @@ void Trantorian::removeObject(IObject *object)
 std::list<IObject*> Trantorian::getInventory() const
 {
     return _inventory;
+}
+
+Model Trantorian::getModel() const
+{
+    return _trantorianModel;
+}
+
+Texture2D Trantorian::getTexture() const
+{
+    return _trantorianTexture;
 }

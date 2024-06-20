@@ -28,8 +28,9 @@ std::string Teams::getName() const
 
 void Teams::addTrantorian(Trantorian& trantorian)
 {
-    trantorian.setTeam(this);
-    _trantorians.emplace_back(trantorian);
+    if (!hasTrantorian(trantorian.getId())) {
+        _trantorians.emplace_back(trantorian);
+    }
 }
 
 std::list<Trantorian> Teams::getTrantorianList() const
@@ -68,4 +69,19 @@ Trantorian Teams::getTrantorianById(std::string id)
             return trantorian;
     }
     return Trantorian();
+}
+
+bool Teams::hasTrantorian(const std::string& id) const
+{
+    for (const auto& trantorian : _trantorians) {
+        if (trantorian.getId() == id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+std::list<Egg> Teams::getEggList() const
+{
+    return _eggs;
 }

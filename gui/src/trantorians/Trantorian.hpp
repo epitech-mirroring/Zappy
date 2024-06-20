@@ -12,6 +12,7 @@
     #include <utility>
     #include <vector>
     #include <list>
+    #include <raylib.h>
     #include "position/Position.hpp"
     #include "objects/interface/IObject.hpp"
     #include "objects/interface/IObject.hpp"
@@ -24,8 +25,6 @@
     #include "objects/stones/Thystame.hpp"
 
 namespace GUI {
-    class Teams; // Forward declaration
-
     class Trantorian {
         public:
           enum ResourceType {
@@ -38,11 +37,17 @@ namespace GUI {
                 THYSTAME,
                 RESOURCE_COUNT
             };
+            enum Orientation {
+                NORTH = 1,
+                EAST = 2,
+                SOUTH = 3,
+                WEST = 4
+            };
             /**
              * @brief Create trantorian object
              */
-            Trantorian(std::string id = "null", int x = 0, int y = 0, int oritentation = 1,
-                int level = 1, std::string teamName = "");
+            Trantorian(std::string id = "null", int x = 0, int y = 0, float orientation = NORTH,
+                int level = 1);
             /**
              * @brief Destroy trantorian object
              */
@@ -58,17 +63,6 @@ namespace GUI {
              * @return pair of ints
              */
             [[nodiscard]] GUI::Position getPosition();
-
-            /**
-             * @brief Set trantorian team
-             * @param team
-             */
-            void setTeam(Teams* team);
-            /**
-             * @brief Get trantorian team
-             * @return Teams* pointer to team
-             */
-            [[nodiscard]] Teams* getTeam();
 
             /**
              * @brief Set trantorian's lifetime
@@ -112,7 +106,7 @@ namespace GUI {
              * @brief Get trantorian id
              * @return int representing player's id
              */
-            [[nodiscard]] std::string getId();
+            [[nodiscard]] std::string getId() const;
 
             /**
              * @brief Set trantorian level
@@ -137,7 +131,12 @@ namespace GUI {
              * @brief Set trantorian orientation
              * @param orientation
              */
-            void setOrientation(int orientation);
+            void setOrientation(float orientation);
+
+            /**
+             * @brief Get trantorian orientation
+             */
+            [[nodiscard]] float getOrientation();
 
             /**
             * @brief Get the object by type
@@ -174,17 +173,27 @@ namespace GUI {
              * @return list of IObject*
              */
             [[nodiscard]] std::list<IObject *> getInventory() const;
+
+            /**
+             * @brief Get the Model object
+             */
+            [[nodiscard]] Model getModel() const;
+            /**
+             * @brief Get the Texture object
+             */
+            [[nodiscard]] Texture2D getTexture() const;
+
         private:
             GUI::Position _position;
-            Teams* _team;
             int _lifetimeRemaining;
             bool _alive;
             bool _action;
             std::string _id;
             int _level;
-            int _orientation;
+            float _orientation;
             std::list<IObject *> _inventory;
+            Model _trantorianModel;
+            Texture2D _trantorianTexture;
     };
-} // namespace GUI
-
+} // namespace GUI  //
 #endif // TRANTORIAN_

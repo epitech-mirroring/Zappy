@@ -10,11 +10,16 @@
 using namespace GUI;
 
 Phiras::Phiras(Position tile)
-    :   AStone(0.08, tile)
+    :   AStone(1, tile)
 {
 }
 
 unsigned int Phiras::getType() noexcept
 {
     return 5;
+}
+
+std::string Phiras::getName() const noexcept
+{
+    return "Phiras";
 }

@@ -16,7 +16,7 @@
     #include "network/Client.hpp"
     #include "network/commands/factory/CommandFactory.hpp"
     #include "network/protocol_handler/ProtocolHandler.hpp"
-    #include "objects/interface/IObject.hpp"
+    #include "display/Display.hpp"
 
 namespace GUI {
     class Game {
@@ -55,25 +55,13 @@ namespace GUI {
          */
         void initializeCallbacks();
 
-        /**
-         * @brief Draw the tiles of the world
-         * @param tiles std::vector<std::vector<Tile>> tiles
-         */
-        void DrawTiles(std::vector<std::vector<Tile>> tiles);
-
-        /**
-         * @brief Draw the objects of the world
-         * @param objects std::vector<std::vector<Tile>> objects
-         */
-        void DrawObjects(std::list<IObject *> objects);
-
     private:
         World _world;                            // World object
         Teams _teams;                            // Teams object
-        Camera _camera;                          // Camera object
         network::Client _client;                 // Client object
         network::CommandFactory _commandFactory; // CommandFactory object
         unsigned int _timeUnit;                  // Time unit of the game
+        Display _display;                        // Display object
     };
 } // namespace GUI //
 #endif /* !GAME_HPP_ */

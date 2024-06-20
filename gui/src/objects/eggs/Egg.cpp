@@ -14,6 +14,7 @@ Egg::Egg(std::string teamName, int ownerID, Position tile)
     ,   _teamName(std::move(teamName))
     ,   _ownerID(ownerID)
 {
+    _eggModel = LoadModel("gui/src/assets/egg/egg.obj");
 }
 
 Egg::~Egg()
@@ -38,4 +39,20 @@ bool Egg::getIsEjected() const
 void Egg::setIsEjected(bool isEjected)
 {
     _isEjected = isEjected;
+}
+
+void Egg::setPosition(int x, int y)
+{
+    _position.setX(x);
+    _position.setY(y);
+}
+
+Position& Egg::getPosition() noexcept
+{
+    return _position;
+}
+
+Model Egg::getModel()
+{
+    return _eggModel;
 }
