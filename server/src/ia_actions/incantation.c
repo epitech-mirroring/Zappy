@@ -55,7 +55,6 @@ static bool can_elevate(game_t *game, array_t *trantorians, size_t level,
 {
     incantation_check_t incantation = incantation_check[level - 1];
     tile_t *tile = get_tile_by_coordinates(game->map, pos);
-    size_t i = 0;
 
     if (hashmap_get(tile->resources, "linemate") < incantation.linemate ||
         hashmap_get(tile->resources, "deraumere") < incantation.deraumere ||
