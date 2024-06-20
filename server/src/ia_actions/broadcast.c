@@ -11,6 +11,7 @@
 
 static coordinates_t get_closest_player(trantorian_t *sender, trantorian_t *receiver)
 {
+
 }
 
 static float get_angle_of_sound(trantorian_t *sender, coordinates_t closest)
@@ -22,6 +23,7 @@ static float get_distance_of_sound(trantorian_t *sender, coordinates_t closest)
 {
 
 }
+
 
 void broadcast(game_t *game, trantorian_t *trantorian)
 {
