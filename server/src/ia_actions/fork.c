@@ -13,6 +13,7 @@
 static bool is_trantorian_in_team(team_t *team, trantorian_t *trantorian)
 {
     trantorian_t *tmp = NULL;
+
     for (size_t i = 0; i < array_get_size(team->trantorians); i++) {
         tmp = array_get_at(team->trantorians, i);
         if (uuid_compare(tmp->uuid, trantorian->uuid) == 0)
