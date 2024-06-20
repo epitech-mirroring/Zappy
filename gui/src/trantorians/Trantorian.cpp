@@ -22,8 +22,8 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
         _orientation = 270;
     else
         _orientation = 0;
-    _trantorianModel = LoadModel("gui/src/assets/trantorian/trantorian.obj");
-    _trantorianTexture = LoadTexture("gui/src/assets/trantorian/trantorian.png");
+    _trantorianModel = LoadModel("tests/assets/trantorian/trantorian.obj");
+    _trantorianTexture = LoadTexture("tests/assets/trantorian/trantorian.png");
     _trantorianModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _trantorianTexture;
 }
 

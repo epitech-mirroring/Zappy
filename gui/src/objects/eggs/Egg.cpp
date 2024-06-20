@@ -14,8 +14,8 @@ Egg::Egg(std::string teamName, std::string ownerID, Position tile)
     ,   _teamName(std::move(teamName))
     ,   _ownerID(ownerID)
 {
-    _eggModel = LoadModel("gui/src/assets/egg/egg.obj");
-    _eggTexture = LoadTexture("gui/src/assets/egg/egg.png");
+    _eggModel = LoadModel("tests/assets/egg/egg.obj");
+    _eggTexture = LoadTexture("tests/assets/egg/egg.png");
     _eggModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _eggTexture;
     _position = tile;
 }

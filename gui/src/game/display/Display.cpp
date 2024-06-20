@@ -40,10 +40,10 @@ void Display::DrawTiles(std::vector<std::vector<Tile>> tiles)
 void Display::initClouds()
 {
     std::vector<std::string> clouds = {
-        "gui/src/assets/clouds/CloudLarge2.obj",
-        "gui/src/assets/clouds/CloudMedium2.obj",
-        "gui/src/assets/clouds/CloudSmall2.obj",
-        "gui/src/assets/clouds/CloudSmall3.obj"
+        "tests/assets/clouds/CloudLarge2.obj",
+        "tests/assets/clouds/CloudMedium2.obj",
+        "tests/assets/clouds/CloudSmall2.obj",
+        "tests/assets/clouds/CloudSmall3.obj"
     };
     for (int i = 0; i < 7; i++) {
         Model model = LoadModel(clouds[rand() % 4].c_str());
