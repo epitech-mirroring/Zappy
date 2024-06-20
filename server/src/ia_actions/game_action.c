@@ -27,34 +27,73 @@ const action_t actions[] = {
     {-1, -1, NULL}
 };
 
-static action_t *dup_action(size_t i)
+static void find_cmd_and_param(char *msg, char *cmd, char *param)
+{
+    size_t i = 0;
+
+    if (msg == NULL) {
+        cmd = NULL;
+        param = NULL;
+        return;
+    }
+    for (; msg[i] != ' ' && msg[i] != '\0'; i++) {
+        cmd[i] = msg[i];
+    }
+    if (msg[i] == '\0') {
+        param = NULL;
+        return;
+    }
+    i++;
+    for (size_t j = 0; msg[i] != '\0'; i++) {
+        param[j] = msg[i];
+        j++;
+    }
+}
+
+static void free_all(char *cmd, char *param, char *msg)
+{
+    free(cmd);
+    free(param);
+    free(msg);
+}
+
+static void dup_action(trantorian_t *trantorian, size_t i, char *param)
 {
     action_t *action = malloc(sizeof(action_t));
 
     action->action = actions[i].action;
     action->action_name = strdup(actions[i].action_name);
     action->time = actions[i].time;
-    return action;
+    array_push_back(trantorian->actions, action);
+    if (strlen(param) > 0) {
+        trantorian->param = strdup(param);
+    } else {
+        trantorian->param = NULL;
+    }
 }
 
 static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
 {
     char *msg = buffer_get_next(trantorian->client->buffer_asked);
+    char *cmd = calloc(1024, sizeof(char));
+    char *param = calloc(1024, sizeof(char));
     size_t i = 0;
     action_t *action = NULL;
 
     while (msg != NULL) {
+        find_cmd_and_param(msg, cmd, param);
         for (i = 0; actions[i].action != -1 &&
-            strcmp(actions[i].action_name, msg); i++);
+            strcmp(actions[i].action_name, cmd); i++);
         if (array_get_size(trantorian->actions) >= 10 ||
             actions[i].action_name == NULL) {
             buffer_write(trantorian->client->buffer_answered, "ko\n");
         } else {
-            action = dup_action(i);
-            array_push_back(trantorian->actions, action);
+            dup_action(trantorian, i, param);
         }
+        free(msg);
         msg = buffer_get_next(trantorian->client->buffer_asked);
     }
+    free_all(cmd, param, msg);
 }
 
 void find_trantorians_action(game_t *game)

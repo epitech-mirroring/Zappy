@@ -59,8 +59,6 @@ static char *cut_str(char *str, int start)
         return NULL;
     if (start < 0)
         return NULL;
-    printf("str: %s\n", str);
-    printf("start = %d\n", start);
     if (start >= strlen(str))
         return NULL;
     printf("c\n");
