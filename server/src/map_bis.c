@@ -31,7 +31,7 @@ hashmap_t *init_resources(void)
     hashmap_t *resources;
 
     resources = create_hashmap();
-    hashmap_put(resources, "food", 10);
+    hashmap_put(resources, "food", 0);
     hashmap_put(resources, "linemate", 0);
     hashmap_put(resources, "deraumere", 0);
     hashmap_put(resources, "sibur", 0);
