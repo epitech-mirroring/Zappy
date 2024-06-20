@@ -141,6 +141,8 @@ game_t *init_game(array_t *teams, size_t map_size[2])
     game->teams = array_constructor(sizeof(team_t), (void *)&destroy_team);
     game->gui_log = array_constructor(sizeof(char *), (void *)&free);
     game->gui_clients = array_constructor(sizeof(client_t), NULL);
+    game->incantations =
+        array_constructor(sizeof(incantation_t), (void *)&destroy_incantation);
     for (size_t i = 0; i < array_get_size(teams); i++) {
         array_push_back(game->teams, array_get_at(teams, i));
     }

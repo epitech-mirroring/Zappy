@@ -9,9 +9,10 @@
 #include "game.h"
 #include "actions.h"
 #include "gui.h"
+#include "incantation.h"
 #include <string.h>
 
-const incantation_check_t incantation_check[] = {
+const incantations_check_t incantation_check[] = {
     {1, 1, 1, 0, 0, 0, 0, 0},
     {2, 2, 1, 1, 1, 0, 0, 0},
     {3, 2, 2, 0, 1, 0, 2, 0},
@@ -45,15 +46,18 @@ static void ping_all(game_t *game, array_t *trantorians,
     pic_log_gui(game, trantorians, level, pos);
     for (size_t i = 0; i < array_get_size(trantorians); i++) {
         tmp = (trantorian_t *)array_get_at(trantorians, i);
+        tmp->incantated = true;
         buffer_write(tmp->client->buffer_answered, "Elevation underway\n");
         update_actions(tmp);
     }
+    array_push_back(game->incantations,
+        init_incantation(trantorians, pos, level));
 }
 
-static bool can_elevate(game_t *game, array_t *trantorians, size_t level,
+bool can_elevate(game_t *game, array_t *trantorians, size_t level,
     coordinates_t pos)
 {
-    incantation_check_t incantation = incantation_check[level - 1];
+    incantations_check_t incantation = incantation_check[level - 1];
     tile_t *tile = get_tile_by_coordinates(game->map, pos);
 
     if (hashmap_get(tile->resources, "linemate") < incantation.linemate ||
@@ -79,7 +83,7 @@ void cast_incantation(game_t *game, trantorian_t *trantorian)
         if (tmp->coordinates.x == trantorian->coordinates.x &&
             tmp->coordinates.y == trantorian->coordinates.y
             && tmp->level == trantorian->level && strcmp(action->action_name,
-                "Incantation") != 0) {
+                "Incantation") != 0 && !tmp->incantated) {
             array_push_back(trantorians, trantorian);
         }
     }
@@ -101,4 +105,21 @@ void incantation(game_t *game, trantorian_t *trantorian)
     sprintf(msg, "pie %ld %ld %ld\n", trantorian->coordinates.x,
         trantorian->coordinates.y, trantorian->level);
     array_push_back(game->gui_log, msg);
+}
+
+incantation_t *init_incantation(array_t *trantorians,
+    coordinates_t pos, size_t level)
+{
+    incantation_t *incantation = malloc((sizeof(incantation_t)));
+
+    incantation->level = level;
+    incantation->pos = pos;
+    incantation->trantorians = trantorians;
+    return incantation;
+}
+
+void destroy_incantation(incantation_t *incantation)
+{
+    array_destructor(incantation->trantorians);
+    free(incantation);
 }

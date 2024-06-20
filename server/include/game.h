@@ -11,8 +11,7 @@
     #ifdef __cplusplus
 extern "C" {
     #endif // __cplusplus
-    #include "array.h"
-    #include "map.h"
+    #include "incantation.h"
     #include "trantorian.h"
     #include "egg.h"
     #include "client.h"
@@ -34,6 +33,7 @@ extern "C" {
         array_t *clients_without_team;
         array_t *gui_log;
         array_t *gui_clients;
+        array_t *incantations;
         bool win;
         char *winning_team;
         int food_spwan;
@@ -258,6 +258,35 @@ extern "C" {
      * @param i The index of the egg in the eggs array
      */
     void player_spawn(egg_t *egg, team_t *team, game_t *game, size_t i);
+
+    /**
+     * @brief Check if an incantation still be done
+     *
+     * @param game The game
+     */
+    void incantations_check(game_t *game);
+
+    /**
+     * @brief Remove a trantorian in the incantation it is part of
+     * if it is part of one
+     *
+     * @param incantations The list of all the incantations
+     * @param trantorian The trantorian to remove
+     */
+    void incantation_dead_trantorian(array_t *incantations,
+        trantorian_t *trantorian);
+
+    /**
+     * @brief Check if an incantation can happend
+     *
+     * @param game The game
+     * @param trantorians The list of the trantorians t
+     * hat take part of the incantation
+     * @param level The level of the incantation
+     * @param pos The position where is the incantation
+     */
+    bool can_elevate(game_t *game, array_t *trantorians, size_t level,
+        coordinates_t pos);
 
     #ifdef __cplusplus
 }

@@ -66,7 +66,7 @@ extern "C" {
  * @param thystame the number of thystame needed to do the incantation
  */
 
-    typedef struct incantation_check_s {
+    typedef struct incantations_check_s {
         size_t level;
         size_t player;
         size_t linemate;
@@ -75,7 +75,7 @@ extern "C" {
         size_t mendiane;
         size_t phiras;
         size_t thystame;
-    } incantation_check_t;
+    } incantations_check_t;
 
     #ifdef __cplusplus
 }
