@@ -13,22 +13,23 @@
     #include <uuid/uuid.h>
     #include "inventory.h"
     #include "actions.h"
+    #include "client.h"
+
     #ifdef __cplusplus
 extern "C" {
     #endif // __cplusplus
 
-    /**
-     * @struct coordinates_s
-     *
-     * This structure represents the coordinates of a tile on the map.
-     * Each tile has an x and y coordinate.
-     */
     enum direction_e {
         NORTH,
         EAST,
         SOUTH,
         WEST
     };
+
+    typedef struct direction_to_string_s {
+        enum direction_e direction;
+        char *str;
+    } direction_to_string_t;
 
     /**
      * @struct trantorian_s
@@ -44,7 +45,66 @@ extern "C" {
         inventory_t inventory;
         array_t *actions;
         enum direction_e direction;
+        size_t waiting_tick;
+        size_t nb_waiting_actions;
+        client_t *client;
     } trantorian_t;
+
+    /**
+     * @brief Initialize a trantorian
+     *
+     * @param coordinates The coordinates of the trantorian
+     * @param client The client associated with the trantorian
+     * @return trantorian_t* The trantorian
+     */
+    trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client);
+
+    /**
+     * @brief Destroy a trantorian
+     *
+     * @param trantorian The trantorian to destroy
+     */
+    void destroy_trantorian(trantorian_t *trantorian);
+
+    /**
+     * @brief Trantorian tick
+     *
+     * @param trantorian The trantorian to tick
+     */
+    void trantorian_tick(trantorian_t *trantorian);
+
+    /**
+     * @brief Return a string representation of the inventory
+     *
+     * @param inventory The inventory to represent
+     * @return char* The string representation of the inventory
+    */
+    char *inventory_to_str(trantorian_t *trantorian);
+
+    /**
+     * @brief Return a string representation of the trantorian position
+     *
+     * @param trantorian The trantorian to represent
+     * @return char* The string representation of the trantorian position
+    */
+    char *trantorian_pos_to_str(trantorian_t *trantorian);
+
+    /**
+     * @brief Return a string representation of the trantorian level
+     *
+     * @param trantorian The trantorian to represent
+     * @return char* The string representation of the trantorian level
+    */
+    char *trantorian_level_to_str(trantorian_t *trantorian);
+
+    /**
+     * @brief Return a string representation of the new player connection
+     *
+     * @param trantorian The trantorian to represent
+     * @param team The team of the trantorian
+     * @return char* The string representation of the new player connection
+    */
+    char *new_player_connection_log(trantorian_t *trantorian, char *team);
 
     #ifdef __cplusplus
 }
