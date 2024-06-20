@@ -11,6 +11,7 @@
     #include <iostream>
     #include <list>
     #include "Trantorian.hpp"
+    #include "objects/eggs/Egg.hpp"
 
 namespace GUI {
     class Teams {
@@ -76,13 +77,25 @@ namespace GUI {
 
             bool hasTrantorian(const std::string& id) const;
 
+            /**
+             * @brief Add a new egg to egg's list
+             * @param Egg egg object
+             * @return void (nothing to return)
+             */
+            void addEggToList(Egg newEgg);
+
+            /**
+             * @brief Get list of egg in the team
+             * @return list of egg objects
+             */
+            [[nodiscard]] std::list<Egg> getEggList() const;
+
         private:
             std::string _name;
             std::list<Trantorian> _trantorians;
+            std::list<Egg> _eggs;
             static std::list<GUI::Teams> _teams;
     };
 } // namespace GUI
-
-#include "Trantorian.hpp"
 
 #endif // TEAMS_

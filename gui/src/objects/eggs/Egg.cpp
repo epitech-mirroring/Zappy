@@ -9,11 +9,15 @@
 
 using namespace GUI;
 
-Egg::Egg(std::string teamName, int ownerID, Position tile)
+Egg::Egg(std::string teamName, std::string ownerID, Position tile)
     :   AObject(0, tile)
     ,   _teamName(std::move(teamName))
     ,   _ownerID(ownerID)
 {
+    _eggModel = LoadModel("gui/src/assets/egg/egg.obj");
+    _eggTexture = LoadTexture("gui/src/assets/egg/egg.png");
+    _eggModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _eggTexture;
+    _position = tile;
 }
 
 Egg::~Egg()
@@ -25,7 +29,7 @@ std::string Egg::getTeam() const
     return _teamName;
 }
 
-int Egg::getOwnerID() const
+std::string Egg::getOwnerID() const
 {
     return _ownerID;
 }
@@ -38,4 +42,20 @@ bool Egg::getIsEjected() const
 void Egg::setIsEjected(bool isEjected)
 {
     _isEjected = isEjected;
+}
+
+void Egg::setPosition(int x, int y)
+{
+    _position.setX(x);
+    _position.setY(y);
+}
+
+Position& Egg::getPosition() noexcept
+{
+    return _position;
+}
+
+Model Egg::getModel()
+{
+    return _eggModel;
 }

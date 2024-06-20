@@ -10,17 +10,19 @@
 
     #include <iostream>
     #include "objects/abstracts/AObject.hpp"
+    #include "position/Position.hpp"
+    #include "raylib.h"
 
 namespace GUI {
     class Egg : public AObject {
     public:
         /**
          * @brief Construct a new Egg object
-         * @param std::string teamName
-         * @param int ownerID
+         * @param string teamName
+         * @param string ownerID
          * @param Position Tile where the object is
         */
-        Egg(std::string teamName, int ownerID = -1,
+        Egg(std::string teamName, std::string ownerID = "-1",
             Position tile = Position(0, 0));
         /**
          * @brief Destroy the Egg object
@@ -35,9 +37,9 @@ namespace GUI {
 
         /**
          * @brief Get the owner ID
-         * @return int (owner of the egg ID)
+         * @return std::string (owner of the egg ID)
         */
-        [[nodiscard]] int getOwnerID() const;
+        [[nodiscard]] std::string getOwnerID() const;
 
         /**
          * @brief Get the isEjected
@@ -52,10 +54,32 @@ namespace GUI {
         */
         void setIsEjected(bool isEjected);
 
+        /**
+         * @brief Set egg position
+         * @param int x position and y position
+         * @return void (nothing to return)
+        */
+        void setPosition(int x, int y);
+
+        /**
+         * @brief Get egg position
+         * @return Position
+        */
+        [[nodiscard]] Position& getPosition() noexcept;
+
+        /**
+         * @brief Get egg 3d model
+         * @return Model type from raylib
+        */
+        [[nodiscard]] Model getModel();
+
     protected:
         std::string _teamName;      // team name
-        int _ownerID;               // ownerID (player who laid it) default -1
+        std::string _ownerID;               // ownerID (player who laid it) default -1
         bool _isEjected;            // is egg ejected
+        Position _position;         // position of the egg
+        Model _eggModel;            // 3d model for the egg
+        Texture _eggTexture;        // 3d texture for the egg
     };
 } // namespace GUI //
 #endif /* !EGG_HPP_ */

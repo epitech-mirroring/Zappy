@@ -63,11 +63,13 @@ namespace GUI {
          */
         void DrawObjects(std::list<IObject*> objects);
         /**
-         * @brief Draw the scoreboard
-         * @param teams list of teams
+         * @brief Draw the egg
+         */
+        void DrawEgg();
+        /**
+         * @brief Draw the ScoreBoard
          */
         void DrawScoreBoard(Teams &teams);
-
         /**
          * @brief Cleanup the models /!\ ADD TRANTORIANS /!\
          */
