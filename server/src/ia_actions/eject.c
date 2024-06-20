@@ -65,7 +65,6 @@ static void eject_west(game_t *game, trantorian_t *trantorian)
 static void eject_eggs(game_t *game, trantorian_t *trantorian)
 {
     egg_t *tmp = NULL;
-    char *msg = calloc(1024, sizeof(char));
     size_t i = 0;
 
     for (i = 0; i < array_get_size(game->eggs);) {
