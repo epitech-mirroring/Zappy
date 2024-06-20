@@ -57,7 +57,17 @@ static void free_all(char *cmd, char *param, char *msg)
     free(msg);
 }
 
-static void dup_action(trantorian_t *trantorian, size_t i, char *param)
+static void gui_log_action_cast(game_t *game,
+    action_t *action, trantorian_t *trantorian)
+{
+    if (strcmp(action->action_name, "Fork") == 0) {
+        pfk_log_gui(game, trantorian);
+    }
+    // handle incantation cast
+}
+
+static void dup_action(trantorian_t *trantorian,
+    size_t i, char *param, game_t *game)
 {
     action_t *action = malloc(sizeof(action_t));
 
@@ -70,6 +80,7 @@ static void dup_action(trantorian_t *trantorian, size_t i, char *param)
     } else {
         trantorian->param = NULL;
     }
+    gui_log_action_cast(game, action, trantorian);
 }
 
 static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
@@ -88,7 +99,7 @@ static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
             actions[i].action_name == NULL) {
             buffer_write(trantorian->client->buffer_answered, "ko\n");
         } else {
-            dup_action(trantorian, i, param);
+            dup_action(trantorian, i, param, game);
         }
         free(msg);
         msg = buffer_get_next(trantorian->client->buffer_asked);

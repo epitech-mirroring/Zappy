@@ -14,6 +14,7 @@
 #include "array.h"
 #include "team.h"
 #include "trantorian.h"
+#include "gui.h"
 
 const action_fnc_t actions_fnc[] = {
     {FORWARD, &forward},
@@ -190,6 +191,7 @@ void game_tick(game_t *game)
 void create_trantorian(game_t *game, team_t *team, client_t *client)
 {
     trantorian_t *trantorian;
+    egg_t *egg;
     int i = 0;
 
     for (i = 0; i < array_get_size(game->eggs); i++) {
@@ -200,12 +202,12 @@ void create_trantorian(game_t *game, team_t *team, client_t *client)
     }
     if (i == array_get_size(game->eggs))
         return;
-    trantorian = init_trantorian(((egg_t *)array_get_at
-        (game->eggs, i))->coordinates, client);
-    if (trantorian == NULL)
-        return;
+    egg = (egg_t *)array_get_at(game->eggs, i);
+    trantorian = init_trantorian(egg->coordinates, client);
     array_push_back(team->trantorians, trantorian->uuid);
     array_push_back(game->trantorians, trantorian);
+    ebo_log_gui(game, egg);
     array_remove(game->eggs, i);
+    destroy_egg(egg);
     team->free_places--;
 }
