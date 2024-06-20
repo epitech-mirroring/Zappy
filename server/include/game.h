@@ -234,6 +234,21 @@ extern "C" {
      */
     void eject_egg(game_t *game, egg_t *egg);
 
+    /**
+     * @brief Check if a team has won
+     *
+     * @param game The game
+     */
+    void check_win(game_t *game);
+
+    /**
+     * @brief Cast an incantation
+     *
+     * @param game The game
+     * @param trantorian The trantorian
+     */
+    void cast_incantation(game_t *game, trantorian_t *trantorian);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

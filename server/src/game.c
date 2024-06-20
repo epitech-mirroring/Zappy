@@ -186,6 +186,7 @@ void game_tick(game_t *game)
         trantorian_tick(trantorian);
         trantorian_action(game, trantorian);
     }
+    check_win(game);
 }
 
 void create_trantorian(game_t *game, team_t *team, client_t *client)
