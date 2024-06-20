@@ -29,31 +29,80 @@ namespace GUI {
         */
         ~Display() = default;
 
+        /**
+         * @brief calls all the draw functions
+         */
         void displayElements();
 
+        /**
+         * @brief Draw the tiles
+         * @param tiles 2D vector of tiles
+         */
         void DrawTiles(std::vector<std::vector<Tile>> tiles);
+        /**
+         * @brief Draw the clouds
+         */
         void DrawClouds();
-        void DrawTrantorians();
+        /**
+         * @brief Draw the trantorians /!\ TO FIX /!\
+         * @param teams list of teams
+         */
+        void DrawTrantorians(std::list<Teams> teams);
+        /**
+         * @brief Draw the tile info (list of items, position)
+         */
         void DrawTileInfo();
+        /**
+         * @brief Draw the trantorian info (team, time to live, level, inventory, position, id)
+         */
         void DrawTrantorianInfo();
+        /**
+         * @brief Draw the objects (food, linemate, deraumere, sibur, mendiane, phiras, thystame)
+         * if there is many obj we just have bigger squares
+         * @param objects list of objects
+         */
         void DrawObjects(std::list<IObject*> objects);
+        /**
+         * @brief Draw the scoreboard
+         * @param teams list of teams
+         */
+        void DrawScoreBoard(Teams &teams);
 
+        /**
+         * @brief Cleanup the models /!\ ADD TRANTORIANS /!\
+         */
         void cleanupModels();
+        /**
+         * @brief Initialize the clouds
+         */
         void initClouds();
 
+        /**
+         * @brief Check if the window should close
+         * @return true if the window should close
+         */
         bool windowShouldClose();
+        /**
+         * @brief Update the camera
+         */
         void updateCamera();
-
+        /**
+         * @brief Close the window
+         */
         void closeWindow();
 
+        /**
+         * @brief Get the Camera object
+         * @return Camera object
+         */
         std::vector<Model> getClouds() const;
 
     protected:
-        Camera _camera;     // Camera
+        Camera _camera;                          // Camera
         std::vector<Model> _clouds;              // Clouds models
         std::vector<Vector3> _cloudPositions;    // Clouds positions
-        World &_world;      // World
-        Teams &_teams;      // Teams
+        World &_world;                           // World
+        Teams &_teams;                           // Teams
     };
 }
 

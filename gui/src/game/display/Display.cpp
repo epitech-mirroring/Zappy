@@ -24,14 +24,6 @@ Display::Display(World &world, Teams &teams)
     _camera.projection = CAMERA_PERSPECTIVE;
 }
 
-void Display::cleanupModels()
-{
-    for (auto &model : _clouds) {
-        UnloadModel(model);
-    }
-    _clouds.clear();
-}
-
 void Display::DrawTiles(std::vector<std::vector<Tile>> tiles)
 {
     for (auto &row : _world.getTiles()) {
@@ -68,9 +60,9 @@ void Display::DrawClouds()
     }
 }
 
-void Display::DrawTrantorians()
+void Display::DrawTrantorians(std::list<Teams> teams)
 {
-    for (auto &team : _teams.getTeamsList()) {
+    for (auto &team : teams) {
         for (auto &trantorian : team.getTrantorianList()) {
             Vector3 position = {
                 static_cast<float>(trantorian.getPosition().getX()),
@@ -82,13 +74,14 @@ void Display::DrawTrantorians()
 
             DrawModelEx(trantorian.getModel(), position, rotationAxis, trantorian.getOrientation(), scale, WHITE);
 
+            BoundingBox box = {
+                {static_cast<float>(trantorian.getPosition().getX()) - 0.5f, 0.25f,
+                    static_cast<float>(trantorian.getPosition().getY()) - 0.5f},
+                {static_cast<float>(trantorian.getPosition().getX()) + 0.5f, 1.25f,
+                    static_cast<float>(trantorian.getPosition().getY()) + 0.5f}
+            };
+
             if (_hoveredTrantorian != nullptr && (_hoveredTrantorian->getId() == trantorian.getId())) {
-                BoundingBox box = {
-                    {static_cast<float>(_hoveredTrantorian->getPosition().getX()) - 0.5f, 0.25f,
-                        static_cast<float>(_hoveredTrantorian->getPosition().getY()) - 0.5f},
-                    {static_cast<float>(_hoveredTrantorian->getPosition().getX()) + 0.5f, 1.25f,
-                        static_cast<float>(_hoveredTrantorian->getPosition().getY()) + 0.5f}
-                };
                 DrawBoundingBox(box, RED);
             }
         }
@@ -137,16 +130,6 @@ void Display::DrawTrantorianInfo()
     }
 }
 
-bool Display::windowShouldClose()
-{
-    return WindowShouldClose();
-}
-
-void Display::updateCamera()
-{
-    UpdateCamera(&_camera, CAMERA_FREE);
-}
-
 void Display::DrawObjects(std::list<IObject*> objects)
 {
     std::unordered_map<int, std::pair<float, float>> typeOffsets = {
@@ -181,22 +164,54 @@ void Display::DrawObjects(std::list<IObject*> objects)
     }
 }
 
+void Display::DrawScoreBoard(Teams &teams)
+{
+    if (IsKeyDown(KEY_TAB)) {
+        const int lineHeight = 30;
+        const int padding = 10;
+        const int width = 525;
+        int totalLines = 1;
+        int yPosition = 50;
+
+        for (const auto& team : teams.getTeamsList()) {
+            totalLines += 1;
+            totalLines += team.getTrantorianList().size();
+        }
+        int rectangleHeight = totalLines * lineHeight + 2 * padding;
+
+        DrawRectangle(10, 10, width, rectangleHeight, Fade(BLACK, 0.5f));
+        DrawText("Scoreboard", 20, 20, 20, GREEN);
+        for (const auto& team : teams.getTeamsList()) {
+            DrawText(TextFormat("Team: %s", team.getName().c_str()), 20, yPosition, 20, WHITE);
+            yPosition += lineHeight;
+            for (auto& trantorian : team.getTrantorianList()) {
+                DrawText(TextFormat("ID: %s, Level: %d, Position: (%d, %d), TTL: %d",
+                    trantorian.getId().c_str(), trantorian.getLevel(),
+                    trantorian.getPosition().getX(), trantorian.getPosition().getY(),
+                    trantorian.getLifetime()), 20, yPosition, 20, WHITE);
+                yPosition += lineHeight;
+            }
+        }
+    }
+}
+
 void Display::displayElements()
 {
-    Events::detectHoveredTile(_camera, _world);
-    Events::detectHoveredTrantorian(_camera, _teams);
+    detectHoveredTile(_camera, _world);
+    detectHoveredTrantorian(_camera, _teams);
 
     BeginDrawing();
     ClearBackground(BLUE);
     BeginMode3D(_camera);
     DrawTiles(_world.getTiles());
     DrawClouds();
-    DrawTrantorians();
+    DrawTrantorians(_teams.getTeamsList());
     DrawObjects(_world.getObjects());
     EndMode3D();
     DrawFPS(10, 10);
     DrawTileInfo();
     DrawTrantorianInfo();
+    DrawScoreBoard(_teams);
     EndDrawing();
 }
 
@@ -208,4 +223,28 @@ std::vector<Model> Display::getClouds() const
 void Display::closeWindow()
 {
     CloseWindow();
+}
+
+bool Display::windowShouldClose()
+{
+    return WindowShouldClose();
+}
+
+void Display::updateCamera()
+{
+    UpdateCamera(&_camera, CAMERA_FREE);
+}
+
+void Display::cleanupModels()
+{
+    for (auto &model : _clouds) {
+        UnloadModel(model);
+    }
+    _clouds.clear();
+
+    for (auto &team : _teams.getTeamsList()) {
+        for (auto &trantorian : team.getTrantorianList()) {
+            UnloadModel(trantorian.getModel());
+        }
+    }
 }
