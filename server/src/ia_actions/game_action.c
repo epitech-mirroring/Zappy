@@ -112,6 +112,7 @@ void find_trantorians_action(game_t *game)
 {
     trantorian_t *trantorian = NULL;
 
+    incantations_check(game);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
         find_trantorian_action(game, trantorian);
@@ -131,6 +132,8 @@ void check_dead_trantorians(game_t *game)
             pdi_log_gui(game, trantorian);
             trantorian->client->useless = true;
             array_remove(game->trantorians, i);
+            incantation_dead_trantorian(game->incantations, trantorian);
+            destroy_trantorian(trantorian);
             i--;
         }
     }
