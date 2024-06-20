@@ -37,6 +37,7 @@ namespace GUI {
         void DrawTileInfo();
         void DrawTrantorianInfo();
         void DrawObjects(std::list<IObject*> objects);
+        void DrawEgg();
 
         void cleanupModels();
         void initClouds();

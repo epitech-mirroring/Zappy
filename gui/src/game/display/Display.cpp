@@ -181,6 +181,22 @@ void Display::DrawObjects(std::list<IObject*> objects)
     }
 }
 
+void Display::DrawEgg()
+{
+    for (auto &team : Teams::getTeamsList()) {
+        for (auto &egg : team.getEggList()) {
+            Vector3 position = {
+                static_cast<float>(egg.getPosition().getX()),
+                0.5f,
+                static_cast<float>(egg.getPosition().getY())
+            };
+            Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+            Vector3 scale = {0.07f, 0.07f, 0.07f};
+            DrawModelEx(egg.getModel(), position, rotationAxis, 0.0f, scale, WHITE);
+        }
+    }
+}
+
 void Display::displayElements()
 {
     Events::detectHoveredTile(_camera, _world);
@@ -193,6 +209,7 @@ void Display::displayElements()
     DrawClouds();
     DrawTrantorians();
     DrawObjects(_world.getObjects());
+    DrawEgg();
     EndMode3D();
     DrawFPS(10, 10);
     DrawTileInfo();

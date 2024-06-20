@@ -78,6 +78,13 @@ namespace GUI {
             bool hasTrantorian(const std::string& id) const;
 
             /**
+             * @brief Add a new egg to egg's list
+             * @param Egg egg object
+             * @return void (nothing to return)
+             */
+            void addEggToList(Egg newEgg);
+
+            /**
              * @brief Get list of egg in the team
              * @return list of egg objects
              */

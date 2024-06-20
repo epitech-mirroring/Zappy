@@ -277,26 +277,6 @@ void Game::initializeCallbacks()
         }
     });
 
-    _commandFactory.setCallback("pfk", [this](std::istringstream &iss){
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    // HANDLE ACTION LAYING EGG
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " is laying an egg" << std::endl;
-                }
-            }
-        }
-    });
-
     _commandFactory.setCallback("pie", [this](std::istringstream &iss){
         std::string data = iss.str();
         std::istringstream iss2(data);
@@ -418,12 +398,21 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        int eggNb = std::stoi(tokens[1]);
+        std::string trantorianId = tokens[2];
+        int x = std::stoi(tokens[3]);
+        int y = std::stoi(tokens[4]);
+
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    // HANDLE ACTION LAYING EGG
-                    std::cout << "GUI LOG: Egg " << token[1]
-                        << " has been layed by player " << token[2] << std::endl;
+                if (trantorian.getId() == trantorianId) {
+                    Position pos;
+                    pos.setX(x);
+                    pos.setY(y);
+                    Egg egg(team.getName(), trantorianId, pos);
+                    team.addEggToList(egg);
+                    std::cout << "GUI LOG: Egg " << eggNb
+                        << " has been layed by player " << trantorianId << std::endl;
                 }
             }
         }
