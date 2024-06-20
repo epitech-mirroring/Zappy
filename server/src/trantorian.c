@@ -32,6 +32,7 @@ trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
     trantorian->client = client;
     trantorian->nb_waiting_actions = 0;
     trantorian->is_dead = false;
+    trantorian->incantated = false;
     trantorian->param = NULL;
     return trantorian;
 }

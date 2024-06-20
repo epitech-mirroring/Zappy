@@ -48,6 +48,7 @@ extern "C" {
         size_t waiting_tick;
         size_t nb_waiting_actions;
         bool is_dead;
+        bool incantated;
         client_t *client;
         char *param;
     } trantorian_t;
