@@ -229,9 +229,10 @@ void Game::initializeCallbacks()
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == tokens[1]) {
-                    // HANDLE EXPULSION
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " has been expulsed" << std::endl;
+                    trantorian.setAction(Trantorian::Action::EXPULSION);
+                    trantorian.setActionStartTime(GetTime());
+                        std::cout << "GUI LOG: Player " << trantorian.getId()
+                            << " has been expulsed" << std::endl;
                 }
             }
         }
