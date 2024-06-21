@@ -39,14 +39,14 @@ void Game::runGame()
     initializeCallbacks();
 
     while (_display.windowShouldClose() == false) {
-        // ensureGameInit();
+        ensureGameInit();
         _display.setTimeUnit(_timeUnit);
         handleNewTimeUnit();
         _display.displayElements();
         data = _client.readData();
         protocolHandler.handleData(data);
         data.clear();
-        // ensureGameInformation();
+        ensureGameInformation();
     }
     _display.closeWindow();
 }
