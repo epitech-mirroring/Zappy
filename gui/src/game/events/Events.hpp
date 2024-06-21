@@ -12,6 +12,7 @@
     #include "world/World.hpp"
     #include "trantorians/Teams.hpp"
 
+    #include <memory>
     #include <raylib.h>
     #include <iostream>
     #include <vector>
@@ -46,8 +47,8 @@ namespace GUI {
         Tile* _selectedTile;                // tile selected by the user
         Tile* _hoveredTile;                 // tile hovered by the user
 
-        Trantorian* _selectedTrantorian;    // trantorian selected by the user
-        Trantorian* _hoveredTrantorian;     // trantorian hovered by the user
+        std::unique_ptr<Trantorian> _selectedTrantorian;    // trantorian selected by the user
+        std::unique_ptr<Trantorian> _hoveredTrantorian;     // trantorian hovered by the user
     };
 } // namespace GUI //
 #endif /* !EVENTS_HPP_ */

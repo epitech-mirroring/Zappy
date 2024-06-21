@@ -75,15 +75,13 @@ void Display::DrawTrantorians(std::list<Teams> teams)
             DrawModelEx(trantorian.getModel(), position,
                 rotationAxis, trantorian.getOrientation(), scale, WHITE);
             BoundingBox box = {
-                {static_cast<float>(trantorian.getPosition().getX()) - 0.5f, 0.25f,
+                {static_cast<float>(trantorian.getPosition().getX()) - 0.5f, 0.5f,
                     static_cast<float>(trantorian.getPosition().getY()) - 0.5f},
-                {static_cast<float>(trantorian.getPosition().getX()) + 0.5f, 1.25f,
+                {static_cast<float>(trantorian.getPosition().getX()) + 0.5f, 2.0f,
                     static_cast<float>(trantorian.getPosition().getY()) + 0.5f}
             };
-            if (_hoveredTrantorian != nullptr && (_hoveredTrantorian->getId() ==
-                trantorian.getId())) {
-                DrawBoundingBox(box, RED);
-            }
+            if (_hoveredTrantorian != nullptr && (trantorian.getId() == _hoveredTrantorian->getId()))
+                DrawBoundingBox(box, BLACK);
         }
     }
 }
@@ -109,23 +107,32 @@ void Display::DrawTileInfo()
 void Display::DrawTrantorianInfo()
 {
     if (_selectedTrantorian != nullptr && _selectedTile == nullptr) {
-        int yPosition = 360;
+        const int lineHeight = 30;
+        const int padding = 10;
+        const int baseHeight = 160;
+        int inventorySize = _selectedTrantorian->getInventory().size();
+        int rectangleHeight = baseHeight + inventorySize * lineHeight;
+        int yPosition = 450;
 
-        DrawRectangle(10, 290, 300, 250, Fade(BLACK, 0.5f));
-        DrawText(TextFormat("Trantorian ID: %s",
-            _selectedTrantorian->getId().c_str()), 20, 300, 20, WHITE);
+
+        DrawRectangle(10, 290, 300, rectangleHeight, Fade(BLACK, 0.5f));
+        DrawText(TextFormat("Trantorian ID: %s", _selectedTrantorian->getId().c_str()), 20, 300, 20, WHITE);
         DrawText(TextFormat("Position: (X: %d, Y: %d)",
             _selectedTrantorian->getPosition().getX(),
             _selectedTrantorian->getPosition().getY()), 20, 330, 20, WHITE);
-        // DrawText(TextFormat("Team: %s",
-        //     _selectedTrantorian->getTeam()->getName().c_str()), 20, 360, 20, WHITE);
-        DrawText(TextFormat("Level: %d",
-            _selectedTrantorian->getLevel()), 20, 390, 20, WHITE);
+        for (auto& team : _teams.getTeamsList()) {
+            for (auto& trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == _selectedTrantorian->getId()) {
+                    DrawText(TextFormat("Team: %s", team.getName().c_str()), 20, 360, 20, WHITE);
+                    break;
+                }
+            }
+        }
+        DrawText(TextFormat("Level: %d", _selectedTrantorian->getLevel()), 20, 390, 20, WHITE);
         DrawText("Inventory:", 20, 420, 20, WHITE);
         for (auto& object : _selectedTrantorian->getInventory()) {
-            DrawText(TextFormat("%s: %d", object->getName().c_str(),
-                object->getQuantity()), 20, yPosition, 20, WHITE);
-            yPosition += 30;
+            DrawText(TextFormat("%s: %d", object->getName().c_str(), object->getQuantity()), 20, yPosition, 20, WHITE);
+            yPosition += lineHeight;
         }
     }
 }
