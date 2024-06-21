@@ -164,7 +164,7 @@ void Display::DrawObjects(std::list<IObject*> objects)
 
 void Display::DrawScoreBoard(Teams &teams)
 {
-    if (IsKeyDown(KEY_TAB)) {
+    if (IsKeyDown(KEY_TAB) && !IsKeyDown(KEY_H)) {
         const int lineHeight = 30;
         const int padding = 10;
         const int width = 525;
@@ -183,7 +183,7 @@ void Display::DrawScoreBoard(Teams &teams)
             DrawText(TextFormat("Team: %s", team.getName().c_str()), 20, yPosition, 20, WHITE);
             yPosition += lineHeight;
             for (auto& trantorian : team.getTrantorianList()) {
-                DrawText(TextFormat("ID: %s, Level: %d, Position: (%d, %d), TTL: %d",
+                DrawText(TextFormat("   ID: %s, Level: %d, Position: (%d, %d), TTL: %d",
                     trantorian.getId().c_str(), trantorian.getLevel(),
                     trantorian.getPosition().getX(), trantorian.getPosition().getY(),
                     trantorian.getLifetime()), 20, yPosition, 20, WHITE);
@@ -264,6 +264,21 @@ void Display::DrawSSTBox()
     }
 }
 
+void Display::DisplayHelpMenu()
+{
+    DrawText("Hold H to display help menu", 10, 870, 20, WHITE);
+
+    if (IsKeyDown(KEY_H) && !IsKeyDown(KEY_TAB)) {
+        DrawRectangle(10, 10, 500, 230, Fade(BLACK, 0.5f));
+        DrawText("Help Menu", 20, 20, 20, GREEN);
+        DrawText("TAB: Display scoreboard", 20, 50, 20, WHITE);
+        DrawText("T: Open time unit input", 20, 80, 20, WHITE);
+        DrawText("H: Display help menu", 20, 110, 20, WHITE);
+        DrawText("Right click to close input", 20, 170, 20, WHITE);
+        DrawText("Left click on an element to see its informations", 20, 200, 20, WHITE);
+    }
+}
+
 void Display::displayElements()
 {
     if (!_textBoxActive) {
@@ -286,6 +301,7 @@ void Display::displayElements()
     DrawTrantorianInfo();
     DrawScoreBoard(_teams);
     DrawSSTBox();
+    DisplayHelpMenu();
     EndDrawing();
 }
 

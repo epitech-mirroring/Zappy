@@ -110,6 +110,11 @@ namespace GUI {
          */
         std::string getNewTimeUnit();
 
+        /**
+         * @brief Display the help menu
+         */
+        void DisplayHelpMenu();
+
     protected:
         Camera _camera;                          // Camera
         std::vector<Model> _clouds;              // Clouds models
