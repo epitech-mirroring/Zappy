@@ -38,6 +38,7 @@ target_sources(zappy_server_lib
         ${CMAKE_CURRENT_SOURCE_DIR}/hashmap_others.c
         ${CMAKE_CURRENT_SOURCE_DIR}/inventory.c
         ${CMAKE_CURRENT_SOURCE_DIR}/main.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/manage_teams_places.c
         ${CMAKE_CURRENT_SOURCE_DIR}/map_bis.c
         ${CMAKE_CURRENT_SOURCE_DIR}/map.c
         ${CMAKE_CURRENT_SOURCE_DIR}/server_bis.c
