@@ -275,8 +275,8 @@ void Display::DisplayHelpMenu()
         DrawText("T: Open time unit input", 20, 80, 20, WHITE);
         DrawText("H: Display help menu", 20, 110, 20, WHITE);
         DrawText("I: Display game information", 20, 140, 20, WHITE);
-        DrawText("Left click: select an object", 20, 170, 20, WHITE);
-        DrawText("Right click: unselect an object", 20, 200, 20, WHITE);
+        DrawText("Left click: Select an object", 20, 170, 20, WHITE);
+        DrawText("Right click: Unselect an object", 20, 200, 20, WHITE);
         DrawText("Move camera with ZQSD", 20, 230, 20, WHITE);
         DrawText("Orient camera with arrow keys", 20, 260, 20, WHITE);
         DrawText("Rotate camera with A and E", 20, 290, 20, WHITE);
@@ -357,7 +357,7 @@ void Display::DisplayGameInformations()
     }
 
     DrawRectangle(rectX, 10, 400, 430, Fade(BLACK, 0.5f));
-    DrawText("Game informations", rectX + 10, 10 + 10, 20, GREEN);
+    DrawText("Game information", rectX + 10, 10 + 10, 20, GREEN);
     DrawText(TextFormat("Time unit: %d", _timeUnit), rectX + 10,
         10 + 2 * 10 + 20, 20, WHITE);
     DrawText(TextFormat("Number of teams: %d", _teams.getTeamsList().size()),
@@ -373,19 +373,19 @@ void Display::DisplayGameInformations()
     int iconX = rectX + 10;
     int textX = iconX + 30;
     DrawRectangle(iconX, 10 + 8 * 10 + 140, 20, 20, RED);
-    DrawText(TextFormat("   Food: %d", nbFood), textX, 10 + 8 * 10 + 140, 20, WHITE);
+    DrawText(TextFormat(" Food: %d", nbFood), textX, 10 + 8 * 10 + 140, 20, WHITE);
     DrawRectangle(iconX, 10 + 9 * 10 + 160, 20, 20, BROWN);
-    DrawText(TextFormat("   Linemate: %d", nbLinemate), textX, 10 + 9 * 10 + 160, 20, WHITE);
+    DrawText(TextFormat(" Linemate: %d", nbLinemate), textX, 10 + 9 * 10 + 160, 20, WHITE);
     DrawRectangle(iconX, 10 + 10 * 10 + 180, 20, 20, BLUE);
-    DrawText(TextFormat("   Deraumere: %d", nbDeraumere), textX, 10 + 10 * 10 + 180, 20, WHITE);
+    DrawText(TextFormat(" Deraumere: %d", nbDeraumere), textX, 10 + 10 * 10 + 180, 20, WHITE);
     DrawRectangle(iconX, 10 + 11 * 10 + 200, 20, 20, YELLOW);
-    DrawText(TextFormat("   Sibur: %d", nbSibur), textX, 10 + 11 * 10 + 200, 20, WHITE);
+    DrawText(TextFormat(" Sibur: %d", nbSibur), textX, 10 + 11 * 10 + 200, 20, WHITE);
     DrawRectangle(iconX, 10 + 12 * 10 + 220, 20, 20, ORANGE);
-    DrawText(TextFormat("   Mendiane: %d", nbMendiane), textX, 10 + 12 * 10 + 220, 20, WHITE);
+    DrawText(TextFormat(" Mendiane: %d", nbMendiane), textX, 10 + 12 * 10 + 220, 20, WHITE);
     DrawRectangle(iconX, 10 + 13 * 10 + 240, 20, 20, PURPLE);
-    DrawText(TextFormat("   Phiras: %d", nbPhiras), textX, 10 + 13 * 10 + 240, 20, WHITE);
+    DrawText(TextFormat(" Phiras: %d", nbPhiras), textX, 10 + 13 * 10 + 240, 20, WHITE);
     DrawRectangle(iconX, 10 + 14 * 10 + 260, 20, 20, PINK);
-    DrawText(TextFormat("   Thystame: %d", nbThystame), textX, 10 + 14 * 10 + 260, 20, WHITE);
+    DrawText(TextFormat(" Thystame: %d", nbThystame), textX, 10 + 14 * 10 + 260, 20, WHITE);
 }
 
 void Display::displayElements()
