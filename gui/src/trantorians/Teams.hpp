@@ -85,6 +85,13 @@ namespace GUI {
             void addEggToList(Egg newEgg);
 
             /**
+             * @brief Remove egg from egg's list
+             * @param string egg Id
+             * @return void (nothing to return)
+             */
+            void removeEggFromList(std::string eggId);
+
+            /**
              * @brief Get list of egg in the team
              * @return list of egg objects
              */

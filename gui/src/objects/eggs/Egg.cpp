@@ -9,9 +9,9 @@
 
 using namespace GUI;
 
-Egg::Egg(std::string teamName, std::string ownerID, Position tile)
+Egg::Egg(std::string eggId, std::string ownerID, Position tile)
     :   AObject(0, tile)
-    ,   _teamName(std::move(teamName))
+    ,   _eggId(std::move(eggId))
     ,   _ownerID(ownerID)
 {
     _eggModel = LoadModel("gui/src/assets/egg/egg.obj");
@@ -27,6 +27,11 @@ Egg::~Egg()
 std::string Egg::getTeam() const
 {
     return _teamName;
+}
+
+std::string Egg::getEggId() const
+{
+    return _eggId;
 }
 
 std::string Egg::getOwnerID() const

@@ -398,7 +398,7 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        int eggNb = std::stoi(tokens[1]);
+        std::string eggId = tokens[1];
         std::string trantorianId = tokens[2];
         int x = std::stoi(tokens[3]);
         int y = std::stoi(tokens[4]);
@@ -409,9 +409,9 @@ void Game::initializeCallbacks()
                     Position pos;
                     pos.setX(x);
                     pos.setY(y);
-                    Egg egg(team.getName(), trantorianId, pos);
+                    Egg egg(eggId, trantorianId, pos);
                     team.addEggToList(egg);
-                    std::cout << "GUI LOG: Egg " << eggNb
+                    std::cout << "GUI LOG: Egg " << eggId
                         << " has been layed by player " << trantorianId << std::endl;
                 }
             }
@@ -440,8 +440,16 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        // HANDLE DEATH FOR AN EGG
-        std::cout << "GUI LOG: Death of " << token[1] << " Egg" << std::endl;
+        std::string eggId = tokens[1];
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &egg : team.getEggList()) {
+                if (egg.getEggId() == eggId) {
+                    team.removeEggFromList(eggId);
+                    std::cout << "GUI LOG: Death of " << eggId << " Egg" << std::endl;
+                }
+            }
+        }
     });
 
     _commandFactory.setCallback("seg", [this](std::istringstream &iss){
