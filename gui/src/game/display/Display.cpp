@@ -190,6 +190,8 @@ void Display::DrawScoreBoard(Teams &teams)
                 yPosition += lineHeight;
             }
         }
+        if (_selectedTile != nullptr)
+            _selectedTile = nullptr;
     }
 }
 
@@ -253,7 +255,7 @@ void Display::DrawSSTBox()
         if (_framesCounter / 20 % 2 == 0) {
             DrawText("_", textBox.x + 8 + MeasureText(_inputText, 20), textBox.y + 12, 20, WHITE);
         }
-        DrawText("Enter new time unit:", textBox.x, textBox.y - 30, 20, WHITE);
+        DrawText("Enter new frequency:", textBox.x, textBox.y - 30, 20, WHITE);
         DrawRectangleRec(sendButton, Fade(BLACK, 0.5f));
         DrawText("Send", sendButton.x + 10, sendButton.y + 10, 20, WHITE);
         if (CheckCollisionPointRec(GetMousePosition(), sendButton)
@@ -272,7 +274,7 @@ void Display::DisplayHelpMenu()
         DrawRectangle(10, 10, 500, 590, Fade(BLACK, 0.5f));
         DrawText("Help Menu", 20, 20, 20, GREEN);
         DrawText("TAB: Display scoreboard", 20, 50, 20, WHITE);
-        DrawText("T: Open time unit input", 20, 80, 20, WHITE);
+        DrawText("T: Open frequency", 20, 80, 20, WHITE);
         DrawText("H: Display help menu", 20, 110, 20, WHITE);
         DrawText("I: Display game information", 20, 140, 20, WHITE);
         DrawText("Left click: Select an object", 20, 170, 20, WHITE);
@@ -358,7 +360,7 @@ void Display::DisplayGameInformations()
 
     DrawRectangle(rectX, 10, 400, 430, Fade(BLACK, 0.5f));
     DrawText("Game information", rectX + 10, 10 + 10, 20, GREEN);
-    DrawText(TextFormat("Time unit: %d", _timeUnit), rectX + 10,
+    DrawText(TextFormat("Frequency: %d", _timeUnit), rectX + 10,
         10 + 2 * 10 + 20, 20, WHITE);
     DrawText(TextFormat("Number of teams: %d", _teams.getTeamsList().size()),
         rectX + 10, 10 + 3 * 10 + 40, 20, WHITE);
