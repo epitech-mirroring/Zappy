@@ -34,6 +34,7 @@ static char *add_space(char *str, char *tmp, int j, int element)
     if (j < element - 1)
         sprintf(tmp, "%s ", str);
     return tmp;
+
 }
 
 static char *make_string_for_elements(const int elements[8])
@@ -62,7 +63,6 @@ char *get_element_on_tile(game_t *game, tile_t *tile,
         return ",";
     }
     i++;
-    elements[0] = tile->player_count;
     elements[1] = hashmap_get(tile->resources, "food");
     elements[2] = hashmap_get(tile->resources, "linemate");
     elements[3] = hashmap_get(tile->resources, "deraumere");
