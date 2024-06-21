@@ -134,7 +134,7 @@ void handle_new_client(game_t *game)
     }
 }
 
-game_t *init_game(array_t *teams, size_t map_size[2])
+game_t *init_game(array_t *teams, size_t map_size[2], size_t min_places)
 {
     game_t *game = malloc(sizeof(game_t));
 
@@ -154,6 +154,7 @@ game_t *init_game(array_t *teams, size_t map_size[2])
     game->clients_without_team = array_constructor(sizeof(client_t), NULL);
     game->win = false;
     game->food_spwan = 0;
+    game->min_places = min_places;
     return game;
 }
 
@@ -188,6 +189,7 @@ void game_tick(game_t *game)
         trantorian_tick(trantorian);
         trantorian_action(game, trantorian);
     }
+    manage_teams_places(game);
     check_win(game);
 }
 

@@ -37,6 +37,7 @@ extern "C" {
         bool win;
         char *winning_team;
         int food_spwan;
+        size_t min_places;
 
         map_t *map;
     } game_t;
@@ -48,7 +49,7 @@ extern "C" {
      * @param map_size The size of the map [width, height]
      * @return game_t* The game
      */
-    game_t *init_game(array_t *teams, size_t map_size[2]);
+    game_t *init_game(array_t *teams, size_t map_size[2], size_t min_places);
 
     /**
      * @brief Destroy a game
@@ -287,6 +288,15 @@ extern "C" {
      */
     bool can_elevate(game_t *game, array_t *trantorians, size_t level,
         coordinates_t pos);
+
+    /**
+     * @brief Check if a team has the sum of the trantorians in
+     * the team and the eggs of the team is >= of the minimum space
+     * in the team
+     *
+     *@param game The game
+     */
+    void manage_teams_places(game_t *game);
 
     #ifdef __cplusplus
 }
