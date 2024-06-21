@@ -18,12 +18,16 @@
 
 static void write_to_client(client_t *client)
 {
-    char *message = buffer_get_next(client->buffer_answered);
+    char *message = buffer_get_next(client->buffer_answered, '\n');
+    char *tmp = NULL;
 
     while (message != NULL) {
-        send(client->socket, message, strlen(message), 0);
+        tmp = calloc(strlen(message) + 2, sizeof(char));
+        sprintf(tmp, "%s\n", message);
+        send(client->socket, tmp, strlen(tmp), 0);
         free(message);
-        message = buffer_get_next(client->buffer_answered);
+        free(tmp);
+        message = buffer_get_next(client->buffer_answered, '\n');
     }
     free(message);
 }

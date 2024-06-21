@@ -118,7 +118,7 @@ void handle_new_client(game_t *game)
 
     for (size_t i = 0; i < array_get_size(game->clients_without_team); i++) {
         client = (client_t *)array_get_at(game->clients_without_team, i);
-        msg = buffer_get_next(client->buffer_asked);
+        msg = buffer_get_next(client->buffer_asked, '\n');
         if (msg == NULL)
             continue;
         if (can_create_trantorian(game, msg)) {
@@ -129,8 +129,9 @@ void handle_new_client(game_t *game)
             new_client_ping(game, client,
                 get_team_by_name(game->teams, msg), trantorian);
             array_remove(game->clients_without_team, i);
-        } else
+        } else {
             new_client_unknow_team(game, client, msg, i);
+        }
     }
 }
 

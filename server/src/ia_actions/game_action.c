@@ -87,7 +87,7 @@ static void dup_action(trantorian_t *trantorian,
 
 static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
 {
-    char *msg = buffer_get_next(trantorian->client->buffer_asked);
+    char *msg = buffer_get_next(trantorian->client->buffer_asked, '\n');
     char *cmd = calloc(1024, sizeof(char));
     char *param = calloc(1024, sizeof(char));
     size_t i = 0;
@@ -103,7 +103,7 @@ static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
             dup_action(trantorian, i, param, game);
         }
         free(msg);
-        msg = buffer_get_next(trantorian->client->buffer_asked);
+        msg = buffer_get_next(trantorian->client->buffer_asked, '\n');
     }
     free_all(cmd, param, msg);
 }
@@ -130,7 +130,7 @@ void check_dead_trantorians(game_t *game)
             snprintf(msg, 10, "dead\n");
             buffer_write(trantorian->client->buffer_answered, msg);
             pdi_log_gui(game, trantorian);
-            trantorian->client->useless = true;
+            trantorian->client->need_to_be_kick = true;
             array_remove(game->trantorians, i);
             incantation_dead_trantorian(game->incantations, trantorian);
             destroy_trantorian(trantorian);

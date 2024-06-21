@@ -37,7 +37,7 @@ extern "C" {
     typedef struct client_s {
         int socket;
         client_type_t type;
-        bool useless;
+        bool need_to_be_kick;
 
         buffer_t *buffer_asked;
         buffer_t *buffer_answered;
