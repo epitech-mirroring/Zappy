@@ -39,12 +39,14 @@ void Game::runGame()
     initializeCallbacks();
 
     while (_display.windowShouldClose() == false) {
+        ensureGameInit();
         _display.setTimeUnit(_timeUnit);
         handleNewTimeUnit();
         _display.displayElements();
         data = _client.readData();
         protocolHandler.handleData(data);
         data.clear();
+        ensureGameInformation();
     }
     _display.closeWindow();
 }
@@ -93,6 +95,34 @@ void Game::handleNewTimeUnit()
         std::cerr << "INVALID TIME UNIT" << std::endl;
         newTimeUnitStr.clear();
         _display.setNewTimeUnit(newTimeUnitStr);
+    }
+}
+
+void Game::ensureGameInit()
+{
+    if (_world.getHeight() == 0 && _world.getWidth() == 0) {
+        _client._socket.get()->send("msz\n");
+    }
+    if (_timeUnit == 0) {
+        _client._socket.get()->send("sgt\n");
+    }
+    if (Teams::getTeamsList().size() == 0) {
+        _client._socket.get()->send("tna\n");
+    }
+}
+
+void Game::ensureGameInformation()
+{
+    _client._socket.get()->send("mct\n");
+    for (auto &team : Teams::getTeamsList()) {
+        for (auto &trantorian : team.getTrantorianList()) {
+            std::string pinRequest = "pin " + trantorian.getId() + "\n";
+            std::string ppoRequest = "ppo " + trantorian.getId() + "\n";
+            std::string plvRequest = "plv " + trantorian.getId() + "\n";
+            _client._socket.get()->send(pinRequest);
+            _client._socket.get()->send(ppoRequest);
+            _client._socket.get()->send(plvRequest);
+        }
     }
 }
 

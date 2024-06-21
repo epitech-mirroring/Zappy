@@ -59,6 +59,15 @@ namespace GUI {
          */
         void initializeCallbacks();
 
+        /**
+         * @brief Ensure the game is initialized by requesting the game info to the server
+         */
+        void ensureGameInit();
+
+        /**
+         * @brief Ensure the info are received from the server
+         */
+        void ensureGameInformation();
     private:
         World _world;                            // World object
         Teams _teams;                            // Teams object
