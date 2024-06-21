@@ -14,9 +14,9 @@
 static int manage_pos(int index, int max)
 {
     if (index < 0)
-        return max - 1;
+        return max + (index % max);
     if (index == max)
-        return 0;
+        return index % max;
     return index;
 }
 
