@@ -327,3 +327,8 @@ std::string Display::getNewTimeUnit()
 {
     return _newTimeUnit;
 }
+
+void Display::setNewTimeUnit(std::string newTimeUnit)
+{
+    _newTimeUnit = newTimeUnit;
+}

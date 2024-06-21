@@ -110,6 +110,11 @@ namespace GUI {
          */
         std::string getNewTimeUnit();
 
+        /**
+         * @brief Set the new time unit
+         */
+        void setNewTimeUnit(std::string newTimeUnit);
+
     protected:
         Camera _camera;                          // Camera
         std::vector<Model> _clouds;              // Clouds models
