@@ -58,8 +58,6 @@ void buffer_write(buffer_t *buffer, char *data)
         buffer->buffer[buffer->write_index] = data[i];
         buffer->write_index++;
     }
-    buffer->buffer[buffer->write_index] = '\n';
-    buffer->write_index++;
 }
 
 char *buffer_get_next(buffer_t *buffer, char limit)
