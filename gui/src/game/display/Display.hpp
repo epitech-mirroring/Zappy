@@ -14,6 +14,7 @@
     #include "trantorians/Teams.hpp"
     #include "trantorians/Trantorian.hpp"
     #include "game/events/Events.hpp"
+    #include <cstring>
 
 namespace GUI {
     class Display : public Events {
@@ -99,12 +100,28 @@ namespace GUI {
          */
         std::vector<Model> getClouds() const;
 
+        /**
+         * @brief Draw the SST Box
+         */
+        void DrawSSTBox();
+
+        /**
+         * @brief Draw the TextBox
+         */
+        std::string getNewTimeUnit();
+
     protected:
         Camera _camera;                          // Camera
         std::vector<Model> _clouds;              // Clouds models
         std::vector<Vector3> _cloudPositions;    // Clouds positions
         World &_world;                           // World
         Teams &_teams;                           // Teams
+
+        char _inputText[256] = "";
+        bool _textBoxActive = false;
+        int _framesCounter = 0;
+        int _ignoreInputFrames = 0;
+        std::string _newTimeUnit;
     };
 }
 

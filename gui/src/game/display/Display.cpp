@@ -72,16 +72,16 @@ void Display::DrawTrantorians(std::list<Teams> teams)
             Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
             Vector3 scale = {1.0f, 1.0f, 1.0f};
 
-            DrawModelEx(trantorian.getModel(), position, rotationAxis, trantorian.getOrientation(), scale, WHITE);
-
+            DrawModelEx(trantorian.getModel(), position,
+                rotationAxis, trantorian.getOrientation(), scale, WHITE);
             BoundingBox box = {
                 {static_cast<float>(trantorian.getPosition().getX()) - 0.5f, 0.25f,
                     static_cast<float>(trantorian.getPosition().getY()) - 0.5f},
                 {static_cast<float>(trantorian.getPosition().getX()) + 0.5f, 1.25f,
                     static_cast<float>(trantorian.getPosition().getY()) + 0.5f}
             };
-
-            if (_hoveredTrantorian != nullptr && (_hoveredTrantorian->getId() == trantorian.getId())) {
+            if (_hoveredTrantorian != nullptr && (_hoveredTrantorian->getId() ==
+                trantorian.getId())) {
                 DrawBoundingBox(box, RED);
             }
         }
@@ -141,7 +141,6 @@ void Display::DrawObjects(std::list<IObject*> objects)
         {Trantorian::ResourceType::PHIRAS, {-0.2f, 0.0f}},
         {Trantorian::ResourceType::THYSTAME, {0.2f, 0.0f}}
     };
-
     std::unordered_map<int, Color> typeColors = {
         {Trantorian::ResourceType::FOOD, RED},
         {Trantorian::ResourceType::LINEMATE, BROWN},
@@ -151,7 +150,6 @@ void Display::DrawObjects(std::list<IObject*> objects)
         {Trantorian::ResourceType::PHIRAS, PURPLE},
         {Trantorian::ResourceType::THYSTAME, PINK}
     };
-
     for (auto& object : objects) {
         auto offset = typeOffsets[object->getType()];
         auto color = typeColors[object->getType()];
@@ -211,10 +209,68 @@ void Display::DrawEgg()
     }
 }
 
+void Display::DrawSSTBox()
+{
+    if (IsKeyPressed(KEY_T)) {
+        _textBoxActive = !_textBoxActive;
+        if (_textBoxActive) {
+            memset(_inputText, 0, sizeof(_inputText));
+            _framesCounter = 0;
+            _ignoreInputFrames = 10;
+        }
+    }
+
+    if (_textBoxActive) {
+        if (_ignoreInputFrames > 0) {
+            _ignoreInputFrames--;
+        } else {
+            if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) {
+                _textBoxActive = false;
+                return;
+            }
+            int key = GetKeyPressed();
+            while (key > 0) {
+                if ((key >= 32) && (key <= 125) && (strlen(_inputText) < 255)) {
+                    int len = strlen(_inputText);
+                    _inputText[len] = (char)key;
+                    _inputText[len + 1] = '\0';
+                }
+                key = GetKeyPressed();
+            }
+            if (IsKeyPressed(KEY_BACKSPACE)) {
+                int len = strlen(_inputText);
+                if (len > 0) {
+                    _inputText[len - 1] = '\0';
+                }
+            }
+        }
+        _framesCounter++;
+        Rectangle textBox = { 800 - 200, 450 - 25, 400, 50 };
+        Rectangle sendButton = { textBox.x + textBox.width + 10, textBox.y, 100, 50 };
+
+        DrawRectangleRec(textBox, Fade(BLACK, 0.5f));
+        DrawText(_inputText, textBox.x + 5, textBox.y + 10, 20, WHITE);
+        if (_framesCounter / 20 % 2 == 0) {
+            DrawText("_", textBox.x + 8 + MeasureText(_inputText, 20), textBox.y + 12, 20, WHITE);
+        }
+        DrawText("Enter new time unit:", textBox.x, textBox.y - 30, 20, WHITE);
+        DrawRectangleRec(sendButton, Fade(BLACK, 0.5f));
+        DrawText("Send", sendButton.x + 10, sendButton.y + 10, 20, WHITE);
+        if (CheckCollisionPointRec(GetMousePosition(), sendButton)
+            && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            _newTimeUnit = _inputText;
+            _textBoxActive = false;
+        }
+    }
+}
+
 void Display::displayElements()
 {
-    detectHoveredTile(_camera, _world);
-    detectHoveredTrantorian(_camera, _teams);
+    if (!_textBoxActive) {
+        detectHoveredTile(_camera, _world);
+        detectHoveredTrantorian(_camera, _teams);
+        updateCamera();
+    }
 
     BeginDrawing();
     ClearBackground(BLUE);
@@ -229,6 +285,7 @@ void Display::displayElements()
     DrawTileInfo();
     DrawTrantorianInfo();
     DrawScoreBoard(_teams);
+    DrawSSTBox();
     EndDrawing();
 }
 
@@ -264,4 +321,9 @@ void Display::cleanupModels()
             UnloadModel(trantorian.getModel());
         }
     }
+}
+
+std::string Display::getNewTimeUnit()
+{
+    return _newTimeUnit;
 }

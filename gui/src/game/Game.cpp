@@ -39,7 +39,7 @@ void Game::runGame()
     initializeCallbacks();
 
     while (_display.windowShouldClose() == false) {
-        _display.updateCamera();
+        handleNewTimeUnit();
         _display.displayElements();
         data = _client.readData();
         protocolHandler.handleData(data);
@@ -72,6 +72,16 @@ void Game::createWorld(std::vector<std::string> data)
     std::cout << "GUI LOG: Tiles created (" << (_world.getTiles().size()
         * _world.getTiles().size()) << ")" << std::endl;
     std::cout << "GUI LOG: Clouds created (" << _display.getClouds().size() << ")" << std::endl;
+}
+
+void Game::handleNewTimeUnit()
+{
+    if (_display.getNewTimeUnit() != "" && (std::stoi(_display.getNewTimeUnit()) != _timeUnit)) {
+        std::string request = "sst " + _display.getNewTimeUnit() + "\n";
+        _client._socket.get()->send(request);
+        _timeUnit = std::stoi(_display.getNewTimeUnit());
+        std::cout << "GUI LOG: Sent SGT: " << _display.getNewTimeUnit() << std::endl;
+    }
 }
 
 void Game::initializeCallbacks()
