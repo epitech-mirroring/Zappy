@@ -122,12 +122,12 @@ void find_trantorians_action(game_t *game)
 void check_dead_trantorians(game_t *game)
 {
     trantorian_t *trantorian = NULL;
-    char *msg = malloc(sizeof(char) * 5);
+    char *msg = calloc(10, sizeof(char));
 
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
         if (trantorian->is_dead) {
-            sprintf(msg, "dead\n");
+            snprintf(msg, 10, "dead\n");
             buffer_write(trantorian->client->buffer_answered, msg);
             pdi_log_gui(game, trantorian);
             trantorian->client->useless = true;

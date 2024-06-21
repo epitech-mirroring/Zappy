@@ -72,14 +72,23 @@ bool can_elevate(game_t *game, array_t *trantorians, size_t level,
     return true;
 }
 
-void cast_incantation(game_t *game, trantorian_t *trantorian)
+static void cant_level_up(trantorian_t *trantorian)
 {
-    trantorian_t *tmp = trantorian;
-    array_t *trantorians = array_constructor(sizeof(trantorian_t), NULL);
-    action_t *action = (action_t *)array_get_at(trantorian->actions, 0);
+    trantorian->incantated = false;
+    array_remove(trantorian->actions, 0);
+    buffer_write(trantorian->client->buffer_answered, "ko\n");
+}
 
+static void find_trantorians(game_t *game,
+    array_t *trantorians, trantorian_t *trantorian)
+{
+    action_t *action = NULL;
+    trantorian_t *tmp = NULL;
+
+    array_push_back(trantorians, trantorian);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         tmp = (trantorian_t *)array_get_at(game->trantorians, i);
+        action = (action_t *)array_get_at(trantorian->actions, 0);
         if (tmp->coordinates.x == trantorian->coordinates.x &&
             tmp->coordinates.y == trantorian->coordinates.y
             && tmp->level == trantorian->level && strcmp(action->action_name,
@@ -87,12 +96,21 @@ void cast_incantation(game_t *game, trantorian_t *trantorian)
             array_push_back(trantorians, trantorian);
         }
     }
+}
+
+void cast_incantation(game_t *game, trantorian_t *trantorian)
+{
+    array_t *trantorians = array_constructor(sizeof(trantorian_t), NULL);
+
+    for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
+        find_trantorians(game, trantorians, trantorian);
+    }
     if (can_elevate(game, trantorians,
         trantorian->level, trantorian->coordinates)) {
         ping_all(game, trantorians,
             trantorian->level, trantorian->coordinates);
     } else {
-        buffer_write(trantorian->client->buffer_answered, "ko\n");
+        cant_level_up(trantorian);
     }
 }
 
@@ -100,11 +118,17 @@ void incantation(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
 
+    if (trantorian->incantated == false) {
+        free(msg);
+        return;
+    }
+    trantorian->level++;
     sprintf(msg, "Current level: %ld\n", trantorian->level);
     buffer_write(trantorian->client->buffer_answered, msg);
     sprintf(msg, "pie %ld %ld %ld\n", trantorian->coordinates.x,
         trantorian->coordinates.y, trantorian->level);
     array_push_back(game->gui_log, msg);
+    trantorian->incantated = false;
 }
 
 incantation_t *init_incantation(array_t *trantorians,
@@ -115,6 +139,8 @@ incantation_t *init_incantation(array_t *trantorians,
     incantation->level = level;
     incantation->pos = pos;
     incantation->trantorians = trantorians;
+    incantation->trantorians->element_destructor = NULL;
+    incantation->couldown = 300;
     return incantation;
 }
 

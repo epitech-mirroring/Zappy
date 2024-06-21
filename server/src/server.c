@@ -40,10 +40,10 @@ static void tick(server_t *server)
     for (int i = 0; i < nb_ticks; i++) {
         game_tick(server->game);
     }
-    check_dead_client(server);
     run_gui_commands(server);
     update_graphic_clients_buffer(server);
     write_to_clients(server);
+    check_dead_client(server);
     server->nb_ticks += nb_ticks;
 }
 
@@ -96,7 +96,7 @@ static void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds)
 
 void run(server_t *server)
 {
-    struct timeval tv;
+    struct timeval tv = {0, 0};
     struct timeval *tv2;
     fd_set readfds;
     fd_set writefds;

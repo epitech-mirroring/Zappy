@@ -40,8 +40,11 @@ buffer_t *create_buffer(size_t capacity)
 
 void buffer_write(buffer_t *buffer, char *data)
 {
-    size_t data_size = strlen(data);
+    size_t data_size = 0;
 
+    if (buffer == NULL || data == NULL)
+        return;
+    data_size = strlen(data);
     if (!can_write(buffer, data_size))
         return;
     if (data[0] == '\0' || data[0] == '\n' || data[0] == '\r')
