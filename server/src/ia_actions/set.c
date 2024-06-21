@@ -8,6 +8,7 @@
 
 #include "game.h"
 #include "actions.h"
+#include "gui.h"
 
 static bool check_set_cmd(game_t *game, char *param, trantorian_t *trantorian)
 {
@@ -22,6 +23,23 @@ static bool check_set_cmd(game_t *game, char *param, trantorian_t *trantorian)
         return false;
     }
     return true;
+}
+
+static char *find_resource_number(char *param)
+{
+    if (strcmp(param, "food") == 0)
+        return "q0";
+    if (strcmp(param, "linemate") == 0)
+        return "q1";
+    if (strcmp(param, "deraumere") == 0)
+        return "q2";
+    if (strcmp(param, "sibur") == 0)
+        return "q3";
+    if (strcmp(param, "mendiane") == 0)
+        return "q4";
+    if (strcmp(param, "phiras") == 0)
+        return "q5";
+    return "q6";
 }
 
 void set(game_t *game, trantorian_t *trantorian)
@@ -44,4 +62,5 @@ void set(game_t *game, trantorian_t *trantorian)
     buffer_write(trantorian->client->buffer_answered, msg);
     free(msg);
     free(trantorian->param);
+    pdr_log_gui(game, trantorian, find_resource_number(trantorian->param));
 }

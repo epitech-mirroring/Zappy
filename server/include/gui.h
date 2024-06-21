@@ -158,7 +158,7 @@ extern "C" {
      * @param trantorian The trantorian
      * @param resource The resource
      */
-    void pdr_log_gui(game_t *game, trantorian_t *trantorian, size_t resource);
+    void pdr_log_gui(game_t *game, trantorian_t *trantorian, char *resource);
 
     /**
      * @brief pgt command
@@ -167,7 +167,7 @@ extern "C" {
      * @param trantorian The trantorian
      * @param resource The resource
      */
-    void pgt_log_gui(game_t *game, trantorian_t *trantorian, size_t resource);
+    void pgt_log_gui(game_t *game, trantorian_t *trantorian, char *resource);
 
     /**
      * @brief pdi command

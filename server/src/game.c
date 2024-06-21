@@ -129,9 +129,8 @@ void handle_new_client(game_t *game)
             new_client_ping(game, client,
                 get_team_by_name(game->teams, msg), trantorian);
             array_remove(game->clients_without_team, i);
-        } else {
+        } else
             new_client_unknow_team(game, client, msg, i);
-        }
     }
 }
 
