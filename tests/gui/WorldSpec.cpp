@@ -32,15 +32,15 @@ TEST(WorldTest, SetHeight) {
 TEST(WorldTest, AddObject) {
     GUI::World world(100, 200);
     GUI::Deraumere deraumere;
-    world.addObject(&deraumere);
+    world.addObject(&deraumere, GUI::Position(10, 20));
     ASSERT_EQ(1, world.getObjects().size());
 }
 
 TEST(WorldTest, RemoveObject) {
     GUI::World world(100, 200);
     GUI::Deraumere deraumere;
-    world.addObject(&deraumere);
-    world.removeObject(&deraumere);
+    world.addObject(&deraumere, GUI::Position(10, 20));
+    world.removeObject(&deraumere, GUI::Position(10, 20));
     ASSERT_EQ(0, world.getObjects().size());
 }
 
@@ -49,7 +49,7 @@ TEST(WorldTest, GetObjectsAt) {
     GUI::Deraumere deraumere;
     deraumere.getPosition().setX(10);
     deraumere.getPosition().setY(20);
-    world.addObject(&deraumere);
+    world.addObject(&deraumere, GUI::Position(10, 20));
     auto objectsAt = world.getObjectsAt(GUI::Position(10, 20));
     ASSERT_EQ(1, objectsAt.size());
 }
@@ -59,7 +59,7 @@ TEST(WorldTest, NoObjectsAt) {
     GUI::Deraumere deraumere;
     deraumere.getPosition().setX(10);
     deraumere.getPosition().setY(20);
-    world.addObject(&deraumere);
+    world.addObject(&deraumere, GUI::Position(10, 20));
     auto objectsAt = world.getObjectsAt(GUI::Position(30, 40));
     ASSERT_EQ(0, objectsAt.size());
 }
@@ -72,8 +72,8 @@ TEST(WorldTest, MultipleObjectsAt) {
     deraumere.getPosition().setY(20);
     linemate.getPosition().setX(10);
     linemate.getPosition().setY(20);
-    world.addObject(&deraumere);
-    world.addObject(&linemate);
+    world.addObject(&deraumere, GUI::Position(10, 20));
+    world.addObject(&linemate, GUI::Position(10, 20));
     auto objectsAt = world.getObjectsAt(GUI::Position(10, 20));
     ASSERT_EQ(2, objectsAt.size());
 }
@@ -82,8 +82,8 @@ TEST(WorldTest, GetObjects) {
     GUI::World world(100, 200);
     GUI::Deraumere deraumere;
     GUI::Linemate linemate;
-    world.addObject(&deraumere);
-    world.addObject(&linemate);
+    world.addObject(&deraumere, GUI::Position(10, 20));
+    world.addObject(&linemate, GUI::Position(30, 40));
     auto objects = world.getObjects();
     ASSERT_EQ(2, objects.size());
 }
@@ -92,11 +92,11 @@ TEST(WorldTest, AddAndRemoveMultipleObjects) {
     GUI::World world(100, 200);
     GUI::Deraumere deraumere;
     GUI::Linemate linemate;
-    world.addObject(&deraumere);
-    world.addObject(&linemate);
+    world.addObject(&deraumere, GUI::Position(10, 20));
+    world.addObject(&linemate, GUI::Position(30, 40));
     ASSERT_EQ(2, world.getObjects().size());
-    world.removeObject(&deraumere);
+    world.removeObject(&deraumere, GUI::Position(10, 20));
     ASSERT_EQ(1, world.getObjects().size());
-    world.removeObject(&linemate);
+    world.removeObject(&linemate, GUI::Position(30, 40));
     ASSERT_EQ(0, world.getObjects().size());
 }

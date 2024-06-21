@@ -9,13 +9,13 @@
     #define IOBJECT_HPP_
 
     #include "position/Position.hpp"
+    #include <string>
 
 namespace GUI {
     class IObject {
     public:
         /**
-         * @brief Get the Density object
-         * @return float
+         * @brief Construct a new IObject object
          */
         IObject() noexcept = default;
         /**
@@ -24,10 +24,10 @@ namespace GUI {
         virtual ~IObject() noexcept = default;
 
         /**
-         * @brief Get the Density of the object
-         * @return float (density of the object)
+         * @brief Get the Quantity of the object
+         * @return unsinged int (Quantity of the object)
          */
-        [[nodiscard]] virtual float getDensity() const noexcept = 0;
+        [[nodiscard]] virtual unsigned int getQuantity() const noexcept = 0;
 
         /**
          * @brief Get the Position of the tile where the object is
@@ -40,6 +40,24 @@ namespace GUI {
          * @return Position& tile where the object is (modifiable)
          */
         [[nodiscard]] virtual Position& getPosition() noexcept = 0;
+
+
+        /**
+         * @brief Get the Type of the object
+         * @return unsigned int (type of the object (follow the protocol))
+         */
+        [[nodiscard]] virtual unsigned int getType() noexcept = 0;
+
+        /**
+         * @brief Set the Quantity of the object
+         * @param quantity (Quantity of the object)
+         */
+        virtual void setQuantity(unsigned int quantity) noexcept = 0;
+
+        /**
+         * @brief get the name of the object
+         */
+        [[nodiscard]] virtual std::string getName() const noexcept = 0;
     };
 }  // namespace GUI
 #endif /* !IOBJECT_HPP_ */
