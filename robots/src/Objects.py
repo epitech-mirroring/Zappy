@@ -20,10 +20,19 @@ class AbstractObject:
             raise ValueError("Cannot add different objects")
         other.count = 0
 
+    def set_count(self, count: int):
+        self.count = count
+
+    def get_name(self) -> str:
+        pass
+
 
 class Food(AbstractObject):
     def __init__(self, count: int = 1):
         super().__init__(count)
+
+    def get_name(self) -> str:
+        return "food"
 
 
 class AbstractStones(AbstractObject):
@@ -35,32 +44,51 @@ class Linemate(AbstractStones):
     def __init__(self, count: int = 1):
         super().__init__(count)
 
+    def get_name(self) -> str:
+        return "linemate"
+
 
 class Deraumere(AbstractStones):
     def __init__(self, count: int = 1):
         super().__init__(count)
+
+    def get_name(self) -> str:
+        return "deraumere"
 
 
 class Sibur(AbstractStones):
     def __init__(self, count: int = 1):
         super().__init__(count)
 
+    def get_name(self) -> str:
+        return "sibur"
 
 class Mendiane(AbstractStones):
     def __init__(self, count: int = 1):
         super().__init__(count)
+
+    def get_name(self) -> str:
+        return "mendiane"
 
 
 class Phiras(AbstractStones):
     def __init__(self, count: int = 1):
         super().__init__(count)
 
+    def get_name(self) -> str:
+        return "phiras"
+
 
 class Thystame(AbstractStones):
     def __init__(self, count: int = 1):
         super().__init__(count)
 
+    def get_name(self) -> str:
+        return "thystame"
 
 class Egg(AbstractObject):
     def __init__(self):
         super().__init__(0)
+
+    def get_name(self) -> str:
+        return "egg"
