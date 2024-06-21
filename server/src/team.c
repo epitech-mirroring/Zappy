@@ -21,7 +21,10 @@ team_t *init_team(char *name)
 
 void destroy_team(team_t *team)
 {
-    array_destructor(team->trantorians);
+    if (team != NULL) {
+        array_destructor(team->trantorians);
+        uuid_clear(team->uuid);
+    }
     free(team);
 }
 
