@@ -16,6 +16,11 @@ pipeline {
                 checkout scm
             }
         }
+        stage('🐋 Prepare test docker') {
+            steps {
+                sh 'docker build -t epitechcontent/epitest-docker:local -f Dockerfile.test .'
+            }
+        }
         stage('🕵️ Lint') {
             steps {
                 // Run docker container
@@ -58,7 +63,7 @@ pipeline {
         stage('🏗️ Build') {
             agent {
                 docker {
-                    image 'epitechcontent/epitest-docker:latest'
+                    image 'epitechcontent/epitest-docker:local'
                     args '-v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/jenkins/.local:/.local -v /var/lib/jenkins/.cache:/.cache'
                 }
             }
@@ -89,7 +94,7 @@ pipeline {
         stage ('🧪 Tests') {
             agent {
                 docker {
-                    image 'epitechcontent/epitest-docker:gradle'
+                    image 'epitechcontent/epitest-docker:local'
                     args '-v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/jenkins/.local:/.local -v /var/lib/jenkins/.cache:/.cache'
                 }
             }
