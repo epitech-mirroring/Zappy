@@ -13,21 +13,20 @@
 #include "gui.h"
 
 static coordinates_t v_pos(int pos, trantorian_t *sender,
-                           trantorian_t *receiver, size_t h, size_t w)
+    trantorian_t *receiver, coordinates_t s)
 {
     int virtual_position[8][2] = {
-            {receiver->coordinates.x, receiver->coordinates.y - h},
-            {receiver->coordinates.x, receiver->coordinates.y + h},
-            {receiver->coordinates.x - w, receiver->coordinates.y},
-            {receiver->coordinates.x + w, receiver->coordinates.y},
-            {receiver->coordinates.x - w, receiver->coordinates.y - h},
-            {receiver->coordinates.x + w, receiver->coordinates.y - h},
-            {receiver->coordinates.x - w, receiver->coordinates.y + h},
-            {receiver->coordinates.x + w, receiver->coordinates.y + h}
+            {receiver->coordinates.x, receiver->coordinates.y - s.y},
+            {receiver->coordinates.x, receiver->coordinates.y + s.y},
+            {receiver->coordinates.x - s.x, receiver->coordinates.y},
+            {receiver->coordinates.x + s.x, receiver->coordinates.y},
+            {receiver->coordinates.x - s.x, receiver->coordinates.y - s.y},
+            {receiver->coordinates.x + s.x, receiver->coordinates.y - s.y},
+            {receiver->coordinates.x - s.x, receiver->coordinates.y + s.y},
+            {receiver->coordinates.x + s.x, receiver->coordinates.y + s.y}
     };
 
     return (coordinates_t){virtual_position[pos][0], virtual_position[pos][1]};
-
 }
 
 static coordinates_t get_closet_coordinates(trantorian_t *sender,
@@ -36,16 +35,17 @@ static coordinates_t get_closet_coordinates(trantorian_t *sender,
     int min_distance = 1000000;
     int distance;
     int closest_position[2] = {0, 0};
+    coordinates_t size = {w / 2, h / 2};
 
     for (int i = 0; i < 8; i++) {
         distance = sqrt(pow(sender->coordinates.x -
-                v_pos(i, sender, receiver, h, w).x, 2) +
+                v_pos(i, sender, receiver, size).x, 2) +
                 pow(sender->coordinates.y -
-                v_pos(i, sender, receiver, h, w).y, 2));
+                v_pos(i, sender, receiver, size).y, 2));
         if (distance < min_distance) {
             min_distance = distance;
-            closest_position[0] = v_pos(i, sender, receiver, h, w).x;
-            closest_position[1] = v_pos(i, sender, receiver, h, w).y;
+            closest_position[0] = v_pos(i, sender, receiver, size).x;
+            closest_position[1] = v_pos(i, sender, receiver, size).y;
         }
     }
     return (coordinates_t){closest_position[0], closest_position[1]};
@@ -106,13 +106,14 @@ void broadcast(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
     char *status_msg = calloc(10, sizeof(char));
+    trantorian_t *receiver;
+    int orientation;
 
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
-        trantorian_t *receiver =
-                (trantorian_t *)array_get_at(game->trantorians, i);
+        receiver = (trantorian_t *)array_get_at(game->trantorians, i);
         if (receiver->uuid != trantorian->uuid) {
-            int orientation = sound_orientation(trantorian, receiver,
-                                        game->map->height, game->map->width);
+            orientation = sound_orientation(trantorian, receiver,
+                game->map->height, game->map->width);
             snprintf(msg, 1024, "message %d, %s\n",
                      orientation, trantorian->param);
             buffer_write(receiver->client->buffer_answered, msg);
