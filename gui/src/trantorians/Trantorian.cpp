@@ -10,7 +10,7 @@
 using namespace GUI;
 
 Trantorian::Trantorian(std::string id, int x, int y, float orientation, int level)
-    : _id(id), _position(x, y), _level(level), _lifetimeRemaining(100), _alive(true), _action(false)
+    : _id(id), _position(x, y), _level(level), _lifetimeRemaining(100), _alive(true), _action(NONE)
 {
     if (orientation == static_cast<float>(NORTH))
         _orientation = 0;
@@ -25,16 +25,30 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
     _trantorianModel = LoadModel("gui/src/assets/trantorian/trantorian.obj");
     _trantorianTexture = LoadTexture("gui/src/assets/trantorian/trantorian.png");
     _trantorianModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _trantorianTexture;
+
+    _pexModel = LoadModel("gui/src/assets/pex/boot.obj");
+    _pexTexture = LoadTexture("gui/src/assets/pex/boot.png");
+    _pexModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pexTexture;
 }
 
-void Trantorian::setAction(bool action)
+void Trantorian::setAction(Action action)
 {
     _action = action;
 }
 
-bool Trantorian::getAction()
+Trantorian::Action Trantorian::getAction()
 {
     return _action;
+}
+
+void Trantorian::setActionStartTime(float time)
+{
+    _actionStartTime = time;
+}
+
+float Trantorian::getActionStartTime() const
+{
+    return _actionStartTime;
 }
 
 void Trantorian::setId(std::string id)
@@ -181,4 +195,24 @@ Model Trantorian::getModel() const
 Texture2D Trantorian::getTexture() const
 {
     return _trantorianTexture;
+}
+
+Model Trantorian::getPexModel() const
+{
+    return _pexModel;
+}
+
+Model Trantorian::getPbcModel() const
+{
+    return _pbcModel;
+}
+
+Model Trantorian::getPdrModel() const
+{
+    return _pdrModel;
+}
+
+Model Trantorian::getPgtModel() const
+{
+    return _pgtModel;
 }

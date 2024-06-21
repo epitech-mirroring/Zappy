@@ -27,7 +27,16 @@
 namespace GUI {
     class Trantorian {
         public:
-          enum ResourceType {
+            enum Action {
+                NONE = -1,
+                LOOK,
+                BROADCAST,
+                EXPULSION,
+                COLLECT,
+                DROP,
+                INCANTATION 
+            };
+            enum ResourceType {
                 FOOD,
                 LINEMATE,
                 DERAUMERE,
@@ -90,12 +99,23 @@ namespace GUI {
              * @brief Set trantorian action
              * @param bool
              */
-            void setAction(bool Action);
+            void setAction(Action action);
             /**
              * @brief Get trantorian action
-             * @return true if doing an action, false if not
+             * @return Action (corresponding to current action)
              */
-            [[nodiscard]] bool getAction();
+            [[nodiscard]] Action getAction();
+            /**
+             * @brief Set time when action start
+             * @param float action start time
+             * @return void (nothing to return)
+             */
+            void setActionStartTime(float time);
+            /**
+             * @brief Get action start time
+             * @return float (time when action start)
+             */
+            [[nodiscard]] float getActionStartTime() const;
 
             /**
              * @brief Set trantorian id
@@ -183,17 +203,44 @@ namespace GUI {
              */
             [[nodiscard]] Texture2D getTexture() const;
 
+            /**
+             * @brief Get the pex Model object
+             */
+            [[nodiscard]] Model getPexModel() const;
+            /**
+             * @brief Get the pbc Model object
+             */
+            [[nodiscard]] Model getPbcModel() const;
+            /**
+             * @brief Get the pdr Model object
+             */
+            [[nodiscard]] Model getPdrModel() const;
+            /**
+             * @brief Get the pgt Model object
+             */
+            [[nodiscard]] Model getPgtModel() const;
+
         private:
             GUI::Position _position;
             int _lifetimeRemaining;
             bool _alive;
-            bool _action;
+            Action _action;
+            float _actionStartTime;
             std::string _id;
             int _level;
             float _orientation;
             std::list<IObject *> _inventory;
             Model _trantorianModel;
             Texture2D _trantorianTexture;
+            Model _pexModel;
+            Texture2D _pexTexture;
+            Model _pbcModel;
+            Texture2D _pbcTexture;
+            Model _pdrModel;
+            Texture2D _pdrTexture;
+            Model _pgtModel;
+            Texture2D _pgtTexture;
+
     };
 } // namespace GUI  //
 #endif // TRANTORIAN_
