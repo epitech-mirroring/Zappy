@@ -30,21 +30,19 @@ static void write_to_client(client_t *client)
 
 static void tick(server_t *server)
 {
-    suseconds_t actual_time = time(NULL) * 1000000 + 0;
+    suseconds_t actual_time = time(NULL) * 1000000;
     int nb_ticks = (actual_time - server->prev_tick_time)
         / server->single_tick_time;
 
     handle_new_client(server->game);
-    if (nb_ticks <= 0)
-        return;
-    for (int i = 0; i < nb_ticks; i++) {
-        game_tick(server->game);
-    }
+    if (nb_ticks > 0)
+        for (int i = 0; i < nb_ticks; i++) {
+            game_tick(server->game);
+        }
     run_gui_commands(server);
     update_graphic_clients_buffer(server);
     write_to_clients(server);
     check_dead_client(server);
-    server->nb_ticks += nb_ticks;
 }
 
 static void read_clients_messages(server_t *server, fd_set *readfds)
