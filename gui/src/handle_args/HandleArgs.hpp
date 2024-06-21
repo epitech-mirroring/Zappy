@@ -44,6 +44,18 @@ namespace GUI {
         [[nodiscard]] int checkHostname(const std::string &hostname);
 
         /**
+         * @brief Get the Port object
+         * @return unsigned int (port)
+         */
+        [[nodiscard]] unsigned int getPort() const;
+
+        /**
+         * @brief Get the Hostname object
+         * @return std::string (hostname)
+         */
+        [[nodiscard]] std::string getHostname() const;
+
+        /**
          * @brief Print the usage of the program
          * @return void (nothing to return)
          */
