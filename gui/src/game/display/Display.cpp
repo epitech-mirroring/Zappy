@@ -197,6 +197,61 @@ void Display::DrawEgg()
     }
 }
 
+void Display::DrawAction()
+{
+    for (auto &team : Teams::getTeamsList()) {
+        for (auto &trantorian : team.getTrantorianList()) {
+            Vector3 position = {
+                static_cast<float>(trantorian.getPosition().getX()),
+                0.5f,
+                static_cast<float>(trantorian.getPosition().getY())
+            };
+            Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+            Vector3 scale = {0.07f, 0.07f, 0.07f};
+            if (trantorian.getAction() != Trantorian::Action::NONE) {
+                switch (trantorian.getAction()) {
+                    case Trantorian::Action::LOOK:
+                        // DrawLookAction();
+                    case Trantorian::Action::BROADCAST:
+                        // DrawBroadcatAction();
+                    case Trantorian::Action::EXPULSION:
+                        DrawExpulsionAction();
+                    case Trantorian::Action::DROP:
+                        // DrawDropAction();
+                    case Trantorian::Action::INCANTATION:
+                        // DrawIncantationAction();
+                    default:
+                        return;
+                }
+            }
+        }
+    }
+}
+
+void Display::DrawExpulsionAction()
+{
+    std::cout << "GUI LOG: in draw expulsion action" << std::endl;
+    for (auto &team : Teams::getTeamsList()) {
+        for (auto &trantorian : team.getTrantorianList()) {
+            trantorian.setAction(Trantorian::Action::EXPULSION);
+            trantorian.setActionStartTime(GetTime());
+            Vector3 position = {
+                static_cast<float>(trantorian.getPosition().getX()),
+                3.0f,
+                static_cast<float>(trantorian.getPosition().getY())
+            };
+            Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+            Vector3 scale = {0.1f, 0.1f, 0.1f};
+            if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+                DrawModelEx(trantorian.getPexModel(), position, rotationAxis, 0.0f, scale, WHITE);
+                std::cout << "GUI LOG: boot has been drawn" << std::endl;
+            } else {
+                trantorian.setAction(Trantorian::Action::NONE); // Désactiver l'affichage après le temps spécifié
+            }
+        }
+    }
+}
+
 void Display::displayElements()
 {
     Events::detectHoveredTile(_camera, _world);
@@ -210,6 +265,7 @@ void Display::displayElements()
     DrawTrantorians();
     DrawObjects(_world.getObjects());
     DrawEgg();
+    DrawAction();
     EndMode3D();
     DrawFPS(10, 10);
     DrawTileInfo();
