@@ -10,7 +10,7 @@
 #include "actions.h"
 #include "gui.h"
 
-static void eject_north(game_t *game, trantorian_t *trantorian)
+static int eject_north(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
     coordinates_t prev = trantorian->coordinates;
@@ -21,9 +21,10 @@ static void eject_north(game_t *game, trantorian_t *trantorian)
         trantorian->coordinates.y--;
     sprintf(msg, "eject: %s\n", get_direction_str(NORTH));
     update_pos(prev, trantorian->coordinates, game->map);
+    return 1;
 }
 
-static void eject_east(game_t *game, trantorian_t *trantorian)
+static int eject_east(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
     coordinates_t prev = trantorian->coordinates;
@@ -34,9 +35,10 @@ static void eject_east(game_t *game, trantorian_t *trantorian)
         trantorian->coordinates.x++;
     sprintf(msg, "eject: %s\n", get_direction_str(EAST));
     update_pos(prev, trantorian->coordinates, game->map);
+    return 1;
 }
 
-static void eject_south(game_t *game, trantorian_t *trantorian)
+static int eject_south(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
     coordinates_t prev = trantorian->coordinates;
@@ -47,9 +49,10 @@ static void eject_south(game_t *game, trantorian_t *trantorian)
         trantorian->coordinates.y++;
     sprintf(msg, "eject: %s\n", get_direction_str(SOUTH));
     update_pos(prev, trantorian->coordinates, game->map);
+    return 1;
 }
 
-static void eject_west(game_t *game, trantorian_t *trantorian)
+static int eject_west(game_t *game, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
     coordinates_t prev = trantorian->coordinates;
@@ -60,12 +63,14 @@ static void eject_west(game_t *game, trantorian_t *trantorian)
         trantorian->coordinates.x--;
     sprintf(msg, "eject: %s\n", get_direction_str(WEST));
     update_pos(prev, trantorian->coordinates, game->map);
+    return 1;
 }
 
-static void eject_eggs(game_t *game, trantorian_t *trantorian)
+static int eject_eggs(game_t *game, trantorian_t *trantorian)
 {
     egg_t *tmp = NULL;
     size_t i = 0;
+    int nb = 0;
 
     for (i = 0; i < array_get_size(game->eggs);) {
         tmp = (egg_t *)array_get_at(game->eggs, i);
@@ -74,32 +79,45 @@ static void eject_eggs(game_t *game, trantorian_t *trantorian)
                 i++;
             continue;
         }
+        nb++;
         array_remove(game->eggs, i);
         eject_egg(game, tmp);
         i = 0;
+    }
+    return nb;
+}
+
+void eject_eggs_and_log_client(game_t *game, trantorian_t *trantorian, int nb)
+{
+    nb += eject_eggs(game, trantorian);
+
+    if (nb > 0) {
+        pex_log_gui(game, trantorian);
+        buffer_write(trantorian->client->buffer_answered, "ok\n");
+    } else {
+        buffer_write(trantorian->client->buffer_answered, "ko\n");
     }
 }
 
 void eject(game_t *game, trantorian_t *trantorian)
 {
     trantorian_t *tmp;
+    int nb = 0;
 
-    pex_log_gui(game, trantorian);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         tmp = (trantorian_t *)array_get_at(game->trantorians, i);
-        if (uuid_compare(tmp->uuid, trantorian->uuid) == 0)
-            continue;
-        if (tmp->coordinates.x != trantorian->coordinates.x ||
+        if (uuid_compare(tmp->uuid, trantorian->uuid) == 0
+            || tmp->coordinates.x != trantorian->coordinates.x ||
             tmp->coordinates.y != trantorian->coordinates.y)
             continue;
         if (trantorian->direction == NORTH)
-            eject_north(game, tmp);
+            nb += eject_north(game, tmp);
         if (trantorian->direction == EAST)
-            eject_east(game, tmp);
+            nb += eject_east(game, tmp);
         if (trantorian->direction == SOUTH)
-            eject_south(game, tmp);
+            nb += eject_south(game, tmp);
         if (trantorian->direction == WEST)
-            eject_west(game, tmp);
+            nb += eject_west(game, tmp);
     }
-    eject_eggs(game, trantorian);
+    eject_eggs_and_log_client(game, trantorian, nb);
 }
