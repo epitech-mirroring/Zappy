@@ -1,4 +1,3 @@
-
 /*
 ** EPITECH PROJECT, 2024
 ** Project
@@ -13,6 +12,4 @@
 
 void broadcast(game_t *game, trantorian_t *trantorian)
 {
-    (void) game;
-    (void) trantorian;
 }
