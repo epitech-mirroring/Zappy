@@ -77,11 +77,22 @@ void Game::createWorld(std::vector<std::string> data)
 
 void Game::handleNewTimeUnit()
 {
-    if (_display.getNewTimeUnit() != "" && (std::stoi(_display.getNewTimeUnit()) != _timeUnit)) {
-        std::string request = "sst " + _display.getNewTimeUnit() + "\n";
-        _client._socket.get()->send(request);
-        _timeUnit = std::stoi(_display.getNewTimeUnit());
-        std::cout << "GUI LOG: Sent SGT: " << _display.getNewTimeUnit() << std::endl;
+    std::string newTimeUnitStr = _display.getNewTimeUnit();
+    try {
+        if (newTimeUnitStr != "" && (std::stoi(newTimeUnitStr) != _timeUnit)) {
+            std::string request = "sst " + newTimeUnitStr + "\n";
+            _client._socket.get()->send(request);
+            _timeUnit = std::stoi(newTimeUnitStr);
+            std::cout << "GUI LOG: Sent SGT: " << newTimeUnitStr << std::endl;
+        }
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "INVALID TIME UNIT" << std::endl;
+        newTimeUnitStr.clear();
+        _display.setNewTimeUnit(newTimeUnitStr);
+    } catch (const std::out_of_range& e) {
+        std::cerr << "INVALID TIME UNIT" << std::endl;
+        newTimeUnitStr.clear();
+        _display.setNewTimeUnit(newTimeUnitStr);
     }
 }
 
