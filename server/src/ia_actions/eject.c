@@ -90,7 +90,6 @@ static int eject_eggs(game_t *game, trantorian_t *trantorian)
 void eject_eggs_and_log_client(game_t *game, trantorian_t *trantorian, int nb)
 {
     nb += eject_eggs(game, trantorian);
-
     if (nb > 0) {
         pex_log_gui(game, trantorian);
         buffer_write(trantorian->client->buffer_answered, "ok\n");
