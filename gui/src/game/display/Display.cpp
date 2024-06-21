@@ -269,35 +269,37 @@ void Display::DisplayHelpMenu()
     DrawText("Hold H to display help menu", 10, 870, 20, WHITE);
 
     if (IsKeyDown(KEY_H) && !IsKeyDown(KEY_TAB)) {
-        DrawRectangle(10, 10, 500, 560, Fade(BLACK, 0.5f));
+        DrawRectangle(10, 10, 500, 590, Fade(BLACK, 0.5f));
         DrawText("Help Menu", 20, 20, 20, GREEN);
         DrawText("TAB: Display scoreboard", 20, 50, 20, WHITE);
         DrawText("T: Open time unit input", 20, 80, 20, WHITE);
         DrawText("H: Display help menu", 20, 110, 20, WHITE);
         DrawText("I: Display game information", 20, 140, 20, WHITE);
-        DrawText("Left click: on an element to see its informations", 20, 170, 20, WHITE);
-        DrawText("Right click: unselect and object", 20, 200, 20, WHITE);
+        DrawText("Left click: select an object", 20, 170, 20, WHITE);
+        DrawText("Right click: unselect an object", 20, 200, 20, WHITE);
         DrawText("Move camera with ZQSD", 20, 230, 20, WHITE);
         DrawText("Orient camera with arrow keys", 20, 260, 20, WHITE);
         DrawText("Rotate camera with A and E", 20, 290, 20, WHITE);
-        DrawText("Item Legend:", 20, 320, 20, WHITE);
-        DrawRectangle(20, 350, 20, 20, RED);
-        DrawText("Food", 50, 350, 20, WHITE);
-        DrawRectangle(20, 380, 20, 20, BROWN);
-        DrawText("Linemate", 50, 380, 20, WHITE);
-        DrawRectangle(20, 410, 20, 20, BLUE);
-        DrawText("Deraumere", 50, 410, 20, WHITE);
-        DrawRectangle(20, 440, 20, 20, YELLOW);
-        DrawText("Sibur", 50, 440, 20, WHITE);
-        DrawRectangle(20, 470, 20, 20, ORANGE);
-        DrawText("Mendiane", 50, 470, 20, WHITE);
-        DrawRectangle(20, 500, 20, 20, PURPLE);
-        DrawText("Phiras", 50, 500, 20, WHITE);
-        DrawRectangle(20, 530, 20, 20, PINK);
-        DrawText("Thystame", 50, 530, 20, WHITE);
+        DrawText("Esc: Exit client GUI", 20, 320, 20, WHITE);
+        DrawText("Item Legend:", 20, 350, 20, WHITE);
+        DrawRectangle(20, 380, 20, 20, RED);
+        DrawText("Food", 50, 380, 20, WHITE);
+        DrawRectangle(20, 410, 20, 20, BROWN);
+        DrawText("Linemate", 50, 410, 20, WHITE);
+        DrawRectangle(20, 440, 20, 20, BLUE);
+        DrawText("Deraumere", 50, 440, 20, WHITE);
+        DrawRectangle(20, 470, 20, 20, YELLOW);
+        DrawText("Sibur", 50, 470, 20, WHITE);
+        DrawRectangle(20, 500, 20, 20, ORANGE);
+        DrawText("Mendiane", 50, 500, 20, WHITE);
+        DrawRectangle(20, 530, 20, 20, PURPLE);
+        DrawText("Phiras", 50, 530, 20, WHITE);
+        DrawRectangle(20, 560, 20, 20, PINK);
+        DrawText("Thystame", 50, 560, 20, WHITE);
+        if (_selectedTile != nullptr)
+            _selectedTile = nullptr;
     }
 }
-
 void Display::DisplayGameInformations()
 {
     if (IsKeyPressed(KEY_I)) {
@@ -354,7 +356,7 @@ void Display::DisplayGameInformations()
         }
     }
 
-    DrawRectangle(rectX, 10, 400, 460, Fade(BLACK, 0.5f));
+    DrawRectangle(rectX, 10, 400, 430, Fade(BLACK, 0.5f));
     DrawText("Game informations", rectX + 10, 10 + 10, 20, GREEN);
     DrawText(TextFormat("Time unit: %d", _timeUnit), rectX + 10,
         10 + 2 * 10 + 20, 20, WHITE);
