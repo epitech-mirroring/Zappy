@@ -1,6 +1,22 @@
 target_sources(zappy_server_lib
     PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/basic_log.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/broadcast.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/connect_nbr.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/eject.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/fork.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/forward.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/game_action.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/incantation.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/incantation_bis.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/inventory.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/left.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/look/look.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/look/look_direction.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/look/look_utils.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/right.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/set.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/ia_actions/take.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/basic_log.c
         ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/broadcast.c
         ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/egg_log.c
         ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/gui.c
@@ -22,10 +38,12 @@ target_sources(zappy_server_lib
         ${CMAKE_CURRENT_SOURCE_DIR}/hashmap_others.c
         ${CMAKE_CURRENT_SOURCE_DIR}/inventory.c
         ${CMAKE_CURRENT_SOURCE_DIR}/main.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/manage_teams_places.c
         ${CMAKE_CURRENT_SOURCE_DIR}/map_bis.c
         ${CMAKE_CURRENT_SOURCE_DIR}/map.c
         ${CMAKE_CURRENT_SOURCE_DIR}/server_bis.c
         ${CMAKE_CURRENT_SOURCE_DIR}/server.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/shutdown_server.c
         ${CMAKE_CURRENT_SOURCE_DIR}/team.c
         ${CMAKE_CURRENT_SOURCE_DIR}/trantorian.c
 )

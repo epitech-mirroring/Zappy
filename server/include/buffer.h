@@ -35,7 +35,7 @@ extern "C" {
      * @param capacity The capacity of the buffer
      * @return buffer_t* The buffer
      */
-    buffer_t *create_buffer(size_t capacity);
+    buffer_t *create_buffer(size_t capacity, char limit);
 
     /**
      * @brief Write data to the buffer
@@ -51,7 +51,7 @@ extern "C" {
      * @param buffer The buffer to get the data from
      * @return char* The data
      */
-    char *buffer_get_next(buffer_t *buffer);
+    char *buffer_get_next(buffer_t *buffer, char limit);
 
     /**
      * @brief Destroy a buffer

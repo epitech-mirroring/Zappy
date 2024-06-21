@@ -18,32 +18,35 @@
 
 static void write_to_client(client_t *client)
 {
-    char *message = buffer_get_next(client->buffer_answered);
+    char *message = buffer_get_next(client->buffer_answered, '\n');
+    char *tmp = NULL;
 
     while (message != NULL) {
-        send(client->socket, message, strlen(message), 0);
+        tmp = calloc(strlen(message) + 2, sizeof(char));
+        sprintf(tmp, "%s\n", message);
+        send(client->socket, tmp, strlen(tmp), 0);
         free(message);
-        message = buffer_get_next(client->buffer_answered);
+        free(tmp);
+        message = buffer_get_next(client->buffer_answered, '\n');
     }
     free(message);
 }
 
-static void tick(server_t *server, suseconds_t time_since_last_tick)
+static void tick(server_t *server)
 {
-    int nb_ticks = time_since_last_tick / server->single_tick_time;
+    suseconds_t actual_time = time(NULL) * 1000000;
+    int nb_ticks = (actual_time - server->prev_tick_time)
+        / server->single_tick_time;
 
-    if (nb_ticks <= 0)
-        return;
-    if (time_since_last_tick == -1)
-        nb_ticks = 0;
     handle_new_client(server->game);
-    for (int i = 0; i < nb_ticks; i++) {
-        game_tick(server->game);
-    }
+    if (nb_ticks > 0)
+        for (int i = 0; i < nb_ticks; i++) {
+            game_tick(server->game);
+        }
     run_gui_commands(server);
     update_graphic_clients_buffer(server);
     write_to_clients(server);
-    server->nb_ticks += nb_ticks;
+    check_dead_client(server);
 }
 
 static void read_clients_messages(server_t *server, fd_set *readfds)
@@ -95,13 +98,13 @@ static void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds)
 
 void run(server_t *server)
 {
-    struct timeval tv;
+    struct timeval tv = {0, 0};
     struct timeval *tv2;
     fd_set readfds;
     fd_set writefds;
 
-    while (1) {
-        tv.tv_sec = 0;
+    while (!server->game->win) {
+        server->prev_tick_time = time(NULL) * 1000000 + 0;
         tv.tv_usec = get_closest_action(server);
         fill_fd_set(server, &readfds, &writefds);
         if (tv.tv_usec == -1)
@@ -113,7 +116,7 @@ void run(server_t *server)
         handle_new_connections(server, &readfds);
         read_clients_messages(server, &readfds);
         while (waitpid(-1, NULL, WNOHANG) > 0);
-        tick(server, tv.tv_usec);
+        tick(server);
     }
 }
 

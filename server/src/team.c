@@ -21,7 +21,10 @@ team_t *init_team(char *name)
 
 void destroy_team(team_t *team)
 {
-    array_destructor(team->trantorians);
+    if (team != NULL) {
+        array_destructor(team->trantorians);
+        uuid_clear(team->uuid);
+    }
     free(team);
 }
 
@@ -57,4 +60,17 @@ char *teams_to_string(array_t *teams)
         free(prev);
     }
     return str;
+}
+
+bool is_in_team(trantorian_t *trantorian, team_t *team)
+{
+    uuid_t trantorian_copy;
+
+    for (size_t i = 0; i < array_get_size(team->trantorians); i++) {
+        uuid_copy(trantorian_copy,
+            *(uuid_t *)array_get_at(team->trantorians, i));
+        if (uuid_compare(trantorian->uuid, trantorian_copy) == 0)
+            return true;
+    }
+    return false;
 }

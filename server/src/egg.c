@@ -8,6 +8,7 @@
 
 #include "egg.h"
 #include "game.h"
+#include "gui.h"
 
 egg_t *init_egg(uuid_t team_uuid, coordinates_t coordinates)
 {
@@ -21,8 +22,10 @@ egg_t *init_egg(uuid_t team_uuid, coordinates_t coordinates)
 
 void destroy_egg(egg_t *egg)
 {
-    if (egg == NULL)
-        return;
+    if (egg != NULL) {
+        uuid_clear(egg->team_uuid);
+        uuid_clear(egg->uuid);
+    }
     free(egg);
 }
 
@@ -33,6 +36,7 @@ egg_t *generate_egg(uuid_t team_uuid, map_t *map)
 
     uuid_copy(egg->team_uuid, team_uuid);
     egg->coordinates = coordinates;
+    uuid_generate(egg->uuid);
     return egg;
 }
 
@@ -46,4 +50,20 @@ void generate_start_eggs(game_t *game)
             array_push_back(game->eggs, generate_egg(team->uuid, game->map));
         }
     }
+}
+
+void eject_egg(game_t *game, egg_t *egg)
+{
+    team_t *team = NULL;
+
+    for (size_t i = 0; i < array_get_size(game->teams); i++) {
+        team = (team_t *)array_get_at(game->teams, i);
+        if (uuid_compare(egg->team_uuid, team->uuid) == 0) {
+            team->free_places--;
+            break;
+        }
+    }
+    printf("team %s has lost an egg\n", team->name);
+    edi_log_gui(game, egg);
+    destroy_egg(egg);
 }

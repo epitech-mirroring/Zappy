@@ -13,14 +13,14 @@ inventory_t init_inventory(void)
 {
     inventory_t inventory;
 
-    inventory.food_time = 0;
+    inventory.food_time = 126;
     inventory.resources = init_resources();
     return inventory;
 }
 
 char *inventory_to_str(trantorian_t *trantorian)
 {
-    char *str = malloc(sizeof(char) * 100);
+    char *str = malloc(sizeof(char) * 1024);
     inventory_t inventory = trantorian->inventory;
 
     sprintf(str, "pin %li %i %i %i %i %i %i %i %i %i\n", trantorian->uuid,
