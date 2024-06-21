@@ -10,6 +10,16 @@
 using namespace GUI;
 
 Linemate::Linemate(Position tile)
-    :   AStone(0.3, tile)
+    :   AStone(1, tile)
 {
+}
+
+unsigned int Linemate::getType() noexcept
+{
+    return 1;
+}
+
+std::string Linemate::getName() const noexcept
+{
+    return "Linemate";
 }

@@ -22,6 +22,17 @@ namespace GUI {
          * @brief Destroy the Sibur object
          */
         virtual ~Sibur() noexcept = default;
+
+        /**
+         * @brief Get the Type of the object
+         * @return unsigned int (type of the object (follow the protocol))
+         */
+        [[nodiscard]] unsigned int getType() noexcept final;
+
+        /**
+         * @brief Get the name of the object
+         */
+        [[nodiscard]] std::string getName() const noexcept final;
     };
 } // namespace GUI //
 #endif /* !SIBUR_HPP_ */

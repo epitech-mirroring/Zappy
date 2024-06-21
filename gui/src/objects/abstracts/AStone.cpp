@@ -9,7 +9,7 @@
 
 using namespace GUI;
 
-AStone::AStone(float density, Position tile)
-    : AObject(density, tile)
+AStone::AStone(unsigned int quantity, Position tile)
+    : AObject(quantity, tile)
 {
 }
