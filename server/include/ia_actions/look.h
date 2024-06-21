@@ -27,8 +27,7 @@ extern "C" {
      *
      * @return char* The message to send to the player
      */
-    char *get_element_on_tile(game_t *game, tile_t *tile,
-        coordinates_t *coords, int *i);
+    char *get_element_on_tile(game_t *game, tile_t *tile);
 
     /**
      * @brief Look around the player in north direction

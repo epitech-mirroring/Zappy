@@ -8,16 +8,6 @@
 
 #include "ia_actions/look.h"
 
-static bool is_tile_in_array(tile_t *tile, coordinates_t *coords, int *i)
-{
-    for (int j = 0; j < *i; j++) {
-        if (coords[j].x == tile->coordinates.x
-            && coords[j].y == tile->coordinates.y)
-            return true;
-    }
-    return false;
-}
-
 static size_t get_elements_size(const int *elements)
 {
     size_t size = 0;
@@ -53,15 +43,10 @@ static char *make_string_for_elements(const int elements[8])
     return tmp;
 }
 
-char *get_element_on_tile(game_t *game, tile_t *tile,
-    coordinates_t *coords, int *i)
+char *get_element_on_tile(game_t *game, tile_t *tile)
 {
     int elements[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
-    if (is_tile_in_array(tile, coords, i)) {
-        return ",";
-    }
-    i++;
     elements[1] = hashmap_get(tile->resources, "food");
     elements[2] = hashmap_get(tile->resources, "linemate");
     elements[3] = hashmap_get(tile->resources, "deraumere");
