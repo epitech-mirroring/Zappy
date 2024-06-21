@@ -73,8 +73,6 @@ void forward(game_t *game, trantorian_t *trantorian)
 {
     char *msg = malloc(sizeof(char) * 4);
 
-    if (!check_forward(trantorian, msg))
-        return;
     if (trantorian->direction == NORTH) {
         forward_north(game, trantorian);
     }

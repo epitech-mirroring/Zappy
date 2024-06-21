@@ -143,20 +143,24 @@ void read_client_message(server_t *server, client_t *client)
 void new_clients_check(server_t *server, client_t *client)
 {
     char *message;
+    char *tmp = calloc(1024, sizeof(char));
 
     if (client->type != UNKNOWN) {
         return;
     }
     message = get_next_message(client);
+    sprintf(tmp, "%s\n", message);
     if (!message)
         return;
     if (strcmp(message, "GRAPHIC") == 0) {
         client->type = GRAPHIC;
     } else {
         client->type = AI;
-        buffer_write(client->buffer_asked, message);
+        buffer_write(client->buffer_asked, tmp);
         array_push_back(server->game->clients_without_team, client);
     }
+    free(message);
+    free(tmp);
 }
 
 int find_max_fd(server_t *server)

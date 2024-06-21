@@ -46,8 +46,9 @@ static team_t *get_team_by_name(array_t *teams, char *team_name)
 
 static bool can_create_trantorian(game_t *game, char *team_name)
 {
-    team_t *team = get_team_by_name(game->teams, team_name);
+    team_t *team = NULL;
 
+    team = get_team_by_name(game->teams, team_name);
     if (team == NULL)
         return false;
     if (team->free_places <= 0)
