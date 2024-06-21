@@ -100,7 +100,7 @@ static void new_client_ping(game_t *game, client_t *client,
 
     snprintf(msg, 1024, "%i\n", team->free_places);
     buffer_write(client->buffer_answered, msg);
-    snprintf(msg, 1024, "%i %i\n", pos.x, pos.y);
+    snprintf(msg, 1024, "%i %i\n", game->map->width, game->map->height);
     buffer_write(client->buffer_answered, msg);
     uuid_unparse(trantorian->uuid, uuid);
     snprintf(msg, 1024, "pnw %s %d %d %s %d %s\n", uuid, pos.x, pos.y,
