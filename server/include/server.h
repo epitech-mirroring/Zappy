@@ -34,7 +34,6 @@ extern "C" {
 
         size_t single_tick_time; // in microseconds
         suseconds_t prev_tick_time; // in microseconds
-        long long nb_ticks; // number of ticks
 
         unsigned short port;
         int max_fd;

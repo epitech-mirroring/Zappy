@@ -53,7 +53,6 @@ server_t *create_server(unsigned short port, array_t *teams,
     server->game = init_game(teams, map_size, min_free_places);
     server->clients = array_constructor(sizeof(client_t),
         (void *)&destroy_client);
-    server->nb_ticks = 0;
     server->port = port;
     server->max_fd = 0;
     if (create_socket(server) == -1)
