@@ -45,7 +45,6 @@ char *look_south(game_t *game, short level,
     coordinates_t player_coordinates)
 {
     char *msg = calloc(100000, sizeof(char));
-    coordinates_t *coord = calloc(100, sizeof(coordinates_t));
     int x = player_coordinates.x;
     int y = player_coordinates.y;
     int k = 0;
@@ -55,14 +54,12 @@ char *look_south(game_t *game, short level,
         y = manage_pos(y, game->map->height);
         for (size_t j = 0; j < 1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
-            coord[k] = (coordinates_t){x, y};
             snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
-                (game, get_tile(game->map, x, y), coord, &k));
+                (game, get_tile(game->map, x, y)));
             x--;
         }
         y++;
     }
-    free(coord);
     return msg;
 }
 
@@ -70,7 +67,6 @@ char *look_west(game_t *game, short level,
     coordinates_t player_coordinates)
 {
     char *msg = calloc(100000, sizeof(char));
-    coordinates_t *coord = calloc(100, sizeof(coordinates_t));
     int x = player_coordinates.x;
     int y = player_coordinates.y;
     int k = 0;
@@ -80,14 +76,12 @@ char *look_west(game_t *game, short level,
         x = manage_pos(y, game->map->height);
         for (size_t j = 0; j < 1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
-            coord[k] = (coordinates_t){x, y};
             snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
-                (game, get_tile(game->map, x, y), coord, &k));
+                (game, get_tile(game->map, x, y)));
             y--;
         }
         x--;
     }
-    free(coord);
     return msg;
 }
 
@@ -95,7 +89,6 @@ char *look_east(game_t *game, short level,
     coordinates_t player_coordinates)
 {
     char *msg = calloc(100000, sizeof(char));
-    coordinates_t *coord = calloc(100, sizeof(coordinates_t));
     int x = player_coordinates.x;
     int y = player_coordinates.y;
     int k = 0;
@@ -105,13 +98,11 @@ char *look_east(game_t *game, short level,
         x = manage_pos(y, game->map->height);
         for (size_t j = 0; j < 1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
-            coord[k] = (coordinates_t){x, y};
             snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
-                (game, get_tile(game->map, x, y), coord, &k));
+                (game, get_tile(game->map, x, y)));
             y++;
         }
         x++;
     }
-    free(coord);
     return msg;
 }
