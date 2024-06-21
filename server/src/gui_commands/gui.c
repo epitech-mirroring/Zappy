@@ -72,8 +72,8 @@ static char *cut_str(char *str, int start)
 
 static void run_gui_command(server_t *server, client_t *client, char *msg)
 {
+    char *arg = cut_str(msg, 4);
     char *cmd = strtok(msg, " \n");
-    char *arg = cut_str(msg, strlen(cmd) + 1);
 
     for (size_t i = 0; gui_commands[i].cmd != NULL; i++) {
         if (strcmp(gui_commands[i].cmd, cmd) == 0) {
@@ -102,8 +102,8 @@ void run_gui_commands(server_t *server)
         client = (client_t *)array_get_at(server->clients, i);
         if (client->type != GRAPHIC)
             continue;
-        for (msg = buffer_get_next(client->buffer_asked); msg != NULL;
-            msg = buffer_get_next(client->buffer_asked)) {
+        for (msg = buffer_get_next(client->buffer_asked, '\n'); msg != NULL;
+            msg = buffer_get_next(client->buffer_asked, '\n')) {
             run_gui_command(server, client, msg);
         }
     }
@@ -115,8 +115,8 @@ void new_client_unknow_team(game_t *game, client_t *client,
     if (strcmp(msg, "GRAPHIC") == 0) {
         client->type = GRAPHIC;
         array_push_back(game->gui_clients, client);
-        array_remove(game->clients_without_team, index);
-        return;
+    } else {
+        client->need_to_be_kick = true;
     }
-    buffer_write(client->buffer_answered, "ko\n");
+    array_remove(game->clients_without_team, index);
 }

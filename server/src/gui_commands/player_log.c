@@ -11,11 +11,12 @@
 void pdi_log_gui(game_t *game, trantorian_t *trantorian)
 {
     char *str = calloc(1024, sizeof(char));
-    char *uuid = NULL;
+    char *uuid = calloc(37, sizeof(char));
 
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "pdi %s\n", uuid);
     array_push_back(game->gui_log, str);
+    free(uuid);
 }
 
 static bool check_ppo_arg(game_t *game, char *arg)

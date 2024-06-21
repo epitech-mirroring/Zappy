@@ -9,8 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "client.h"
-#include "buffer.h"
+#include "server.h"
 
 client_t *init_client(int socket, client_type_t type)
 {
@@ -20,8 +19,9 @@ client_t *init_client(int socket, client_type_t type)
         return NULL;
     client->socket = socket;
     client->type = type;
-    client->buffer_asked = create_buffer(100000);
-    client->buffer_answered = create_buffer(100000);
+    client->buffer_asked = create_buffer(100000, '\n');
+    client->buffer_answered = create_buffer(100000, '\n');
+    client->need_to_be_kick = false;
     return client;
 }
 
@@ -51,5 +51,27 @@ char *get_next_message(client_t *client)
 {
     if (client == NULL)
         return NULL;
-    return buffer_get_next(client->buffer_asked);
+    return buffer_get_next(client->buffer_asked, '\n');
+}
+
+static void dead_client(server_t *server, client_t *client)
+{
+    (void)server;
+    close(client->socket);
+}
+
+void check_dead_client(server_t *server)
+{
+    client_t *client;
+    client_t *tmp;
+
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
+        client = (client_t *)array_get_at(server->clients, i);
+        if (client->need_to_be_kick == true) {
+            tmp = client;
+            array_remove(server->clients, i);
+            dead_client(server, tmp);
+            destroy_client(tmp);
+        }
+    }
 }

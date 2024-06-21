@@ -133,6 +133,17 @@ extern "C" {
      */
     bool is_hashmap_empty(hashmap_t *map);
 
+    /**
+     * @brief Function to set the data of an element in the hashmap
+     *
+     * This function sets the data of an element in the hashmap.
+     * The element has a key and a data.
+     * @param map The hashmap
+     * @param key The key of the element
+     * @param data The data of the element
+     */
+    void hashmap_set(hashmap_t *map, char *key, int data);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

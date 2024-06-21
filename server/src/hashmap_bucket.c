@@ -22,6 +22,5 @@ bucket_t *create_bucket(char *key, int data)
 
 void destroy_bucket(bucket_t *bucket)
 {
-    free(bucket->key);
     free(bucket);
 }

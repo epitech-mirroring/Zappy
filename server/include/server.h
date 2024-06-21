@@ -33,7 +33,7 @@ extern "C" {
         array_t *clients;
 
         size_t single_tick_time; // in microseconds
-        long long nb_ticks; // number of ticks
+        suseconds_t prev_tick_time; // in microseconds
 
         unsigned short port;
         int max_fd;
@@ -119,6 +119,20 @@ extern "C" {
      * @param server The server
      */
     void write_to_clients(server_t *server);
+
+    /**
+     * @brief remove the useless clients
+     *
+     * @param server The server
+     */
+    void check_dead_client(server_t *server);
+
+    /**
+     * @brief shutdown the server
+     *
+     * @param server The server to shutdown
+     */
+    void shutdown_server(server_t *server);
 
     #ifdef __cplusplus
 }
