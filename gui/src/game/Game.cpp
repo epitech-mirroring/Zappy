@@ -39,6 +39,7 @@ void Game::runGame()
     initializeCallbacks();
 
     while (_display.windowShouldClose() == false) {
+        _display.setTimeUnit(_timeUnit);
         handleNewTimeUnit();
         _display.displayElements();
         data = _client.readData();

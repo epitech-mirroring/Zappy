@@ -115,18 +115,30 @@ namespace GUI {
          */
         void DisplayHelpMenu();
 
+        /**
+         * @brief Display the game informations on the top right corner
+         */
+        void DisplayGameInformations();
+
+        /**
+         * @brief setTheTimeUnit
+         */
+        void setTimeUnit(unsigned int timeUnit);
+
     protected:
         Camera _camera;                          // Camera
         std::vector<Model> _clouds;              // Clouds models
         std::vector<Vector3> _cloudPositions;    // Clouds positions
         World &_world;                           // World
         Teams &_teams;                           // Teams
+        unsigned int _timeUnit;                  // Time unit
 
         char _inputText[256] = "";
         bool _textBoxActive = false;
         int _framesCounter = 0;
         int _ignoreInputFrames = 0;
         std::string _newTimeUnit;
+        bool _gameInfo = false;
     };
 }
 

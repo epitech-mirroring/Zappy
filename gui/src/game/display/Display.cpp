@@ -279,6 +279,84 @@ void Display::DisplayHelpMenu()
     }
 }
 
+void Display::DisplayGameInformations()
+{
+    if (IsKeyPressed(KEY_I)) {
+        _gameInfo = !_gameInfo;
+    }
+
+    if (!_gameInfo)
+        return;
+
+    int rectX = GetScreenWidth() - 400 - 10;
+    int nbTrantorians = 0;
+    int nbEggs = 0;
+    int nbFood = 0;
+    int nbLinemate = 0;
+    int nbDeraumere = 0;
+    int nbSibur = 0;
+    int nbMendiane = 0;
+    int nbPhiras = 0;
+    int nbThystame = 0;
+
+    for (auto &team : _teams.getTeamsList()) {
+        nbTrantorians += team.getTrantorianList().size();
+        nbEggs += team.getEggList().size();
+    }
+    for (auto &row : _world.getTiles()) {
+        for (auto &tile : row) {
+            for (auto &object : tile.getObjects()) {
+                switch (object->getType()) {
+                    case Trantorian::ResourceType::FOOD:
+                        nbFood++;
+                        break;
+                    case Trantorian::ResourceType::LINEMATE:
+                        nbLinemate++;
+                        break;
+                    case Trantorian::ResourceType::DERAUMERE:
+                        nbDeraumere++;
+                        break;
+                    case Trantorian::ResourceType::SIBUR:
+                        nbSibur++;
+                        break;
+                    case Trantorian::ResourceType::MENDIANE:
+                        nbMendiane++;
+                        break;
+                    case Trantorian::ResourceType::PHIRAS:
+                        nbPhiras++;
+                        break;
+                    case Trantorian::ResourceType::THYSTAME:
+                        nbThystame++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    DrawRectangle(rectX, 10, 400, 460, Fade(BLACK, 0.5f));
+    DrawText("Game informations", rectX + 10, 10 + 10, 20, GREEN);
+    DrawText(TextFormat("Time unit: %d", _timeUnit), rectX + 10,
+        10 + 2 * 10 + 20, 20, WHITE);
+    DrawText(TextFormat("Number of teams: %d", _teams.getTeamsList().size()),
+        rectX + 10, 10 + 3 * 10 + 40, 20, WHITE);
+    DrawText(TextFormat("Number of trantorians: %d", nbTrantorians),
+        rectX + 10, 10 + 4 * 10 + 60, 20, WHITE);
+    DrawText(TextFormat("Number of eggs: %d", nbEggs), rectX + 10,
+        10 + 5 * 10 + 80, 20, WHITE);
+    DrawText(TextFormat("Map size X Y: %d, %d", _world.getWidth(), _world.getHeight()), rectX + 10,
+        10 + 6 * 10 + 100, 20, WHITE);
+    DrawText("Objects:", rectX + 10, 10 + 7 * 10 + 120, 20, WHITE);
+    DrawText(TextFormat("   Food: %d", nbFood), rectX + 10, 10 + 8 * 10 + 140, 20, WHITE);
+    DrawText(TextFormat("   Linemate: %d", nbLinemate), rectX + 10, 10 + 9 * 10 + 160, 20, WHITE);
+    DrawText(TextFormat("   Deraumere: %d", nbDeraumere), rectX + 10, 10 + 10 * 10 + 180, 20, WHITE);
+    DrawText(TextFormat("   Sibur: %d", nbSibur), rectX + 10, 10 + 11 * 10 + 200, 20, WHITE);
+    DrawText(TextFormat("   Mendiane: %d", nbMendiane), rectX + 10, 10 + 12 * 10 + 220, 20, WHITE);
+    DrawText(TextFormat("   Phiras: %d", nbPhiras), rectX + 10, 10 + 13 * 10 + 240, 20, WHITE);
+    DrawText(TextFormat("   Thystame: %d", nbThystame), rectX + 10, 10 + 14 * 10 + 260, 20, WHITE);
+}
+
 void Display::displayElements()
 {
     if (!_textBoxActive) {
@@ -286,7 +364,6 @@ void Display::displayElements()
         detectHoveredTrantorian(_camera, _teams);
         updateCamera();
     }
-
     BeginDrawing();
     ClearBackground(BLUE);
     BeginMode3D(_camera);
@@ -302,6 +379,7 @@ void Display::displayElements()
     DrawScoreBoard(_teams);
     DrawSSTBox();
     DisplayHelpMenu();
+    DisplayGameInformations();
     EndDrawing();
 }
 
@@ -342,4 +420,9 @@ void Display::cleanupModels()
 std::string Display::getNewTimeUnit()
 {
     return _newTimeUnit;
+}
+
+void Display::setTimeUnit(unsigned int timeUnit)
+{
+    _timeUnit = timeUnit;
 }
