@@ -1,6 +1,6 @@
 from . import AbstractAction
 from .. import AbstractObject, Food, Linemate, Deraumere, \
-    Sibur, Mendiane, Phiras, Thystame
+    Sibur, Mendiane, Phiras, Thystame, Egg
 
 
 def parse_item(item: str) -> AbstractObject or None:
@@ -20,6 +20,8 @@ def parse_item(item: str) -> AbstractObject or None:
         return Phiras()
     if item == "thystame":
         return Thystame()
+    if item == "egg":
+        return Egg()
     return None
 
 
