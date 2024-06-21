@@ -24,7 +24,7 @@ char *look_north(game_t *game, short level,
     coordinates_t player_coordinates)
 {
     char *msg = calloc(100000, sizeof(char));
-    int x = player_coordinates.x;
+    int x = 0;
     int y = player_coordinates.y;
 
     for (size_t i = 0; i <= level; i++) {
@@ -45,7 +45,7 @@ char *look_south(game_t *game, short level,
     coordinates_t player_coordinates)
 {
     char *msg = calloc(100000, sizeof(char));
-    int x = player_coordinates.x;
+    int x = 0;
     int y = player_coordinates.y;
     int k = 0;
 
@@ -68,7 +68,7 @@ char *look_west(game_t *game, short level,
 {
     char *msg = calloc(100000, sizeof(char));
     int x = player_coordinates.x;
-    int y = player_coordinates.y;
+    int y = 0;
     int k = 0;
 
     for (size_t i = 0; i <= level; i++) {
@@ -90,7 +90,7 @@ char *look_east(game_t *game, short level,
 {
     char *msg = calloc(100000, sizeof(char));
     int x = player_coordinates.x;
-    int y = player_coordinates.y;
+    int y = 0;
     int k = 0;
 
     for (size_t i = 0; i <= level; i++) {
