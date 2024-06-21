@@ -32,6 +32,7 @@ void left(game_t *game, trantorian_t *trantorian)
     char *msg = malloc(sizeof(char) * 100);
 
     if (trantorian->param != NULL) {
+        printf("b\n");
         sprintf(msg, "ko\n");
         buffer_write(trantorian->client->buffer_answered, msg);
         free(msg);
