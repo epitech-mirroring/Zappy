@@ -115,7 +115,7 @@ void broadcast(game_t *game, trantorian_t *trantorian)
             orientation = sound_orientation(trantorian, receiver,
                 game->map->height, game->map->width);
             snprintf(msg, 1024, "message %d, %s\n",
-                     orientation, trantorian->param);
+                orientation, trantorian->param);
             buffer_write(receiver->client->buffer_answered, msg);
         }
     }
