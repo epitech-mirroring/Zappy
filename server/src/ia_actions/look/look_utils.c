@@ -34,7 +34,6 @@ static char *add_space(char *str, char *tmp, int j, int element)
     if (j < element - 1)
         sprintf(tmp, "%s ", str);
     return tmp;
-
 }
 
 static char *make_string_for_elements(const int elements[8])
