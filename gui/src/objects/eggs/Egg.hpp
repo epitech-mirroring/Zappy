@@ -11,7 +11,7 @@
     #include <iostream>
     #include "objects/abstracts/AObject.hpp"
     #include "position/Position.hpp"
-    #include "raylib.h"
+    #include <raylib.h>
 
 namespace GUI {
     class Egg : public AObject {
