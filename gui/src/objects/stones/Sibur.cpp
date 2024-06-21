@@ -10,6 +10,16 @@
 using namespace GUI;
 
 Sibur::Sibur(Position tile)
-    :   AStone(0.1, tile)
+    :   AStone(1, tile)
 {
+}
+
+unsigned int Sibur::getType() noexcept
+{
+    return 3;
+}
+
+std::string Sibur::getName() const noexcept
+{
+    return "Sibur";
 }

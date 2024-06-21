@@ -9,15 +9,15 @@
 
 using namespace GUI;
 
-AObject::AObject(float density, Position tile)
-    : _density(density)
+AObject::AObject(unsigned int quantity, Position tile)
+    : _quantity(quantity)
     , _position(tile)
 {
 }
 
-float AObject::getDensity() const noexcept
+unsigned int AObject::getQuantity() const noexcept
 {
-    return _density;
+    return _quantity;
 }
 
 const Position& AObject::getPosition() const noexcept
@@ -28,4 +28,19 @@ const Position& AObject::getPosition() const noexcept
 Position& AObject::getPosition() noexcept
 {
     return _position;
+}
+
+unsigned int AObject::getType() noexcept
+{
+    return 999;
+}
+
+void AObject::setQuantity(unsigned int quantity) noexcept
+{
+    _quantity = quantity;
+}
+
+std::string AObject::getName() const noexcept
+{
+    return "null";
 }

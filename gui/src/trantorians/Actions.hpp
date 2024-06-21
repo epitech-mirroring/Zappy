@@ -32,9 +32,12 @@ namespace GUI {
     class Actions {
         public:
             /**
-             * @brief 
+             * @brief Construct a new Actions object
              */
             Actions() = default;
+            /**
+             * @brief Destroy the Actions object
+             */
             ~Actions() = default;
 
             /**

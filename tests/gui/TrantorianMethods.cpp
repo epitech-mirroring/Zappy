@@ -2,20 +2,22 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** trantorian_methods tests
+** TrantorianMethods
 */
 
 #include <gtest/gtest.h>
 #include <climits>
-#include "trantorians/Trantorian.hpp"
+#include "mocks/MockTrantorians.hpp"
+#include "mocks/MockTeams.hpp"
 #include "position/Position.hpp"
 
 using namespace GUI;
 
 TEST(trantorian_methods, PositionSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     Position res(42, 84);
     Position new_res(-42, -84);
+
 
     player.setPosition(42, 84);
     EXPECT_EQ(player.getPosition().getX(), res.getX());
@@ -26,18 +28,18 @@ TEST(trantorian_methods, PositionSetterAndGetters) {
 }
 
 TEST(trantorian_methods, TeamSetterAndGetters) {
-    Trantorian player;
-    std::string res = "Epitech";
-    std::string new_res = "Zappy";
+    MockTeams team1("Epitech");
+    MockTeams team2("Zappy");
+    MockTrantorians player;
 
-    player.setTeam("Epitech");
-    EXPECT_EQ(player.getTeam(), res);
-    player.setTeam("Zappy");
-    EXPECT_EQ(player.getTeam(), new_res);
+    player.setTeam(&team1);
+    EXPECT_EQ(player.getTeam()->getName(), team1.getName());
+    player.setTeam(&team2);
+    EXPECT_EQ(player.getTeam()->getName(), team2.getName());
 }
 
 TEST(trantorian_methods, LifetimeSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     int res = 42;
     int new_res = 84;
 
@@ -48,7 +50,7 @@ TEST(trantorian_methods, LifetimeSetterAndGetters) {
 }
 
 TEST(trantorian_methods, LevelSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     int res = 42;
     int new_res = 84;
 
@@ -59,7 +61,7 @@ TEST(trantorian_methods, LevelSetterAndGetters) {
 }
 
 TEST(trantorian_methods, IsAliveSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     bool res = false;
     bool new_res = true;
 
@@ -70,18 +72,18 @@ TEST(trantorian_methods, IsAliveSetterAndGetters) {
 }
 
 TEST(trantorian_methods, IdSetterAndGetters) {
-    Trantorian player;
-    int res = 4242;
-    int new_res = 8484;
+    MockTrantorians player;
+    std::string res = "4242";
+    std::string new_res = "8484";
 
-    player.setId(4242);
+    player.setId("4242");
     EXPECT_EQ(player.getId(), res);
-    player.setId(8484);
+    player.setId("8484");
     EXPECT_EQ(player.getId(), new_res);
 }
 
 TEST(trantorian_methods, ActionSetterAndGetters) {
-    Trantorian player;
+    MockTrantorians player;
     bool res = true;
     bool new_res = false;
 
@@ -92,13 +94,13 @@ TEST(trantorian_methods, ActionSetterAndGetters) {
 }
 
 TEST(trantorian_methods, NegativeLifetime) {
-    Trantorian player;
+    MockTrantorians player;
     player.setLifetime(-42);
     EXPECT_EQ(player.getLifetime(), -42);
 }
 
 TEST(trantorian_methods, PositionBoundaryValues) {
-    Trantorian player;
+    MockTrantorians player;
     Position max_res(INT_MAX, INT_MAX);
     Position min_res(INT_MIN, INT_MIN);
 
@@ -112,7 +114,7 @@ TEST(trantorian_methods, PositionBoundaryValues) {
 }
 
 TEST(trantorian_methods, LevelBoundaryValues) {
-    Trantorian player;
+    MockTrantorians player;
     player.setLevel(INT_MAX);
     EXPECT_EQ(player.getLevel(), INT_MAX);
 
@@ -121,29 +123,97 @@ TEST(trantorian_methods, LevelBoundaryValues) {
 }
 
 TEST(trantorian_methods, IsAliveDefault) {
-    Trantorian player;
+    MockTrantorians player;
     EXPECT_EQ(player.getIsAlive(), true);
 }
 
 TEST(trantorian_methods, PositionDefault) {
-    Trantorian player;
+    MockTrantorians player;
     Position default_res(0, 0);
     EXPECT_EQ(player.getPosition().getX(), default_res.getX());
     EXPECT_EQ(player.getPosition().getY(), default_res.getY());
 }
 
 TEST(trantorian_methods, TeamDefault) {
-    Trantorian player;
-    EXPECT_EQ(player.getTeam(), "");
+    MockTrantorians player;
+    EXPECT_EQ(player.getTeam(), nullptr);
 }
 
 TEST(trantorian_methods, MultipleProperties) {
-    Trantorian player;
-    player.setTeam("Zappy");
+    MockTeams team("Zappy");
+    MockTrantorians player;
+    player.setTeam(&team);
     player.setLevel(5);
     player.setIsAlive(false);
 
-    EXPECT_EQ(player.getTeam(), "Zappy");
+    EXPECT_EQ(player.getTeam()->getName(), "Zappy");
     EXPECT_EQ(player.getLevel(), 5);
     EXPECT_EQ(player.getIsAlive(), false);
+}
+
+TEST(trantorian_methods, setInventory_AddObjects) {
+    std::vector<std::string> objs = {"12", "X", "Y", "1", "0", "1", "0", "0", "0", "0"};
+    MockTrantorians player("12", 0, 0, 1, 1, "Zappy");
+
+    player.setInventory(objs);
+    auto objects = player.getInventory();
+    EXPECT_EQ(objects.size(), 2);
+
+    int foodCount = 0;
+    int deraumerecount = 0;
+
+    for (auto obj : objects) {
+        if (obj->getType() == MockTrantorians::FOOD) {
+            foodCount++;
+        } else if (obj->getType() == MockTrantorians::DERAUMERE) {
+            deraumerecount++;
+        }
+        delete obj;
+    }
+
+    EXPECT_EQ(foodCount, 1);
+    EXPECT_EQ(deraumerecount, 1);
+}
+
+TEST(trantorian_methods, setInventory_RemoveObjects) {
+    MockTrantorians player("12", 0, 0, 1, 1, "Zappy");
+    IObject* food = new Food(Position(0, 0));
+    IObject* linemate = new Linemate(Position(0, 0));
+    player.addObject(food);
+    player.addObject(linemate);
+
+    std::vector<std::string> objs = {"12", "X", "Y", "0", "0", "0", "0", "0", "0", "0"};
+    player.setInventory(objs);
+
+    auto objects = player.getInventory();
+    EXPECT_EQ(objects.size(), 0);
+}
+
+TEST(trantorian_methods, setInventory_MixedChanges) {
+    MockTrantorians player("12", 0, 0, 1, 1, "Zappy");
+    IObject* food = new Food(Position(0, 0));
+    IObject* linemate = new Linemate(Position(0, 0));
+    player.addObject(food);
+    player.addObject(linemate);
+
+    std::vector<std::string> objs = {"12", "X", "Y", "1", "0", "1", "0", "0", "0", "0"};
+    player.setInventory(objs);
+
+    auto objects = player.getInventory();
+    EXPECT_EQ(objects.size(), 2);
+
+    int foodCount = 0;
+    int deraumerecount = 0;
+
+    for (auto obj : objects) {
+        if (obj->getType() == MockTrantorians::FOOD) {
+            foodCount++;
+        } else if (obj->getType() == MockTrantorians::DERAUMERE) {
+            deraumerecount++;
+        }
+        delete obj;
+    }
+
+    EXPECT_EQ(foodCount, 1);
+    EXPECT_EQ(deraumerecount, 1);
 }

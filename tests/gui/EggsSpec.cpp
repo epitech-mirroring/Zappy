@@ -6,20 +6,23 @@
 */
 
 #include <gtest/gtest.h>
-#include "objects/eggs/Egg.hpp"
+#include "mocks/MockEgg.hpp"
 
 using namespace GUI;
 
-TEST(EggTest, ConstructorAndGetters) {
-    Egg egg("TeamA", 42);
+TEST(MockEggTest, ConstructorAndGetters) {
+    Position pos(0, 0);
+    MockEgg egg("TeamA", "42", pos);
 
     EXPECT_EQ(egg.getTeam(), "TeamA");
-    EXPECT_EQ(egg.getOwnerID(), 42);
-    EXPECT_EQ(egg.getDensity(), 0);
+    EXPECT_EQ(egg.getOwnerID(), "42");
+    EXPECT_EQ(egg.getPosition().getX(), 0);
+    EXPECT_EQ(egg.getPosition().getY(), 0);
 }
 
-TEST(EggTest, SetAndGetIsEjected) {
-    Egg egg("TeamA");
+TEST(MockEggTest, SetAndGetIsEjected) {
+    Position pos(0, 0);
+    MockEgg egg("TeamA", "42", pos);
 
     egg.setIsEjected(true);
     EXPECT_TRUE(egg.getIsEjected());
@@ -28,62 +31,68 @@ TEST(EggTest, SetAndGetIsEjected) {
     EXPECT_FALSE(egg.getIsEjected());
 }
 
-TEST(EggTest, DefaultOwnerID) {
-    Egg egg("TeamA");
+TEST(MockEggTest, DefaultOwnerID) {
+    Position pos(0, 0);
+    MockEgg egg("TeamA");
 
-    EXPECT_EQ(egg.getOwnerID(), -1);
+    EXPECT_EQ(egg.getOwnerID(), "-1");
 }
 
-TEST(EggTest, DifferentTeam) {
-    Egg egg("TeamB", 10);
+TEST(MockEggTest, DifferentTeam) {
+    Position pos(0, 0);
+    MockEgg egg("TeamB", "10", pos);
 
     EXPECT_EQ(egg.getTeam(), "TeamB");
-    EXPECT_EQ(egg.getOwnerID(), 10);
+    EXPECT_EQ(egg.getOwnerID(), "10");
 }
 
-TEST(EggTest, SetAndGetTeam) {
-    Egg egg("TeamA", 42);
+TEST(MockEggTest, SetAndGetTeam) {
+    Position pos(0, 0);
+    MockEgg egg("TeamA", "42", pos);
 
     EXPECT_EQ(egg.getTeam(), "TeamA");
 }
 
-TEST(EggTest, DefaultValues) {
-    Egg egg("TeamA");
+TEST(MockEggTest, DefaultValues) {
+    Position pos(0, 0);
+    MockEgg egg("TeamA");
 
-    EXPECT_EQ(egg.getDensity(), 0);
-    EXPECT_EQ(egg.getOwnerID(), -1);
+    EXPECT_EQ(egg.getOwnerID(), "-1");
     EXPECT_FALSE(egg.getIsEjected());
 }
 
-TEST(EggTest, ModifiedValues) {
-    Egg egg("TeamA", 10);
+TEST(MockEggTest, ModifiedValues) {
+    Position pos(0, 0);
+    MockEgg egg("TeamA", "10", pos);
     egg.setIsEjected(true);
     EXPECT_TRUE(egg.getIsEjected());
 
-    egg.getTeam() = "TeamA";
     EXPECT_EQ(egg.getTeam(), "TeamA");
 }
 
-TEST(EggTest, Destructor) {
-    Egg* egg = new Egg("TeamA", 42);
+TEST(MockEggTest, Destructor) {
+    Position pos(0, 0);
+    MockEgg* egg = new MockEgg("TeamA", "42", pos);
     delete egg;
 }
 
-TEST(EggTest, ConstGetters) {
-    const Egg egg("TeamA", 42);
+TEST(MockEggTest, ConstGetters) {
+    Position pos(0, 0);
+    const MockEgg egg("TeamA", "42", pos);
 
     EXPECT_EQ(egg.getTeam(), "TeamA");
-    EXPECT_EQ(egg.getOwnerID(), 42);
-    EXPECT_EQ(egg.getDensity(), 0);
+    EXPECT_EQ(egg.getOwnerID(), "42");
     EXPECT_FALSE(egg.getIsEjected());
 }
 
-TEST(EggTest, BooleanValues) {
-    Egg egg("TeamA", 42);
+TEST(MockEggTest, BooleanValues) {
+    Position pos(0, 0);
+    MockEgg egg("TeamA", "42", pos);
 
     egg.setIsEjected(true);
     EXPECT_TRUE(egg.getIsEjected());
 
     egg.setIsEjected(false);
+    std::cout << "zozo" << std::endl;
     EXPECT_FALSE(egg.getIsEjected());
 }
