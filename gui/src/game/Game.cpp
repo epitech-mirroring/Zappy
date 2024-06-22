@@ -183,8 +183,10 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
         }
 
+        int orientation = std::stoi(tokens[4]);
+        float orientationFloat = static_cast<float>(orientation);
         Trantorian player(tokens[1], std::stoi(tokens[2]), std::stoi(tokens[3]),
-                        std::stof(tokens[4]), std::stoi(tokens[5]));
+                        orientationFloat, std::stoi(tokens[5]));
 
         for (auto &team : Teams::getTeamsList()) {
             if (team.getName() == tokens[6]) {
@@ -208,11 +210,13 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        int orientation = std::stoi(tokens[4]);
+        float orientationFloat = static_cast<float>(orientation);
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == tokens[1]) {
                     trantorian.setPosition(std::stoi(tokens[2]), std::stoi(tokens[3]));
-                    trantorian.setOrientation(std::stof(tokens[4]));
+                    trantorian.setOrientation(orientationFloat);
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " position updated" << std::endl;
                 }
