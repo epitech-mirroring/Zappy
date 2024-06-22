@@ -210,18 +210,21 @@ void Display::DrawAction()
             Vector3 scale = {0.07f, 0.07f, 0.07f};
             if (trantorian.getAction() != Trantorian::Action::NONE) {
                 switch (trantorian.getAction()) {
-                    case Trantorian::Action::LOOK:
-                        // DrawLookAction(trantorian);
                     case Trantorian::Action::BROADCAST:
                         // DrawBroadcatAction(trantorian);
+                        return;
                     case Trantorian::Action::EXPULSION:
                         DrawExpulsionAction(trantorian);
+                        return;
                     case Trantorian::Action::DROP:
-                        // DrawDropAction(trantorian);
+                        DrawDropAction(trantorian);
+                        return;
                     case Trantorian::Action::COLLECT:
                         DrawCollectAction(trantorian);
+                        return;
                     case Trantorian::Action::INCANTATION:
                         // DrawIncantationAction(trantorian);
+                        return;
                     default:
                         return;
                 }
@@ -259,6 +262,23 @@ void Display::DrawCollectAction(Trantorian &trantorian)
     Vector3 scale = {0.8f, 0.8f, 0.8f};
     if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
         DrawModelEx(trantorian.getPgtModel(), position, rotationAxis, 0.0f, scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
+void Display::DrawDropAction(Trantorian &trantorian)
+{
+    
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.3f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.2f, 0.2f, 0.2f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPdrModel(), position, rotationAxis, 0.0f, scale, WHITE);
     } else {
         trantorian.setAction(Trantorian::Action::NONE);
     }

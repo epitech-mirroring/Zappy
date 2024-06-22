@@ -98,6 +98,12 @@ namespace GUI {
         void DrawCollectAction(Trantorian &trantorian);
 
         /**
+         * @brief Draw drop action
+         * @return void (nothing to return)
+         */
+        void DrawDropAction(Trantorian &trantorian);
+
+        /**
          * @brief Cleanup object's models
          * @return void (nothing to return)
          */

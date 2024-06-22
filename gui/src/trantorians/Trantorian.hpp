@@ -29,7 +29,6 @@ namespace GUI {
         public:
             enum Action {
                 NONE = -1,
-                LOOK,
                 BROADCAST,
                 EXPULSION,
                 COLLECT,
