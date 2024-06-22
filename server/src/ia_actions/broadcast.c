@@ -12,9 +12,10 @@
 #include "ia_actions/broadcast.h"
 #include "gui.h"
 
-static coordinates_t v_pos(int pos, trantorian_t *sender,
-    trantorian_t *receiver, coordinates_t s)
+static signed_coordinates_t v_pos(int pos, trantorian_t *sender,
+                                  trantorian_t *receiver, signed_coordinates_t s)
 {
+    signed_coordinates_t coords = {0, 0};
     int virtual_position[8][2] = {
             {receiver->coordinates.x, receiver->coordinates.y - s.y},
             {receiver->coordinates.x, receiver->coordinates.y + s.y},
@@ -26,33 +27,38 @@ static coordinates_t v_pos(int pos, trantorian_t *sender,
             {receiver->coordinates.x + s.x, receiver->coordinates.y + s.y}
     };
 
-    return (coordinates_t){virtual_position[pos][0], virtual_position[pos][1]};
+    coords.x = virtual_position[pos][0];
+    coords.y = virtual_position[pos][1];
+    return coords;
 }
 
-static coordinates_t get_closet_coordinates(trantorian_t *sender,
-    trantorian_t *receiver, size_t h, size_t w)
+static signed_coordinates_t get_closet_coordinates(trantorian_t *sender,
+                                                   trantorian_t *receiver, size_t h, size_t w)
 {
     int min_distance = 1000000;
     int distance;
     int closest_position[2] = {0, 0};
-    coordinates_t size = {w / 2, h / 2};
+    signed_coordinates_t size = {w / 2, h / 2};
+    signed_coordinates_t coords = {0, 0};
 
     for (int i = 0; i < 8; i++) {
-        distance = sqrt(pow(sender->coordinates.x -
-                v_pos(i, sender, receiver, size).x, 2) +
-                pow(sender->coordinates.y -
-                v_pos(i, sender, receiver, size).y, 2));
-        if (distance < min_distance) {
-            min_distance = distance;
-            closest_position[0] = v_pos(i, sender, receiver, size).x;
-            closest_position[1] = v_pos(i, sender, receiver, size).y;
+            distance = sqrt(pow(sender->coordinates.x -
+                                v_pos(i, sender, receiver, size).x, 2) +
+                            pow(sender->coordinates.y -
+                                v_pos(i, sender, receiver, size).y, 2));
+            if (distance < min_distance) {
+                    min_distance = distance;
+                    closest_position[0] = v_pos(i, sender, receiver, size).x;
+                    closest_position[1] = v_pos(i, sender, receiver, size).y;
+                }
         }
-    }
-    return (coordinates_t){closest_position[0], closest_position[1]};
+    coords.x = closest_position[0];
+    coords.y = closest_position[1];
+    return coords;
 }
 
 static int get_direction(trantorian_t receiver, trantorian_t *sender,
-    coordinates_t closest)
+                         signed_coordinates_t closest)
 {
     if (receiver.coordinates.x == sender->coordinates.x &&
         receiver.coordinates.y == sender->coordinates.y)
@@ -86,10 +92,10 @@ static int orientation_correction(int sound_orientation)
 }
 
 static int sound_orientation(trantorian_t *sender, trantorian_t *receiver,
-    size_t height, size_t width)
+                             size_t height, size_t width)
 {
     int orientation = get_direction(*receiver, sender,
-                    get_closet_coordinates(sender, receiver, height, width));
+                                    get_closet_coordinates(sender, receiver, height, width));
 
     if (receiver->direction == NORTH)
         return orientation;
@@ -110,15 +116,15 @@ void broadcast(game_t *game, trantorian_t *trantorian)
     int orientation;
 
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
-        receiver = (trantorian_t *)array_get_at(game->trantorians, i);
-        if (receiver->uuid != trantorian->uuid) {
-            orientation = sound_orientation(trantorian, receiver,
-                game->map->height, game->map->width);
-            snprintf(msg, 1024, "message %d, %s\n",
-                orientation, trantorian->param);
-            buffer_write(receiver->client->buffer_answered, msg);
+            receiver = (trantorian_t *)array_get_at(game->trantorians, i);
+            if (receiver->uuid != trantorian->uuid) {
+                    orientation = sound_orientation(trantorian, receiver,
+                                                    game->map->height, game->map->width);
+                    snprintf(msg, 1024, "message %d, %s\n",
+                             orientation, trantorian->param);
+                    buffer_write(receiver->client->buffer_answered, msg);
+                }
         }
-    }
     free(msg);
     sprintf(status_msg, "ok\n");
     buffer_write(trantorian->client->buffer_answered, status_msg);
