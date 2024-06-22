@@ -22,45 +22,44 @@ static void write_to_client(client_t *client)
     char *tmp = NULL;
 
     while (message != NULL) {
-        tmp = calloc(strlen(message) + 2, sizeof(char));
-        sprintf(tmp, "%s\n", message);
-        send(client->socket, tmp, strlen(tmp), MSG_NOSIGNAL);
-        free(message);
-        free(tmp);
-        message = buffer_get_next(client->buffer_answered, '\n');
-    }
+            tmp = calloc(strlen(message) + 2, sizeof(char));
+            sprintf(tmp, "%s\n", message);
+            send(client->socket, tmp, strlen(tmp), MSG_NOSIGNAL);
+            free(message);
+            free(tmp);
+            message = buffer_get_next(client->buffer_answered, '\n');
+        }
     free(message);
 }
 
-static void tick(server_t *server)
+static void tick(server_t *server, fd_set *write_fds)
 {
     suseconds_t actual_time = time(NULL) * 1000000;
     int nb_ticks = (actual_time - server->prev_tick_time)
-        / server->single_tick_time;
+                   / server->single_tick_time;
 
     handle_new_client(server->game);
     if (nb_ticks > 0)
         for (int i = 0; i < nb_ticks; i++) {
-            game_tick(server->game);
-        }
+                game_tick(server->game);
+            }
     run_gui_commands(server);
     update_graphic_clients_buffer(server);
-    write_to_clients(server);
+    write_to_clients(server, write_fds);
     check_dead_client(server);
 }
 
 static void read_clients_messages(server_t *server, fd_set *readfds)
 {
     client_t *client;
-    client_t *tmp;
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client = (client_t *)array_get_at(server->clients, i);
-        if (FD_ISSET(client->socket, readfds)) {
-            read_client_message(server, client);
-            new_clients_check(server, client);
+            client = (client_t *)array_get_at(server->clients, i);
+            if (FD_ISSET(client->socket, readfds)) {
+                    read_client_message(server, client);
+                    new_clients_check(server, client);
+                }
         }
-    }
 }
 
 static suseconds_t get_closest_action(server_t *server)
@@ -70,14 +69,14 @@ static suseconds_t get_closest_action(server_t *server)
     trantorian_t *trantorian;
 
     for (size_t i = 0; i < array_get_size(server->game->trantorians); i++) {
-        trantorian = (trantorian_t *)
-            array_get_at(server->game->trantorians, i);
-        if (array_get_size(trantorian->actions) == 0)
-            continue;
-        action = trantorian->waiting_tick * server->single_tick_time;
-        if (action != -1 && (closest_action == -1 || action < closest_action))
-            closest_action = action;
-    }
+            trantorian = (trantorian_t *)
+                    array_get_at(server->game->trantorians, i);
+            if (array_get_size(trantorian->actions) == 0)
+                continue;
+            action = trantorian->waiting_tick * server->single_tick_time;
+            if (action != -1 && (closest_action == -1 || action < closest_action))
+                closest_action = action;
+        }
     return closest_action;
 }
 
@@ -90,10 +89,10 @@ static void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds)
     FD_SET(server->fd, readfds);
     server->max_fd = find_max_fd(server);
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client = (client_t *)array_get_at(server->clients, i);
-        FD_SET(client->socket, readfds);
-        FD_SET(client->socket, writefds);
-    }
+            client = (client_t *)array_get_at(server->clients, i);
+            FD_SET(client->socket, readfds);
+            FD_SET(client->socket, writefds);
+        }
 }
 
 void run(server_t *server)
@@ -104,30 +103,31 @@ void run(server_t *server)
     fd_set writefds;
 
     while (!server->game->win) {
-        server->prev_tick_time = time(NULL) * 1000000 + 0;
-        tv.tv_usec = get_closest_action(server);
-        fill_fd_set(server, &readfds, &writefds);
-        if (tv.tv_usec == -1)
-            tv2 = NULL;
-        else
-            tv2 = &tv;
-        if (select(server->max_fd + 1, &readfds, &writefds, NULL, tv2) == -1)
-            return;
-        handle_new_connections(server, &readfds);
-        read_clients_messages(server, &readfds);
-        while (waitpid(-1, NULL, WNOHANG) > 0);
-        tick(server);
-    }
+            server->prev_tick_time = time(NULL) * 1000000 + 0;
+            tv.tv_usec = get_closest_action(server);
+            fill_fd_set(server, &readfds, &writefds);
+            if (tv.tv_usec == -1)
+                tv2 = NULL;
+            else
+                tv2 = &tv;
+            if (select(server->max_fd + 1, &readfds, &writefds, NULL, tv2) == -1)
+                return;
+            handle_new_connections(server, &readfds);
+            read_clients_messages(server, &readfds);
+            while (waitpid(-1, NULL, WNOHANG) > 0);
+            tick(server, &writefds);
+        }
 }
 
-void write_to_clients(server_t *server)
+void write_to_clients(server_t *server, fd_set *write_fds)
 {
     client_t *client;
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client = (client_t *)array_get_at(server->clients, i);
-        write_to_client(client);
-    }
+            client = (client_t *)array_get_at(server->clients, i);
+            if (FD_ISSET(client->socket, write_fds))
+                write_to_client(client);
+        }
 }
 
 void read_client_message(server_t *server, client_t *client)
@@ -137,16 +137,16 @@ void read_client_message(server_t *server, client_t *client)
     trantorian_t *trantorian;
 
     if (ret > 0) {
-        add_message(client, buffer);
-        return;
-    }
+            add_message(client, buffer);
+            return;
+        }
     if (client->type != AI) {
-        remove_client(server, client->socket);
-    } else {
-        trantorian = get_ia_with_fd(server->game, client->socket);
-        if (trantorian)
-            trantorian->is_dead = true;
-    }
+            remove_client(server, client->socket);
+        } else {
+            trantorian = get_ia_with_fd(server->game, client->socket);
+            if (trantorian)
+                trantorian->is_dead = true;
+        }
 }
 
 void new_clients_check(server_t *server, client_t *client)
@@ -155,19 +155,19 @@ void new_clients_check(server_t *server, client_t *client)
     char *tmp = calloc(1024, sizeof(char));
 
     if (client->type != UNKNOWN) {
-        return;
-    }
+            return;
+        }
     message = get_next_message(client);
     sprintf(tmp, "%s\n", message);
     if (!message)
         return;
     if (strcmp(message, "GRAPHIC") == 0) {
-        client->type = GRAPHIC;
-    } else {
-        client->type = AI;
-        buffer_write(client->buffer_asked, tmp);
-        array_push_back(server->game->clients_without_team, client);
-    }
+            client->type = GRAPHIC;
+        } else {
+            client->type = AI;
+            buffer_write(client->buffer_asked, tmp);
+            array_push_back(server->game->clients_without_team, client);
+        }
     free(message);
     free(tmp);
 }
@@ -178,9 +178,9 @@ int find_max_fd(server_t *server)
     client_t *client;
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
-        client = (client_t *)array_get_at(server->clients, i);
-        if (client->socket > max_fd)
-            max_fd = client->socket;
-    }
+            client = (client_t *)array_get_at(server->clients, i);
+            if (client->socket > max_fd)
+                max_fd = client->socket;
+        }
     return max_fd;
 }
