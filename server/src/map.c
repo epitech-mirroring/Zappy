@@ -27,8 +27,16 @@ void generate_ressources(map_t *map)
     int nb_ressources = 0;
     size_t x = 0;
     size_t y = 0;
+    int tmp = 0;
 
     for (size_t i = 0; resources_map[i].name != NULL; i++) {
+        tmp = 0;
+        for (size_t j = 0; j < map->width * map->height; j++) {
+            tile = (tile_t *)array_get_at(map->tiles, j);
+            nb = hashmap_get(tile->resources, resources_map[i].name);
+            tmp += nb;
+        }
+        printf("Total %s: %d\n", resources_map[i].name, tmp);
         nb_ressources = resources_map[i].density *
             map->width * map->height / 100;
         for (int j = 0; j < nb_ressources; j++) {
@@ -39,6 +47,13 @@ void generate_ressources(map_t *map)
             hashmap_put(tile->resources,
                 resources_map[i].name, nb + 1);
         }
+        tmp = 0;
+        for (size_t j = 0; j < map->width * map->height; j++) {
+            tile = (tile_t *)array_get_at(map->tiles, j);
+            nb = hashmap_get(tile->resources, resources_map[i].name);
+            tmp += nb;
+        }
+        printf("Total %s: %d\n", resources_map[i].name, tmp);
     }
 }
 

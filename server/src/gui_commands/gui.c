@@ -77,14 +77,14 @@ static void run_gui_command(server_t *server, client_t *client, char *msg)
 
     for (size_t i = 0; gui_commands[i].cmd != NULL; i++) {
         if (strcmp(gui_commands[i].cmd, cmd) == 0) {
-            gui_commands[i].func(server->game, arg);
+            gui_commands[i].func(server->game, arg, client);
             free(arg);
             return;
         }
     }
     for (size_t i = 0; gui_commands2[i].cmd != NULL; i++) {
         if (strcmp(gui_commands2[i].cmd, cmd) == 0) {
-            gui_commands2[i].func(server, arg);
+            gui_commands2[i].func(server, arg, client);
             free(arg);
             return;
         }
