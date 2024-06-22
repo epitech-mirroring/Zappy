@@ -203,10 +203,16 @@ void Display::DrawScoreBoard(Teams &teams)
             DrawText(TextFormat("Team: %s", team.getName().c_str()), 20, yPosition, 20, WHITE);
             yPosition += lineHeight;
             for (auto& trantorian : team.getTrantorianList()) {
-                DrawText(TextFormat("   ID: %s, Level: %d, Position: (%d, %d), TTL: %d",
+                int ttl = 0;
+                for (auto& object : trantorian.getInventory()) {
+                    if (object->getType() == Trantorian::ResourceType::FOOD) {
+                        ttl += object->getQuantity();
+                    }
+                }
+                DrawText(TextFormat("   ID: %s, Level: %d, Position: (%d, %d), FOOD: %d",
                     trantorian.getId().c_str(), trantorian.getLevel(),
                     trantorian.getPosition().getX(), trantorian.getPosition().getY(),
-                    trantorian.getLifetime()), 20, yPosition, 20, WHITE);
+                    ttl), 20, yPosition, 20, WHITE);
                 yPosition += lineHeight;
             }
         }
