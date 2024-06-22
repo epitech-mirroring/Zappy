@@ -33,6 +33,7 @@ target_sources(zappy_server_lib
         ${CMAKE_CURRENT_SOURCE_DIR}/client.c
         ${CMAKE_CURRENT_SOURCE_DIR}/egg.c
         ${CMAKE_CURRENT_SOURCE_DIR}/game.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/get_ia_with_fd.c
         ${CMAKE_CURRENT_SOURCE_DIR}/hashmap_bucket.c
         ${CMAKE_CURRENT_SOURCE_DIR}/hashmap_op.c
         ${CMAKE_CURRENT_SOURCE_DIR}/hashmap_others.c

@@ -134,6 +134,15 @@ extern "C" {
      */
     void shutdown_server(server_t *server);
 
+    /**
+     * @brief Get an ia with a file descriptor
+     *
+     * @param game The game
+     * @param fd The file descriptor
+     * @return trantorian_t* The trantorian
+     */
+    trantorian_t *get_ia_with_fd(game_t *game, int fd);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
