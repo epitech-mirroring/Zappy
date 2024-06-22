@@ -10,8 +10,7 @@
 using namespace GUI;
 
 Events::Events()
-    : _selectedTile(nullptr), _hoveredTile(nullptr),
-      _selectedTrantorian(nullptr), _hoveredTrantorian(nullptr)
+    : _selectedTile(nullptr), _hoveredTile(nullptr)
 {
 }
 
@@ -65,17 +64,16 @@ void Events::detectHoveredTrantorian(Camera _camera, Teams &_teams)
     for (auto& team : _teams.getTeamsList()) {
         for (auto& trantorian : team.getTrantorianList()) {
             BoundingBox box = {
-                {static_cast<float>(trantorian.getPosition().getX()) - 0.5f, 0.25f,
+                {static_cast<float>(trantorian.getPosition().getX()) - 0.5f, 0.5f,
                     static_cast<float>(trantorian.getPosition().getY()) - 0.5f},
-                {static_cast<float>(trantorian.getPosition().getX()) + 0.5f, 1.25f,
+                {static_cast<float>(trantorian.getPosition().getX()) + 0.5f, 2.0f,
                     static_cast<float>(trantorian.getPosition().getY()) + 0.5f}
             };
             RayCollision collision = GetRayCollisionBox(ray, box);
             if (collision.hit) {
-                _hoveredTrantorian = &trantorian;
-                // std::cout << "Hovered Trantorian ID: " << trantorian.getId() << std::endl;
+                _hoveredTrantorian = std::make_unique<Trantorian>(trantorian);
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-                    _selectedTrantorian = &trantorian;
+                    _selectedTrantorian = std::make_unique<Trantorian>(trantorian);
                     _selectedTile = nullptr;
                     std::cout << "Selected Trantorian ID: " << trantorian.getId() << std::endl;
                 }

@@ -9,6 +9,7 @@
 #include "game.h"
 #include "actions.h"
 #include "gui.h"
+#include <string.h>
 
 static bool check_set_cmd(game_t *game, char *param, trantorian_t *trantorian)
 {

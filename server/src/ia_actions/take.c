@@ -9,6 +9,7 @@
 #include "game.h"
 #include "actions.h"
 #include "gui.h"
+#include <string.h>
 
 static bool check_take_cmd(game_t *game, char *param, tile_t *tile)
 {
