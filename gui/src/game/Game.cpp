@@ -212,14 +212,15 @@ void Game::initializeCallbacks()
 
         int orientation = std::stoi(tokens[4]);
         float orientationFloat = static_cast<float>(orientation);
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    trantorian.setPosition(std::stoi(tokens[2]), std::stoi(tokens[3]));
-                    trantorian.setOrientation(orientationFloat);
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " position updated" << std::endl;
-                }
+        for (auto& team : Teams::getTeamsList()) {
+            Trantorian* trantorian = team.getTrantorianByIdMod(tokens[1]);
+            if (trantorian != nullptr) {
+                trantorian->setPosition(std::stoi(tokens[2]), std::stoi(tokens[3]));
+                trantorian->setOrientation(orientationFloat);
+                std::cout << "GUI LOG: Player " << trantorian->getId()
+                    << " position updated to (" << trantorian->getPosition().getX() << ", "
+                    << trantorian->getPosition().getY() << ")" << std::endl;
+                break;
             }
         }
     });
@@ -272,17 +273,16 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    trantorian.setInventory(tokens);
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " level updated" << std::endl;
-                }
+        for (auto& team : Teams::getTeamsList()) {
+            Trantorian* trantorian = team.getTrantorianByIdMod(tokens[1]);
+            if (trantorian != nullptr) {
+                trantorian->setInventory(tokens);
+                std::cout << "GUI LOG: Player " << trantorian->getId()
+                    << " inventory updated" << std::endl;
+                break;
             }
         }
     });
-
     _commandFactory.setCallback("pex", [this](std::istringstream &iss){
         std::string data = iss.str();
         std::istringstream iss2(data);

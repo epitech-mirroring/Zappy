@@ -83,7 +83,7 @@ void Trantorian::setPosition(int x, int y)
     _position.setY(y);
 }
 
-Position Trantorian::getPosition()
+const GUI::Position& Trantorian::getPosition() const
 {
     return _position;
 }

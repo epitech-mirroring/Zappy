@@ -90,3 +90,13 @@ std::list<Egg> Teams::getEggList() const
 {
     return _eggs;
 }
+
+Trantorian* Teams::getTrantorianByIdMod(const std::string& id)
+{
+    for (auto& trantorian : _trantorians) {
+        if (trantorian.getId() == id) {
+            return &trantorian;
+        }
+    }
+    return nullptr;
+}
