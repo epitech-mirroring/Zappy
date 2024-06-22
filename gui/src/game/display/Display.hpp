@@ -130,7 +130,14 @@ namespace GUI {
          */
         void setNewTimeUnit(std::string newTimeUnit);
 
+        /**
+         * @brief add the log to the history
+         * @param log the log to add
+         */
         void addLog(const std::string& log);
+        /**
+         * @brief Draw the logs
+         */
         void DrawLogs();
 
     protected:
