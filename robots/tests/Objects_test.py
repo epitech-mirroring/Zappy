@@ -1,5 +1,6 @@
-from robots.src import Food
 import unittest
+
+from ..src.Objects import Food
 
 
 class ObjectsTest(unittest.TestCase):
