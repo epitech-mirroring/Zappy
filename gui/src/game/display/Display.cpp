@@ -91,7 +91,7 @@ void Display::DrawTileInfo()
     if (_selectedTile != nullptr && _selectedTrantorian == nullptr) {
         int yPosition = 360;
 
-        DrawRectangle(10, 290, 300, 250, Fade(BLACK, 0.5f));
+        DrawRectangle(10, 290, 300, 290, Fade(BLACK, 0.5f));
         DrawText(TextFormat("Tile Position: (X: %d, Y: %d)",
             _selectedTile->getPosition().getX(),
             _selectedTile->getPosition().getY()), 20, 300, 20, WHITE);
@@ -148,6 +148,7 @@ void Display::DrawObjects(std::list<IObject*> objects)
         {Trantorian::ResourceType::PHIRAS, {-0.2f, 0.0f}},
         {Trantorian::ResourceType::THYSTAME, {0.2f, 0.0f}}
     };
+
     std::unordered_map<int, Color> typeColors = {
         {Trantorian::ResourceType::FOOD, RED},
         {Trantorian::ResourceType::LINEMATE, BROWN},
@@ -157,14 +158,20 @@ void Display::DrawObjects(std::list<IObject*> objects)
         {Trantorian::ResourceType::PHIRAS, PURPLE},
         {Trantorian::ResourceType::THYSTAME, PINK}
     };
+
     for (auto& object : objects) {
         auto offset = typeOffsets[object->getType()];
         auto color = typeColors[object->getType()];
-        float posX = static_cast<float>(object->getPosition().getX())
-            + offset.first;
-        float posZ = static_cast<float>(object->getPosition().getY())
-            + offset.second;
-        float scale = 0.06f + 0.07f * object->getQuantity();
+        float posX = static_cast<float>(object->getPosition().getX()) + offset.first;
+        float posZ = static_cast<float>(object->getPosition().getY()) + offset.second;
+
+        // Limite l'échelle maximale à une quantité de 3
+        int quantity = object->getQuantity();
+        if (quantity > 3) {
+            quantity = 3;
+        }
+
+        float scale = 0.06f + 0.07f * quantity;
         DrawCube({posX, 0.5f, posZ}, scale, scale, scale, color);
     }
 }
