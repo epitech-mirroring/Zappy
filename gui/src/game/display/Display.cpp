@@ -218,6 +218,8 @@ void Display::DrawAction()
                         DrawExpulsionAction(trantorian);
                     case Trantorian::Action::DROP:
                         // DrawDropAction(trantorian);
+                    case Trantorian::Action::COLLECT:
+                        DrawCollectAction(trantorian);
                     case Trantorian::Action::INCANTATION:
                         // DrawIncantationAction(trantorian);
                     default:
@@ -240,6 +242,23 @@ void Display::DrawExpulsionAction(Trantorian &trantorian)
     Vector3 scale = {0.02f, 0.02f, 0.02f};
     if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
         DrawModelEx(trantorian.getPexModel(), position, rotationAxis, 0.0f, scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
+void Display::DrawCollectAction(Trantorian &trantorian)
+{
+    
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.0f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.8f, 0.8f, 0.8f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPgtModel(), position, rotationAxis, 0.0f, scale, WHITE);
     } else {
         trantorian.setAction(Trantorian::Action::NONE);
     }

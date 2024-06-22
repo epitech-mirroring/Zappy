@@ -379,14 +379,16 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string trantorianId = tokens[1];
+        int ressourceNb = std::stoi(tokens[2]);
+
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    for (auto &inventory : trantorian.getInventory()) {
-                        // HANDLE RESSOURCE COLLECTING
-                    }
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " has collected: " << tokens[2] << std::endl;
+                if (trantorian.getId() == trantorianId) {
+                    trantorian.setAction(Trantorian::Action::COLLECT);
+                    trantorian.setActionStartTime(GetTime());
+                        std::cout << "GUI LOG: Player " << trantorianId
+                            << " has collected" << ressourceNb << " ressources" << std::endl;
                 }
             }
         }

@@ -29,6 +29,10 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
     _pexModel = LoadModel("gui/src/assets/pex/boot.obj");
     _pexTexture = LoadTexture("gui/src/assets/pex/boot.png");
     _pexModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pexTexture;
+
+    _pgtModel = LoadModel("gui/src/assets/pgt/chest.obj");
+    _pgtTexture = LoadTexture("gui/src/assets/pgt/chest.png");
+    _pgtModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pgtTexture;
 }
 
 void Trantorian::setAction(Action action)
