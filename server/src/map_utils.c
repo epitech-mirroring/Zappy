@@ -8,17 +8,6 @@
 
 #include "game.h"
 
-tile_t *init_tile(size_t x, size_t y)
-{
-    tile_t *tile = malloc(sizeof(tile_t));
-
-    tile->coordinates.x = x;
-    tile->coordinates.y = y;
-    tile->resources = init_resources();
-    tile->eggs = array_constructor(sizeof(egg_t *), NULL);
-    return tile;
-}
-
 void destroy_tile(tile_t *tile)
 {
     destroy_hashmap(tile->resources);
@@ -26,19 +15,10 @@ void destroy_tile(tile_t *tile)
     free(tile);
 }
 
-hashmap_t *init_resources(void)
+void destroy_map(map_t *map)
 {
-    hashmap_t *resources;
-
-    resources = create_hashmap();
-    hashmap_put(resources, "food", 0);
-    hashmap_put(resources, "linemate", 10);
-    hashmap_put(resources, "deraumere", 0);
-    hashmap_put(resources, "sibur", 0);
-    hashmap_put(resources, "mendiane", 0);
-    hashmap_put(resources, "phiras", 0);
-    hashmap_put(resources, "thystame", 0);
-    return resources;
+    array_destructor(map->tiles);
+    free(map);
 }
 
 void update_pos(coordinates_t prev, coordinates_t now, map_t *map)
