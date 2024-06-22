@@ -8,14 +8,14 @@
 
 #include "game.h"
 
-void pdi_log_gui(game_t *game, trantorian_t *trantorian, client_t *client)
+void pdi_log_gui(game_t *game, trantorian_t *trantorian)
 {
     char *str = calloc(1024, sizeof(char));
     char *uuid = calloc(37, sizeof(char));
 
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "pdi %s\n", uuid);
-    buffer_write(client->buffer_answered, str);
+    array_push_back(game->gui_log, str);
     free(uuid);
 }
 
