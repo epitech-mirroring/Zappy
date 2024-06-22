@@ -8,9 +8,8 @@
 
 #include "game.h"
 #include "map.h"
-#include <sys/select.h>
 #include <sys/socket.h>
-#include <sys/wait.h>
+#include <string.h>
 
 void msz_log_gui(game_t *game, char *arg, client_t *client)
 {

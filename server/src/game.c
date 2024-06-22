@@ -95,20 +95,12 @@ static void new_client_ping(game_t *game, client_t *client,
     team_t *team, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
-    char *uuid = calloc(37, sizeof(char));
-    char *dir = strdup(get_direction_str(trantorian->direction));
-    coordinates_t pos = trantorian->coordinates;
 
     snprintf(msg, 1024, "%i\n", team->free_places);
     buffer_write(client->buffer_answered, msg);
     snprintf(msg, 1024, "%i %i\n", game->map->width, game->map->height);
     buffer_write(client->buffer_answered, msg);
-    uuid_unparse(trantorian->uuid, uuid);
-    snprintf(msg, 1024, "pnw %s %d %d %s %d %s\n", uuid, pos.x, pos.y,
-        dir, 1, team->name);
-    array_push_back(game->gui_log, msg);
-    free(dir);
-    free(uuid);
+    pnw_log_gui(game, trantorian, team->name);
 }
 
 void handle_new_client(game_t *game)
