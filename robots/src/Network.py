@@ -16,7 +16,7 @@ class NetworkManager:
     def connect(self):
         print(f"Connecting to {self.serverIP}:{self.serverPort}")
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
-        self.socket.setblocking(False)
+        # self.socket.setblocking(False)
         self.socket.connect((self.serverIP, self.serverPort))
 
     def __send(self, message: str):

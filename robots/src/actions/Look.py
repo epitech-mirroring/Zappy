@@ -1,5 +1,5 @@
-from . import AbstractAction
-from .. import AbstractObject, Food, Linemate, Deraumere, \
+from .AbstractAction import AbstractAction
+from ..Objects import AbstractObject, Food, Linemate, Deraumere, \
     Sibur, Mendiane, Phiras, Thystame, Egg
 
 
