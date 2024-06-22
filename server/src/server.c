@@ -14,7 +14,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
-#include <errno.h>
+#include <time.h>
 
 static void write_to_client(client_t *client)
 {
