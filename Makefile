@@ -36,7 +36,7 @@ successfully$(RESET)\n"
 
 zappy_ai:
 	@pip install -r robots/requirements.txt
-	@echo "#!$(shell which bash)\n$(shell which python3) robots/main.py \$$@"\
+	@echo -e "#!$(shell which bash)\n$(shell which python3) robots/main.py \$$@"\
 	> zappy_ai
 	@chmod +x zappy_ai
 	@printf "$(SUCCESS)$(GREEN)  🤖  Zappy AI built successfully$(RESET)\n"
