@@ -47,6 +47,7 @@ char *get_element_on_tile(game_t *game, tile_t *tile)
 {
     int elements[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
+    elements[0] = tile->player_count;
     elements[1] = hashmap_get(tile->resources, "food");
     elements[2] = hashmap_get(tile->resources, "linemate");
     elements[3] = hashmap_get(tile->resources, "deraumere");
