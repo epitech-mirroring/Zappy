@@ -91,7 +91,7 @@ void Display::DrawTileInfo()
     if (_selectedTile != nullptr && _selectedTrantorian == nullptr) {
         int yPosition = 360;
 
-        DrawRectangle(10, 290, 300, 250, Fade(BLACK, 0.5f));
+        DrawRectangle(10, 290, 300, 290, Fade(BLACK, 0.5f));
         DrawText(TextFormat("Tile Position: (X: %d, Y: %d)",
             _selectedTile->getPosition().getX(),
             _selectedTile->getPosition().getY()), 20, 300, 20, WHITE);
@@ -110,10 +110,16 @@ void Display::DrawTrantorianInfo()
         const int lineHeight = 30;
         const int padding = 10;
         const int baseHeight = 160;
-        int inventorySize = _selectedTrantorian->getInventory().size();
+        std::unordered_map<std::string, int> inventoryMap;
+
+        for (auto& object : _selectedTrantorian->getInventory()) {
+            std::string objectName = object->getName();
+            inventoryMap[objectName] += object->getQuantity();
+        }
+
+        int inventorySize = inventoryMap.size();
         int rectangleHeight = baseHeight + inventorySize * lineHeight;
         int yPosition = 450;
-
 
         DrawRectangle(10, 290, 300, rectangleHeight, Fade(BLACK, 0.5f));
         DrawText(TextFormat("Trantorian ID: %s", _selectedTrantorian->getId().c_str()), 20, 300, 20, WHITE);
@@ -130,8 +136,8 @@ void Display::DrawTrantorianInfo()
         }
         DrawText(TextFormat("Level: %d", _selectedTrantorian->getLevel()), 20, 390, 20, WHITE);
         DrawText("Inventory:", 20, 420, 20, WHITE);
-        for (auto& object : _selectedTrantorian->getInventory()) {
-            DrawText(TextFormat("%s: %d", object->getName().c_str(), object->getQuantity()), 20, yPosition, 20, WHITE);
+        for (const auto& [objectName, quantity] : inventoryMap) {
+            DrawText(TextFormat("%s: %d", objectName.c_str(), quantity), 20, yPosition, 20, WHITE);
             yPosition += lineHeight;
         }
     }
@@ -148,6 +154,7 @@ void Display::DrawObjects(std::list<IObject*> objects)
         {Trantorian::ResourceType::PHIRAS, {-0.2f, 0.0f}},
         {Trantorian::ResourceType::THYSTAME, {0.2f, 0.0f}}
     };
+
     std::unordered_map<int, Color> typeColors = {
         {Trantorian::ResourceType::FOOD, RED},
         {Trantorian::ResourceType::LINEMATE, BROWN},
@@ -157,14 +164,20 @@ void Display::DrawObjects(std::list<IObject*> objects)
         {Trantorian::ResourceType::PHIRAS, PURPLE},
         {Trantorian::ResourceType::THYSTAME, PINK}
     };
+
     for (auto& object : objects) {
         auto offset = typeOffsets[object->getType()];
         auto color = typeColors[object->getType()];
-        float posX = static_cast<float>(object->getPosition().getX())
-            + offset.first;
-        float posZ = static_cast<float>(object->getPosition().getY())
-            + offset.second;
-        float scale = 0.06f + 0.07f * object->getQuantity();
+        float posX = static_cast<float>(object->getPosition().getX()) + offset.first;
+        float posZ = static_cast<float>(object->getPosition().getY()) + offset.second;
+
+        // Limite l'échelle maximale à une quantité de 3
+        int quantity = object->getQuantity();
+        if (quantity > 3) {
+            quantity = 3;
+        }
+
+        float scale = 0.06f + 0.07f * quantity;
         DrawCube({posX, 0.5f, posZ}, scale, scale, scale, color);
     }
 }
@@ -190,10 +203,16 @@ void Display::DrawScoreBoard(Teams &teams)
             DrawText(TextFormat("Team: %s", team.getName().c_str()), 20, yPosition, 20, WHITE);
             yPosition += lineHeight;
             for (auto& trantorian : team.getTrantorianList()) {
-                DrawText(TextFormat("   ID: %s, Level: %d, Position: (%d, %d), TTL: %d",
+                int ttl = 0;
+                for (auto& object : trantorian.getInventory()) {
+                    if (object->getType() == Trantorian::ResourceType::FOOD) {
+                        ttl += object->getQuantity();
+                    }
+                }
+                DrawText(TextFormat("   ID: %s, Level: %d, Position: (%d, %d), FOOD: %d",
                     trantorian.getId().c_str(), trantorian.getLevel(),
                     trantorian.getPosition().getX(), trantorian.getPosition().getY(),
-                    trantorian.getLifetime()), 20, yPosition, 20, WHITE);
+                    ttl), 20, yPosition, 20, WHITE);
                 yPosition += lineHeight;
             }
         }
