@@ -69,7 +69,7 @@ void trantorian_tick(trantorian_t *trantorian)
 
 char *get_direction_str(enum direction_e direction)
 {
-    for (int i = 0; DIRECTION_TO_STRING[i].direction != -1; i++) {
+    for (int i = 0; DIRECTION_TO_STRING[i].str != NULL; i++) {
         if (DIRECTION_TO_STRING[i].direction == direction)
             return DIRECTION_TO_STRING[i].str;
     }

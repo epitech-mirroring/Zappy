@@ -57,18 +57,6 @@ static void forward_west(game_t *game, trantorian_t *trantorian)
     update_pos(prev, trantorian->coordinates, game->map);
 }
 
-static bool check_forward(trantorian_t *trantorian, char *msg)
-{
-    if (trantorian->param != NULL) {
-        sprintf(msg, "ko\n");
-        buffer_write(trantorian->client->buffer_answered, msg);
-        free(msg);
-        free(trantorian->param);
-        return false;
-    }
-    return true;
-}
-
 void forward(game_t *game, trantorian_t *trantorian)
 {
     char *msg = malloc(sizeof(char) * 4);

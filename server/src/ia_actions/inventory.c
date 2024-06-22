@@ -21,12 +21,7 @@ void inventory(game_t *game, trantorian_t *trantorian)
     char *msg = calloc(1024, sizeof(char));
     char *tmp = calloc(1024, sizeof(char));
 
-    if (trantorian->param != NULL) {
-        sprintf(msg, "ko\n");
-        buffer_write(trantorian->client->buffer_answered, msg);
-        free_str(tmp, msg, trantorian->param);
-        return;
-    }
+    (void)game;
     sprintf(tmp, "[food %d, linemate %d, deraumere %d, sibur %d,",
         hashmap_get(trantorian->inventory.resources, "food"),
         hashmap_get(trantorian->inventory.resources, "linemate"),

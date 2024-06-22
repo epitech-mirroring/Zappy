@@ -8,17 +8,6 @@
 
 #include "ia_actions/look.h"
 
-static size_t get_elements_size(const int *elements)
-{
-    size_t size = 0;
-    const int element_size[8] = {6, 4, 8, 9, 5, 8, 6, 8};
-
-    for (int i = 0; i < 8; i++)
-        size += elements[i] * element_size[i] +
-        (i * elements[i] - i == 0 ? 0 : 1);
-    return size;
-}
-
 static char *add_space(char *str, char *tmp, int j, int element)
 {
     if (j < element - 1)
@@ -43,7 +32,7 @@ static char *make_string_for_elements(const int elements[8])
     return tmp;
 }
 
-char *get_element_on_tile(game_t *game, tile_t *tile)
+char *get_element_on_tile(tile_t *tile)
 {
     int elements[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 

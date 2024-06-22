@@ -68,7 +68,7 @@ char *buffer_get_next(buffer_t *buffer, char limit)
     char *data;
     int data_size = 0;
 
-    for (int i = buffer->read_index; buffer->buffer[i] != limit; i++) {
+    for (size_t i = buffer->read_index; buffer->buffer[i] != limit; i++) {
         if (i == buffer->capacity)
             i = 0;
         data_size++;
@@ -89,7 +89,7 @@ char *buffer_get_next(buffer_t *buffer, char limit)
 
 void buffer_clear(buffer_t *buffer)
 {
-    for (int i = 0; i < buffer->capacity; i++)
+    for (size_t i = 0; i < buffer->capacity; i++)
         buffer->buffer[i] = '\0';
     buffer->read_index = 0;
     buffer->write_index = 0;

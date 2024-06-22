@@ -126,7 +126,7 @@ int main(int ac, char **av)
 
     srand(time(NULL));
     if (map_size == NULL || nb_max_clients == -1
-        || single_tick_time == -1 || check_teams(teams) == 84)
+        || single_tick_time > (size_t)1000000 || check_teams(teams) == 84)
         return 84;
     server = create_server(port, teams, map_size, nb_max_clients);
     if (server == NULL)

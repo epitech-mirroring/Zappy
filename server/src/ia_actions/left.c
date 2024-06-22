@@ -31,6 +31,7 @@ void left(game_t *game, trantorian_t *trantorian)
 {
     char *msg = malloc(sizeof(char) * 100);
 
+    (void)game;
     turn(trantorian);
     sprintf(msg, "ok\n");
     buffer_write(trantorian->client->buffer_answered, msg);

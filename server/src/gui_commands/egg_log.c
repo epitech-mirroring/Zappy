@@ -27,7 +27,7 @@ void enw_log_gui(game_t *game, egg_t *egg, trantorian_t *trantorian)
 
     uuid_unparse(egg->uuid, uuid_egg);
     uuid_unparse(trantorian->uuid, uuid_player);
-    sprintf(str, "enw %s %s %d %d\n", uuid_egg, uuid_player,
+    sprintf(str, "enw %s %s %ld %ld\n", uuid_egg, uuid_player,
         egg->coordinates.x, egg->coordinates.y);
     array_push_back(game->gui_log, str);
     free(uuid_egg);

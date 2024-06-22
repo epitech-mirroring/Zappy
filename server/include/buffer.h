@@ -24,9 +24,9 @@ extern "C" {
      */
     typedef struct buffer_s {
         char *buffer;
-        int capacity;
-        int read_index;
-        int write_index;
+        size_t capacity;
+        size_t read_index;
+        size_t write_index;
     } buffer_t;
 
     /**

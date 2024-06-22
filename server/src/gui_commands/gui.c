@@ -59,7 +59,7 @@ static char *cut_str(char *str, int start)
         return NULL;
     if (start < 0)
         return NULL;
-    if (start >= strlen(str))
+    if (start >= (int)strlen(str))
         return NULL;
     new_str = malloc(sizeof(char) * (strlen(str) - start + 1));
     for (i = 0; str[start] != '\0' && str[start] != '\n'; i++) {

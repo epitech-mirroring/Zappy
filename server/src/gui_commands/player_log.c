@@ -131,5 +131,6 @@ void tna_log_gui(game_t *game, char *arg, client_t *client)
 {
     char *str = teams_to_string(game->teams);
 
+    (void)arg;
     buffer_write(client->buffer_answered, str);
 }
