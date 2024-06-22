@@ -1,4 +1,4 @@
-from . import AbstractObject
+from .Objects import AbstractObject
 
 
 class World:

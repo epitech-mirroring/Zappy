@@ -1,6 +1,6 @@
-from . import AbstractAction
-from .. import AbstractObject
-from Look import parse_item
+from .AbstractAction import AbstractAction
+from .Look import parse_item
+from ..Objects import AbstractObject
 
 
 class Inventory(AbstractAction):
