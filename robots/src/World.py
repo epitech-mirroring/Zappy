@@ -24,7 +24,8 @@ class World:
 
     def remove_object(self, x: int, y: int, obj: AbstractObject):
         if y in self.cells and x in self.cells[y]:
-            self.cells[y][x].remove(obj)
+            if obj in self.cells[y][x]:
+                self.cells[y][x].remove(obj)
 
     def get_objects(self, x: int, y: int) -> list[AbstractObject]:
         if y not in self.cells:

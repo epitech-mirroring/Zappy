@@ -1,5 +1,6 @@
 import threading
 import time
+import random
 from enum import Enum
 
 from .Network import NetworkManager
@@ -60,6 +61,12 @@ class Direction(Enum):
     EAST = 1
     SOUTH = 2
     WEST = 3
+
+    def right(self) -> 'Direction':
+        return Direction((self.value + 1) % 4)
+
+    def left(self) -> 'Direction':
+        return Direction((self.value - 1) % 4)
 
 
 def cells_to_direction(cell_from: tuple[int, int], cell_to: tuple[int, int]) \
@@ -134,9 +141,10 @@ class Bot:
                     duration / expected_duration)
             action.handle_response(response, self)
 
-    def find_nearest_food(self) -> tuple[int, int]:
+    def find_nearest_food(self) -> tuple[int, int] or None:
         min_distance = 1000000
         nearest_food: tuple[int, int] = (0, 0)
+        found = False
         for x in range(2 * self.level):
             for y in range(2 * self.level):
                 coords = (self.position[0] + x, self.position[1] + y)
@@ -148,6 +156,9 @@ class Bot:
                         if distance < min_distance:
                             min_distance = distance
                             nearest_food = coords
+                            found = True
+        if not found:
+            return None
         return nearest_food
 
     def rotate_to_face(self, direction: Direction,
@@ -200,6 +211,7 @@ class Bot:
             elif direction == Direction.SOUTH:
                 self.add_action(Left())
                 return 1
+        return 0
 
     def a_star_towards(self, target: tuple[int, int]):
         explored = []
@@ -257,8 +269,17 @@ class Bot:
                                      abs(new_cell[1] - target[1]))
                 to_explore.sort(key=lambda x: f_score[x])
 
+    def wander(self):
+        rand_x = random.randint(self.position[0] - 1, self.position[0] + 1)
+        rand_y = random.randint(self.position[1] - 1, self.position[1] + 1)
+        self.a_star_towards((rand_x, rand_y))
+
     def feed(self):
         nearest_food = self.find_nearest_food()
+        if nearest_food is None:
+            self.wander()
+            return
+
         distance = abs(self.position[0] - nearest_food[0]) + abs(
             self.position[1] - nearest_food[1])
         # If distance too far scan around
@@ -300,7 +321,7 @@ class Bot:
                 continue
             if len(self.actionQueue) != 0:
                 if not self.actionQueue[0].has_been_executed:
-                    self.actionQueue.pop(0).execute(self)
+                    self.actionQueue[0].execute(self)
                 else:
                     continue
             else:
