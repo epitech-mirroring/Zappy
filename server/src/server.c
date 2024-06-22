@@ -24,7 +24,7 @@ static void write_to_client(client_t *client)
     while (message != NULL) {
         tmp = calloc(strlen(message) + 2, sizeof(char));
         sprintf(tmp, "%s\n", message);
-        send(client->socket, tmp, strlen(tmp), 0);
+        send(client->socket, tmp, strlen(tmp), MSG_NOSIGNAL);
         free(message);
         free(tmp);
         message = buffer_get_next(client->buffer_answered, '\n');
@@ -134,10 +134,19 @@ void read_client_message(server_t *server, client_t *client)
 {
     char buffer[1024] = {0};
     size_t ret = read(client->socket, buffer, MAX_COMMAND_SIZE);
+    trantorian_t *trantorian;
 
-    if (ret <= 0)
+    if (ret > 0) {
+        add_message(client, buffer);
         return;
-    add_message(client, buffer);
+    }
+    if (client->type != AI) {
+        remove_client(server, client->socket);
+    } else {
+        trantorian = get_ia_with_fd(server->game, client->socket);
+        if (trantorian)
+            trantorian->is_dead = true;
+    }
 }
 
 void new_clients_check(server_t *server, client_t *client)

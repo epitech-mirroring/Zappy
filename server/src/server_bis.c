@@ -92,6 +92,7 @@ void remove_client(server_t *server, int fd)
         client = (client_t *)array_get_at(server->clients, i);
         if (client->socket == fd) {
             array_remove(server->clients, i);
+            destroy_client(client);
             break;
         }
     }
