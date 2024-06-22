@@ -33,7 +33,7 @@ void Teams::addTrantorian(Trantorian& trantorian)
     }
 }
 
-std::list<Trantorian> Teams::getTrantorianList() const
+std::list<Trantorian>& Teams::getTrantorianList()
 {
     return _trantorians;
 }
@@ -79,6 +79,21 @@ bool Teams::hasTrantorian(const std::string& id) const
         }
     }
     return false;
+}
+
+void Teams::addEggToList(Egg newEgg)
+{
+    _eggs.emplace_back(newEgg);
+}
+
+void Teams::removeEggFromList(std::string eggId)
+{
+    for (auto it = _eggs.begin(); it != _eggs.end(); ++it) {
+        if (it->getEggId() == eggId) {
+            _eggs.erase(it);
+            return;
+        }
+    }
 }
 
 std::list<Egg> Teams::getEggList() const

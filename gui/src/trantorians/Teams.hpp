@@ -47,7 +47,7 @@ namespace GUI {
              * @brief Get list of trantorian in the team
              * @return list of trantorian objects
              */
-            [[nodiscard]] std::list<Trantorian> getTrantorianList() const;
+            [[nodiscard]] std::list<Trantorian>& getTrantorianList();
 
             /**
              * @brief Add team to teams list
@@ -76,6 +76,20 @@ namespace GUI {
             [[nodiscard]] Trantorian getTrantorianById(std::string id);
 
             bool hasTrantorian(const std::string& id) const;
+
+            /**
+             * @brief Add a new egg to egg's list
+             * @param Egg egg object
+             * @return void (nothing to return)
+             */
+            void addEggToList(Egg newEgg);
+
+            /**
+             * @brief Remove egg from egg's list
+             * @param string egg Id
+             * @return void (nothing to return)
+             */
+            void removeEggFromList(std::string eggId);
 
             /**
              * @brief Get list of egg in the team

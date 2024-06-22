@@ -9,12 +9,15 @@
 
 using namespace GUI;
 
-Egg::Egg(std::string teamName, int ownerID, Position tile)
+Egg::Egg(std::string eggId, std::string ownerID, Position tile)
     :   AObject(0, tile)
-    ,   _teamName(std::move(teamName))
+    ,   _eggId(std::move(eggId))
     ,   _ownerID(ownerID)
 {
     _eggModel = LoadModel("gui/src/assets/egg/egg.obj");
+    _eggTexture = LoadTexture("gui/src/assets/egg/egg.png");
+    _eggModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _eggTexture;
+    _position = tile;
 }
 
 Egg::~Egg()
@@ -26,7 +29,12 @@ std::string Egg::getTeam() const
     return _teamName;
 }
 
-int Egg::getOwnerID() const
+std::string Egg::getEggId() const
+{
+    return _eggId;
+}
+
+std::string Egg::getOwnerID() const
 {
     return _ownerID;
 }

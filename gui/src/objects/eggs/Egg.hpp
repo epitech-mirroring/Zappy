@@ -18,11 +18,11 @@ namespace GUI {
     public:
         /**
          * @brief Construct a new Egg object
-         * @param std::string teamName
-         * @param int ownerID
+         * @param string eggId
+         * @param string ownerID
          * @param Position Tile where the object is
         */
-        Egg(std::string teamName, int ownerID = -1,
+        Egg(std::string eggId, std::string ownerID = "-1",
             Position tile = Position(0, 0));
         /**
          * @brief Destroy the Egg object
@@ -36,10 +36,16 @@ namespace GUI {
         [[nodiscard]] std::string getTeam() const;
 
         /**
-         * @brief Get the owner ID
-         * @return int (owner of the egg ID)
+         * @brief Get the egg ID
+         * @return std::string (egg ID)
         */
-        [[nodiscard]] int getOwnerID() const;
+        [[nodiscard]] std::string getEggId() const;
+
+        /**
+         * @brief Get the owner ID
+         * @return std::string (owner of the egg ID)
+        */
+        [[nodiscard]] std::string getOwnerID() const;
 
         /**
          * @brief Get the isEjected
@@ -75,10 +81,12 @@ namespace GUI {
 
     protected:
         std::string _teamName;      // team name
-        int _ownerID;               // ownerID (player who laid it) default -1
+        std::string _eggId;         // eggId
+        std::string _ownerID;       // ownerID (player who laid it) default -1
         bool _isEjected;            // is egg ejected
         Position _position;         // position of the egg
         Model _eggModel;            // 3d model for the egg
+        Texture _eggTexture;        // 3d texture for the egg
     };
 } // namespace GUI //
 #endif /* !EGG_HPP_ */

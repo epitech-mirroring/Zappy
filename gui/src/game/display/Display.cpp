@@ -181,6 +181,70 @@ void Display::DrawObjects(std::list<IObject*> objects)
     }
 }
 
+void Display::DrawEgg()
+{
+    for (auto &team : Teams::getTeamsList()) {
+        for (auto &egg : team.getEggList()) {
+            Vector3 position = {
+                static_cast<float>(egg.getPosition().getX()),
+                0.5f,
+                static_cast<float>(egg.getPosition().getY())
+            };
+            Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+            Vector3 scale = {0.07f, 0.07f, 0.07f};
+            DrawModelEx(egg.getModel(), position, rotationAxis, 0.0f, scale, WHITE);
+        }
+    }
+}
+
+void Display::DrawAction()
+{
+    for (auto &team : Teams::getTeamsList()) {
+        for (auto &trantorian : team.getTrantorianList()) {
+            Vector3 position = {
+                static_cast<float>(trantorian.getPosition().getX()),
+                0.5f,
+                static_cast<float>(trantorian.getPosition().getY())
+            };
+            Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+            Vector3 scale = {0.07f, 0.07f, 0.07f};
+            if (trantorian.getAction() != Trantorian::Action::NONE) {
+                switch (trantorian.getAction()) {
+                    case Trantorian::Action::LOOK:
+                        // DrawLookAction(trantorian);
+                    case Trantorian::Action::BROADCAST:
+                        // DrawBroadcatAction(trantorian);
+                    case Trantorian::Action::EXPULSION:
+                        DrawExpulsionAction(trantorian);
+                    case Trantorian::Action::DROP:
+                        // DrawDropAction(trantorian);
+                    case Trantorian::Action::INCANTATION:
+                        // DrawIncantationAction(trantorian);
+                    default:
+                        return;
+                }
+            }
+        }
+    }
+}
+
+void Display::DrawExpulsionAction(Trantorian &trantorian)
+{
+    
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.0f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.02f, 0.02f, 0.02f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPexModel(), position, rotationAxis, 0.0f, scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
 void Display::displayElements()
 {
     Events::detectHoveredTile(_camera, _world);
@@ -193,6 +257,8 @@ void Display::displayElements()
     DrawClouds();
     DrawTrantorians();
     DrawObjects(_world.getObjects());
+    DrawEgg();
+    DrawAction();
     EndMode3D();
     DrawFPS(10, 10);
     DrawTileInfo();

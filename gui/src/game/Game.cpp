@@ -226,12 +226,15 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string trantorianId = tokens[1];
+
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    // HANDLE EXPULSION
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " has been expulsed" << std::endl;
+                if (trantorian.getId() == trantorianId) {
+                    trantorian.setAction(Trantorian::Action::EXPULSION);
+                    trantorian.setActionStartTime(GetTime());
+                        std::cout << "GUI LOG: Player " << trantorianId
+                            << " has been expulsed" << std::endl;
                 }
             }
         }
@@ -252,26 +255,6 @@ void Game::initializeCallbacks()
                     // HANDLE BROADCAST
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " has broadcasted: " << tokens[2] << std::endl;
-                }
-            }
-        }
-    });
-
-    _commandFactory.setCallback("pfk", [this](std::istringstream &iss){
-        std::string data = iss.str();
-        std::istringstream iss2(data);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (std::getline(iss2, token, ' '))
-            tokens.push_back(token);
-
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    // HANDLE ACTION LAYING EGG
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " is laying an egg" << std::endl;
                 }
             }
         }
@@ -418,12 +401,21 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string eggId = tokens[1];
+        std::string trantorianId = tokens[2];
+        int x = std::stoi(tokens[3]);
+        int y = std::stoi(tokens[4]);
+
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    // HANDLE ACTION LAYING EGG
-                    std::cout << "GUI LOG: Egg " << token[1]
-                        << " has been layed by player " << token[2] << std::endl;
+                if (trantorian.getId() == trantorianId) {
+                    Position pos;
+                    pos.setX(x);
+                    pos.setY(y);
+                    Egg egg(eggId, trantorianId, pos);
+                    team.addEggToList(egg);
+                    std::cout << "GUI LOG: Egg " << eggId
+                        << " has been layed by player " << trantorianId << std::endl;
                 }
             }
         }
@@ -451,8 +443,16 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        // HANDLE DEATH FOR AN EGG
-        std::cout << "GUI LOG: Death of " << token[1] << " Egg" << std::endl;
+        std::string eggId = tokens[1];
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &egg : team.getEggList()) {
+                if (egg.getEggId() == eggId) {
+                    team.removeEggFromList(eggId);
+                    std::cout << "GUI LOG: Death of " << eggId << " Egg" << std::endl;
+                }
+            }
+        }
     });
 
     _commandFactory.setCallback("seg", [this](std::istringstream &iss){
