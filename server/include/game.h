@@ -38,7 +38,6 @@ extern "C" {
         char *winning_team;
         int food_spwan;
         size_t min_places;
-
         map_t *map;
     } game_t;
 
