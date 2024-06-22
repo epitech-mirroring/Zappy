@@ -2,7 +2,9 @@ import threading
 import time
 from enum import Enum
 
-from . import NetworkManager, World, AbstractObject, Food
+from .Network import NetworkManager
+from .Objects import AbstractObject, Food
+from .World import World
 from .actions import AbstractAction
 from .actions.Forward import Forward
 from .actions.Look import Look
@@ -104,15 +106,21 @@ class Bot:
             self.add_action(Right())
 
     def handle_response(self, response: str):
+        response = response.strip()
+        if len(response) == 0:
+            return
         if self.world is None:
-            # If response is two numbers, it's the world size
-            if response.count(' ') == 1:
-                x, y = response.split(' ')
-                width = int(x)
-                height = int(y)
-                self.world = World(width, height)
+            if response == 'WELCOME':
+                self.network_manager.send(f"%s\n" % self.team)
             else:
-                self.remaining_places_in_team = int(response)
+                # If response is two numbers, it's the world size
+                if response.count(' ') == 1:
+                    x, y = response.split(' ')
+                    width = int(x)
+                    height = int(y)
+                    self.world = World(width, height)
+                else:
+                    self.remaining_places_in_team = int(response)
         else:
             if response == "dead":
                 exit(0)
@@ -286,8 +294,6 @@ class Bot:
         self.network_thread.daemon = True
         self.network_manager.add_response_handler(self.handle_response)
         self.network_thread.start()
-
-        self.network_manager.send(f"%s\n" % self.team)
 
         while True:
             if self.world is None:

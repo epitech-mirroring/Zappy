@@ -1,5 +1,7 @@
-from . import AbstractAction
-from .. import NetworkManager, Bot
+from .AbstractAction import AbstractAction
+from ..Bot import Bot
+from ..Network import NetworkManager
+
 import os
 
 

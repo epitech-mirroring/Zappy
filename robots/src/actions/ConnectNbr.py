@@ -1,4 +1,4 @@
-from . import AbstractAction
+from .AbstractAction import AbstractAction
 
 
 class ConnectNbr(AbstractAction):
@@ -13,5 +13,3 @@ class ConnectNbr(AbstractAction):
     def handle_response(self, response: str, bot):
         super().handle_response(response, bot)
         bot.remaining_places_in_team = int(response)
-
-
