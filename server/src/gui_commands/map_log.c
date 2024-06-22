@@ -23,7 +23,15 @@ void bct_log_gui(game_t *game, char *arg, client_t *client)
 {
     coordinates_t coordinates = {0, 0};
     char *str = NULL;
+    int x = 0;
+    int y = 0;
 
+    sscanf(arg, "%d %d", &x, &y);
+    if (x < 0 || y < 0 || x >= (int)game->map->width
+        || y >= (int)game->map->height) {
+        buffer_write(client->buffer_answered, "sbp\n");
+        return;
+    }
     str = tile_to_string(get_tile_by_coordinates(game->map, coordinates));
     buffer_write(client->buffer_answered, str);
 }
