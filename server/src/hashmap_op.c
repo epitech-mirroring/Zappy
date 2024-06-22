@@ -24,7 +24,7 @@ int hashcode(char *key)
 {
     int hash = 0;
 
-    for (int i = 0; i < strlen(key); i++)
+    for (size_t i = 0; i < strlen(key); i++)
         hash += key[i];
     return hash % 100;
 }

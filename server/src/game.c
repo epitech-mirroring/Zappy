@@ -72,7 +72,7 @@ static void trantorian_action(game_t *game, trantorian_t *trantorian)
         return;
     if (trantorian->is_dead)
         return;
-    while (actions_fnc[i].action != -1) {
+    while (actions_fnc[i].fnc != NULL) {
         action = *(action_t *)array_get_at(trantorian->actions, 0);
         if (actions_fnc[i].action == action.action) {
             actions_fnc[i].fnc(game, trantorian);
@@ -83,22 +83,14 @@ static void trantorian_action(game_t *game, trantorian_t *trantorian)
     }
 }
 
-static char *int_to_str(int nb)
-{
-    char *str = calloc(sizeof(char), 12);
-
-    sprintf(str, "%d", nb);
-    return str;
-}
-
 static void new_client_ping(game_t *game, client_t *client,
     team_t *team, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
 
-    snprintf(msg, 1024, "%i\n", team->free_places);
+    snprintf(msg, 1024, "%li\n", team->free_places);
     buffer_write(client->buffer_answered, msg);
-    snprintf(msg, 1024, "%i %i\n", game->map->width, game->map->height);
+    snprintf(msg, 1024, "%li %li\n", game->map->width, game->map->height);
     buffer_write(client->buffer_answered, msg);
     pnw_log_gui(game, trantorian, team->name);
 }
@@ -190,7 +182,7 @@ void create_trantorian(game_t *game, team_t *team, client_t *client)
 {
     trantorian_t *trantorian;
     egg_t *egg;
-    int i = 0;
+    size_t i = 0;
 
     for (i = 0; i < array_get_size(game->eggs); i++) {
         if (uuid_compare(((egg_t *)array_get_at

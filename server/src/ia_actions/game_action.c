@@ -94,7 +94,7 @@ static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
 
     while (msg != NULL) {
         find_cmd_and_param(msg, cmd, param);
-        for (i = 0; actions[i].action != -1 &&
+        for (i = 0; actions[i].action_name != NULL &&
             strcmp(actions[i].action_name, cmd); i++);
         if (array_get_size(trantorian->actions) >= 10 ||
             actions[i].action_name == NULL) {

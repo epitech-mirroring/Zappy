@@ -67,7 +67,7 @@ bool can_elevate(game_t *game, array_t *trantorians, size_t level,
         hashmap_get(tile->resources, "phiras") < incantation.phiras ||
         hashmap_get(tile->resources, "thystame") < incantation.thystame)
         return false;
-    if (array_get_size(trantorians) < incantation.player)
+    if (array_get_size(trantorians) < (size_t)incantation.player)
         return false;
     return true;
 }

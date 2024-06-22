@@ -89,7 +89,7 @@ extern "C" {
      * @param index the index to set the element at
      * @param element the element to set
      */
-    void array_set_at(array_t *array, int index, void *element);
+    void array_set_at(array_t *array, size_t index, void *element);
 
     /**
      * @brief Destroys the array

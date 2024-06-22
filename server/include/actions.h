@@ -67,14 +67,14 @@ extern "C" {
  */
 
     typedef struct incantations_check_s {
-        size_t level;
-        size_t player;
-        size_t linemate;
-        size_t deraumere;
-        size_t sibur;
-        size_t mendiane;
-        size_t phiras;
-        size_t thystame;
+        int level;
+        int player;
+        int linemate;
+        int deraumere;
+        int sibur;
+        int mendiane;
+        int phiras;
+        int thystame;
     } incantations_check_t;
 
     #ifdef __cplusplus

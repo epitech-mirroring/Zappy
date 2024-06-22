@@ -20,7 +20,8 @@ void pic_log_gui(game_t *game, array_t *trantorians,
     for (size_t i = 0; i < array_get_size(trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(trantorians, i);
         uuid_unparse(trantorian->uuid, uuid);
-        sprintf(str, "%s %s", str, uuid);
+        sprintf(tmp, "%s %s", str, uuid);
+        sprintf(str, "%s", tmp);
     }
     sprintf(tmp, "%s\n", str);
     free(str);
