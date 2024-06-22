@@ -8,6 +8,21 @@
 
 #include "game.h"
 
+map_t *init_map(size_t width, size_t height)
+{
+    map_t *map = malloc(sizeof(map_t));
+
+    map->width = width;
+    map->height = height;
+    map->tiles = array_constructor(sizeof(tile_t), (void *)&destroy_tile);
+    for (size_t y = 0; y < height; y++) {
+            for (size_t x = 0; x < width; x++) {
+                    array_push_back(map->tiles, init_tile(x, y));
+                }
+        }
+    return map;
+}
+
 tile_t *init_tile(size_t x, size_t y)
 {
     tile_t *tile = malloc(sizeof(tile_t));
@@ -17,13 +32,6 @@ tile_t *init_tile(size_t x, size_t y)
     tile->resources = init_resources();
     tile->eggs = array_constructor(sizeof(egg_t *), NULL);
     return tile;
-}
-
-void destroy_tile(tile_t *tile)
-{
-    destroy_hashmap(tile->resources);
-    array_destructor(tile->eggs);
-    free(tile);
 }
 
 hashmap_t *init_resources(void)
@@ -39,24 +47,4 @@ hashmap_t *init_resources(void)
     hashmap_put(resources, "phiras", 0);
     hashmap_put(resources, "thystame", 0);
     return resources;
-}
-
-void update_pos(coordinates_t prev, coordinates_t now, map_t *map)
-{
-    tile_t *prev_tile = get_tile_by_coordinates(map, prev);
-    tile_t *now_tile = get_tile_by_coordinates(map, now);
-
-    prev_tile->player_count--;
-    now_tile->player_count++;
-}
-
-void player_spawn(egg_t *egg, team_t *team, game_t *game, size_t i)
-{
-    coordinates_t pos = egg->coordinates;
-    tile_t *tile = get_tile_by_coordinates(game->map, pos);
-
-    tile->player_count++;
-    array_remove(game->eggs, i);
-    destroy_egg(egg);
-    team->free_places--;
 }
