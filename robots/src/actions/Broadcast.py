@@ -1,4 +1,4 @@
-from . import AbstractAction
+from .AbstractAction import AbstractAction
 
 
 class Broadcast(AbstractAction):

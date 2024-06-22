@@ -1,5 +1,5 @@
-from . import AbstractAction
-from .. import AbstractObject
+from .AbstractAction import AbstractAction
+from ..Objects import AbstractObject
 
 
 class DropDown(AbstractAction):
