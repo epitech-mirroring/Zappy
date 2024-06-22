@@ -39,8 +39,8 @@ static char *new_player_connection_log_gui(trantorian_t *trantorian,
 
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "pnw %s %d %d %i %d %s\n", uuid, trantorian->coordinates.x,
-        trantorian->coordinates.y, trantorian->direction + 1, trantorian->level,
-        team);
+        trantorian->coordinates.y, trantorian->direction + 1,
+        trantorian->level, team);
     free(uuid);
     return str;
 }
