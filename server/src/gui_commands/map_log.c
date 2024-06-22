@@ -8,6 +8,9 @@
 
 #include "game.h"
 #include "map.h"
+#include <sys/select.h>
+#include <sys/socket.h>
+#include <sys/wait.h>
 
 void msz_log_gui(game_t *game, char *arg, client_t *client)
 {
@@ -27,7 +30,15 @@ void bct_log_gui(game_t *game, char *arg, client_t *client)
 
 void mct_log_gui(game_t *game, char *arg, client_t *client)
 {
-    char *str = map_to_string(game->map);
+    tile_t *tile = NULL;
+    char *str = NULL;
 
-    buffer_write(client->buffer_answered, str);
+    for (size_t y = 0; y < game->map->height; y++) {
+        for (size_t x = 0; x < game->map->width; x++) {
+            tile = get_tile_by_coordinates(game->map, (coordinates_t){x, y});
+            str = tile_to_string(tile);
+            send(client->socket, str, strlen(str), 0);
+            free(str);
+        }
+    }
 }
