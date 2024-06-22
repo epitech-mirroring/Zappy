@@ -278,43 +278,43 @@ void Display::DisplayHelpMenu()
     DrawText("Hold H to display help menu", 10, 870, 20, WHITE);
 
     if (IsKeyDown(KEY_H) && !IsKeyDown(KEY_TAB)) {
-        DrawRectangle(10, 10, 500, 590, Fade(BLACK, 0.5f));
+        DrawRectangle(10, 10, 500, 620, Fade(BLACK, 0.5f));
         DrawText("Help Menu", 20, 20, 20, GREEN);
         DrawText("TAB: Display scoreboard", 20, 50, 20, WHITE);
         DrawText("T: Open frequency", 20, 80, 20, WHITE);
         DrawText("H: Display help menu", 20, 110, 20, WHITE);
         DrawText("I: Display game information", 20, 140, 20, WHITE);
-        DrawText("Left click: Select an object", 20, 170, 20, WHITE);
-        DrawText("Right click: Unselect an object", 20, 200, 20, WHITE);
-        DrawText("Move camera with ZQSD", 20, 230, 20, WHITE);
-        DrawText("Orient camera with arrow keys", 20, 260, 20, WHITE);
-        DrawText("Rotate camera with A and E", 20, 290, 20, WHITE);
-        DrawText("Esc: Exit client GUI", 20, 320, 20, WHITE);
-        DrawText("Item Legend:", 20, 350, 20, WHITE);
-        DrawRectangle(20, 380, 20, 20, RED);
-        DrawText("Food", 50, 380, 20, WHITE);
-        DrawRectangle(20, 410, 20, 20, BROWN);
-        DrawText("Linemate", 50, 410, 20, WHITE);
-        DrawRectangle(20, 440, 20, 20, BLUE);
-        DrawText("Deraumere", 50, 440, 20, WHITE);
-        DrawRectangle(20, 470, 20, 20, YELLOW);
-        DrawText("Sibur", 50, 470, 20, WHITE);
-        DrawRectangle(20, 500, 20, 20, ORANGE);
-        DrawText("Mendiane", 50, 500, 20, WHITE);
-        DrawRectangle(20, 530, 20, 20, PURPLE);
-        DrawText("Phiras", 50, 530, 20, WHITE);
-        DrawRectangle(20, 560, 20, 20, PINK);
-        DrawText("Thystame", 50, 560, 20, WHITE);
+        DrawText("J: Open the log menu", 20, 170, 20, WHITE); // Ajout de cette ligne
+        DrawText("Left click: Select an object", 20, 200, 20, WHITE);
+        DrawText("Right click: Unselect an object", 20, 230, 20, WHITE);
+        DrawText("Move camera with ZQSD", 20, 260, 20, WHITE);
+        DrawText("Orient camera with arrow keys", 20, 290, 20, WHITE);
+        DrawText("Rotate camera with A and E", 20, 320, 20, WHITE);
+        DrawText("Esc: Exit client GUI", 20, 350, 20, WHITE);
+        DrawText("Item Legend:", 20, 380, 20, WHITE);
+        DrawRectangle(20, 410, 20, 20, RED);
+        DrawText("Food", 50, 410, 20, WHITE);
+        DrawRectangle(20, 440, 20, 20, BROWN);
+        DrawText("Linemate", 50, 440, 20, WHITE);
+        DrawRectangle(20, 470, 20, 20, BLUE);
+        DrawText("Deraumere", 50, 470, 20, WHITE);
+        DrawRectangle(20, 500, 20, 20, YELLOW);
+        DrawText("Sibur", 50, 500, 20, WHITE);
+        DrawRectangle(20, 530, 20, 20, ORANGE);
+        DrawText("Mendiane", 50, 530, 20, WHITE);
+        DrawRectangle(20, 560, 20, 20, PURPLE);
+        DrawText("Phiras", 50, 560, 20, WHITE);
+        DrawRectangle(20, 590, 20, 20, PINK);
+        DrawText("Thystame", 50, 590, 20, WHITE);
         if (_selectedTile != nullptr)
             _selectedTile = nullptr;
     }
 }
+
 void Display::DisplayGameInformations()
 {
-    if (IsKeyPressed(KEY_I)) {
+    if (IsKeyPressed(KEY_I))
         _gameInfo = !_gameInfo;
-    }
-
     if (!_gameInfo)
         return;
 
@@ -397,6 +397,38 @@ void Display::DisplayGameInformations()
     DrawText(TextFormat(" Thystame: %d", nbThystame), textX, 10 + 14 * 10 + 260, 20, WHITE);
 }
 
+void Display::addLog(const std::string& log)
+{
+    _logs.push_back(log);
+
+    if (_logs.size() > 16) {
+        _logs.erase(_logs.begin());
+    }
+}
+
+void Display::DrawLogs()
+{
+    if (IsKeyPressed(KEY_J))
+        _drawLogs = !_drawLogs;
+
+    if (!_drawLogs)
+        return;
+
+    int rectX = GetScreenWidth() - 400 - 10;
+    int rectY = GetScreenHeight() - 400 - 10;
+    int rectWidth = 400;
+    int rectHeight = 400;
+
+    DrawRectangle(rectX, rectY, rectWidth, rectHeight, Fade(BLACK, 0.5f));
+    DrawText("Logs", rectX + 10, rectY + 10, 20, GREEN);
+
+    int startLogY = rectY + 40;
+    int logLineHeight = 20;
+    for (size_t i = 0; i < _logs.size(); ++i) {
+        DrawText(_logs[i].c_str(), rectX + 10, startLogY + i * logLineHeight, 20, WHITE);
+    }
+}
+
 void Display::displayElements()
 {
     if (!_textBoxActive) {
@@ -420,6 +452,7 @@ void Display::displayElements()
     DrawSSTBox();
     DisplayHelpMenu();
     DisplayGameInformations();
+    DrawLogs();
     EndDrawing();
 }
 

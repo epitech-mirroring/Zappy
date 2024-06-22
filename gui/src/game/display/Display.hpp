@@ -130,6 +130,9 @@ namespace GUI {
          */
         void setNewTimeUnit(std::string newTimeUnit);
 
+        void addLog(const std::string& log);
+        void DrawLogs();
+
     protected:
         Camera _camera;                          // Camera
         std::vector<Model> _clouds;              // Clouds models
@@ -144,6 +147,8 @@ namespace GUI {
         int _ignoreInputFrames = 0;
         std::string _newTimeUnit;
         bool _gameInfo = false;
+        bool _drawLogs = false;
+        std::vector<std::string> _logs;
     };
 }
 
