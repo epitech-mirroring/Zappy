@@ -39,7 +39,8 @@ void manage_teams_places(game_t *game)
             get_nb_eggs_in_team(team->uuid, game->eggs);
         printf("nb = %ld\n", nb);
         if (nb < game->min_places) {
-                fill_team_egg(game, team, nb);
-            }
+            fill_team_egg(game, team, nb);
+            team->free_places = game->min_places;
+        }
     }
 }
