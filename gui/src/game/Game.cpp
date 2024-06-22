@@ -226,12 +226,14 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string trantorianId = tokens[1];
+
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
+                if (trantorian.getId() == trantorianId) {
                     trantorian.setAction(Trantorian::Action::EXPULSION);
                     trantorian.setActionStartTime(GetTime());
-                        std::cout << "GUI LOG: Player " << trantorian.getId()
+                        std::cout << "GUI LOG: Player " << trantorianId
                             << " has been expulsed" << std::endl;
                 }
             }

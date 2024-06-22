@@ -29,26 +29,102 @@ namespace GUI {
         */
         ~Display() = default;
 
+        /**
+         * @brief Display all objects to draw on the map
+         * @return void (nothing to return)
+         */
         void displayElements();
 
+        /**
+         * @brief Draw tile's map
+         * @param tiles Every informations about tile's map
+         * @return void (nothing to return)
+         */
         void DrawTiles(std::vector<std::vector<Tile>> tiles);
-        void DrawClouds();
-        void DrawTrantorians();
-        void DrawTileInfo();
-        void DrawTrantorianInfo();
-        void DrawObjects(std::list<IObject*> objects);
-        void DrawEgg();
-        void DrawAction();
-        void DrawExpulsionAction();
 
+        /**
+         * @brief Draw clouds
+         * @return void (nothing to return)
+         */
+        void DrawClouds();
+
+        /**
+         * @brief Draw trantorians
+         * @return void (nothing to return)
+         */
+        void DrawTrantorians();
+
+        /**
+         * @brief Draw tile's infos
+         * @return void (nothing to return)
+         */
+        void DrawTileInfo();
+
+        /**
+         * @brief Draw trantorian's infos
+         * @return void (nothing to return)
+         */
+        void DrawTrantorianInfo();
+
+        /**
+         * @brief Draw food and stone objects
+         * @param objects every food and stone objects
+         * @return void (nothing to return)
+         */
+        void DrawObjects(std::list<IObject*> objects);
+
+        /**
+         * @brief Draw eggs
+         * @return void (nothing to return)
+         */
+        void DrawEgg();
+
+        /**
+         * @brief Draw actions (parse which action to draw)
+         * @return void (nothing to return)
+         */
+        void DrawAction();
+
+        /**
+         * @brief Draw expulsion action
+         * @return void (nothing to return)
+         */
+        void DrawExpulsionAction(Trantorian &trantorian);
+
+        /**
+         * @brief Cleanup object's models
+         * @return void (nothing to return)
+         */
         void cleanupModels();
+
+        /**
+         * @brief Init clouds models
+         * @return void (nothing to return)
+         */
         void initClouds();
 
+        /**
+         * @brief Know if window should close
+         * @return bool (true if window should close)
+         */
         bool windowShouldClose();
+
+        /**
+         * @brief Update camera values
+         * @return void (nothing to return)
+         */
         void updateCamera();
 
+        /**
+         * @brief Close the window
+         * @return void (nothing to return)
+         */
         void closeWindow();
 
+        /**
+         * @brief Get clouds models
+         * @return list of clouds models
+         */
         std::vector<Model> getClouds() const;
 
     protected:

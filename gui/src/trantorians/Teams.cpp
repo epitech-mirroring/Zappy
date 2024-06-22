@@ -33,7 +33,7 @@ void Teams::addTrantorian(Trantorian& trantorian)
     }
 }
 
-std::list<Trantorian> Teams::getTrantorianList() const
+std::list<Trantorian>& Teams::getTrantorianList()
 {
     return _trantorians;
 }

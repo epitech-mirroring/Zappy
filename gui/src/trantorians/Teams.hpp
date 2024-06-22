@@ -47,7 +47,7 @@ namespace GUI {
              * @brief Get list of trantorian in the team
              * @return list of trantorian objects
              */
-            [[nodiscard]] std::list<Trantorian> getTrantorianList() const;
+            [[nodiscard]] std::list<Trantorian>& getTrantorianList();
 
             /**
              * @brief Add team to teams list
