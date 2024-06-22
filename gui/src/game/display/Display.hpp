@@ -111,9 +111,34 @@ namespace GUI {
         std::string getNewTimeUnit();
 
         /**
+         * @brief Display the help menu
+         */
+        void DisplayHelpMenu();
+
+        /**
+         * @brief Display the game informations on the top right corner
+         */
+        void DisplayGameInformations();
+
+        /**
+         * @brief setTheTimeUnit
+         */
+        void setTimeUnit(unsigned int timeUnit);
+
+        /**
          * @brief Set the new time unit
          */
         void setNewTimeUnit(std::string newTimeUnit);
+
+        /**
+         * @brief add the log to the history
+         * @param log the log to add
+         */
+        void addLog(const std::string& log);
+        /**
+         * @brief Draw the logs
+         */
+        void DrawLogs();
 
     protected:
         Camera _camera;                          // Camera
@@ -121,12 +146,16 @@ namespace GUI {
         std::vector<Vector3> _cloudPositions;    // Clouds positions
         World &_world;                           // World
         Teams &_teams;                           // Teams
+        unsigned int _timeUnit;                  // Time unit
 
         char _inputText[256] = "";
         bool _textBoxActive = false;
         int _framesCounter = 0;
         int _ignoreInputFrames = 0;
         std::string _newTimeUnit;
+        bool _gameInfo = false;
+        bool _drawLogs = false;
+        std::vector<std::string> _logs;
     };
 }
 
