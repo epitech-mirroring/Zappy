@@ -75,14 +75,6 @@ extern "C" {
      */
     char *get_next_message(client_t *client);
 
-    /**
-     * @brief Get the type of the client
-     *
-     * @param client The target client
-     * @return client_type_t The type of the client
-     */
-    client_type_t get_type(client_t *client);
-
     #ifdef __cplusplus
 }
     #endif // __cplusplus

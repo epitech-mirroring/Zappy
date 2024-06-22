@@ -10,6 +10,7 @@ endif ()
 target_link_libraries(zappy_server_lib PRIVATE m)
 add_subdirectory(src)
 add_subdirectory(include)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wshadow")
 
 if (TESTS)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage -g")

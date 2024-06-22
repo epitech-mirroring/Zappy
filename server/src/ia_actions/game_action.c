@@ -98,7 +98,6 @@ static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
             strcmp(actions[i].action_name, cmd); i++);
         if (array_get_size(trantorian->actions) >= 10 ||
             actions[i].action_name == NULL) {
-            buffer_write(trantorian->client->buffer_answered, "ko\n");
         } else {
             dup_action(trantorian, i, param, game);
         }

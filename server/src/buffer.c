@@ -13,13 +13,16 @@ static bool can_write(buffer_t *buffer, size_t size)
 {
     size_t i = buffer->write_index;
 
-    if (i == buffer->write_index) {
+    if (i == buffer->read_index) {
         i++;
         size--;
     }
-    for (; i != buffer->read_index && size > 0; i++) {
+    for (; size > 0; i++) {
         if (i >= buffer->capacity)
             i = 0;
+        if ((i + 1 == buffer->read_index && size > 1) ||
+            (i == buffer->capacity && buffer->read_index == 0 && size > 1))
+            return false;
         size--;
     }
     if (size > 0)
@@ -58,8 +61,6 @@ void buffer_write(buffer_t *buffer, char *data)
         buffer->buffer[buffer->write_index] = data[i];
         buffer->write_index++;
     }
-    buffer->buffer[buffer->write_index] = '\n';
-    buffer->write_index++;
 }
 
 char *buffer_get_next(buffer_t *buffer, char limit)
@@ -74,7 +75,7 @@ char *buffer_get_next(buffer_t *buffer, char limit)
     }
     if (data_size == 0)
         return NULL;
-    data = calloc(data_size + 1, sizeof(char));
+    data = calloc(data_size + 2, sizeof(char));
     for (size_t i = 0; buffer->buffer[buffer->read_index] != limit; i++) {
         if (buffer->read_index == buffer->capacity)
             buffer->read_index = 0;
