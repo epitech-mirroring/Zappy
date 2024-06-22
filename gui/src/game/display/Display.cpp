@@ -110,10 +110,16 @@ void Display::DrawTrantorianInfo()
         const int lineHeight = 30;
         const int padding = 10;
         const int baseHeight = 160;
-        int inventorySize = _selectedTrantorian->getInventory().size();
+        std::unordered_map<std::string, int> inventoryMap;
+
+        for (auto& object : _selectedTrantorian->getInventory()) {
+            std::string objectName = object->getName();
+            inventoryMap[objectName] += object->getQuantity();
+        }
+
+        int inventorySize = inventoryMap.size();
         int rectangleHeight = baseHeight + inventorySize * lineHeight;
         int yPosition = 450;
-
 
         DrawRectangle(10, 290, 300, rectangleHeight, Fade(BLACK, 0.5f));
         DrawText(TextFormat("Trantorian ID: %s", _selectedTrantorian->getId().c_str()), 20, 300, 20, WHITE);
@@ -130,8 +136,8 @@ void Display::DrawTrantorianInfo()
         }
         DrawText(TextFormat("Level: %d", _selectedTrantorian->getLevel()), 20, 390, 20, WHITE);
         DrawText("Inventory:", 20, 420, 20, WHITE);
-        for (auto& object : _selectedTrantorian->getInventory()) {
-            DrawText(TextFormat("%s: %d", object->getName().c_str(), object->getQuantity()), 20, yPosition, 20, WHITE);
+        for (const auto& [objectName, quantity] : inventoryMap) {
+            DrawText(TextFormat("%s: %d", objectName.c_str(), quantity), 20, yPosition, 20, WHITE);
             yPosition += lineHeight;
         }
     }
