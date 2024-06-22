@@ -34,7 +34,6 @@ void destroy_client(client_t *client)
 
 void add_message(client_t *client, char *message)
 {
-
     if (client == NULL)
         return;
     buffer_write(client->buffer_asked, message);
