@@ -39,14 +39,14 @@ void Game::runGame()
     initializeCallbacks();
 
     while (_display.windowShouldClose() == false) {
-        ensureGameInit();
+        // ensureGameInit();
         _display.setTimeUnit(_timeUnit);
         handleNewTimeUnit();
         _display.displayElements();
         data = _client.readData();
         protocolHandler.handleData(data);
         data.clear();
-        ensureGameInformation();
+        // ensureGameInformation();
     }
     _display.closeWindow();
 }
@@ -190,7 +190,7 @@ void Game::initializeCallbacks()
             if (team.getName() == tokens[6]) {
                 team.addTrantorian(player);
                 std::string log = "GUI LOG: Player " + player.getId() +
-                    " added to team " + team.getName();
+                    " added to " + team.getName();
                 _display.addLog(log);
                 std::cout << "GUI LOG: Player " << player.getId() <<
                     " added to team " << team.getName() << std::endl;
