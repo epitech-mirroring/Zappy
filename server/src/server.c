@@ -24,7 +24,7 @@ static void write_to_client(client_t *client)
     while (message != NULL) {
         tmp = calloc(strlen(message) + 2, sizeof(char));
         sprintf(tmp, "%s\n", message);
-        send(client->socket, tmp, strlen(tmp), 0);
+        send(client->socket, tmp, strlen(tmp), MSG_NOSIGNAL);
         free(message);
         free(tmp);
         message = buffer_get_next(client->buffer_answered, '\n');
