@@ -15,11 +15,11 @@ static char *make_string(char *element, char *message, int count)
     if (element == NULL || message == NULL)
         return message;
     for (int i = 0; i < count; i++) {
-        sprintf(tmp, "%s", message);
+        snprintf(tmp, 2048, "%s", message);
         if (strlen(message) == 0)
-            sprintf(message, "%s", element);
+            snprintf(message, 2048, "%s", element);
         else
-            sprintf(message, "%s %s", tmp, element);
+            snprintf(message, 2048, "%s %s", tmp, element);
     }
     free(tmp);
     return message;
