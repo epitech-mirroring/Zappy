@@ -29,34 +29,17 @@ static char *make_string_for_elements(hashmap_t *elements)
     int count = 0;
 
     for (int i = 0; i < 8; i++) {
-        if (hashmap_get(elements, element_str[i]) > 0){
             count = hashmap_get(elements, element_str[i]);
+            count = (count > 8) ? 0 : count;
+        if (count > 0){
             tmp = make_string(element_str[i], tmp, count);
         }
     }
     return tmp;
 }
 
-static hashmap_t *init_tile_content(void)
+char *get_element_on_tile(tile_t *tile, hashmap_t *content)
 {
-    hashmap_t *resources;
-
-    resources = create_hashmap();
-    hashmap_put(resources, "player", 0);
-    hashmap_put(resources, "food", 0);
-    hashmap_put(resources, "linemate", 0);
-    hashmap_put(resources, "deraumere", 0);
-    hashmap_put(resources, "sibur", 0);
-    hashmap_put(resources, "mendiane", 0);
-    hashmap_put(resources, "phiras", 0);
-    hashmap_put(resources, "thystame", 0);
-    return resources;
-}
-
-char *get_element_on_tile(tile_t *tile)
-{
-    hashmap_t *content = init_tile_content();
-
     hashmap_set(content, "player", tile->player_count);
     hashmap_set(content, "food", hashmap_get(tile->resources, "food"));
     hashmap_set(content, "linemate", hashmap_get(tile->resources, "linemate"));
