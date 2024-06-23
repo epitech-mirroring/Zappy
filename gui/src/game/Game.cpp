@@ -114,16 +114,6 @@ void Game::ensureGameInit()
 void Game::ensureGameInformation()
 {
     _client._socket.get()->send("mct\n");
-    for (auto &team : Teams::getTeamsList()) {
-        for (auto &trantorian : team.getTrantorianList()) {
-            std::string pinRequest = "pin " + trantorian.getId() + "\n";
-            std::string ppoRequest = "ppo " + trantorian.getId() + "\n";
-            std::string plvRequest = "plv " + trantorian.getId() + "\n";
-            _client._socket.get()->send(pinRequest);
-            _client._socket.get()->send(ppoRequest);
-            _client._socket.get()->send(plvRequest);
-        }
-    }
 }
 
 void Game::initializeCallbacks()
