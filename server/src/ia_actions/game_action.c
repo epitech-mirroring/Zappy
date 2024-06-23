@@ -82,6 +82,7 @@ static void dup_action(trantorian_t *trantorian,
     } else {
         trantorian->param = NULL;
     }
+    trantorian->waiting_tick = actions[i].time;
     gui_log_action_cast(game, action, trantorian);
 }
 

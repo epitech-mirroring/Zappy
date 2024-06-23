@@ -119,3 +119,8 @@ void buffer_destroy(buffer_t *buffer)
     free(buffer->buffer);
     free(buffer);
 }
+
+bool buffer_is_empty(buffer_t *buffer)
+{
+    return buffer->read_index == buffer->write_index;
+}

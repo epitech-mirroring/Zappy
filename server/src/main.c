@@ -8,6 +8,7 @@
 
 #include <string.h>
 #include <time.h>
+#include <sys/time.h>
 #include "server.h"
 #include "team.h"
 #include "array.h"
@@ -139,6 +140,10 @@ int main(int ac, char **av)
     server = create_server(port, teams, map_size, nb_max_clients);
     free_tmp(map_size, teams);
     server->single_tick_time = single_tick_time;
+    server->remaining_us_before_next_tick = single_tick_time;
+    struct timeval tv = {0, 0};
+    gettimeofday(&tv, NULL);
+    server->prev_tick_time = tv.tv_sec * 1000000 + tv.tv_usec;
     run(server);
     shutdown_server(server);
     destroy(server);

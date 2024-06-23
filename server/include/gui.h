@@ -241,6 +241,8 @@ extern "C" {
      */
     void suc_log_gui(game_t *game);
 
+    void gui_send_updates(game_t *game, server_t *server);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

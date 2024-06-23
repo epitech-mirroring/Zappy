@@ -60,6 +60,8 @@ extern "C" {
      */
     void buffer_destroy(buffer_t *buffer);
 
+    bool buffer_is_empty(buffer_t *buffer);
+
     #ifdef __cplusplus
 }
 

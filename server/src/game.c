@@ -178,7 +178,6 @@ void game_tick(game_t *game)
     if (game->win || array_get_size(game->trantorians) == 0)
         return;
     check_dead_trantorians(game);
-    find_trantorians_action(game);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
         trantorian_tick(trantorian);
