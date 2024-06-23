@@ -176,6 +176,9 @@
      */
     void shutdown_action(server_t *server);
 
+    extern sig_atomic_t is_running;
+
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

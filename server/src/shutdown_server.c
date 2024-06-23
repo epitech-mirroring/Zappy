@@ -9,7 +9,7 @@
 #include "server.h"
 #include <signal.h>
 
-extern sig_atomic_t is_running = true;
+sig_atomic_t is_running = true;
 
 int sigaction_init(void)
 {
@@ -20,6 +20,7 @@ int sigaction_init(void)
     sigemptyset(&action.sa_mask);
     if (sigaction(SIGINT, &action, NULL) == -1)
         return 84;
+    return 0;
 }
 
 void shutdown_action(server_t *server)

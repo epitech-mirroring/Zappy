@@ -103,7 +103,8 @@ void run(server_t *server)
     fd_set readfds;
     fd_set writefds;
 
-    while (!server->game->win) {
+    is_running = true;
+    while (is_running) {
         server->prev_tick_time = time(NULL) * 1000000 + 0;
         tv.tv_usec = get_closest_action(server);
         fill_fd_set(server, &readfds, &writefds);
@@ -112,7 +113,6 @@ void run(server_t *server)
             tv2 = &tv;
         if (select(server->max_fd + 1, &readfds, &writefds, NULL, tv2) == -1)
             return;
-        shutdown_action(server);
         handle_new_connections(server, &readfds);
         read_clients_messages(server, &readfds);
         while (waitpid(-1, NULL, WNOHANG) > 0);
