@@ -35,14 +35,16 @@ char *look_north(game_t *game, short level,
     char *msg = calloc(100000, sizeof(char));
     int x = 0;
     int y = player_coordinates.y;
+    tile_t *tile = NULL;
 
     for (short i = 0; i <= level; i++) {
         x = player_coordinates.x - i;
         y = manage_pos(y, game->map->height);
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
+            tile = get_tile(game->map, x, y);
             msg = make_msg(msg, get_element_on_tile
-                (get_tile(game->map, x, y), content));
+                (tile, content));
             x++;
         }
         y--;
@@ -56,14 +58,16 @@ char *look_south(game_t *game, short level,
     char *msg = calloc(100000, sizeof(char));
     int x = 0;
     int y = player_coordinates.y;
+    tile_t *tile = NULL;
 
     for (short i = 0; i <= level; i++) {
         x = player_coordinates.x + i;
         y = manage_pos(y, game->map->height);
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
+            tile = get_tile(game->map, x, y);
             msg = make_msg(msg, get_element_on_tile
-                (get_tile(game->map, x, y), content));
+                (tile, content));
             x--;
         }
         y++;
@@ -77,14 +81,16 @@ char *look_west(game_t *game, short level,
     char *msg = calloc(100000, sizeof(char));
     int x = player_coordinates.x;
     int y = 0;
+    tile_t *tile = NULL;
 
     for (short i = 0; i <= level; i++) {
         y = player_coordinates.x + i;
         x = manage_pos(y, game->map->height);
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
+            tile = get_tile(game->map, x, y);
             msg = make_msg(msg, get_element_on_tile
-                (get_tile(game->map, x, y), content));
+                (tile, content));
             y--;
         }
         x--;
@@ -98,14 +104,16 @@ char *look_east(game_t *game, short level,
     char *msg = calloc(100000, sizeof(char));
     int x = player_coordinates.x;
     int y = 0;
+    tile_t *tile = NULL;
 
     for (short i = 0; i <= level; i++) {
         y = player_coordinates.x - i;
         x = manage_pos(y, game->map->height);
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
+            tile = get_tile(game->map, x, y);
             msg = make_msg(msg, get_element_on_tile
-                (get_tile(game->map, x, y), content));
+                (tile, content));
             y++;
         }
         x++;
