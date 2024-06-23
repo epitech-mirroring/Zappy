@@ -63,9 +63,8 @@ void buffer_write(buffer_t *buffer, char *data)
     }
 }
 
-char *buffer_get_next(buffer_t *buffer, char limit)
+static int read_get_size(buffer_t *buffer, char limit)
 {
-    char *data;
     int data_size = 0;
 
     for (size_t i = buffer->read_index; buffer->buffer[i] != limit; i++) {
@@ -73,10 +72,21 @@ char *buffer_get_next(buffer_t *buffer, char limit)
             i = 0;
         data_size++;
     }
+    return data_size;
+}
+
+char *buffer_get_next(buffer_t *buffer, char limit)
+{
+    char *data;
+    int data_size = 0;
+
+    if (buffer == NULL)
+        return NULL;
+    data_size = read_get_size(buffer, limit);
     if (data_size == 0)
         return NULL;
-    data = calloc(data_size + 2, sizeof(char));
-    for (size_t i = 0; buffer->buffer[buffer->read_index] != limit; i++) {
+    data = calloc(data_size + 1, sizeof(char));
+    for (size_t i = 0; data_size > strlen(data); i++) {
         if (buffer->read_index == buffer->capacity)
             buffer->read_index = 0;
         data[i] = buffer->buffer[buffer->read_index];

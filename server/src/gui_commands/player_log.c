@@ -53,6 +53,7 @@ void ppo_log_gui(game_t *game, char *arg, client_t *client)
     }
     str = trantorian_pos_to_str(trantorian);
     buffer_write(client->buffer_answered, str);
+    free(str);
 }
 
 static bool check_plv_arg(game_t *game, char *arg)

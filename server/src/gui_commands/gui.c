@@ -107,6 +107,7 @@ void run_gui_commands(server_t *server)
             run_gui_command(server, client, msg);
         }
     }
+    gui_send_updates(server->game, server);
 }
 
 void new_client_unknow_team(game_t *game, client_t *client,
@@ -119,4 +120,27 @@ void new_client_unknow_team(game_t *game, client_t *client,
         client->need_to_be_kick = true;
     }
     array_remove(game->clients_without_team, index);
+}
+
+void gui_send_updates(game_t *game, server_t *server)
+{
+    trantorian_t *trantorian = NULL;
+    client_t *client = NULL;
+    size_t nb_clients = array_get_size(server->clients);
+    size_t nb_ia = array_get_size(game->trantorians);
+    char *uuid = calloc(37, sizeof(char));
+
+    for (size_t i = 0; i < nb_clients; i++) {
+        client = (client_t *)array_get_at(server->clients, i);
+        if (client->type != GRAPHIC)
+            continue;
+        for (size_t j = 0; j < nb_ia; j++) {
+            trantorian = (trantorian_t *)array_get_at(game->trantorians, j);
+            uuid_unparse(trantorian->uuid, uuid);
+            ppo_log_gui(game, uuid, client);
+            plv_log_gui(game, uuid, client);
+            pin_log_gui(game, uuid, client);
+        }
+    }
+    free(uuid);
 }
