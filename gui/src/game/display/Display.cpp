@@ -474,7 +474,7 @@ void Display::DrawAction()
                         DrawCollectAction(trantorian);
                         return;
                     case Trantorian::Action::INCANTATION_S:
-                        // DrawStartIncantationAction(trantorian);
+                        DrawStartIncantationAction(trantorian);
                         return;
                     case Trantorian::Action::INCANTATION_E:
                         // DrawEndIncantationAction(trantorian);
@@ -489,7 +489,7 @@ void Display::DrawAction()
 
 void Display::DrawExpulsionAction(Trantorian &trantorian)
 {
-    
+
     Vector3 position = {
         static_cast<float>(trantorian.getPosition().getX()),
         2.0f,
@@ -506,7 +506,7 @@ void Display::DrawExpulsionAction(Trantorian &trantorian)
 
 void Display::DrawCollectAction(Trantorian &trantorian)
 {
-    
+
     Vector3 position = {
         static_cast<float>(trantorian.getPosition().getX()),
         2.0f,
@@ -523,7 +523,7 @@ void Display::DrawCollectAction(Trantorian &trantorian)
 
 void Display::DrawDropAction(Trantorian &trantorian)
 {
-    
+
     Vector3 position = {
         static_cast<float>(trantorian.getPosition().getX()),
         2.3f,
@@ -540,7 +540,7 @@ void Display::DrawDropAction(Trantorian &trantorian)
 
 void Display::DrawBroadcastAction(Trantorian &trantorian)
 {
-    
+
     Vector3 position = {
         static_cast<float>(trantorian.getPosition().getX()),
         2.1f,
@@ -555,16 +555,15 @@ void Display::DrawBroadcastAction(Trantorian &trantorian)
     }
 }
 
-void Display::DrawStartIncantationAction(Trantorian &trantorian)
+void Display::DrawStartIncantationAction(Trantorian trantorian)
 {
-    
     Vector3 position = {
         static_cast<float>(trantorian.getPosition().getX()),
-        2.1f,
+        2.5f,
         static_cast<float>(trantorian.getPosition().getY())
     };
     Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
-    Vector3 scale = {0.6f, 0.6f, 0.6f};
+    Vector3 scale = {0.3f, 0.3f, 0.3f};
     if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
         DrawModelEx(trantorian.getPicModel(), position, rotationAxis, 0.0f, scale, WHITE);
     } else {

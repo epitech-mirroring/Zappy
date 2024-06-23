@@ -380,29 +380,22 @@ void Game::initializeCallbacks()
 
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
-        
-        // int x = std::stoi(tokens[1]);
-        // int y = std::stoi(tokens[2]);
-        // std::string trantorianId = tokens[3];
 
-        // for (auto &team : Teams::getTeamsList()) {
-        //     for (auto &trantorian : team.getTrantorianList()) {
-        //         if (trantorian.getId() == trantorianId) {
-        //             trantorian.setAction(Trantorian::Action::INCANTATION_S);
-        //             trantorian.setActionStartTime(GetTime());
-        //             std::cout << "GUI LOG: Player " << trantorianId
-        //                 << " has started incantation" << std::endl;
-        //         }
-        //     }
-        // }
-        std::cout << "GUI LOG: PLAYER START INCANTATION" << std::endl;
+        int x = std::stoi(tokens[1]);
+        int y = std::stoi(tokens[2]);
+        std::string trantorianId = tokens[3];
+
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    std::string log = "GUI LOG: Player " + trantorian.getId() + " started incantation";
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Incantation started by player " << trantorian.getId() << std::endl;
-                }
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::INCANTATION_S);
+                trantorian->setActionStartTime(GetTime());
+                _display.DrawStartIncantationAction(*trantorian);
+                std::string log = "GUI LOG: Incantation started\nby player "
+                    + trantorianId;
+                _display.addLog(log);
+                std::cout << "GUI LOG: Incantation started by player "
+                    << trantorianId << std::endl;
             }
         }
     });
