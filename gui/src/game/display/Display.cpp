@@ -22,6 +22,8 @@ Display::Display(World &world, Teams &teams)
     _camera.up = Vector3{0.0f, 1.0f, 0.0f};
     _camera.fovy = 90.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
+
+    _winnerTeam = "";
 }
 
 void Display::DrawTiles(std::vector<std::vector<Tile>> tiles)
@@ -62,6 +64,9 @@ void Display::DrawClouds()
 
 void Display::DrawTrantorians(std::list<Teams> teams)
 {
+    if (_endGame)
+        return;
+
     for (auto &team : teams) {
         for (auto &trantorian : team.getTrantorianList()) {
             Vector3 position = {
@@ -88,6 +93,9 @@ void Display::DrawTrantorians(std::list<Teams> teams)
 
 void Display::DrawTileInfo()
 {
+    if (_endGame)
+        return;
+
     if (_selectedTile != nullptr && _selectedTrantorian == nullptr) {
         int yPosition = 360;
 
@@ -106,6 +114,9 @@ void Display::DrawTileInfo()
 
 void Display::DrawTrantorianInfo()
 {
+    if (_endGame)
+        return;
+
     if (_selectedTrantorian != nullptr && _selectedTile == nullptr) {
         const int lineHeight = 30;
         const int padding = 10;
@@ -145,6 +156,9 @@ void Display::DrawTrantorianInfo()
 
 void Display::DrawObjects(std::list<IObject*> objects)
 {
+    if (_endGame)
+        return;
+
     std::unordered_map<int, std::pair<float, float>> typeOffsets = {
         {Trantorian::ResourceType::FOOD, {0.0f, 0.0f}},
         {Trantorian::ResourceType::LINEMATE, {-0.3f, -0.3f}},
@@ -223,6 +237,9 @@ void Display::DrawScoreBoard(Teams &teams)
 
 void Display::DrawEgg()
 {
+    if (_endGame)
+        return;
+
     for (auto &team : Teams::getTeamsList()) {
         for (auto &egg : team.getEggList()) {
             Vector3 position = {
@@ -332,6 +349,9 @@ void Display::DisplayHelpMenu()
 
 void Display::DisplayGameInformations()
 {
+    if (_endGame)
+        return;
+
     if (IsKeyPressed(KEY_I))
         _gameInfo = !_gameInfo;
     if (!_gameInfo)
@@ -594,7 +614,7 @@ void Display::DrawEndIncantationAction(Trantorian trantorian)
 
 void Display::displayElements()
 {
-    if (!_textBoxActive) {
+    if (!_textBoxActive && !_endGame) {
         detectHoveredTile(_camera, _world);
         detectHoveredTrantorian(_camera, _teams);
         updateCamera();
@@ -617,6 +637,7 @@ void Display::displayElements()
     DisplayHelpMenu();
     DisplayGameInformations();
     DrawLogs();
+    handleEndGame(_winnerTeam);
     EndDrawing();
 }
 
@@ -667,4 +688,29 @@ void Display::setNewTimeUnit(std::string newTimeUnit)
 void Display::setTimeUnit(unsigned int timeUnit)
 {
     _timeUnit = timeUnit;
+}
+
+void Display::setEndGame(bool endGame)
+{
+    _endGame = endGame;
+}
+
+void Display::handleEndGame(std::string winner)
+{
+    if (winner.empty())
+        return;
+    int screenWidth = GetScreenWidth();
+    int screenHeight = GetScreenHeight();
+    int textSize = 50;
+    int textWidth = MeasureText(TextFormat("The winner is: %s", winner.c_str()), textSize);
+    int textX = (screenWidth - textWidth) / 2;
+    int textY = (screenHeight - textSize) / 2;
+
+    DrawText(TextFormat("The winner is: %s", winner.c_str()), textX, textY, textSize, BLACK);
+    std::cout << "The winner is: " << winner << std::endl;
+}
+
+void Display::setWinnerTeam(std::string winnerTeam)
+{
+    _winnerTeam = winnerTeam;
 }

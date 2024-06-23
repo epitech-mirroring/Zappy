@@ -1,16 +1,113 @@
 import threading
 import time
+import random
 from enum import Enum
 
 from .Network import NetworkManager
-from .Objects import AbstractObject, Food
+from .Objects import AbstractObject, Food, Linemate, Deraumere, Sibur, Mendiane, \
+    Thystame, Phiras, Egg
 from .World import World
 from .actions import AbstractAction
+from .actions.DropDown import DropDown
+from .actions.Fork import Fork
 from .actions.Forward import Forward
+from .actions.Incantation import Incantation
 from .actions.Look import Look
 from .actions.PickUp import PickUp
 from .actions.Right import Right
 from .actions.Left import Left
+from .actions.Inventory import Inventory as InventoryAction
+
+
+incantation_requirements: dict[int, dict[str, int]] = {
+    1: {
+        "players": 1,
+        "linemate": 1,
+        "deraumere": 0,
+        "sibur": 0,
+        "mendiane": 0,
+        "phiras": 0,
+        "thystame": 0
+    },
+    2: {
+        "players": 2,
+        "linemate": 1,
+        "deraumere": 1,
+        "sibur": 1,
+        "mendiane": 0,
+        "phiras": 0,
+        "thystame": 0
+    },
+    3: {
+        "players": 2,
+        "linemate": 2,
+        "deraumere": 0,
+        "sibur": 1,
+        "mendiane": 0,
+        "phiras": 2,
+        "thystame": 0
+    },
+    4: {
+        "players": 4,
+        "linemate": 1,
+        "deraumere": 1,
+        "sibur": 2,
+        "mendiane": 0,
+        "phiras": 1,
+        "thystame": 0
+    },
+    5: {
+        "players": 4,
+        "linemate": 1,
+        "deraumere": 2,
+        "sibur": 1,
+        "mendiane": 3,
+        "phiras": 0,
+        "thystame": 0
+    },
+    6: {
+        "players": 6,
+        "linemate": 1,
+        "deraumere": 2,
+        "sibur": 3,
+        "mendiane": 0,
+        "phiras": 1,
+        "thystame": 0
+    },
+    7: {
+        "players": 6,
+        "linemate": 2,
+        "deraumere": 2,
+        "sibur": 2,
+        "mendiane": 2,
+        "phiras": 2,
+        "thystame": 1
+    }
+}
+
+ticks_before_rescan = 20
+ticks_before_inventory_rescan = 126
+
+def parse_item(item: str) -> AbstractObject or None:
+    if item == "player":
+        return None
+    if item == "food":
+        return Food()
+    if item == "linemate":
+        return Linemate()
+    if item == "deraumere":
+        return Deraumere()
+    if item == "sibur":
+        return Sibur()
+    if item == "mendiane":
+        return Mendiane()
+    if item == "phiras":
+        return Phiras()
+    if item == "thystame":
+        return Thystame()
+    if item == "egg":
+        return Egg()
+    return None
 
 
 class Inventory:
@@ -22,16 +119,25 @@ class Inventory:
     def add_item(self, item: AbstractObject):
         # Find the item in the inventory
         for i in self.inventory:
-            if i.__class__ == item.__class__:
+            if isinstance(i, item.__class__):
                 i.add(item)
                 return
         # If the item is not in the inventory, add it
         self.inventory.append(item)
 
+    def add_one_of(self, item: AbstractObject.__class__):
+        # Find the item in the inventory
+        for i in self.inventory:
+            if isinstance(i, item):
+                i.add_one()
+                return
+        # If the item is not in the inventory, add it
+        self.inventory.append(item())
+
     def remove_item(self, item: AbstractObject) -> bool:
         # Find the item in the inventory
         for i in self.inventory:
-            if i.__class__ == item.__class__:
+            if isinstance(i, item.__class__):
                 i.add(item)
                 return True
         return False
@@ -40,14 +146,18 @@ class Inventory:
                  item: AbstractObject.__class__) -> AbstractObject or None:
         # Find the item in the inventory
         for i in self.inventory:
-            if i.__class__ == item:
+            if isinstance(i, item):
                 return i
         return None
 
-    def get_item_count(self, item: AbstractObject.__class__) -> int:
+    def get_item_count(self, item: AbstractObject.__class__ or str) -> int:
         # Find the item in the inventory
         for i in self.inventory:
-            if i.__class__ == item:
+            # if item is a string, it's the name of the item
+            if isinstance(item, str):
+                if i.get_name() == item:
+                    return i.count
+            elif isinstance(i, item):
                 return i.count
         return 0
 
@@ -60,6 +170,12 @@ class Direction(Enum):
     EAST = 1
     SOUTH = 2
     WEST = 3
+
+    def right(self) -> 'Direction':
+        return Direction((self.value + 1) % 4)
+
+    def left(self) -> 'Direction':
+        return Direction((self.value - 1) % 4)
 
 
 def cells_to_direction(cell_from: tuple[int, int], cell_to: tuple[int, int]) \
@@ -88,7 +204,9 @@ class Bot:
     position: tuple[int, int] = (0, 0)
     direction: Direction = Direction.NORTH
     last_scan_time: float = 0
+    last_inventory_scan_time: float = 0
     server_frequency: float or None = None
+    debug: bool = False
 
     def __init__(self, network_manager: NetworkManager, team: str):
         self.network_manager = network_manager
@@ -96,7 +214,6 @@ class Bot:
         self.remaining_places_in_team = 0
 
     def add_action(self, action: AbstractAction):
-        action.set_requested_time(time.time())
         self.actionQueue.append(action)
 
     def scan(self):
@@ -123,8 +240,11 @@ class Bot:
                     self.remaining_places_in_team = int(response)
         else:
             if response == "dead":
-                exit(0)
-            action = self.actionQueue.pop(0)
+                self.network_manager.close()
+                if self.debug:
+                    print("Dead")
+                return
+            action = self.actionQueue[0]
             duration = time.time() - action.requested_time
             expected_duration = action.time_to_execute  # In ticks
             if self.server_frequency is None:
@@ -132,22 +252,37 @@ class Bot:
             else:
                 self.server_frequency = 0.9 * self.server_frequency + 0.1 * (
                     duration / expected_duration)
-            action.handle_response(response, self)
+            should_remove_action = action.handle_response(response, self)
+            if should_remove_action is None or should_remove_action:
+                self.actionQueue.pop(0)
 
-    def find_nearest_food(self) -> tuple[int, int]:
+    def find_nearest(self, item: AbstractObject.__class__ or str) -> tuple[int, int] or None:
         min_distance = 1000000
         nearest_food: tuple[int, int] = (0, 0)
-        for x in range(2 * self.level):
-            for y in range(2 * self.level):
+        found = False
+        for x in range(-2*self.level, 2*self.level):
+            for y in range(-2*self.level, 2*self.level):
                 coords = (self.position[0] + x, self.position[1] + y)
                 objects = self.world.get_objects(coords[0], coords[1])
                 for obj in objects:
-                    if obj.__class__ == Food.__class__:
+                    match = False
+                    if isinstance(item, str):
+                        match = obj.get_name() == item
+                    else:
+                        match = isinstance(obj, item)
+                    if match:
                         distance = abs(self.position[0] - coords[0]) + abs(
                             self.position[1] - coords[1])
                         if distance < min_distance:
                             min_distance = distance
                             nearest_food = coords
+                            found = True
+        if not found:
+            if self.debug:
+                print("No %s found" % item)
+            return None
+        if self.debug:
+            print(f"Nearest %s at {nearest_food}" % item)
         return nearest_food
 
     def rotate_to_face(self, direction: Direction,
@@ -200,6 +335,7 @@ class Bot:
             elif direction == Direction.SOUTH:
                 self.add_action(Left())
                 return 1
+        return 0
 
     def a_star_towards(self, target: tuple[int, int]):
         explored = []
@@ -257,35 +393,126 @@ class Bot:
                                      abs(new_cell[1] - target[1]))
                 to_explore.sort(key=lambda x: f_score[x])
 
+    def wander(self):
+        rand_x = random.randint(self.position[0] - self.world.width // 2,
+                                self.position[0] + self.world.width // 2)
+        rand_y = random.randint(self.position[1] - self.world.height // 2,
+                                self.position[1] + self.world.height // 2)
+        self.a_star_towards((rand_x, rand_y))
+
     def feed(self):
-        nearest_food = self.find_nearest_food()
-        distance = abs(self.position[0] - nearest_food[0]) + abs(
-            self.position[1] - nearest_food[1])
+        nearest_food = self.find_nearest(Food)
         # If distance too far scan around
-        ticks_before_rescan = 20
-        if (distance > self.world.height or distance > self.world.width) and (
+        if self.server_frequency is not None and self.debug:
+            print(f"Server frequency: {self.server_frequency}")
+        if (self.server_frequency is not None and
                 (time.time() - self.last_scan_time) > ticks_before_rescan /
                 self.server_frequency):
+            if self.debug:
+                print("Scanning")
             self.scan()
-        elif distance > 1:
+            return
+        if nearest_food is None:
+            if self.debug:
+                print("Wandering")
+            self.wander()
+            return
+        distance = abs(self.position[0] - nearest_food[0]) + abs(
+            self.position[1] - nearest_food[1])
+        if distance > 1:
+            if self.debug:
+                print("Moving towards food")
             self.a_star_towards(nearest_food)
         else:
+            if self.debug:
+                print("Picking up food")
+                print("There was %d food at the position %d %d" % (self.world.get_objects_by_type_on_cell(nearest_food[0], nearest_food[1], Food).count, nearest_food[0], nearest_food[1]))
+
             self.add_action(PickUp(Food()))
 
     def level_up(self):
-        # FIXME Implement level up logic
-        pass
+        requirements: dict[str, int] = incantation_requirements[self.level]
+        has_all = True
+        requirement_pos: dict[str, tuple[int, int]] = {}
+        for i in requirements:
+            if i == "players":
+                continue
+            if self.inventory.get_item_count(i) < requirements[i]:
+                if self.debug:
+                    print(f"Missing {i}")
+                has_all = False
+                nearest_item = self.find_nearest(i)
+                if nearest_item is not None:
+                    requirement_pos[i] = nearest_item
+        if not has_all:
+            nearest_requirement = None
+            min_distance = 1000000
+            for i in requirement_pos:
+                distance = abs(self.position[0] - requirement_pos[i][0]) + abs(
+                    self.position[1] - requirement_pos[i][1])
+                if distance < min_distance:
+                    min_distance = distance
+                    nearest_requirement = i
+            if nearest_requirement is not None:
+                if min_distance > 1:
+                    if self.debug:
+                        print("Moving towards requirement")
+                    self.a_star_towards(requirement_pos[nearest_requirement])
+                else:
+                    if self.debug:
+                        print("Picking up requirement")
+                    self.add_action(PickUp(parse_item(nearest_requirement)))
+            else:
+                if (self.server_frequency is not None and
+                        (time.time() - self.last_scan_time) > ticks_before_rescan /
+                        self.server_frequency):
+                    if self.debug:
+                        print("Scanning")
+                    self.scan()
+                    return
+                if self.debug:
+                    print("Wandering")
+                self.wander()
+        else:
+            if self.debug:
+                print("I have the requirements")
+            if (self.server_frequency is not None and
+                    (time.time() - self.last_inventory_scan_time) > ticks_before_inventory_rescan /
+                    self.server_frequency):
+                if self.debug:
+                    print("Scanning inventory")
+                self.add_action(InventoryAction())
+                self.last_inventory_scan_time = time.time()
+                return
+            if requirements["players"] > 1:
+                if self.debug:
+                    print("Waiting for other players")
+                return
+            else:
+                if self.debug:
+                    print("Starting incantation")
+                for i in requirements:
+                    if i == "players":
+                        continue
+                    if requirements[i] > 0:
+                        for j in range(requirements[i]):
+                            self.add_action(DropDown(parse_item(i)))
+                self.add_action(Incantation())
 
     def logic(self):
         food_urge = 10  # FIXME Update food urge computation
         level_urge = 0  # FIXME Update level urge computation
         for i in self.inventory.inventory:
-            if i.__class__ == Food.__class__:
+            if isinstance(i, Food):
                 food_urge -= i.count
 
         if food_urge > level_urge:
+            if self.debug:
+                print("Feeding")
             self.feed()
         else:
+            if self.debug:
+                print("Leveling up")
             self.level_up()
 
     def start(self):
@@ -295,13 +522,25 @@ class Bot:
         self.network_manager.add_response_handler(self.handle_response)
         self.network_thread.start()
 
+        time.sleep(1)
+
+        if self.remaining_places_in_team > 0:
+            self.remaining_places_in_team -= 1
+            Fork().handle_response("ok", self)
+
         while True:
+            if not self.network_manager.isRunning:
+                break
             if self.world is None:
                 continue
             if len(self.actionQueue) != 0:
                 if not self.actionQueue[0].has_been_executed:
-                    self.actionQueue.pop(0).execute(self)
+                    self.actionQueue[0].execute(self)
                 else:
                     continue
             else:
                 self.logic()
+
+        self.network_thread.join()
+        exit(0)
+

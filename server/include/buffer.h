@@ -24,9 +24,9 @@ extern "C" {
      */
     typedef struct buffer_s {
         char *buffer;
-        int capacity;
-        int read_index;
-        int write_index;
+        size_t capacity;
+        size_t read_index;
+        size_t write_index;
     } buffer_t;
 
     /**
@@ -59,6 +59,8 @@ extern "C" {
      * @param buffer The buffer to destroy
      */
     void buffer_destroy(buffer_t *buffer);
+
+    bool buffer_is_empty(buffer_t *buffer);
 
     #ifdef __cplusplus
 }

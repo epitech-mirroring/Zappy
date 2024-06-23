@@ -20,20 +20,53 @@ static int manage_pos(int index, int max)
     return index;
 }
 
-char *look_north(game_t *game, short level,
-    coordinates_t player_coordinates)
+static void update_egg_count(game_t *game, hashmap_t **content, tile_t *tile)
 {
-    char *msg = calloc(100000, sizeof(char));
+    egg_t *egg = NULL;
+    int eggs_number = 0;
+    size_t size = array_get_size(game->eggs);
+
+    for (size_t i = 0; i < size; i++) {
+        egg = (egg_t *)array_get_at(game->eggs, i);
+        if (egg->coordinates.x == tile->coordinates.x
+            && egg->coordinates.y == tile->coordinates.y)
+            eggs_number++;
+    }
+    hashmap_set(*content, "egg", eggs_number);
+}
+
+static char *make_msg(char *msg, char *element)
+{
+    char *tmp = NULL;
+
+    if (strlen(msg) == 0) {
+        snprintf(msg, 1000000, "%s", element);
+    } else {
+        tmp = strdup(msg);
+        snprintf(msg, 1000000, "%s %s,", tmp, element);
+        free(tmp);
+    }
+    free(element);
+    return msg;
+}
+
+char *look_north(game_t *game, short level,
+    coordinates_t player_coordinates, hashmap_t *content)
+{
+    char *msg = calloc(1000000, sizeof(char));
     int x = 0;
     int y = player_coordinates.y;
+    tile_t *tile = NULL;
 
-    for (size_t i = 0; i <= level; i++) {
+    for (short i = 0; i <= level; i++) {
         x = player_coordinates.x - i;
         y = manage_pos(y, game->map->height);
-        for (size_t j = 0; j < 1 + (i * 2); j++) {
+        for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
-            snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
-                (game, get_tile(game->map, x, y)));
+            tile = get_tile(game->map, x, y);
+            update_egg_count(game, &content, tile);
+            msg = make_msg(msg, get_element_on_tile
+                (tile, content));
             x++;
         }
         y--;
@@ -42,20 +75,22 @@ char *look_north(game_t *game, short level,
 }
 
 char *look_south(game_t *game, short level,
-    coordinates_t player_coordinates)
+    coordinates_t player_coordinates, hashmap_t *content)
 {
-    char *msg = calloc(100000, sizeof(char));
+    char *msg = calloc(1000000, sizeof(char));
     int x = 0;
     int y = player_coordinates.y;
-    int k = 0;
+    tile_t *tile = NULL;
 
-    for (size_t i = 0; i <= level; i++) {
+    for (short i = 0; i <= level; i++) {
         x = player_coordinates.x + i;
         y = manage_pos(y, game->map->height);
-        for (size_t j = 0; j < 1 + (i * 2); j++) {
+        for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
-            snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
-                (game, get_tile(game->map, x, y)));
+            tile = get_tile(game->map, x, y);
+            update_egg_count(game, &content, tile);
+            msg = make_msg(msg, get_element_on_tile
+                (tile, content));
             x--;
         }
         y++;
@@ -64,20 +99,22 @@ char *look_south(game_t *game, short level,
 }
 
 char *look_west(game_t *game, short level,
-    coordinates_t player_coordinates)
+    coordinates_t player_coordinates, hashmap_t *content)
 {
-    char *msg = calloc(100000, sizeof(char));
+    char *msg = calloc(1000000, sizeof(char));
     int x = player_coordinates.x;
     int y = 0;
-    int k = 0;
+    tile_t *tile = NULL;
 
-    for (size_t i = 0; i <= level; i++) {
+    for (short i = 0; i <= level; i++) {
         y = player_coordinates.x + i;
         x = manage_pos(y, game->map->height);
-        for (size_t j = 0; j < 1 + (i * 2); j++) {
+        for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
-            snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
-                (game, get_tile(game->map, x, y)));
+            tile = get_tile(game->map, x, y);
+            update_egg_count(game, &content, tile);
+            msg = make_msg(msg, get_element_on_tile
+                (tile, content));
             y--;
         }
         x--;
@@ -86,20 +123,22 @@ char *look_west(game_t *game, short level,
 }
 
 char *look_east(game_t *game, short level,
-    coordinates_t player_coordinates)
+    coordinates_t player_coordinates, hashmap_t *content)
 {
-    char *msg = calloc(100000, sizeof(char));
+    char *msg = calloc(1000000, sizeof(char));
     int x = player_coordinates.x;
     int y = 0;
-    int k = 0;
+    tile_t *tile = NULL;
 
-    for (size_t i = 0; i <= level; i++) {
+    for (short i = 0; i <= level; i++) {
         y = player_coordinates.x - i;
         x = manage_pos(y, game->map->height);
-        for (size_t j = 0; j < 1 + (i * 2); j++) {
+        for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
-            snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
-                (game, get_tile(game->map, x, y)));
+            tile = get_tile(game->map, x, y);
+            update_egg_count(game, &content, tile);
+            msg = make_msg(msg, get_element_on_tile
+                (tile, content));
             y++;
         }
         x++;

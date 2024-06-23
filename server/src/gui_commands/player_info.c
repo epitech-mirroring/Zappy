@@ -10,11 +10,11 @@
 
 char *trantorian_pos_to_str(trantorian_t *trantorian)
 {
-    char *str = malloc(sizeof(char) * 100);
+    char *str = malloc(sizeof(char) * 1024);
     char *uuid = calloc(37, sizeof(char));
 
     uuid_unparse(trantorian->uuid, uuid);
-    sprintf(str, "ppo %s %d %d %d\n", uuid, trantorian->coordinates.x,
+    sprintf(str, "ppo %s %ld %ld %d\n", uuid, trantorian->coordinates.x,
         trantorian->coordinates.y, trantorian->direction + 1);
     free(uuid);
     return str;
@@ -22,11 +22,11 @@ char *trantorian_pos_to_str(trantorian_t *trantorian)
 
 char *trantorian_level_to_str(trantorian_t *trantorian)
 {
-    char *str = malloc(sizeof(char) * 100);
+    char *str = malloc(sizeof(char) * 1024);
     char *uuid = calloc(37, sizeof(char));
 
     uuid_unparse(trantorian->uuid, uuid);
-    sprintf(str, "plv %s %d\n", uuid, trantorian->level);
+    sprintf(str, "plv %s %ld\n", uuid, trantorian->level);
     free(uuid);
     return str;
 }
@@ -34,11 +34,11 @@ char *trantorian_level_to_str(trantorian_t *trantorian)
 static char *new_player_connection_log_gui(trantorian_t *trantorian,
     char *team)
 {
-    char *str = malloc(sizeof(char) * 100);
+    char *str = malloc(sizeof(char) * 1024);
     char *uuid = calloc(37, sizeof(char));
 
     uuid_unparse(trantorian->uuid, uuid);
-    sprintf(str, "pnw %s %d %d %i %d %s\n", uuid, trantorian->coordinates.x,
+    sprintf(str, "pnw %s %ld %ld %i %ld %s\n", uuid, trantorian->coordinates.x,
         trantorian->coordinates.y, trantorian->direction + 1,
         trantorian->level, team);
     free(uuid);

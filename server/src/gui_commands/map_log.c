@@ -15,6 +15,7 @@ void msz_log_gui(game_t *game, char *arg, client_t *client)
 {
     char *str = map_dimensions_to_string(game->map);
 
+    (void)arg;
     buffer_write(client->buffer_answered, str);
 }
 
@@ -40,11 +41,12 @@ void mct_log_gui(game_t *game, char *arg, client_t *client)
     tile_t *tile = NULL;
     char *str = NULL;
 
+    (void)arg;
     for (size_t y = 0; y < game->map->height; y++) {
         for (size_t x = 0; x < game->map->width; x++) {
             tile = get_tile_by_coordinates(game->map, (coordinates_t){x, y});
             str = tile_to_string(tile);
-            send(client->socket, str, strlen(str), 0);
+            send(client->socket, str, strlen(str), MSG_NOSIGNAL);
             free(str);
         }
     }

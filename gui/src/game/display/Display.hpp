@@ -197,7 +197,22 @@ namespace GUI {
          * @brief Draw the logs
          */
         void DrawLogs();
+        /**
+         * @brief Set the end game
+         * @param endGame true if the game is ended
+         */
+        void setEndGame(bool endGame);
 
+        /**
+         * @brief Set the winner team
+         * @param winnerTeam the winner team
+         */
+        void setWinnerTeam(std::string winnerTeam);
+
+        /**
+         * @brief handle the end of the game
+         */
+        void handleEndGame(std::string winner);
     protected:
         Camera _camera;                          // Camera
         std::vector<Model> _clouds;              // Clouds models
@@ -214,6 +229,8 @@ namespace GUI {
         bool _gameInfo = false;
         bool _drawLogs = false;
         std::vector<std::string> _logs;
+        bool _endGame = false;
+        std::string _winnerTeam;
     };
 }
 

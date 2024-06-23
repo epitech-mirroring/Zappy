@@ -13,6 +13,7 @@ void sgt_log_gui(server_t *server, char *arg)
     char *str = calloc(1024, sizeof(char));
     int freq = 1000000 / server->single_tick_time;
 
+    (void)arg;
     sprintf(str, "sgt %d\n", freq);
     array_push_back(server->game->gui_log, str);
 }

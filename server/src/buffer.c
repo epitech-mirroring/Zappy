@@ -63,40 +63,56 @@ void buffer_write(buffer_t *buffer, char *data)
     }
 }
 
+static int read_get_size(buffer_t *buffer, char limit)
+{
+    int data_size = 0;
+    size_t i = 0;
+
+    if (buffer == NULL)
+        return 0;
+    i = buffer->read_index;
+    if (i == buffer->capacity)
+            i = 0;
+    while (buffer->buffer[i] != limit) {
+        data_size++;
+        i++;
+        if (i == buffer->capacity)
+            i = 0;
+    }
+    return data_size;
+}
+
 char *buffer_get_next(buffer_t *buffer, char limit)
 {
     char *data;
     int data_size = 0;
+    size_t i = 0;
 
-    for (int i = buffer->read_index; buffer->buffer[i] != limit; i++) {
-        if (i == buffer->capacity)
-            i = 0;
-        data_size++;
-    }
+    data_size = read_get_size(buffer, limit);
     if (data_size == 0)
         return NULL;
-    data = calloc(data_size + 2, sizeof(char));
-    for (size_t i = 0; buffer->buffer[buffer->read_index] != limit; i++) {
-        if (buffer->read_index == buffer->capacity)
+    data = calloc(data_size + 1, sizeof(char));
+    if (buffer->read_index == buffer->capacity)
             buffer->read_index = 0;
+    while (data_size > strlen(data)) {
         data[i] = buffer->buffer[buffer->read_index];
         buffer->buffer[buffer->read_index] = limit;
         buffer->read_index++;
+        i++;
+        if (buffer->read_index == buffer->capacity)
+            buffer->read_index = 0;
     }
     buffer->read_index++;
     return data;
-}
-
-void buffer_clear(buffer_t *buffer)
-{
-    for (int i = 0; i < buffer->capacity; i++)
-        buffer->buffer[i] = '\0';
-    buffer->read_index = 0;
-    buffer->write_index = 0;
 }
 
 void buffer_destroy(buffer_t *buffer)
 {
     free(buffer->buffer);
     free(buffer);
+}
+
+bool buffer_is_empty(buffer_t *buffer)
+{
+    return buffer->read_index == buffer->write_index;
 }

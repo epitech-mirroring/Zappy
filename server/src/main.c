@@ -8,6 +8,7 @@
 
 #include <string.h>
 #include <time.h>
+#include <sys/time.h>
 #include "server.h"
 #include "team.h"
 #include "array.h"
@@ -115,6 +116,21 @@ int check_teams(array_t *teams)
     return 0;
 }
 
+void free_tmp(size_t *map_size, array_t *teams)
+{
+    free(map_size);
+    free(teams->data);
+    free(teams);
+}
+
+int launch_server(server_t *server)
+{
+    run(server);
+    shutdown_server(server);
+    destroy(server);
+    return 0;
+}
+
 int main(int ac, char **av)
 {
     size_t *map_size = find_map_size(ac, av);
@@ -123,17 +139,18 @@ int main(int ac, char **av)
     size_t single_tick_time = find_single_tick_time(ac, av);
     array_t *teams = find_teams(ac, av);
     server_t *server;
+    struct timeval tv = {0, 0};
 
+    sigaction_init();
     srand(time(NULL));
     if (map_size == NULL || nb_max_clients == -1
-        || single_tick_time == -1 || check_teams(teams) == 84)
+        || single_tick_time > (size_t)1000000 || check_teams(teams) == 84)
         return 84;
     server = create_server(port, teams, map_size, nb_max_clients);
-    if (server == NULL)
-        return 84;
+    free_tmp(map_size, teams);
     server->single_tick_time = single_tick_time;
-    run(server);
-    shutdown_server(server);
-    destroy(server);
-    return 0;
+    server->remaining_us_before_next_tick = single_tick_time;
+    gettimeofday(&tv, NULL);
+    server->prev_tick_time = tv.tv_sec * 1000000 + tv.tv_usec;
+    return launch_server(server);
 }

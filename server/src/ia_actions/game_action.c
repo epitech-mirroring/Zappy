@@ -82,6 +82,7 @@ static void dup_action(trantorian_t *trantorian,
     } else {
         trantorian->param = NULL;
     }
+    trantorian->waiting_tick = actions[i].time;
     gui_log_action_cast(game, action, trantorian);
 }
 
@@ -94,7 +95,7 @@ static void find_trantorian_action(game_t *game, trantorian_t *trantorian)
 
     while (msg != NULL) {
         find_cmd_and_param(msg, cmd, param);
-        for (i = 0; actions[i].action != -1 &&
+        for (i = 0; actions[i].action_name != NULL &&
             strcmp(actions[i].action_name, cmd); i++);
         if (array_get_size(trantorian->actions) >= 10 ||
             actions[i].action_name == NULL) {
@@ -122,6 +123,7 @@ void check_dead_trantorians(game_t *game)
 {
     trantorian_t *trantorian = NULL;
     char *msg = calloc(10, sizeof(char));
+    tile_t *tile = NULL;
 
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
@@ -132,7 +134,9 @@ void check_dead_trantorians(game_t *game)
             trantorian->client->need_to_be_kick = true;
             array_remove(game->trantorians, i);
             incantation_dead_trantorian(game->incantations, trantorian);
-            destroy_trantorian(trantorian);
+            tile = get_tile_by_coordinates(game->map, trantorian->coordinates);
+            tile->player_count--;
+            remove_dead_trantorian(trantorian, game->teams);
             i--;
         }
     }
@@ -158,6 +162,8 @@ void check_win(game_t *game)
 {
     team_t *team = NULL;
 
+    if (game->win)
+        return;
     for (size_t i = 0; i < array_get_size(game->teams); i++) {
         team = (team_t *)array_get_at(game->teams, i);
         if (check_win_team(team, game->trantorians)) {

@@ -114,16 +114,6 @@ void Game::ensureGameInit()
 void Game::ensureGameInformation()
 {
     _client._socket.get()->send("mct\n");
-    for (auto &team : Teams::getTeamsList()) {
-        for (auto &trantorian : team.getTrantorianList()) {
-            std::string pinRequest = "pin " + trantorian.getId() + "\n";
-            std::string ppoRequest = "ppo " + trantorian.getId() + "\n";
-            std::string plvRequest = "plv " + trantorian.getId() + "\n";
-            _client._socket.get()->send(pinRequest);
-            _client._socket.get()->send(ppoRequest);
-            _client._socket.get()->send(plvRequest);
-        }
-    }
 }
 
 void Game::initializeCallbacks()
@@ -599,7 +589,8 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        // HANDLE END OF GAME
+        _display.setWinnerTeam(tokens[1]);
+        _display.setEndGame(true);
         std::string log = "GUI LOG: Team " + tokens[1] + " end the game";
         _display.addLog(log);
         std::cout << "GUI LOG: Team " << token[1] << " end the game" << std::endl;

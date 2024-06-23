@@ -11,7 +11,7 @@
 #include "gui.h"
 #include <string.h>
 
-static bool check_take_cmd(game_t *game, char *param, tile_t *tile)
+static bool check_take_cmd(char *param, tile_t *tile)
 {
     if (param == NULL) {
         return false;
@@ -48,7 +48,7 @@ void take(game_t *game, trantorian_t *trantorian)
     coordinates_t coords = trantorian->coordinates;
     tile_t *tile = get_tile_by_coordinates(game->map, coords);
 
-    if (!check_take_cmd(game, trantorian->param, tile)) {
+    if (!check_take_cmd(trantorian->param, tile)) {
         sprintf(msg, "ko\n");
         buffer_write(trantorian->client->buffer_answered, msg);
         free(msg);

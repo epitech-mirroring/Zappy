@@ -22,7 +22,6 @@ void array_push_back(array_t *array, void *element)
 
 void array_remove(array_t *array, size_t index)
 {
-    void *tmp = array->data[index];
     size_t size = array_get_size(array);
     void **tmp_data = calloc(size, array->elementSize);
     int j = 0;

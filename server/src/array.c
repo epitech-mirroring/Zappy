@@ -18,7 +18,7 @@ size_t array_get_size(array_t *array)
     return size;
 }
 
-void array_set_at(array_t *array, int index, void *element)
+void array_set_at(array_t *array, size_t index, void *element)
 {
     if (array == NULL || index >= array_get_size(array))
         return;
@@ -49,7 +49,7 @@ void array_resize(array_t *array, size_t newSize)
         free(tmp);
         return;
     }
-    for (int i = 0; i < newSize; i++) {
+    for (size_t i = 0; i < newSize; i++) {
         if (i < array_get_size(array))
             tmp[i] = array->data[i];
         else

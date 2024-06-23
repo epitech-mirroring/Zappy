@@ -9,16 +9,19 @@
 #ifndef ZAPPY_SERVER_H
     #define ZAPPY_SERVER_H
 
-    #define MAX_COMMAND_SIZE 1024
+    #define MAX_COMMAND_SIZE 4096
     #define MAX_USERS 10000
+
+    #define MIN(a, b) (a < b ? a : b)
 
     #include "game.h"
     #include "array.h"
     #include "client.h"
     #include "buffer.h"
     #include <sys/select.h>
+    #include <signal.h>
     #ifdef __cplusplus
-extern "C" {
+    extern "C" {
     #endif // __cplusplus
     /**
      * @struct server_s
@@ -33,7 +36,8 @@ extern "C" {
         array_t *clients;
 
         size_t single_tick_time; // in microseconds
-        suseconds_t prev_tick_time; // in microseconds
+        size_t prev_tick_time; // in microseconds
+        size_t remaining_us_before_next_tick;
 
         unsigned short port;
         int max_fd;
@@ -83,14 +87,6 @@ extern "C" {
     void remove_client(server_t *server, int fd);
 
     /**
-     * @brief Read a client message
-     *
-     * @param server The server
-     * @param client The client
-     */
-    void read_client_message(server_t *server, client_t *client);
-
-    /**
      * @brief Identify if a client is a GUI or an IA client
      *
      * @param server The server
@@ -117,8 +113,9 @@ extern "C" {
      * @brief write to clients
      *
      * @param server The server
+     * @param write_fds The fd_set for the write file descriptors
      */
-    void write_to_clients(server_t *server);
+    void write_to_clients(server_t *server, fd_set *write_fds);
 
     /**
      * @brief remove the useless clients
@@ -143,8 +140,75 @@ extern "C" {
      */
     trantorian_t *get_ia_with_fd(game_t *game, int fd);
 
-    #ifdef __cplusplus
+    /**
+     * @brief Get a client with a file descriptor
+     *
+     * @param server The server
+     * @param fd The file descriptor
+     * @return client_t* The client
+     */
+    void handle_sigint(int sig, siginfo_t *info, void *ucontext);
+
+    /**
+     *
+     * @brief Initialize the sigaction
+     *
+     * @return void
+     */
+    int sigaction_init(void);
+
+    /**
+     * @brief Check if the server is running
+     *
+     * @param write The write flag
+     * @param value The value
+     *
+     * @return bool
+     */
+    bool is_server_running(bool write, bool value);
+
+    /**
+     * @brief Shutdown the server
+     *
+     * @param server The server
+     */
+    void shutdown_action(server_t *server);
+
+    /**
+     * @brief Get the closest action
+     *
+     * @param server The server
+     * @return int The closest action
+     */
+    int get_closest_action(server_t *server);
+
+    /**
+     * @brief Tick the server
+     * @param server The server
+     * @param readfds The read file descriptors
+     * @param writefds The write file descriptors
+     */
+    void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds);
+
+    /**
+    * @brief Tick the server
+    * @param server The server
+    * @param writefds The write file descriptors
+     */
+    void read_clients_messages(server_t *server, fd_set *readfds);
+
+    /**
+     * @brief Tick the server
+     *
+     * @param server The server
+     * @param writefds The write file descriptors
+     * @param readfds The read file descriptors
+     */
+    void tick(server_t *server, fd_set *write_fds);
+
+
+#ifdef __cplusplus
 }
-    #endif // __cplusplus
+#endif // __cplusplus
 
 #endif //ZAPPY_SERVER_H

@@ -63,7 +63,6 @@ void eject_egg(game_t *game, egg_t *egg)
             break;
         }
     }
-    printf("team %s has lost an egg\n", team->name);
     edi_log_gui(game, egg);
     destroy_egg(egg);
 }

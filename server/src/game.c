@@ -64,7 +64,7 @@ static bool can_create_trantorian(game_t *game, char *team_name)
 static void trantorian_action(game_t *game, trantorian_t *trantorian)
 {
     size_t i = 0;
-    action_t action;
+    action_t *action;
 
     if (array_get_size(trantorian->actions) == 0)
         return;
@@ -72,10 +72,12 @@ static void trantorian_action(game_t *game, trantorian_t *trantorian)
         return;
     if (trantorian->is_dead)
         return;
-    while (actions_fnc[i].action != -1) {
-        action = *(action_t *)array_get_at(trantorian->actions, 0);
-        if (actions_fnc[i].action == action.action) {
+    while (actions_fnc[i].fnc != NULL) {
+        action = (action_t *)array_get_at(trantorian->actions, 0);
+        if (actions_fnc[i].action == action->action) {
             actions_fnc[i].fnc(game, trantorian);
+            free(action->action_name);
+            free(action);
             array_remove(trantorian->actions, 0);
             return;
         }
@@ -83,31 +85,23 @@ static void trantorian_action(game_t *game, trantorian_t *trantorian)
     }
 }
 
-static char *int_to_str(int nb)
-{
-    char *str = calloc(sizeof(char), 12);
-
-    sprintf(str, "%d", nb);
-    return str;
-}
-
 static void new_client_ping(game_t *game, client_t *client,
     team_t *team, trantorian_t *trantorian)
 {
     char *msg = calloc(1024, sizeof(char));
 
-    snprintf(msg, 1024, "%i\n", team->free_places);
+    snprintf(msg, 1024, "%li\n", team->free_places);
     buffer_write(client->buffer_answered, msg);
-    snprintf(msg, 1024, "%i %i\n", game->map->width, game->map->height);
+    snprintf(msg, 1024, "%li %li\n", game->map->width, game->map->height);
     buffer_write(client->buffer_answered, msg);
     pnw_log_gui(game, trantorian, team->name);
+    free(msg);
 }
 
 void handle_new_client(game_t *game)
 {
-    client_t *client = NULL;
     char *msg = NULL;
-    trantorian_t *trantorian = NULL;
+    client_t *client = NULL;
 
     for (size_t i = 0; i < array_get_size(game->clients_without_team); i++) {
         client = (client_t *)array_get_at(game->clients_without_team, i);
@@ -117,30 +111,33 @@ void handle_new_client(game_t *game)
         if (can_create_trantorian(game, msg)) {
             create_trantorian(game,
                 get_team_by_name(game->teams, msg), client);
-            trantorian = (trantorian_t *)array_get_at
-                (game->trantorians, array_get_size(game->trantorians) - 1);
-            new_client_ping(game, client,
-                get_team_by_name(game->teams, msg), trantorian);
             array_remove(game->clients_without_team, i);
+            i = 0;
         } else
             new_client_unknow_team(game, client, msg, i);
+        free(msg);
     }
+}
+
+static void set_up_teams_and_trantorians(game_t *game, array_t *teams)
+{
+    game->teams = array_constructor(sizeof(team_t), (void *)&destroy_team);
+    for (size_t i = 0; i < array_get_size(teams); i++)
+        array_push_back(game->teams, array_get_at(teams, i));
+    game->trantorians = array_constructor(sizeof(trantorian_t),
+        (void *)&destroy_trantorian);
 }
 
 game_t *init_game(array_t *teams, size_t map_size[2], size_t min_places)
 {
     game_t *game = malloc(sizeof(game_t));
 
-    game->teams = array_constructor(sizeof(team_t), (void *)&destroy_team);
     game->gui_log = array_constructor(sizeof(char *), (void *)&free);
     game->gui_clients = array_constructor(sizeof(client_t), NULL);
     game->incantations =
         array_constructor(sizeof(incantation_t), (void *)&destroy_incantation);
-    for (size_t i = 0; i < array_get_size(teams); i++) {
-        array_push_back(game->teams, array_get_at(teams, i));
-    }
+    set_up_teams_and_trantorians(game, teams);
     game->eggs = array_constructor(sizeof(egg_t), (void *)&destroy_egg);
-    game->trantorians = array_constructor(sizeof(trantorian_t), NULL);
     game->map = init_map(map_size[0], map_size[1]);
     generate_start_eggs(game);
     generate_ressources(game->map);
@@ -148,6 +145,7 @@ game_t *init_game(array_t *teams, size_t map_size[2], size_t min_places)
     game->win = false;
     game->food_spwan = 0;
     game->min_places = min_places;
+    game->winning_team = NULL;
     return game;
 }
 
@@ -159,6 +157,7 @@ void destroy_game(game_t *game)
     array_destructor(game->clients_without_team);
     array_destructor(game->gui_log);
     array_destructor(game->gui_clients);
+    array_destructor(game->incantations);
     destroy_map(game->map);
     free(game->winning_team);
     free(game);
@@ -176,7 +175,6 @@ void game_tick(game_t *game)
     if (game->win || array_get_size(game->trantorians) == 0)
         return;
     check_dead_trantorians(game);
-    find_trantorians_action(game);
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
         trantorian_tick(trantorian);
@@ -190,7 +188,7 @@ void create_trantorian(game_t *game, team_t *team, client_t *client)
 {
     trantorian_t *trantorian;
     egg_t *egg;
-    int i = 0;
+    size_t i = 0;
 
     for (i = 0; i < array_get_size(game->eggs); i++) {
         if (uuid_compare(((egg_t *)array_get_at
@@ -206,4 +204,5 @@ void create_trantorian(game_t *game, team_t *team, client_t *client)
     array_push_back(game->trantorians, trantorian);
     ebo_log_gui(game, egg);
     player_spawn(egg, team, game, i);
+    new_client_ping(game, client, team, trantorian);
 }

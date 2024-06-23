@@ -27,6 +27,11 @@ target_sources(zappy_server_lib
         ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/player_log.c
         ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/ressource_log.c
         ${CMAKE_CURRENT_SOURCE_DIR}/gui_commands/time_log.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/server_connection.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/server_shutdown.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/server_init.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/server_handle_client.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/server.c
         ${CMAKE_CURRENT_SOURCE_DIR}/array.c
         ${CMAKE_CURRENT_SOURCE_DIR}/array_bis.c
         ${CMAKE_CURRENT_SOURCE_DIR}/buffer.c
@@ -43,9 +48,6 @@ target_sources(zappy_server_lib
         ${CMAKE_CURRENT_SOURCE_DIR}/map.c
         ${CMAKE_CURRENT_SOURCE_DIR}/map_utils.c
         ${CMAKE_CURRENT_SOURCE_DIR}/map_init.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/server_bis.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/server.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/shutdown_server.c
         ${CMAKE_CURRENT_SOURCE_DIR}/team.c
         ${CMAKE_CURRENT_SOURCE_DIR}/trantorian.c
 )

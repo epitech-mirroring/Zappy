@@ -17,7 +17,8 @@ class Broadcast(AbstractAction):
         if response == "ok":
             pass
         else:
-            print(f"Broadcast failed: {response}")
+            if bot.debug:
+                print(f"Broadcast failed: {response}")
             exit(1)
 
 

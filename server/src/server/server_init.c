@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Project
 ** File description:
-** No file there , just an epitech header example .
+** No file there , just an epitech header example.
 ** You can even have multiple lines if you want !
 */
 
@@ -26,8 +26,9 @@ static int create_socket(server_t *server)
         sizeof(opt)) == -1)
         return -1;
     if (bind(server->fd, (struct sockaddr *)addr, sizeof(*addr)) == -1 ||
-            listen(server->fd, MAX_USERS) == -1)
+        listen(server->fd, MAX_USERS) == -1)
         return -1;
+    free(addr);
     return 0;
 }
 
@@ -51,7 +52,7 @@ server_t *create_server(unsigned short port, array_t *teams,
         team->free_places = min_free_places;
     }
     server->game = init_game(teams, map_size, min_free_places);
-    server->clients = array_constructor(sizeof(client_t),
+    server->clients = array_constructor(sizeof(client_t *),
         (void *)&destroy_client);
     server->port = port;
     server->max_fd = 0;
@@ -60,44 +61,22 @@ server_t *create_server(unsigned short port, array_t *teams,
     return server;
 }
 
-void add_client(server_t *server, int fd)
-{
-    client_t *client = init_client(fd, UNKNOWN);
-
-    client->socket = fd;
-    buffer_write(client->buffer_answered, "WELCOME\n");
-    array_push_back(server->clients, client);
-    if (fd > server->max_fd)
-        server->max_fd = fd;
-}
-
-void handle_new_connections(server_t *server, fd_set *readfds)
-{
-    int new_fd = 0;
-    struct sockaddr_in addr;
-    socklen_t size = sizeof(addr);
-
-    if (FD_ISSET(server->fd, readfds)) {
-        new_fd = accept(server->fd, (struct sockaddr *)&addr, &size);
-        add_client(server, new_fd);
-    }
-}
-
-void remove_client(server_t *server, int fd)
+void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds)
 {
     client_t *client;
-    size_t size = array_get_size(server->clients);
+    bool is_empty;
 
-    for (size_t i = 0; i < size; i++) {
+    FD_ZERO(readfds);
+    FD_ZERO(writefds);
+    FD_SET(server->fd, readfds);
+    server->max_fd = find_max_fd(server);
+    for (size_t i = 0; i < array_get_size(server->clients); i++) {
         client = (client_t *)array_get_at(server->clients, i);
-        if (client->socket == fd) {
-            array_remove(server->clients, i);
-            destroy_client(client);
-            break;
+        is_empty = buffer_is_empty(client->buffer_answered);
+        if (!is_empty) {
+            FD_SET(client->socket, writefds);
+        } else {
+            FD_SET(client->socket, readfds);
         }
-    }
-    if (fd == server->max_fd) {
-        server->max_fd = 0;
-        server->max_fd = find_max_fd(server);
     }
 }

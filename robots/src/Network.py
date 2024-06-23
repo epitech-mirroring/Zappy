@@ -8,15 +8,16 @@ class NetworkManager:
     socket = None
     sendQueue = []
     responseHandlers = []
+    buffer = ""
+    isRunning = False
 
     def __init__(self, server_port: int, server_ip: str = "127.0.0.1"):
         self.serverIP = server_ip
         self.serverPort = server_port
 
     def connect(self):
-        print(f"Connecting to {self.serverIP}:{self.serverPort}")
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
-        # self.socket.setblocking(False)
+        self.socket.setblocking(True)
         self.socket.connect((self.serverIP, self.serverPort))
 
     def __send(self, message: str):
@@ -30,27 +31,40 @@ class NetworkManager:
 
     def start(self):
         self.connect()
-        while True:
+        self.isRunning = True
+        while self.isRunning:
             write_list = []
             read_list = []
-            if self.sendQueue:
+            if len(self.sendQueue) > 0:
                 write_list.append(self.socket)
             else:
                 read_list.append(self.socket)
             readable, writable, exceptional = select.select(read_list,
                                                             write_list,
-                                                            [])
-            if readable:
+                                                            [],
+                                                            0.1)
+            if self.socket in readable:
                 response = self.receive()
+                if len(response) == 0:
+                    break
+                if '\n' not in response:
+                    self.buffer += response
+                    continue
+                if '\n' in response and len(self.buffer) > 0:
+                    response = self.buffer + response
+                    self.buffer = ""
                 for line in response.split("\n"):
                     for handler in self.responseHandlers:
                         handler(line)
-            if writable:
+            if self.socket in writable:
                 self.__send(self.sendQueue.pop(0))
+        self.close()
 
     def close(self):
-        self.socket.close()
-        print("Connection closed")
+        if self.socket is not None:
+            self.socket.close()
+        self.socket = None
+        self.isRunning = False
 
     def add_response_handler(self, handler: callable):
         self.responseHandlers.append(handler)
