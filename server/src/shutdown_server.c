@@ -7,6 +7,26 @@
 */
 
 #include "server.h"
+#include <signal.h>
+
+int sigaction_init(void)
+{
+    struct sigaction action;
+    action.sa_flags = 0;
+    action.sa_sigaction = handle_sigint;
+    sigemptyset(&action.sa_mask);
+
+    if (sigaction(SIGINT, &action, NULL) == -1)
+        return 84;
+}
+
+void handle_sigint(int sig, siginfo_t *info, void *ucontext)
+{
+    (void)info;
+    (void)ucontext;
+    (void)sig;
+    printf("Shutting down server...\n");
+}
 
 void shutdown_server(server_t *server)
 {

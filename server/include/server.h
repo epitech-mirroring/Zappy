@@ -17,6 +17,7 @@
     #include "client.h"
     #include "buffer.h"
     #include <sys/select.h>
+    #include <signal.h>
     #ifdef __cplusplus
     extern "C" {
     #endif // __cplusplus
@@ -143,6 +144,23 @@
      * @return trantorian_t* The trantorian
      */
     trantorian_t *get_ia_with_fd(game_t *game, int fd);
+
+    /**
+     * @brief Get a client with a file descriptor
+     *
+     * @param server The server
+     * @param fd The file descriptor
+     * @return client_t* The client
+     */
+    void handle_sigint(int sig, siginfo_t *info, void *ucontext);
+
+     /**
+      *
+      * @brief Initialize the sigaction
+      *
+      * @return void
+      */
+    int sigaction_init(void);
 
 #ifdef __cplusplus
 }

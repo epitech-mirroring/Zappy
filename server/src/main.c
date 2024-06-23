@@ -124,6 +124,8 @@ int main(int ac, char **av)
     array_t *teams = find_teams(ac, av);
     server_t *server;
 
+    if (sigaction_init() == 84)
+        return 84;
     srand(time(NULL));
     if (map_size == NULL || nb_max_clients == -1
         || single_tick_time > (size_t)1000000 || check_teams(teams) == 84)
