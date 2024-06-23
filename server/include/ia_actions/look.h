@@ -17,6 +17,9 @@ extern "C" {
     #endif // __cplusplus
 
     #include <stddef.h>
+    typedef struct tile_content_s {
+        hashmap_t *content;
+    } tile_content_s;
     /**
      * @brief Look around the player
      *
