@@ -13,11 +13,11 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
     : _id(id), _position(x, y), _level(level), _lifetimeRemaining(100), _alive(true), _action(false)
 {
     if (orientation == static_cast<float>(NORTH))
-        _orientation = 0;
+        _orientation = 180;
     else if (orientation == static_cast<float>(EAST))
         _orientation = 90;
     else if (orientation == static_cast<float>(SOUTH))
-        _orientation = 180;
+        _orientation = 0;
     else if (orientation == static_cast<float>(WEST))
         _orientation = 270;
     else
@@ -103,11 +103,11 @@ bool Trantorian::operator==(const Trantorian& other) const
 void Trantorian::setOrientation(float orientation)
 {
     if (orientation == static_cast<float>(NORTH))
-        _orientation = 0;
+        _orientation = 180;
     else if (orientation == static_cast<float>(EAST))
         _orientation = 90;
     else if (orientation == static_cast<float>(SOUTH))
-        _orientation = 180;
+        _orientation = 0;
     else if (orientation == static_cast<float>(WEST))
         _orientation = 270;
     else
