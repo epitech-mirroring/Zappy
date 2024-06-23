@@ -27,6 +27,7 @@ static char *make_string_for_elements(hashmap_t *elements)
     char *element_str[9] = {"player", "food", "linemate", "deraumere",
         "sibur", "mendiane", "phiras", "thystame", NULL};
     int count = 0;
+
     if (is_hashmap_empty(elements) == true)
         return NULL;
     for (int i = 0; i < 8; i++) {

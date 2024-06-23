@@ -14,10 +14,10 @@ extern sig_atomic_t is_running = true;
 int sigaction_init(void)
 {
     struct sigaction action;
+
     action.sa_flags = 0;
     action.sa_sigaction = handle_sigint;
     sigemptyset(&action.sa_mask);
-
     if (sigaction(SIGINT, &action, NULL) == -1)
         return 84;
 }
