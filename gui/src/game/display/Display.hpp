@@ -90,25 +90,25 @@ namespace GUI {
          * @brief Draw expulsion action
          * @return void (nothing to return)
          */
-        void DrawExpulsionAction(Trantorian &trantorian);
+        void DrawExpulsionAction(Trantorian trantorian);
 
         /**
          * @brief Draw collect action
          * @return void (nothing to return)
          */
-        void DrawCollectAction(Trantorian &trantorian);
+        void DrawCollectAction(Trantorian trantorian);
 
         /**
          * @brief Draw drop action
          * @return void (nothing to return)
          */
-        void DrawDropAction(Trantorian &trantorian);
+        void DrawDropAction(Trantorian trantorian);
 
         /**
          * @brief Draw broadcast action
          * @return void (nothing to return)
          */
-        void DrawBroadcastAction(Trantorian &trantorian);
+        void DrawBroadcastAction(Trantorian trantorian);
 
         /**
          * @brief Draw broadcast action

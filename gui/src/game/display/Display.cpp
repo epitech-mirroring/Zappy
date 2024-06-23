@@ -463,22 +463,22 @@ void Display::DrawAction()
                 switch (trantorian.getAction()) {
                     case Trantorian::Action::BROADCAST:
                         DrawBroadcastAction(trantorian);
-                        return;
+                        break;
                     case Trantorian::Action::EXPULSION:
                         DrawExpulsionAction(trantorian);
-                        return;
+                        break;
                     case Trantorian::Action::DROP:
                         DrawDropAction(trantorian);
-                        return;
+                        break;
                     case Trantorian::Action::COLLECT:
                         DrawCollectAction(trantorian);
-                        return;
+                        break;
                     case Trantorian::Action::INCANTATION_S:
                         DrawStartIncantationAction(trantorian);
-                        return;
+                        break;
                     case Trantorian::Action::INCANTATION_E:
                         // DrawEndIncantationAction(trantorian);
-                        return;
+                        break;
                     default:
                         return;
                 }
@@ -487,9 +487,8 @@ void Display::DrawAction()
     }
 }
 
-void Display::DrawExpulsionAction(Trantorian &trantorian)
+void Display::DrawExpulsionAction(Trantorian trantorian)
 {
-
     Vector3 position = {
         static_cast<float>(trantorian.getPosition().getX()),
         2.0f,
@@ -499,12 +498,13 @@ void Display::DrawExpulsionAction(Trantorian &trantorian)
     Vector3 scale = {0.02f, 0.02f, 0.02f};
     if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
         DrawModelEx(trantorian.getPexModel(), position, rotationAxis, 0.0f, scale, WHITE);
+        std::cout << "PEX: Draw player " << trantorian.getId() << std::endl;
     } else {
         trantorian.setAction(Trantorian::Action::NONE);
     }
 }
 
-void Display::DrawCollectAction(Trantorian &trantorian)
+void Display::DrawCollectAction(Trantorian trantorian)
 {
 
     Vector3 position = {
@@ -515,13 +515,14 @@ void Display::DrawCollectAction(Trantorian &trantorian)
     Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
     Vector3 scale = {0.8f, 0.8f, 0.8f};
     if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
-        DrawModelEx(trantorian.getPgtModel(), position, rotationAxis, 0.0f, scale, WHITE);
+        DrawModelEx(trantorian.getPgtModel(), position, rotationAxis,
+            (trantorian.getOrientation() + 90), scale, WHITE);
     } else {
         trantorian.setAction(Trantorian::Action::NONE);
     }
 }
 
-void Display::DrawDropAction(Trantorian &trantorian)
+void Display::DrawDropAction(Trantorian trantorian)
 {
 
     Vector3 position = {
@@ -538,7 +539,7 @@ void Display::DrawDropAction(Trantorian &trantorian)
     }
 }
 
-void Display::DrawBroadcastAction(Trantorian &trantorian)
+void Display::DrawBroadcastAction(Trantorian trantorian)
 {
 
     Vector3 position = {
@@ -549,7 +550,8 @@ void Display::DrawBroadcastAction(Trantorian &trantorian)
     Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
     Vector3 scale = {0.6f, 0.6f, 0.6f};
     if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
-        DrawModelEx(trantorian.getPbcModel(), position, rotationAxis, (trantorian.getOrientation() + 90), scale, WHITE);
+        DrawModelEx(trantorian.getPbcModel(), position, rotationAxis,
+            (trantorian.getOrientation() + 90), scale, WHITE);
     } else {
         trantorian.setAction(Trantorian::Action::NONE);
     }

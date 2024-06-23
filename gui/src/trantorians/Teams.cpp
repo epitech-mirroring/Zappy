@@ -38,9 +38,7 @@ void Teams::removeTrantorian(std::string trantorianId)
     std::cout << "GUI LOG: In removeTrantorian()" << std::endl;
     for (auto it = _trantorians.begin(); it != _trantorians.end(); ++it) {
         if (it->getId() == trantorianId) {
-            std::cout << "GUI LOG: Trantorian to remove found" << std::endl;
             _trantorians.erase(it);
-            std::cout << "GUI LOG: Trantorian removed" << std::endl;
             return;
         }
     }

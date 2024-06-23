@@ -295,15 +295,15 @@ void Game::initializeCallbacks()
         std::string trantorianId = tokens[1];
 
         for (auto &team : Teams::getTeamsList()) {
-            for (auto trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == trantorianId) {
-                    trantorian.setAction(Trantorian::Action::EXPULSION);
-                    trantorian.setActionStartTime(GetTime());
-                        std::string log = "GUI LOG: Player " + trantorianId + " expulsed";
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Player " << trantorianId
-                            << " has been expulsed" << std::endl;
-                }
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::EXPULSION);
+                trantorian->setActionStartTime(GetTime());
+                _display.DrawExpulsionAction(*trantorian);
+                std::string log = "GUI LOG: Player " + trantorianId + " expulsed";
+                _display.addLog(log);
+                std::cout << "GUI LOG: Player " << trantorianId
+                        << " has been expulsed" << std::endl;
             }
         }
     });
@@ -321,16 +321,15 @@ void Game::initializeCallbacks()
         std::string message = tokens[2];
 
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    trantorian.setAction(Trantorian::Action::BROADCAST);
-                    trantorian.setActionStartTime(GetTime());
-                    std::string log = "GUI LOG: Player " + trantorianId +
-                        " has broadcasted: \n" + message;
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Player " << trantorianId
-                        << " has broadcasted: " << message << std::endl;
-                }
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::BROADCAST);
+                trantorian->setActionStartTime(GetTime());
+                std::string log = "GUI LOG: Player " + trantorianId +
+                    " has broadcasted: \n" + message;
+                _display.addLog(log);
+                std::cout << "GUI LOG: Player " << trantorianId
+                    << " has broadcasted: " << message << std::endl;
             }
         }
     });
@@ -383,14 +382,14 @@ void Game::initializeCallbacks()
 
         int x = std::stoi(tokens[1]);
         int y = std::stoi(tokens[2]);
-        std::string trantorianId = tokens[3];
+        int incantationLvl = std::stoi(tokens[3]);
+        std::string trantorianId = tokens[4];
 
         for (auto &team : Teams::getTeamsList()) {
             Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
             if (trantorian != nullptr) {
                 trantorian->setAction(Trantorian::Action::INCANTATION_S);
                 trantorian->setActionStartTime(GetTime());
-                _display.DrawStartIncantationAction(*trantorian);
                 std::string log = "GUI LOG: Incantation started\nby player "
                     + trantorianId;
                 _display.addLog(log);
@@ -468,16 +467,15 @@ void Game::initializeCallbacks()
         std::string ressourceNb = tokens[2];
 
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == trantorianId) {
-                    trantorian.setAction(Trantorian::Action::DROP);
-                    trantorian.setActionStartTime(GetTime());
-                    std::string log = "GUI LOG: Player " + trantorianId +
-                        " dropped: " + ressourceNb;
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Player " << trantorianId
-                        << " has dropped: " << ressourceNb << " ressources" << std::endl;
-                }
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::DROP);
+                trantorian->setActionStartTime(GetTime());
+                std::string log = "GUI LOG: Player " + trantorianId +
+                    " dropped: " + ressourceNb;
+                _display.addLog(log);
+                std::cout << "GUI LOG: Player " << trantorianId
+                    << " has dropped: " << ressourceNb << " ressources" << std::endl;
             }
         }
     });
@@ -495,16 +493,15 @@ void Game::initializeCallbacks()
         std::string ressourceNb = tokens[2];
 
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == trantorianId) {
-                    trantorian.setAction(Trantorian::Action::COLLECT);
-                    trantorian.setActionStartTime(GetTime());
-                        std::string log = "GUI LOG: Player " + trantorianId +
-                        " collected: " + ressourceNb;
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Player " << trantorianId
-                            << " has collected" << ressourceNb << " ressources" << std::endl;
-                }
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::COLLECT);
+                trantorian->setActionStartTime(GetTime());
+                std::string log = "GUI LOG: Player " + trantorianId +
+                    " collected: " + ressourceNb;
+                _display.addLog(log);
+                std::cout << "GUI LOG: Player " << trantorianId
+                        << " has collected" << ressourceNb << " ressources" << std::endl;
             }
         }
     });
