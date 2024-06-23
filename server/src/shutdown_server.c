@@ -9,7 +9,7 @@
 #include "server.h"
 #include <signal.h>
 
-sig_atomic_t is_running = true;
+extern sig_atomic_t is_running = true;
 
 int sigaction_init(void)
 {
