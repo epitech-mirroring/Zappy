@@ -10,7 +10,7 @@
 using namespace GUI;
 
 Trantorian::Trantorian(std::string id, int x, int y, float orientation, int level)
-    : _id(id), _position(x, y), _level(level), _lifetimeRemaining(100), _alive(true), _action(false)
+    : _id(id), _position(x, y), _level(level), _lifetimeRemaining(100), _alive(true), _action(NONE)
 {
     if (orientation == static_cast<float>(NORTH))
         _orientation = 180;
@@ -25,16 +25,54 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
     _trantorianModel = LoadModel("tests/assets/trantorian/trantorian.obj");
     _trantorianTexture = LoadTexture("tests/assets/trantorian/trantorian.png");
     _trantorianModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _trantorianTexture;
+
+    _pexModel = LoadModel("gui/src/assets/pex/boot.obj");
+    _pexTexture = LoadTexture("gui/src/assets/pex/boot.png");
+    _pexModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pexTexture;
+
+    _pgtModel = LoadModel("gui/src/assets/pgt/chest.obj");
+    _pgtTexture = LoadTexture("gui/src/assets/pgt/chest.png");
+    _pgtModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pgtTexture;
+
+    _pdrModel = LoadModel("gui/src/assets/pdr/trashcan.obj");
+    _pdrTexture = LoadTexture("gui/src/assets/pdr/trashcan.png");
+    _pdrModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pdrTexture;
+
+    _pbcModel = LoadModel("gui/src/assets/pbc/mail.obj");
+    _pbcTexture = LoadTexture("gui/src/assets/pbc/mail.png");
+    _pbcModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pbcTexture;
+
+    _picModel = LoadModel("gui/src/assets/pic/potion.obj");
+    _picTexture = LoadTexture("gui/src/assets/pic/potion.png");
+    _picModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _picTexture;
+
+    _pieKoModel = LoadModel("gui/src/assets/pie/potion.obj");
+    _pieKoTexture = LoadTexture("gui/src/assets/pie/potion_red.png");
+    _pieKoModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _picTexture;
+
+    _pieOkModel = LoadModel("gui/src/assets/pie/potion.obj");
+    _pieOkTexture = LoadTexture("gui/src/assets/pie/potion_green.png");
+    _pieOkModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _picTexture;
 }
 
-void Trantorian::setAction(bool action)
+void Trantorian::setAction(Action action)
 {
     _action = action;
 }
 
-bool Trantorian::getAction()
+Trantorian::Action Trantorian::getAction()
 {
     return _action;
+}
+
+void Trantorian::setActionStartTime(float time)
+{
+    _actionStartTime = time;
+}
+
+float Trantorian::getActionStartTime() const
+{
+    return _actionStartTime;
 }
 
 void Trantorian::setId(std::string id)
@@ -190,4 +228,39 @@ Model Trantorian::getModel() const
 Texture2D Trantorian::getTexture() const
 {
     return _trantorianTexture;
+}
+
+Model Trantorian::getPexModel() const
+{
+    return _pexModel;
+}
+
+Model Trantorian::getPbcModel() const
+{
+    return _pbcModel;
+}
+
+Model Trantorian::getPdrModel() const
+{
+    return _pdrModel;
+}
+
+Model Trantorian::getPgtModel() const
+{
+    return _pgtModel;
+}
+
+Model Trantorian::getPicModel() const
+{
+    return _picModel;
+}
+
+Model Trantorian::getPieKoModel() const
+{
+    return _pieKoModel;
+}
+
+Model Trantorian::getPieOkModel() const
+{
+    return _pieOkModel;
 }

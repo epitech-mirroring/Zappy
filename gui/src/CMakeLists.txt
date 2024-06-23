@@ -21,7 +21,6 @@ target_sources(zappy_gui_lib
     # TRANTORIAN
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Trantorian.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Teams.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.cpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.cpp
@@ -88,7 +87,6 @@ target_sources(zappy_gui_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Trantorian.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Teams.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/position/Position.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/trantorians/Actions.hpp
     # WORLD / MAP
     ${CMAKE_CURRENT_SOURCE_DIR}/world/World.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tiles/Tile.hpp

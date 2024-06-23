@@ -282,15 +282,18 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string trantorianId = tokens[1];
+
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    // HANDLE EXPULSION
-                    std::string log = "GUI LOG: Player " + trantorian.getId() + " expulsed";
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::EXPULSION);
+                trantorian->setActionStartTime(GetTime());
+                _display.DrawExpulsionAction(*trantorian);
+                std::string log = "GUI LOG: Player " + trantorianId + " expulsed";
+                _display.addLog(log);
+                std::cout << "GUI LOG: Player " << trantorianId
                         << " has been expulsed" << std::endl;
-                }
             }
         }
     });
@@ -304,16 +307,19 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string trantorianId = tokens[1];
+        std::string message = tokens[2];
+
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    // HANDLE BROADCAST
-                    std::string log = "GUI LOG: Player " + trantorian.getId() +
-                        " has broadcasted: \n" + tokens[2];
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " has broadcasted: " << tokens[2] << std::endl;
-                }
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::BROADCAST);
+                trantorian->setActionStartTime(GetTime());
+                std::string log = "GUI LOG: Player " + trantorianId +
+                    " has broadcasted: \n" + message;
+                _display.addLog(log);
+                std::cout << "GUI LOG: Player " << trantorianId
+                    << " has broadcasted: " << message << std::endl;
             }
         }
     });
@@ -349,10 +355,24 @@ void Game::initializeCallbacks()
 
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
-        // HANDLE INCANTATION END
-        std::string log = "GUI LOG: Incantation ended";
-        _display.addLog(log);
-        std::cout << "GUI LOG: Incantation ended" << std::endl;
+        
+        int x = std::stoi(tokens[1]);
+        int y = std::stoi(tokens[2]);
+        int incantationResponse = std::stoi(tokens[3]);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto trantorians : team.getTrantorianList()) {
+                if (trantorians.getPosition().getX() == x &&
+                    trantorians.getPosition().getY() == y) {
+                    Trantorian *trantorian = team.getTrantorianByIdMod(trantorians.getId());
+                    trantorian->setAction(Trantorian::Action::INCANTATION_OK);
+                    trantorian->setActionStartTime(GetTime());
+                    std::string log = "GUI LOG: Incantation ended";
+                    _display.addLog(log);
+                    std::cout << "GUI LOG: Incantation ended" << std::endl;
+                }
+            }
+        }
     });
 
     _commandFactory.setCallback("pic", [this](std::istringstream &iss){
@@ -363,13 +383,22 @@ void Game::initializeCallbacks()
 
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
+
+        int x = std::stoi(tokens[1]);
+        int y = std::stoi(tokens[2]);
+        int incantationLvl = std::stoi(tokens[3]);
+        std::string trantorianId = tokens[4];
+
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    std::string log = "GUI LOG: Player " + trantorian.getId() + " started incantation";
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Incantation started by player " << trantorian.getId() << std::endl;
-                }
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::INCANTATION_S);
+                trantorian->setActionStartTime(GetTime());
+                std::string log = "GUI LOG: Incantation started\nby player "
+                    + trantorianId;
+                _display.addLog(log);
+                std::cout << "GUI LOG: Incantation started by player "
+                    << trantorianId << std::endl;
             }
         }
     });
@@ -413,13 +442,16 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string trantorianId = tokens[1];
+
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
+                if (trantorian.getId() == trantorianId) {
                     trantorian.setIsAlive(false);
-                    std::string log = "GUI LOG: Player " + trantorian.getId() + " died";
+                    std::string log = "GUI LOG: Player " + trantorianId + " died";
+                    team.removeTrantorian(trantorianId);
                     _display.addLog(log);
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
+                    std::cout << "GUI LOG: Player " << trantorianId
                         << " died" << std::endl;
                 }
             }
@@ -435,18 +467,19 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string trantorianId = tokens[1];
+        std::string ressourceNb = tokens[2];
+
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    for (auto &inventory : trantorian.getInventory()) {
-                        // HANDLE RESSOURCE DROPPING
-                    }
-                    std::string log = "GUI LOG: Player " + trantorian.getId() +
-                        " dropped: " + tokens[2];
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " has dropped: " << tokens[2] << std::endl;
-                }
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::DROP);
+                trantorian->setActionStartTime(GetTime());
+                std::string log = "GUI LOG: Player " + trantorianId +
+                    " dropped: " + ressourceNb;
+                _display.addLog(log);
+                std::cout << "GUI LOG: Player " << trantorianId
+                    << " has dropped: " << ressourceNb << " ressources" << std::endl;
             }
         }
     });
@@ -460,18 +493,19 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string trantorianId = tokens[1];
+        std::string ressourceNb = tokens[2];
+
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    for (auto &inventory : trantorian.getInventory()) {
-                        // HANDLE RESSOURCE COLLECTING
-                    }
-                    std::string log = "GUI LOG: Player " + trantorian.getId() +
-                        " collected: " + tokens[2];
-                    _display.addLog(log);
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " has collected: " << tokens[2] << std::endl;
-                }
+            Trantorian *trantorian = team.getTrantorianByIdMod(trantorianId);
+            if (trantorian != nullptr) {
+                trantorian->setAction(Trantorian::Action::COLLECT);
+                trantorian->setActionStartTime(GetTime());
+                std::string log = "GUI LOG: Player " + trantorianId +
+                    " collected: " + ressourceNb;
+                _display.addLog(log);
+                std::cout << "GUI LOG: Player " << trantorianId
+                        << " has collected" << ressourceNb << " ressources" << std::endl;
             }
         }
     });
@@ -485,7 +519,7 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        int eggNb = std::stoi(tokens[1]);
+        std::string eggId = tokens[1];
         std::string trantorianId = tokens[2];
         int x = std::stoi(tokens[3]);
         int y = std::stoi(tokens[4]);
@@ -496,12 +530,12 @@ void Game::initializeCallbacks()
                     Position pos;
                     pos.setX(x);
                     pos.setY(y);
-                    Egg egg(team.getName(), trantorianId, pos);
+                    Egg egg(eggId, trantorianId, pos);
                     team.addEggToList(egg);
-                    std::string log = "GUI LOG: Egg " + std::to_string(eggNb) +
+                    std::string log = "GUI LOG: Egg " + eggId +
                         " layed by player " + trantorianId;
                     _display.addLog(log);
-                    std::cout << "GUI LOG: Egg " << eggNb
+                    std::cout << "GUI LOG: Egg " << eggId
                         << " has been layed by player " << trantorianId << std::endl;
                 }
             }
@@ -532,10 +566,18 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        // HANDLE DEATH FOR AN EGG
-        std::string log = "GUI LOG: Death of " + tokens[1] + " Egg";
+        std::string eggId = tokens[1];
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &egg : team.getEggList()) {
+                if (egg.getEggId() == eggId) {
+                    team.removeEggFromList(eggId);
+                    std::string log = "GUI LOG: Death of " + eggId + " Egg";
         _display.addLog(log);
-        std::cout << "GUI LOG: Death of " << token[1] << " Egg" << std::endl;
+        std::cout << "GUI LOG: Death of " << eggId << " Egg" << std::endl;
+                }
+            }
+        }
     });
 
     _commandFactory.setCallback("seg", [this](std::istringstream &iss){

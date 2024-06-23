@@ -56,7 +56,6 @@ std::vector<std::string> Client::readData()
 
     return {};
 }
-
 void Client::handleDisconnection()
 {
     _socket->close();

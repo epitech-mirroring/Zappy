@@ -31,17 +31,21 @@ namespace GUI {
         ~Display() = default;
 
         /**
-         * @brief calls all the draw functions
+         * @brief Display all objects to draw on the map
+         * @return void (nothing to return)
          */
         void displayElements();
 
         /**
-         * @brief Draw the tiles
-         * @param tiles 2D vector of tiles
+         * @brief Draw tile's map
+         * @param tiles Every informations about tile's map
+         * @return void (nothing to return)
          */
         void DrawTiles(std::vector<std::vector<Tile>> tiles);
+
         /**
-         * @brief Draw the clouds
+         * @brief Draw clouds
+         * @return void (nothing to return)
          */
         void DrawClouds();
         /**
@@ -63,8 +67,10 @@ namespace GUI {
          * @param objects list of objects
          */
         void DrawObjects(std::list<IObject*> objects);
+
         /**
-         * @brief Draw the egg
+         * @brief Draw eggs
+         * @return void (nothing to return)
          */
         void DrawEgg();
         /**
@@ -74,9 +80,57 @@ namespace GUI {
         /**
          * @brief Cleanup the models /!\ ADD TRANTORIANS /!\
          */
-        void cleanupModels();
         /**
-         * @brief Initialize the clouds
+         * @brief Draw actions (parse which action to draw)
+         * @return void (nothing to return)
+         */
+        void DrawAction();
+
+        /**
+         * @brief Draw expulsion action
+         * @return void (nothing to return)
+         */
+        void DrawExpulsionAction(Trantorian trantorian);
+
+        /**
+         * @brief Draw collect action
+         * @return void (nothing to return)
+         */
+        void DrawCollectAction(Trantorian trantorian);
+
+        /**
+         * @brief Draw drop action
+         * @return void (nothing to return)
+         */
+        void DrawDropAction(Trantorian trantorian);
+
+        /**
+         * @brief Draw broadcast action
+         * @return void (nothing to return)
+         */
+        void DrawBroadcastAction(Trantorian trantorian);
+
+        /**
+         * @brief Draw start incantation action
+         * @return void (nothing to return)
+         */
+        void DrawStartIncantationAction(Trantorian trantorian);
+
+        /**
+         * @brief Draw end incantation action
+         * @return void (nothing to return)
+         */
+        void DrawEndIncantationAction(Trantorian trantorian);
+
+        /**
+         * @brief Cleanup object's models
+         * @return void (nothing to return)
+         */
+        void cleanupModels();
+
+        /**
+         * @brief Init clouds models
+         * @return void (nothing to return)
          */
         void initClouds();
 
@@ -85,12 +139,16 @@ namespace GUI {
          * @return true if the window should close
          */
         bool windowShouldClose();
+
         /**
-         * @brief Update the camera
+         * @brief Update camera values
+         * @return void (nothing to return)
          */
         void updateCamera();
+
         /**
          * @brief Close the window
+         * @return void (nothing to return)
          */
         void closeWindow();
 

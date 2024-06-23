@@ -33,6 +33,17 @@ void Teams::addTrantorian(Trantorian& trantorian)
     }
 }
 
+void Teams::removeTrantorian(std::string trantorianId)
+{
+    std::cout << "GUI LOG: In removeTrantorian()" << std::endl;
+    for (auto it = _trantorians.begin(); it != _trantorians.end(); ++it) {
+        if (it->getId() == trantorianId) {
+            _trantorians.erase(it);
+            return;
+        }
+    }
+}
+
 std::list<Trantorian> Teams::getTrantorianList() const
 {
     return _trantorians;
@@ -84,6 +95,16 @@ bool Teams::hasTrantorian(const std::string& id) const
 void Teams::addEggToList(Egg newEgg)
 {
     _eggs.emplace_back(newEgg);
+}
+
+void Teams::removeEggFromList(std::string eggId)
+{
+    for (auto it = _eggs.begin(); it != _eggs.end(); ++it) {
+        if (it->getEggId() == eggId) {
+            _eggs.erase(it);
+            return;
+        }
+    }
 }
 
 std::list<Egg> Teams::getEggList() const

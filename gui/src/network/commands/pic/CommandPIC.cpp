@@ -11,11 +11,11 @@ using namespace network;
 
 void CommandPIC::execute(std::istringstream &iss)
 {
-    (void)iss;
-    return;
+    if (_callback)
+        _callback(iss);
 }
 
 std::unique_ptr<ICommand> CommandPIC::clone() const
 {
-    return nullptr;
+    return std::make_unique<CommandPIC>();
 }

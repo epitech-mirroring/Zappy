@@ -468,6 +468,150 @@ void Display::DrawLogs()
     }
 }
 
+void Display::DrawAction()
+{
+    for (auto &team : Teams::getTeamsList()) {
+        for (auto &trantorian : team.getTrantorianList()) {
+            Vector3 position = {
+                static_cast<float>(trantorian.getPosition().getX()),
+                0.5f,
+                static_cast<float>(trantorian.getPosition().getY())
+            };
+            Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+            Vector3 scale = {0.07f, 0.07f, 0.07f};
+            if (trantorian.getAction() != Trantorian::Action::NONE) {
+                switch (trantorian.getAction()) {
+                    case Trantorian::Action::BROADCAST:
+                        DrawBroadcastAction(trantorian);
+                        break;
+                    case Trantorian::Action::EXPULSION:
+                        DrawExpulsionAction(trantorian);
+                        break;
+                    case Trantorian::Action::DROP:
+                        DrawDropAction(trantorian);
+                        break;
+                    case Trantorian::Action::COLLECT:
+                        DrawCollectAction(trantorian);
+                        break;
+                    case Trantorian::Action::INCANTATION_S:
+                        DrawStartIncantationAction(trantorian);
+                        break;
+                    case Trantorian::Action::INCANTATION_KO:
+                        DrawEndIncantationAction(trantorian);
+                        break;
+                    case Trantorian::Action::INCANTATION_OK:
+                        DrawEndIncantationAction(trantorian);
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+    }
+}
+
+void Display::DrawExpulsionAction(Trantorian trantorian)
+{
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.0f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.02f, 0.02f, 0.02f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPexModel(), position, rotationAxis, 0.0f, scale, WHITE);
+        std::cout << "PEX: Draw player " << trantorian.getId() << std::endl;
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
+void Display::DrawCollectAction(Trantorian trantorian)
+{
+
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.0f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.8f, 0.8f, 0.8f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPgtModel(), position, rotationAxis,
+            (trantorian.getOrientation() + 90), scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
+void Display::DrawDropAction(Trantorian trantorian)
+{
+
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.3f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.2f, 0.2f, 0.2f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPdrModel(), position, rotationAxis, 0.0f, scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
+void Display::DrawBroadcastAction(Trantorian trantorian)
+{
+
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.1f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.6f, 0.6f, 0.6f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPbcModel(), position, rotationAxis,
+            (trantorian.getOrientation() + 90), scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
+void Display::DrawStartIncantationAction(Trantorian trantorian)
+{
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.5f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.3f, 0.3f, 0.3f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPicModel(), position, rotationAxis, 0.0f, scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
+void Display::DrawEndIncantationAction(Trantorian trantorian)
+{
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.5f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.3f, 0.3f, 0.3f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPieOkModel(), position, rotationAxis, 0.0f, scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
 void Display::displayElements()
 {
     if (!_textBoxActive && !_endGame) {
@@ -483,6 +627,7 @@ void Display::displayElements()
     DrawTrantorians(_teams.getTeamsList());
     DrawObjects(_world.getObjects());
     DrawEgg();
+    DrawAction();
     EndMode3D();
     DrawFPS(10, 10);
     DrawTileInfo();
