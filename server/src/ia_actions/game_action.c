@@ -136,7 +136,7 @@ void check_dead_trantorians(game_t *game)
             incantation_dead_trantorian(game->incantations, trantorian);
             tile = get_tile_by_coordinates(game->map, trantorian->coordinates);
             tile->player_count--;
-            destroy_trantorian(trantorian);
+            remove_dead_trantorian(trantorian, game->teams);
             i--;
         }
     }

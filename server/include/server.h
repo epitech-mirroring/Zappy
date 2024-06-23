@@ -9,7 +9,7 @@
 #ifndef ZAPPY_SERVER_H
     #define ZAPPY_SERVER_H
 
-    #define MAX_COMMAND_SIZE 1024
+    #define MAX_COMMAND_SIZE 4096
     #define MAX_USERS 10000
 
     #define MIN(a, b) (a < b ? a : b)

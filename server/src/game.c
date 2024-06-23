@@ -102,7 +102,6 @@ void handle_new_client(game_t *game)
 {
     char *msg = NULL;
     client_t *client = NULL;
-    trantorian_t *trantorian = NULL;
 
     for (size_t i = 0; i < array_get_size(game->clients_without_team); i++) {
         client = (client_t *)array_get_at(game->clients_without_team, i);
@@ -112,8 +111,6 @@ void handle_new_client(game_t *game)
         if (can_create_trantorian(game, msg)) {
             create_trantorian(game,
                 get_team_by_name(game->teams, msg), client);
-            trantorian = (trantorian_t *)array_get_at
-                (game->trantorians, array_get_size(game->trantorians) - 1);
             array_remove(game->clients_without_team, i);
             i = 0;
         } else

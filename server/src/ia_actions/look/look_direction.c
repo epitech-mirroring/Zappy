@@ -40,10 +40,10 @@ static char *make_msg(char *msg, char *element)
     char *tmp = NULL;
 
     if (strlen(msg) == 0) {
-        snprintf(msg, 100000, "%s", element);
+        snprintf(msg, 1000000, "%s", element);
     } else {
         tmp = strdup(msg);
-        snprintf(msg, 100000, "%s %s,", tmp, element);
+        snprintf(msg, 1000000, "%s %s,", tmp, element);
         free(tmp);
     }
     free(element);
@@ -53,7 +53,7 @@ static char *make_msg(char *msg, char *element)
 char *look_north(game_t *game, short level,
     coordinates_t player_coordinates, hashmap_t *content)
 {
-    char *msg = calloc(100000, sizeof(char));
+    char *msg = calloc(1000000, sizeof(char));
     int x = 0;
     int y = player_coordinates.y;
     tile_t *tile = NULL;
@@ -77,7 +77,7 @@ char *look_north(game_t *game, short level,
 char *look_south(game_t *game, short level,
     coordinates_t player_coordinates, hashmap_t *content)
 {
-    char *msg = calloc(100000, sizeof(char));
+    char *msg = calloc(1000000, sizeof(char));
     int x = 0;
     int y = player_coordinates.y;
     tile_t *tile = NULL;
@@ -101,7 +101,7 @@ char *look_south(game_t *game, short level,
 char *look_west(game_t *game, short level,
     coordinates_t player_coordinates, hashmap_t *content)
 {
-    char *msg = calloc(100000, sizeof(char));
+    char *msg = calloc(1000000, sizeof(char));
     int x = player_coordinates.x;
     int y = 0;
     tile_t *tile = NULL;
@@ -125,7 +125,7 @@ char *look_west(game_t *game, short level,
 char *look_east(game_t *game, short level,
     coordinates_t player_coordinates, hashmap_t *content)
 {
-    char *msg = calloc(100000, sizeof(char));
+    char *msg = calloc(1000000, sizeof(char));
     int x = player_coordinates.x;
     int y = 0;
     tile_t *tile = NULL;

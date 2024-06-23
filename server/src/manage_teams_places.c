@@ -7,19 +7,7 @@
 */
 
 #include "game.h"
-
-static size_t get_nb_eggs_in_team(uuid_t team_uuid, array_t *eggs)
-{
-    size_t nb = 0;
-    egg_t *egg = NULL;
-
-    for (size_t i = 0; i < array_get_size(eggs); i++) {
-        egg = (egg_t *)array_get_at(eggs, i);
-        if (uuid_compare(egg->team_uuid, team_uuid) == 0)
-            nb++;
-    }
-    return nb;
-}
+#include "uuid/uuid.h"
 
 static void fill_team_egg(game_t *game, team_t *team, size_t nb)
 {
@@ -36,9 +24,40 @@ void manage_teams_places(game_t *game)
     for (size_t i = 0; i < array_get_size(game->teams); i++) {
         team = (team_t *)array_get_at(game->teams, i);
         nb_in_teams = array_get_size(team->trantorians);
+        // printf("nb_in_teams: %d\n", nb_in_teams);
         if (team->free_places + nb_in_teams < game->min_places) {
             fill_team_egg(game, team, team->free_places);
             team->free_places = game->min_places;
         }
     }
+}
+
+static int is_trantorian_in_team(trantorian_t *trantorian, team_t *team)
+{
+    uuid_t uuid;
+
+    for (size_t i = 0; i < array_get_size(team->trantorians); i++) {
+        uuid_copy(uuid,
+            ((trantorian_t *)array_get_at(team->trantorians, i))->uuid);
+        if (uuid_compare(uuid, trantorian->uuid) == 0)
+            return (int)i;
+    }
+    return -1;
+}
+
+void remove_dead_trantorian(trantorian_t *trantorian, array_t *teams)
+{
+    size_t size = array_get_size(teams);
+    team_t *team = NULL;
+    int j = 0;
+
+    for (size_t i = 0; i < size; i++) {
+        team = (team_t *)array_get_at(teams, i);
+        j = is_trantorian_in_team(trantorian, team);
+        if (j != -1) {
+            break;
+        }
+    }
+    array_remove(team->trantorians, j);
+    destroy_trantorian(trantorian);
 }

@@ -10,12 +10,12 @@
 
 static char *make_string(char *element, char *message, int count)
 {
-    char *tmp = calloc(2048, sizeof(char));
+    char *tmp = calloc(4096, sizeof(char));
 
     if (element == NULL || message == NULL)
         return message;
     for (int i = 0; i < count; i++) {
-        snprintf(tmp, 2048, "%s", message);
+        snprintf(tmp, 4096, "%s", message);
         if (strlen(message) == 0)
             snprintf(message, 2048, "%s", element);
         else
@@ -27,7 +27,7 @@ static char *make_string(char *element, char *message, int count)
 
 static char *make_string_for_elements(hashmap_t *elements)
 {
-    char *tmp = calloc(2048, sizeof(char));
+    char *tmp = calloc(4096, sizeof(char));
     char *element_str[10] = {"egg", "player", "food", "linemate", "deraumere",
         "sibur", "mendiane", "phiras", "thystame", NULL};
     int count = 0;

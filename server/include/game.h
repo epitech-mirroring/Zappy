@@ -297,6 +297,14 @@ extern "C" {
      */
     void manage_teams_places(game_t *game);
 
+    /**
+     * @brief Remove a tranotrian from a team when it is dead
+     *
+     * @param trantorian The trantorian to remove
+     * @param teams The list of all the teams
+     */
+    void remove_dead_trantorian(trantorian_t *trantorian, array_t *teams);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus
