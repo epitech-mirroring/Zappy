@@ -15,7 +15,7 @@ static char *add_space(char *str, char *tmp, int j, int element)
     return tmp;
 }
 
-static char *make_string_for_elements(const int elements[8])
+static char *make_string_for_elements(const int *elements)
 {
     char *str = calloc(1024, sizeof(char));
     char *tmp = calloc(1024, sizeof(char));
