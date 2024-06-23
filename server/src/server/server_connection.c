@@ -16,9 +16,6 @@
 #include <netinet/in.h>
 
 
-static void time_value(server_t *server, size_t *elapsed_ticks, size_t elapsed_us,
-                       size_t will_sub);
-
 int get_closest_action(server_t *server)
 {
     int closest_action = INT32_MAX;
@@ -42,6 +39,21 @@ int get_closest_action(server_t *server)
     return (int) (closest_action - server->remaining_us_before_next_tick);
 }
 
+static void time_value(server_t *server, size_t *elapsed_ticks,
+    size_t elapsed_us, size_t will_sub)
+{
+    while (elapsed_us > 0) {
+            will_sub = MIN(server->remaining_us_before_next_tick,
+                           elapsed_us);
+            server->remaining_us_before_next_tick -= will_sub;
+            elapsed_us -= will_sub;
+            if (server->remaining_us_before_next_tick == 0) {
+                    server->remaining_us_before_next_tick = server->single_tick_time;
+                    (*elapsed_ticks)++;
+                }
+        }
+}
+
 static void calculate_time(server_t *server, size_t *elapsed_ticks)
 {
     struct timeval tv = {0, 0};
@@ -57,21 +69,6 @@ static void calculate_time(server_t *server, size_t *elapsed_ticks)
             gettimeofday(&current, NULL);
             server->prev_tick_time = current.tv_sec * 1000000 + current.tv_usec;
         }
-}
-
-static void time_value(server_t *server, size_t *elapsed_ticks,
-    size_t elapsed_us, size_t will_sub)
-{
-    while (elapsed_us > 0) {
-        will_sub = MIN(server->remaining_us_before_next_tick,
-            elapsed_us);
-        server->remaining_us_before_next_tick -= will_sub;
-        elapsed_us -= will_sub;
-        if (server->remaining_us_before_next_tick == 0) {
-            server->remaining_us_before_next_tick = server->single_tick_time;
-            (*elapsed_ticks)++;
-        }
-    }
 }
 
 static void update_game(server_t *server, fd_set *write_fds, size_t elapsed_ticks)
