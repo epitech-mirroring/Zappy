@@ -8,27 +8,32 @@
 
 #include "ia_actions/look.h"
 
-static char *add_space(char *str, char *tmp, int j, int element)
+static char *make_string(char *element, char *message, int count)
 {
-    if (j < element - 1)
-        sprintf(tmp, "%s ", str);
-    return tmp;
+    if (element == NULL || message == NULL)
+        return message;
+    for (int i = 0; i < count; i++) {
+        if (strlen(message) == 0)
+            sprintf(message, "%s", element);
+        else
+            sprintf(message, "%s %s", message, element);
+    }
+    return message;
 }
 
-static char *make_string_for_elements(hashmap_t *element)
+static char *make_string_for_elements(hashmap_t *elements)
 {
-    char *str = calloc(1024, sizeof(char));
     char *tmp = calloc(1024, sizeof(char));
-    const char *element_str[8] = {"player", "food", "linemate", "deraumere",
-        "sibur", "mendiane", "phiras", "thystame"};
+    char *element_str[9] = {"player", "food", "linemate", "deraumere",
+                                  "sibur", "mendiane", "phiras", "thystame", NULL};
+    int count = 0;
 
     for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < hashmap_get(element, element_str[i]); j++) {
-            sprintf(str, "%s%s", tmp, element_str[i]);
-            tmp = add_space(str, tmp, j, hashmap_get(element, element_str[i]));
+        if (hashmap_get(elements, element_str[i]) > 0){
+            count = hashmap_get(elements, element_str[i]);
+            tmp = make_string(element_str[i], tmp, count);
         }
     }
-    free(str);
     return tmp;
 }
 
