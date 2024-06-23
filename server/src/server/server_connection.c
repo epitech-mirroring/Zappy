@@ -39,31 +39,34 @@ int get_closest_action(server_t *server)
 }
 
 static void time_value(server_t *server, size_t *elapsed_ticks,
-    size_t elapsed_us, size_t will_sub)
+    size_t *elapsed_us)
 {
-    while (elapsed_us > 0) {
-            will_sub = MIN(server->remaining_us_before_next_tick,
-                elapsed_us);
-            server->remaining_us_before_next_tick -= will_sub;
-            elapsed_us -= will_sub;
-            if (server->remaining_us_before_next_tick == 0) {
-                    server->remaining_us_before_next_tick =
-                        server->single_tick_time;
-                    (*elapsed_ticks)++;
-                }
-        }
+    size_t will_sub = 0;
+
+    while (*elapsed_us > 0) {
+        will_sub = MIN(server->remaining_us_before_next_tick,
+            *elapsed_us);
+        server->remaining_us_before_next_tick -= will_sub;
+        *elapsed_us -= will_sub;
+        if (server->remaining_us_before_next_tick == 0) {
+                server->remaining_us_before_next_tick =
+                    server->single_tick_time;
+                (*elapsed_ticks)++;
+            }
+    }
 }
 
 static void calculate_time(server_t *server, size_t *elapsed_ticks)
 {
-    struct timeval tv = {0, 0};
-    size_t actual_time = tv.tv_sec * 1000000 + tv.tv_usec;
-    size_t elapsed_us = actual_time - server->prev_tick_time;
-    size_t will_sub = 0;
+    struct timeval tv;
+    size_t actual_time = 0;
+    size_t elapsed_us;
     struct timeval current = {0, 0};
 
     gettimeofday(&tv, NULL);
-    time_value(server, elapsed_ticks, elapsed_us, will_sub);
+    actual_time = tv.tv_sec * 1000000 + tv.tv_usec;
+    elapsed_us = actual_time - server->prev_tick_time;
+    time_value(server, elapsed_ticks, &elapsed_us);
     if (*elapsed_ticks > 0)
         for (size_t i = 0; i < *elapsed_ticks; i++) {
             gettimeofday(&current, NULL);
@@ -102,10 +105,10 @@ int find_max_fd(server_t *server)
     client_t *client;
 
     for (size_t i = 0; i < array_get_size(server->clients); i++) {
-            client = (client_t *)array_get_at(server->clients, i);
-            if (client->socket > max_fd)
-                max_fd = client->socket;
-        }
+        client = (client_t *)array_get_at(server->clients, i);
+        if (client->socket > max_fd)
+            max_fd = client->socket;
+    }
     return max_fd;
 }
 
@@ -116,7 +119,7 @@ void handle_new_connections(server_t *server, fd_set *readfds)
     socklen_t size = sizeof(addr);
 
     if (FD_ISSET(server->fd, readfds)) {
-            new_fd = accept(server->fd, (struct sockaddr *)&addr, &size);
-            add_client(server, new_fd);
-        }
+        new_fd = accept(server->fd, (struct sockaddr *)&addr, &size);
+        add_client(server, new_fd);
+    }
 }
