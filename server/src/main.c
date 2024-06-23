@@ -152,5 +152,5 @@ int main(int ac, char **av)
     server->remaining_us_before_next_tick = single_tick_time;
     gettimeofday(&tv, NULL);
     server->prev_tick_time = tv.tv_sec * 1000000 + tv.tv_usec;
-    return launch_server;
+    return launch_server(server);
 }
