@@ -124,6 +124,7 @@ void pin_log_gui(game_t *game, char *arg, client_t *client)
             break;
     }
     str = inventory_to_str(trantorian);
+    printf("str = %s\n", str);
     buffer_write(client->buffer_answered, str);
 }
 
