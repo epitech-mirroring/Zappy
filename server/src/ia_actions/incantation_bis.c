@@ -10,6 +10,7 @@
 #include "incantation.h"
 #include "actions.h"
 #include "gui.h"
+#include <string.h>
 
 static size_t find_trantorian_in_incantation(incantation_t *incantation,
     trantorian_t *trantorian)
