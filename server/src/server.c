@@ -9,6 +9,7 @@
 #include "server.h"
 #include "gui.h"
 #include "actions.h"
+#include <stdint.h>
 #include <sys/select.h>
 #include <sys/socket.h>
 #include <sys/wait.h>
