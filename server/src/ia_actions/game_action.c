@@ -158,6 +158,8 @@ void check_win(game_t *game)
 {
     team_t *team = NULL;
 
+    if (game->win)
+        return;
     for (size_t i = 0; i < array_get_size(game->teams); i++) {
         team = (team_t *)array_get_at(game->teams, i);
         if (check_win_team(team, game->trantorians)) {
