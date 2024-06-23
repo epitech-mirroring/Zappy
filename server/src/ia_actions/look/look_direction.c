@@ -20,6 +20,15 @@ static int manage_pos(int index, int max)
     return index;
 }
 
+static char *make_msg(char *msg, char *element)
+{
+    if (strlen(msg) == 0)
+        snprintf(msg, 100000, "%s", element);
+    else
+        snprintf(msg, 100000, "%s %s,", strdup(msg), element);
+    return msg;
+}
+
 char *look_north(game_t *game, short level,
     coordinates_t player_coordinates)
 {
@@ -32,7 +41,7 @@ char *look_north(game_t *game, short level,
         y = manage_pos(y, game->map->height);
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
-            snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
+            msg = make_msg(msg, get_element_on_tile
                 (get_tile(game->map, x, y)));
             x++;
         }
@@ -53,7 +62,7 @@ char *look_south(game_t *game, short level,
         y = manage_pos(y, game->map->height);
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
-            snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
+            msg = make_msg(msg, get_element_on_tile
                 (get_tile(game->map, x, y)));
             x--;
         }
@@ -74,7 +83,7 @@ char *look_west(game_t *game, short level,
         x = manage_pos(y, game->map->height);
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
-            snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
+            msg = make_msg(msg, get_element_on_tile
                 (get_tile(game->map, x, y)));
             y--;
         }
@@ -95,7 +104,7 @@ char *look_east(game_t *game, short level,
         x = manage_pos(y, game->map->height);
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
-            snprintf(msg, 100000, "%s%s,", strdup(msg), get_element_on_tile
+            msg = make_msg(msg, get_element_on_tile
                 (get_tile(game->map, x, y)));
             y++;
         }
