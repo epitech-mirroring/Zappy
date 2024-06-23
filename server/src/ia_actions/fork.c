@@ -36,6 +36,7 @@ void fork_ia(game_t *game, trantorian_t *trantorian)
         }
     }
     egg = init_egg(team->uuid, trantorian->coordinates);
+    team->free_places++;
     array_push_back(game->eggs, egg);
     enw_log_gui(game, egg, trantorian);
     buffer_write(trantorian->client->buffer_answered, "ok\n");

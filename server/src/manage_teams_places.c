@@ -31,14 +31,11 @@ static void fill_team_egg(game_t *game, team_t *team, size_t nb)
 void manage_teams_places(game_t *game)
 {
     team_t *team = NULL;
-    size_t nb = 0;
 
     for (size_t i = 0; i < array_get_size(game->teams); i++) {
         team = (team_t *)array_get_at(game->teams, i);
-        nb = array_get_size(team->trantorians) +
-            get_nb_eggs_in_team(team->uuid, game->eggs);
-        if (nb < game->min_places) {
-            fill_team_egg(game, team, nb);
+        if (team->free_places < game->min_places) {
+            fill_team_egg(game, team, team->free_places);
             team->free_places = game->min_places;
         }
     }
