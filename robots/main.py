@@ -7,6 +7,7 @@ if __name__ == '__main__':
     port: int or None = None
     host: str = "127.0.0.1"
     team: str or None = None
+    debug: bool = False
     for (i, arg) in enumerate(sys.argv):
         if arg == "--help":
             print("USAGE: ./zappy_ai -p port -n name -h machine")
@@ -32,6 +33,8 @@ if __name__ == '__main__':
                 print("USAGE: ./zappy_ai -p port -n name -h machine")
                 print("Team name is required")
                 sys.exit(84)
+        if arg == "-v":
+            debug = True
     if port is None:
         print("USAGE: ./zappy_ai -p port -n name -h machine")
         print("You must specify a port")
@@ -40,7 +43,11 @@ if __name__ == '__main__':
         print("USAGE: ./zappy_ai -p port -n name -h machine")
         print("You must specify a team name")
         sys.exit(84)
-    print(f"Connecting to {host}:{port} as {team}")
     network = NetworkManager(port, host)
     bot = Bot(network, team)
+    if debug:
+        bot.debug = True
+        print(f"Bot {team} started on {host}:{port}")
     bot.start()
+    if debug:
+        print("Bot stopped")

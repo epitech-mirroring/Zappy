@@ -16,10 +16,11 @@ class PickUp(AbstractAction):
     def handle_response(self, response: str, bot):
         super().handle_response(response, bot)
         if response == "ok":
-            new_item = self.object.__class__()
-            bot.world.remove_object(bot.position[0], bot.position[1], new_item)
-            bot.inventory.add_item(new_item)
+            bot.world.remove_object_by_type(bot.position[0], bot.position[1], self.object.__class__)
+            bot.inventory.add_one_of(self.object.__class__)
         else:
-            print(f"Pick up failed: {response}")
+            if bot.debug:
+                print(f"Pick up failed: {response}")
+            bot.world.remove_all_of_type_on_cell(bot.position[0], bot.position[1], self.object.__class__)
 
 

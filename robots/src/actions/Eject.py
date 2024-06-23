@@ -15,5 +15,6 @@ class Eject(AbstractAction):
         if response == "ok":
             pass
         else:
-            print(f"Eject failed: {response}")
+            if bot.debug:
+                print(f"Eject failed: {response}")
 

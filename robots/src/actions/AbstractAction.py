@@ -1,3 +1,5 @@
+import time
+
 from .. import Bot
 
 
@@ -11,8 +13,9 @@ class AbstractAction:
 
     def execute(self, bot: Bot):
         self.has_been_executed = True
+        self.set_requested_time(time.time())
 
-    def handle_response(self, response: str, bot: Bot):
+    def handle_response(self, response: str, bot: Bot) -> None or bool:
         pass
 
     def set_requested_time(self, requested_time: float):

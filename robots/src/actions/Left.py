@@ -15,5 +15,6 @@ class Left(AbstractAction):
         if response == "ok":
             bot.direction = bot.direction.left()
         else:
-            print(f"Left failed: {response}")
+            if bot.debug:
+                print(f"Left failed: {response}")
             exit(1)

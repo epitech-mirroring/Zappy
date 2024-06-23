@@ -45,21 +45,22 @@ class Look(AbstractAction):
         cell_on_line = 0
         for (i, items) in enumerate(cells):
             cells[i] = items.strip().split(" ")
+            x = 0
+            y = 0
+            if bot.direction == bot.direction.NORTH:
+                x = bot.position[0] - line_width // 2 + cell_on_line
+                y = bot.position[1] - i
+            elif bot.direction == bot.direction.EAST:
+                x = bot.position[0] + i
+                y = bot.position[1] - line_width // 2 + cell_on_line
+            elif bot.direction == bot.direction.SOUTH:
+                x = bot.position[0] + line_width // 2 - cell_on_line
+                y = bot.position[1] + i
+            elif bot.direction == bot.direction.WEST:
+                x = bot.position[0] - i
+                y = bot.position[1] + line_width // 2 - cell_on_line
+            bot.world.clear_cell(x, y)
             for item in cells[i]:
-                x = 0
-                y = 0
-                if bot.direction == bot.direction.NORTH:
-                    x = bot.position[0] - line_width // 2 + cell_on_line
-                    y = bot.position[1] - i
-                elif bot.direction == bot.direction.EAST:
-                    x = bot.position[0] + i
-                    y = bot.position[1] - line_width // 2 + cell_on_line
-                elif bot.direction == bot.direction.SOUTH:
-                    x = bot.position[0] + line_width // 2 - cell_on_line
-                    y = bot.position[1] + i
-                elif bot.direction == bot.direction.WEST:
-                    x = bot.position[0] - i
-                    y = bot.position[1] + line_width // 2 - cell_on_line
                 parsed_item = parse_item(item)
                 if parsed_item is not None:
                     bot.world.add_object(x, y, parsed_item)

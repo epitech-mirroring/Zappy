@@ -16,17 +16,14 @@ class NetworkManager:
         self.serverPort = server_port
 
     def connect(self):
-        print(f"Connecting to {self.serverIP}:{self.serverPort}")
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
         self.socket.setblocking(True)
         self.socket.connect((self.serverIP, self.serverPort))
 
     def __send(self, message: str):
-        print(f"Sending: {message.strip()}")
         self.socket.sendall(message.encode())
 
     def send(self, message: str):
-        print(f"Queuing: {message.strip()}")
         self.sendQueue.append(message)
 
     def receive(self) -> str:
@@ -56,7 +53,6 @@ class NetworkManager:
                 if '\n' in response and len(self.buffer) > 0:
                     response = self.buffer + response
                     self.buffer = ""
-                print(f"Received: '{response.strip()}'")
                 for line in response.split("\n"):
                     for handler in self.responseHandlers:
                         handler(line)
@@ -69,7 +65,6 @@ class NetworkManager:
             self.socket.close()
         self.socket = None
         self.isRunning = False
-        print("Connection closed")
 
     def add_response_handler(self, handler: callable):
         self.responseHandlers.append(handler)

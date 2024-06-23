@@ -22,5 +22,6 @@ class Forward(AbstractAction):
             elif bot.direction == bot.direction.WEST:
                 bot.position = (bot.position[0] - 1, bot.position[1])
         else:
-            print(f"Forward failed: {response}")
+            if bot.debug:
+                print(f"Forward failed: {response}")
             exit(1)
