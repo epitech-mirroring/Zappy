@@ -26,7 +26,7 @@ static void update_egg_count(game_t *game, hashmap_t **content, tile_t *tile)
     int eggs_number = 0;
     size_t size = array_get_size(game->eggs);
 
-    for (size_t i = 0; i < size ; i++) {
+    for (size_t i = 0; i < size; i++) {
         egg = (egg_t *)array_get_at(game->eggs, i);
         if (egg->coordinates.x == tile->coordinates.x
             && egg->coordinates.y == tile->coordinates.y)

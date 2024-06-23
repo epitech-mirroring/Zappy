@@ -106,14 +106,6 @@ char *buffer_get_next(buffer_t *buffer, char limit)
     return data;
 }
 
-void buffer_clear(buffer_t *buffer)
-{
-    for (size_t i = 0; i < buffer->capacity; i++)
-        buffer->buffer[i] = '\0';
-    buffer->read_index = 0;
-    buffer->write_index = 0;
-}
-
 void buffer_destroy(buffer_t *buffer)
 {
     free(buffer->buffer);
