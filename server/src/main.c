@@ -115,6 +115,13 @@ int check_teams(array_t *teams)
     return 0;
 }
 
+void free_tmp(size_t *map_size, array_t *teams)
+{
+    free(map_size);
+    free(teams->data);
+    free(teams);
+}
+
 int main(int ac, char **av)
 {
     size_t *map_size = find_map_size(ac, av);
@@ -130,8 +137,7 @@ int main(int ac, char **av)
         || single_tick_time > (size_t)1000000 || check_teams(teams) == 84)
         return 84;
     server = create_server(port, teams, map_size, nb_max_clients);
-    if (server == NULL)
-        return 84;
+    free_tmp(map_size, teams);
     server->single_tick_time = single_tick_time;
     run(server);
     shutdown_server(server);

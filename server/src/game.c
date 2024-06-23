@@ -93,6 +93,7 @@ static void new_client_ping(game_t *game, client_t *client,
     snprintf(msg, 1024, "%li %li\n", game->map->width, game->map->height);
     buffer_write(client->buffer_answered, msg);
     pnw_log_gui(game, trantorian, team->name);
+    free(msg);
 }
 
 void handle_new_client(game_t *game)
@@ -116,22 +117,29 @@ void handle_new_client(game_t *game)
             array_remove(game->clients_without_team, i);
         } else
             new_client_unknow_team(game, client, msg, i);
+        free(msg);
     }
+}
+
+static void set_up_teams_and_trantorians(game_t *game, array_t *teams)
+{
+    game->teams = array_constructor(sizeof(team_t), (void *)&destroy_team);
+    for (size_t i = 0; i < array_get_size(teams); i++)
+        array_push_back(game->teams, array_get_at(teams, i));
+    game->trantorians = array_constructor(sizeof(trantorian_t),
+        (void *)&destroy_trantorian);
 }
 
 game_t *init_game(array_t *teams, size_t map_size[2], size_t min_places)
 {
     game_t *game = malloc(sizeof(game_t));
 
-    game->teams = array_constructor(sizeof(team_t), (void *)&destroy_team);
     game->gui_log = array_constructor(sizeof(char *), (void *)&free);
     game->gui_clients = array_constructor(sizeof(client_t), NULL);
     game->incantations =
         array_constructor(sizeof(incantation_t), (void *)&destroy_incantation);
-    for (size_t i = 0; i < array_get_size(teams); i++)
-        array_push_back(game->teams, array_get_at(teams, i));
+    set_up_teams_and_trantorians(game, teams);
     game->eggs = array_constructor(sizeof(egg_t), (void *)&destroy_egg);
-    game->trantorians = array_constructor(sizeof(trantorian_t), NULL);
     game->map = init_map(map_size[0], map_size[1]);
     generate_start_eggs(game);
     generate_ressources(game->map);
@@ -151,6 +159,7 @@ void destroy_game(game_t *game)
     array_destructor(game->clients_without_team);
     array_destructor(game->gui_log);
     array_destructor(game->gui_clients);
+    array_destructor(game->incantations);
     destroy_map(game->map);
     free(game->winning_team);
     free(game);

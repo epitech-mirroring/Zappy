@@ -28,6 +28,7 @@ static int create_socket(server_t *server)
     if (bind(server->fd, (struct sockaddr *)addr, sizeof(*addr)) == -1 ||
             listen(server->fd, MAX_USERS) == -1)
         return -1;
+    free(addr);
     return 0;
 }
 
