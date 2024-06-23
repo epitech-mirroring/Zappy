@@ -547,7 +547,8 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        // HANDLE END OF GAME
+        _display.setWinnerTeam(tokens[1]);
+        _display.setEndGame(true);
         std::string log = "GUI LOG: Team " + tokens[1] + " end the game";
         _display.addLog(log);
         std::cout << "GUI LOG: Team " << token[1] << " end the game" << std::endl;
