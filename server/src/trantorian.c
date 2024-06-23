@@ -25,7 +25,7 @@ trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
     trantorian->coordinates = coordinates;
     trantorian->level = 1;
     trantorian->inventory = init_inventory();
-    hashmap_set(trantorian->inventory.resources, "food", 10);
+    trantorian->inventory.food_time = 1260;
     trantorian->actions = array_constructor(sizeof(action_t), NULL);
     trantorian->direction = NORTH;
     trantorian->waiting_tick = 0;
