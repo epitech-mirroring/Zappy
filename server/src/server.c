@@ -103,8 +103,8 @@ void run(server_t *server)
     fd_set readfds;
     fd_set writefds;
 
-    is_running = true;
-    while (is_running) {
+    is_server_running(true, true);
+    while (is_server_running(false, false)) {
         server->prev_tick_time = time(NULL) * 1000000 + 0;
         tv.tv_usec = get_closest_action(server);
         fill_fd_set(server, &readfds, &writefds);
@@ -115,7 +115,6 @@ void run(server_t *server)
             return;
         handle_new_connections(server, &readfds);
         read_clients_messages(server, &readfds);
-        while (waitpid(-1, NULL, WNOHANG) > 0);
         tick(server, &writefds);
     }
 }

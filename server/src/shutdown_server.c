@@ -9,8 +9,6 @@
 #include "server.h"
 #include <signal.h>
 
-sig_atomic_t is_running = true;
-
 int sigaction_init(void)
 {
     struct sigaction action;
@@ -25,12 +23,16 @@ int sigaction_init(void)
 
 void shutdown_action(server_t *server)
 {
-    if (is_server_running())
+    if (is_server_running(false, false))
         shutdown_server(server);
 }
 
-bool is_server_running(void)
+bool is_server_running(bool write, bool value)
 {
+    static bool is_running = true;
+
+    if (write)
+        is_running = value;
     return is_running;
 }
 
@@ -39,7 +41,7 @@ void handle_sigint(int sig, siginfo_t *info, void *ucontext)
     (void)info;
     (void)ucontext;
     (void)sig;
-    is_running = false;
+    is_server_running(true, false);
     printf("Shutting down server...\n");
 }
 

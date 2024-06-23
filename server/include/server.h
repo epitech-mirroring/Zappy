@@ -165,9 +165,12 @@
     /**
      * @brief Check if the server is running
      *
+     * @param write The write flag
+     * @param value The value
+     *
      * @return bool
      */
-    bool is_server_running(void);
+    bool is_server_running(bool write, bool value);
 
     /**
      * @brief Shutdown the server
@@ -175,9 +178,6 @@
      * @param server The server
      */
     void shutdown_action(server_t *server);
-
-    extern sig_atomic_t is_running;
-
 
 #ifdef __cplusplus
 }
