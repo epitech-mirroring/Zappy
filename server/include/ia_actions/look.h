@@ -17,9 +17,6 @@ extern "C" {
     #endif // __cplusplus
 
     #include <stddef.h>
-    typedef struct tile_content_s {
-        hashmap_t *content;
-    } tile_content_s;
     /**
      * @brief Look around the player
      *
@@ -27,7 +24,7 @@ extern "C" {
      *
      * @return char* The message to send to the player
      */
-    char *get_element_on_tile(tile_t *tile);
+    char *get_element_on_tile(tile_t *tile, hashmap_t *content);
 
     /**
      * @brief Look around the player in north direction
@@ -39,7 +36,7 @@ extern "C" {
      * @return the message to send to the player
      */
     char *look_north(game_t *game, short level,
-        coordinates_t player_coordinates);
+        coordinates_t player_coordinates, hashmap_t *content);
 
     /**
      * @brief Look around the player in south direction
@@ -52,7 +49,7 @@ extern "C" {
      *
      */
     char *look_south(game_t *game, short level,
-        coordinates_t player_coordinates);
+        coordinates_t player_coordinates, hashmap_t *content);
 
     /**
      * @brief Look around the player in east direction
@@ -64,7 +61,7 @@ extern "C" {
      * @return the message to send to the player
      */
     char *look_east(game_t *game, short level,
-        coordinates_t player_coordinates);
+        coordinates_t player_coordinates, hashmap_t *content);
 
     /**
      * @brief Look around the player in west direction
@@ -76,7 +73,7 @@ extern "C" {
      * @return the message to send to the player
      */
     char *look_west(game_t *game, short level,
-        coordinates_t player_coordinates);
+        coordinates_t player_coordinates, hashmap_t *content);
 
 
     #ifdef __cplusplus

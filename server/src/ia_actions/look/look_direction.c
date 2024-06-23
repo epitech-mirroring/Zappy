@@ -30,7 +30,7 @@ static char *make_msg(char *msg, char *element)
 }
 
 char *look_north(game_t *game, short level,
-    coordinates_t player_coordinates)
+    coordinates_t player_coordinates, hashmap_t *content)
 {
     char *msg = calloc(100000, sizeof(char));
     int x = 0;
@@ -42,7 +42,7 @@ char *look_north(game_t *game, short level,
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
             msg = make_msg(msg, get_element_on_tile
-                (get_tile(game->map, x, y)));
+                (get_tile(game->map, x, y), content));
             x++;
         }
         y--;
@@ -51,7 +51,7 @@ char *look_north(game_t *game, short level,
 }
 
 char *look_south(game_t *game, short level,
-    coordinates_t player_coordinates)
+    coordinates_t player_coordinates, hashmap_t *content)
 {
     char *msg = calloc(100000, sizeof(char));
     int x = 0;
@@ -63,7 +63,7 @@ char *look_south(game_t *game, short level,
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
             msg = make_msg(msg, get_element_on_tile
-                (get_tile(game->map, x, y)));
+                (get_tile(game->map, x, y), content));
             x--;
         }
         y++;
@@ -72,7 +72,7 @@ char *look_south(game_t *game, short level,
 }
 
 char *look_west(game_t *game, short level,
-    coordinates_t player_coordinates)
+    coordinates_t player_coordinates, hashmap_t *content)
 {
     char *msg = calloc(100000, sizeof(char));
     int x = player_coordinates.x;
@@ -84,7 +84,7 @@ char *look_west(game_t *game, short level,
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
             msg = make_msg(msg, get_element_on_tile
-                (get_tile(game->map, x, y)));
+                (get_tile(game->map, x, y), content));
             y--;
         }
         x--;
@@ -93,7 +93,7 @@ char *look_west(game_t *game, short level,
 }
 
 char *look_east(game_t *game, short level,
-    coordinates_t player_coordinates)
+    coordinates_t player_coordinates, hashmap_t *content)
 {
     char *msg = calloc(100000, sizeof(char));
     int x = player_coordinates.x;
@@ -105,7 +105,7 @@ char *look_east(game_t *game, short level,
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
             msg = make_msg(msg, get_element_on_tile
-                (get_tile(game->map, x, y)));
+                (get_tile(game->map, x, y), content));
             y++;
         }
         x++;

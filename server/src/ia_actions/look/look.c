@@ -19,26 +19,43 @@ static void manage_msg(trantorian_t *trantorian, char *tmp, char *msg)
     free(tmp);
 }
 
+static hashmap_t *init_tile_content(void)
+{
+    hashmap_t *resources;
+
+    resources = create_hashmap();
+    hashmap_put(resources, "player", 0);
+    hashmap_put(resources, "food", 0);
+    hashmap_put(resources, "linemate", 0);
+    hashmap_put(resources, "deraumere", 0);
+    hashmap_put(resources, "sibur", 0);
+    hashmap_put(resources, "mendiane", 0);
+    hashmap_put(resources, "phiras", 0);
+    hashmap_put(resources, "thystame", 0);
+    return resources;
+}
+
 void look(game_t *game, trantorian_t *trantorian)
 {
     char *msg = NULL;
     char *tmp = calloc(100000, sizeof(char));
+    hashmap_t *content = init_tile_content();
 
     if (trantorian->direction == NORTH) {
         msg = look_north
-            (game, (short)trantorian->level, trantorian->coordinates);
+            (game, (short)trantorian->level, trantorian->coordinates, content);
     }
     if (trantorian->direction == EAST) {
         msg = look_east
-            (game, (short)trantorian->level, trantorian->coordinates);
+            (game, (short)trantorian->level, trantorian->coordinates, content);
     }
     if (trantorian->direction == SOUTH) {
         msg = look_south
-            (game, (short)trantorian->level, trantorian->coordinates);
+            (game, (short)trantorian->level, trantorian->coordinates, content);
     }
     if (trantorian->direction == WEST) {
         msg = look_west
-            (game, (short)trantorian->level, trantorian->coordinates);
+            (game, (short)trantorian->level, trantorian->coordinates, content);
     }
     manage_msg(trantorian, tmp, msg);
 }
