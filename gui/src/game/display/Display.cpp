@@ -211,7 +211,7 @@ void Display::DrawAction()
             if (trantorian.getAction() != Trantorian::Action::NONE) {
                 switch (trantorian.getAction()) {
                     case Trantorian::Action::BROADCAST:
-                        // DrawBroadcatAction(trantorian);
+                        DrawBroadcastAction(trantorian);
                         return;
                     case Trantorian::Action::EXPULSION:
                         DrawExpulsionAction(trantorian);
@@ -279,6 +279,23 @@ void Display::DrawDropAction(Trantorian &trantorian)
     Vector3 scale = {0.2f, 0.2f, 0.2f};
     if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
         DrawModelEx(trantorian.getPdrModel(), position, rotationAxis, 0.0f, scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
+void Display::DrawBroadcastAction(Trantorian &trantorian)
+{
+    
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.1f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.6f, 0.6f, 0.6f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPbcModel(), position, rotationAxis, (trantorian.getOrientation() + 90), scale, WHITE);
     } else {
         trantorian.setAction(Trantorian::Action::NONE);
     }

@@ -37,6 +37,10 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
     _pdrModel = LoadModel("gui/src/assets/pdr/trashcan.obj");
     _pdrTexture = LoadTexture("gui/src/assets/pdr/trashcan.png");
     _pdrModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pdrTexture;
+
+    _pbcModel = LoadModel("gui/src/assets/pbc/mail.obj");
+    _pbcTexture = LoadTexture("gui/src/assets/pbc/mail.png");
+    _pbcModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pbcTexture;
 }
 
 void Trantorian::setAction(Action action)

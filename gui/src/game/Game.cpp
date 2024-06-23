@@ -249,12 +249,16 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
+        std::string trantorianId = tokens[1];
+        std::string message = tokens[2];
+
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == tokens[1]) {
-                    // HANDLE BROADCAST
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " has broadcasted: " << tokens[2] << std::endl;
+                    trantorian.setAction(Trantorian::Action::BROADCAST);
+                    trantorian.setActionStartTime(GetTime());
+                    std::cout << "GUI LOG: Player " << trantorianId
+                        << " has broadcasted: " << message << std::endl;
                 }
             }
         }
