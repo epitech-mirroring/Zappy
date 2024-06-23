@@ -47,7 +47,7 @@ void destroy_trantorian(trantorian_t *trantorian)
         uuid_clear(trantorian->uuid);
     }
     for (size_t i = 0; i < size; i++) {
-        action_t *action = array_get_at(trantorian->actions, i);
+        action = (action_t *)array_get_at(trantorian->actions, i);
         if (action == NULL)
             continue;
         free(action->action_name);
