@@ -128,9 +128,8 @@ game_t *init_game(array_t *teams, size_t map_size[2], size_t min_places)
     game->gui_clients = array_constructor(sizeof(client_t), NULL);
     game->incantations =
         array_constructor(sizeof(incantation_t), (void *)&destroy_incantation);
-    for (size_t i = 0; i < array_get_size(teams); i++) {
+    for (size_t i = 0; i < array_get_size(teams); i++)
         array_push_back(game->teams, array_get_at(teams, i));
-    }
     game->eggs = array_constructor(sizeof(egg_t), (void *)&destroy_egg);
     game->trantorians = array_constructor(sizeof(trantorian_t), NULL);
     game->map = init_map(map_size[0], map_size[1]);
@@ -140,6 +139,7 @@ game_t *init_game(array_t *teams, size_t map_size[2], size_t min_places)
     game->win = false;
     game->food_spwan = 0;
     game->min_places = min_places;
+    game->winning_team = NULL;
     return game;
 }
 

@@ -10,14 +10,18 @@
 
 static char *make_string(char *element, char *message, int count)
 {
+    char *tmp = calloc(2048, sizeof(char));
+
     if (element == NULL || message == NULL)
         return message;
     for (int i = 0; i < count; i++) {
+        sprintf(tmp, "%s", message);
         if (strlen(message) == 0)
             sprintf(message, "%s", element);
         else
-            sprintf(message, "%s %s", message, element);
+            sprintf(message, "%s %s", tmp, element);
     }
+    free(tmp);
     return message;
 }
 
