@@ -39,37 +39,50 @@ int get_closest_action(server_t *server)
     return (int) (closest_action - server->remaining_us_before_next_tick);
 }
 
-void tick(server_t *server, fd_set *write_fds)
+static void calculate_time(server_t *server, size_t *elapsed_ticks)
 {
     struct timeval tv = {0, 0};
     gettimeofday(&tv, NULL);
     size_t actual_time = tv.tv_sec * 1000000 + tv.tv_usec;
     size_t elapsed_us = actual_time - server->prev_tick_time;
-    size_t elapsed_ticks = 0;
     struct timeval current = {0, 0};
 
     while (elapsed_us > 0) {
-            size_t will_sub = MIN(server->remaining_us_before_next_tick, elapsed_us);
-            server->remaining_us_before_next_tick -= will_sub;
-            elapsed_us -= will_sub;
-            if (server->remaining_us_before_next_tick == 0) {
-                    server->remaining_us_before_next_tick = server->single_tick_time;
-                    elapsed_ticks++;
-                }
+        size_t will_sub = MIN(server->remaining_us_before_next_tick, elapsed_us);
+        server->remaining_us_before_next_tick -= will_sub;
+        elapsed_us -= will_sub;
+        if (server->remaining_us_before_next_tick == 0) {
+            server->remaining_us_before_next_tick = server->single_tick_time;
+            (*elapsed_ticks)++;
         }
+    }
+    if (*elapsed_ticks > 0)
+        for (size_t i = 0; i < *elapsed_ticks; i++) {
+            gettimeofday(&current, NULL);
+            server->prev_tick_time = current.tv_sec * 1000000 + current.tv_usec;
+        }
+}
+
+static void update_game(server_t *server, fd_set *write_fds, size_t elapsed_ticks)
+{
     handle_new_client(server->game);
     if (elapsed_ticks > 0) {
-            for (size_t i = 0; i < elapsed_ticks; i++) {
-                    gettimeofday(&current, NULL);
-                    server->prev_tick_time = current.tv_sec * 1000000 + current.tv_usec;
-                    game_tick(server->game);
-                }
+        for (size_t i = 0; i < elapsed_ticks; i++) {
+            game_tick(server->game);
         }
+    }
     run_gui_commands(server);
     update_graphic_clients_buffer(server);
     write_to_clients(server, write_fds);
     find_trantorians_action(server->game);
     check_dead_client(server);
+}
+
+void tick(server_t *server, fd_set *write_fds)
+{
+    size_t elapsed_ticks = 0;
+    calculate_time(server, &elapsed_ticks);
+    update_game(server, write_fds, elapsed_ticks);
 }
 
 int find_max_fd(server_t *server)
