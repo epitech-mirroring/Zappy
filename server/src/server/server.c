@@ -11,6 +11,21 @@
 #include <sys/select.h>
 #include <sys/time.h>
 
+static struct timeval get_timeout(server_t *server)
+{
+    int us = get_closest_action(server);
+    long int s = 0;
+    struct timeval tv = {0, 0};
+
+    if (us < 0)
+        return tv;
+    s = us / 1000000;
+    us = us % 1000000;
+    tv.tv_sec = s;
+    tv.tv_usec = us;
+    return tv;
+}
+
 void run(server_t *server)
 {
     struct timeval tv = {0, 0};
@@ -19,14 +34,8 @@ void run(server_t *server)
 
     is_server_running(true, true);
     while (is_server_running(false, false)) {
-        struct timeval current = {0, 0};
-        gettimeofday(&current, NULL);
-        int us = get_closest_action(server);
-        long int s = us / 1000000;
-        us = us % 1000000;
-        tv.tv_sec = s;
-        tv.tv_usec = us;
         fill_fd_set(server, &readfds, &writefds);
+        tv = get_timeout(server);
         if (select(server->max_fd + 1, &readfds, &writefds, NULL, &tv) == -1)
             return;
         handle_new_connections(server, &readfds);
