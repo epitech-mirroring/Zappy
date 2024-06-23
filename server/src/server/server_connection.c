@@ -15,7 +15,6 @@
 #include <sys/time.h>
 #include <netinet/in.h>
 
-
 int get_closest_action(server_t *server)
 {
     int closest_action = INT32_MAX;
@@ -44,11 +43,12 @@ static void time_value(server_t *server, size_t *elapsed_ticks,
 {
     while (elapsed_us > 0) {
             will_sub = MIN(server->remaining_us_before_next_tick,
-                           elapsed_us);
+                elapsed_us);
             server->remaining_us_before_next_tick -= will_sub;
             elapsed_us -= will_sub;
             if (server->remaining_us_before_next_tick == 0) {
-                    server->remaining_us_before_next_tick = server->single_tick_time;
+                    server->remaining_us_before_next_tick =
+                        server->single_tick_time;
                     (*elapsed_ticks)++;
                 }
         }
@@ -67,11 +67,13 @@ static void calculate_time(server_t *server, size_t *elapsed_ticks)
     if (*elapsed_ticks > 0)
         for (size_t i = 0; i < *elapsed_ticks; i++) {
             gettimeofday(&current, NULL);
-            server->prev_tick_time = current.tv_sec * 1000000 + current.tv_usec;
+            server->prev_tick_time =
+                current.tv_sec * 1000000 + current.tv_usec;
         }
 }
 
-static void update_game(server_t *server, fd_set *write_fds, size_t elapsed_ticks)
+static void update_game(server_t *server, fd_set *write_fds,
+    size_t elapsed_ticks)
 {
     handle_new_client(server->game);
     if (elapsed_ticks > 0) {
@@ -89,6 +91,7 @@ static void update_game(server_t *server, fd_set *write_fds, size_t elapsed_tick
 void tick(server_t *server, fd_set *write_fds)
 {
     size_t elapsed_ticks = 0;
+
     calculate_time(server, &elapsed_ticks);
     update_game(server, write_fds, elapsed_ticks);
 }
