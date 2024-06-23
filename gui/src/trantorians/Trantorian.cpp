@@ -41,6 +41,10 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
     _pbcModel = LoadModel("gui/src/assets/pbc/mail.obj");
     _pbcTexture = LoadTexture("gui/src/assets/pbc/mail.png");
     _pbcModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pbcTexture;
+
+    // _picModel = LoadModel("gui/src/assets/pic/cauldrin.obj");
+    // _picTexture = LoadTexture("gui/src/assets/pic/cauldrin.png");
+    // _picModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _picTexture;
 }
 
 void Trantorian::setAction(Action action)
@@ -227,4 +231,14 @@ Model Trantorian::getPdrModel() const
 Model Trantorian::getPgtModel() const
 {
     return _pgtModel;
+}
+
+Model Trantorian::getPicModel() const
+{
+    return _picModel;
+}
+
+Model Trantorian::getPieModel() const
+{
+    return _pieModel;
 }

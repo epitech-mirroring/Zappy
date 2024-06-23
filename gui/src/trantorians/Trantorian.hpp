@@ -33,7 +33,8 @@ namespace GUI {
                 EXPULSION,
                 COLLECT,
                 DROP,
-                INCANTATION 
+                INCANTATION_S,
+                INCANTATION_E
             };
             enum ResourceType {
                 FOOD,
@@ -218,6 +219,14 @@ namespace GUI {
              * @brief Get the pgt Model object
              */
             [[nodiscard]] Model getPgtModel() const;
+            /**
+             * @brief Get the pic Model object
+             */
+            [[nodiscard]] Model getPicModel() const;
+            /**
+             * @brief Get the pie Model object
+             */
+            [[nodiscard]] Model getPieModel() const;
 
         private:
             GUI::Position _position;
@@ -239,6 +248,10 @@ namespace GUI {
             Texture2D _pdrTexture;
             Model _pgtModel;
             Texture2D _pgtTexture;
+            Model _picModel;
+            Texture2D _picTexture;
+            Model _pieModel;
+            Texture2D _pieTexture;
 
     };
 } // namespace GUI  //

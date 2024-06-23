@@ -44,6 +44,12 @@ namespace GUI {
             void addTrantorian(Trantorian& trantorian);
 
             /**
+             * @brief Remove trantorian from team
+             * @param string id of the trantorian to remove
+             */
+            void removeTrantorian(std::string trantorianId);
+
+            /**
              * @brief Get list of trantorian in the team
              * @return list of trantorian objects
              */

@@ -1,6 +1,6 @@
 # Blender 3.3.1
 # www.blender.org
-mtllib FolderMail.mtl
+mtllib mail.mtl
 o Mail
 v 0.000000 -0.268379 0.500000
 v -0.000000 -0.268379 -0.500000
