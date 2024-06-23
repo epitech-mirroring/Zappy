@@ -26,6 +26,12 @@ class AbstractObject:
     def get_name(self) -> str:
         pass
 
+    def __str__(self):
+        return f"{self.get_name()}({self.count})"
+
+    def __repr__(self):
+        return self.__str__()
+
 
 class Food(AbstractObject):
     def __init__(self, count: int = 1):

@@ -26,5 +26,6 @@ class Fork(AbstractAction):
             elif pid > 0:
                 pass
         else:
-            print(f"Fork failed: {response}")
+            if bot.debug:
+                print(f"Fork failed: {response}")
             exit(1)

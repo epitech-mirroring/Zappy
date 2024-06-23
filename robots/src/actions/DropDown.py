@@ -20,6 +20,7 @@ class DropDown(AbstractAction):
             bot.inventory.remove_item(new_item)
             bot.world.add_object(bot.position[0], bot.position[1], new_item)
         else:
-            print(f"Drop down failed: {response}")
+            if bot.debug:
+                print(f"Drop down failed: {response}")
 
 
