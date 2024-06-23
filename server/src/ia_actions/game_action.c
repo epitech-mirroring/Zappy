@@ -134,8 +134,6 @@ void check_dead_trantorians(game_t *game)
             trantorian->client->need_to_be_kick = true;
             array_remove(game->trantorians, i);
             incantation_dead_trantorian(game->incantations, trantorian);
-            printf("x: %ld y: %ld\n", trantorian->coordinates.x,
-                trantorian->coordinates.y);
             tile = get_tile_by_coordinates(game->map, trantorian->coordinates);
             tile->player_count--;
             destroy_trantorian(trantorian);
