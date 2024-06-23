@@ -131,7 +131,8 @@ class Bot:
                     self.remaining_places_in_team = int(response)
         else:
             if response == "dead":
-                exit(0)
+                self.network_manager.close()
+                return
             action = self.actionQueue.pop(0)
             duration = time.time() - action.requested_time
             expected_duration = action.time_to_execute  # In ticks
@@ -319,7 +320,11 @@ class Bot:
         self.network_manager.add_response_handler(self.handle_response)
         self.network_thread.start()
 
+        time.sleep(1)
+
         while True:
+            if not self.network_manager.isRunning:
+                break
             if self.world is None:
                 continue
             if self.remaining_places_in_team > 0:
@@ -332,4 +337,7 @@ class Bot:
                     continue
             else:
                 self.logic()
+
+        self.network_thread.join()
+        exit(0)
 

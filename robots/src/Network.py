@@ -8,6 +8,8 @@ class NetworkManager:
     socket = None
     sendQueue = []
     responseHandlers = []
+    buffer = ""
+    isRunning = False
 
     def __init__(self, server_port: int, server_ip: str = "127.0.0.1"):
         self.serverIP = server_ip
@@ -32,7 +34,8 @@ class NetworkManager:
 
     def start(self):
         self.connect()
-        while True:
+        self.isRunning = True
+        while self.isRunning:
             write_list = []
             read_list = []
             if len(self.sendQueue) > 0:
@@ -45,15 +48,27 @@ class NetworkManager:
                                                             0.1)
             if self.socket in readable:
                 response = self.receive()
+                if len(response) == 0:
+                    break
+                if '\n' not in response:
+                    self.buffer += response
+                    continue
+                if '\n' in response and len(self.buffer) > 0:
+                    response = self.buffer + response
+                    self.buffer = ""
                 print(f"Received: '{response.strip()}'")
                 for line in response.split("\n"):
                     for handler in self.responseHandlers:
                         handler(line)
             if self.socket in writable:
                 self.__send(self.sendQueue.pop(0))
+        self.close()
 
     def close(self):
-        self.socket.close()
+        if self.socket is not None:
+            self.socket.close()
+        self.socket = None
+        self.isRunning = False
         print("Connection closed")
 
     def add_response_handler(self, handler: callable):
