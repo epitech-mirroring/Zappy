@@ -123,6 +123,7 @@ void check_dead_trantorians(game_t *game)
 {
     trantorian_t *trantorian = NULL;
     char *msg = calloc(10, sizeof(char));
+    tile_t *tile = NULL;
 
     for (size_t i = 0; i < array_get_size(game->trantorians); i++) {
         trantorian = (trantorian_t *)array_get_at(game->trantorians, i);
@@ -134,6 +135,8 @@ void check_dead_trantorians(game_t *game)
             array_remove(game->trantorians, i);
             incantation_dead_trantorian(game->incantations, trantorian);
             destroy_trantorian(trantorian);
+            tile = get_tile_by_coordinates(game->map, trantorian->pos);
+            tile->player_count--;
             i--;
         }
     }
