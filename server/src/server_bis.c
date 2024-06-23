@@ -28,6 +28,7 @@ static int create_socket(server_t *server)
     if (bind(server->fd, (struct sockaddr *)addr, sizeof(*addr)) == -1 ||
             listen(server->fd, MAX_USERS) == -1)
         return -1;
+    free(addr);
     return 0;
 }
 
@@ -51,7 +52,7 @@ server_t *create_server(unsigned short port, array_t *teams,
         team->free_places = min_free_places;
     }
     server->game = init_game(teams, map_size, min_free_places);
-    server->clients = array_constructor(sizeof(client_t),
+    server->clients = array_constructor(sizeof(client_t *),
         (void *)&destroy_client);
     server->port = port;
     server->max_fd = 0;

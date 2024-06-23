@@ -37,10 +37,16 @@ static void update_egg_count(game_t *game, hashmap_t **content, tile_t *tile)
 
 static char *make_msg(char *msg, char *element)
 {
-    if (strlen(msg) == 0)
+    char *tmp = NULL;
+
+    if (strlen(msg) == 0) {
         snprintf(msg, 100000, "%s", element);
-    else
-        snprintf(msg, 100000, "%s %s,", strdup(msg), element);
+    } else {
+        tmp = strdup(msg);
+        snprintf(msg, 100000, "%s %s,", tmp, element);
+        free(tmp);
+    }
+    free(element);
     return msg;
 }
 

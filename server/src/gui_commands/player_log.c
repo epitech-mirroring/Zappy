@@ -43,6 +43,7 @@ void ppo_log_gui(game_t *game, char *arg, client_t *client)
     if (check_ppo_arg(game, arg) == false) {
         sprintf(str, "sbp\n");
         buffer_write(client->buffer_answered, str);
+        free(str);
         return;
     }
     uuid_parse(arg, uuid);
@@ -51,8 +52,10 @@ void ppo_log_gui(game_t *game, char *arg, client_t *client)
         if (uuid_compare(trantorian->uuid, uuid) == 0)
             break;
     }
+    free(str);
     str = trantorian_pos_to_str(trantorian);
     buffer_write(client->buffer_answered, str);
+    free(str);
 }
 
 static bool check_plv_arg(game_t *game, char *arg)
@@ -79,6 +82,7 @@ void plv_log_gui(game_t *game, char *arg, client_t *client)
     if (check_plv_arg(game, arg) == false) {
         sprintf(str, "sbp\n");
         buffer_write(client->buffer_answered, str);
+        free(str);
         return;
     }
     uuid_parse(arg, uuid);
@@ -87,8 +91,10 @@ void plv_log_gui(game_t *game, char *arg, client_t *client)
         if (uuid_compare(trantorian->uuid, uuid) == 0)
             break;
     }
+    free(str);
     str = trantorian_level_to_str(trantorian);
     buffer_write(client->buffer_answered, str);
+    free(str);
 }
 
 static bool check_pin_arg(game_t *game, char *arg)
@@ -115,6 +121,7 @@ void pin_log_gui(game_t *game, char *arg, client_t *client)
     if (check_pin_arg(game, arg) == false) {
         sprintf(str, "sbp\n");
         buffer_write(client->buffer_answered, str);
+        free(str);
         return;
     }
     uuid_parse(arg, uuid);
@@ -123,8 +130,10 @@ void pin_log_gui(game_t *game, char *arg, client_t *client)
         if (uuid_compare(trantorian->uuid, uuid) == 0)
             break;
     }
+    free(str);
     str = inventory_to_str(trantorian);
     buffer_write(client->buffer_answered, str);
+    free(str);
 }
 
 void tna_log_gui(game_t *game, char *arg, client_t *client)

@@ -12,6 +12,8 @@
     #define MAX_COMMAND_SIZE 1024
     #define MAX_USERS 10000
 
+    #define MIN(a, b) (a < b ? a : b)
+
     #include "game.h"
     #include "array.h"
     #include "client.h"
@@ -34,7 +36,8 @@
         array_t *clients;
 
         size_t single_tick_time; // in microseconds
-        suseconds_t prev_tick_time; // in microseconds
+        size_t prev_tick_time; // in microseconds
+        size_t remaining_us_before_next_tick;
 
         unsigned short port;
         int max_fd;

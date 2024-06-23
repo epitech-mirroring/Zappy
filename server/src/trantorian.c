@@ -39,11 +39,21 @@ trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
 
 void destroy_trantorian(trantorian_t *trantorian)
 {
+    size_t size = array_get_size(trantorian->actions);
+    action_t *action = NULL;
+
     if (trantorian != NULL) {
-        array_destructor(trantorian->actions);
         destroy_hashmap(trantorian->inventory.resources);
         uuid_clear(trantorian->uuid);
     }
+    for (size_t i = 0; i < size; i++) {
+        action_t *action = array_get_at(trantorian->actions, i);
+        if (action == NULL)
+            continue;
+        free(action->action_name);
+        free(action);
+    }
+    array_destructor(trantorian->actions);
     free(trantorian);
 }
 
