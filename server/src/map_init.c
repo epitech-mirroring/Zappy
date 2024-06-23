@@ -30,6 +30,7 @@ tile_t *init_tile(size_t x, size_t y)
     tile->coordinates.x = x;
     tile->coordinates.y = y;
     tile->resources = init_resources();
+    tile->player_count = 0;
     tile->eggs = array_constructor(sizeof(egg_t *), NULL);
     return tile;
 }
