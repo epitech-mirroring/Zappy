@@ -102,7 +102,16 @@ bool Trantorian::operator==(const Trantorian& other) const
 
 void Trantorian::setOrientation(float orientation)
 {
-    _orientation = orientation;
+    if (orientation == static_cast<float>(NORTH))
+        _orientation = 0;
+    else if (orientation == static_cast<float>(EAST))
+        _orientation = 90;
+    else if (orientation == static_cast<float>(SOUTH))
+        _orientation = 180;
+    else if (orientation == static_cast<float>(WEST))
+        _orientation = 270;
+    else
+        _orientation = 0;
 }
 
 float Trantorian::getOrientation()
