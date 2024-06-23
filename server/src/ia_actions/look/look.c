@@ -24,6 +24,7 @@ static hashmap_t *init_tile_content(void)
     hashmap_t *resources;
 
     resources = create_hashmap();
+    hashmap_put(resources, "egg", 0);
     hashmap_put(resources, "player", 0);
     hashmap_put(resources, "food", 0);
     hashmap_put(resources, "linemate", 0);

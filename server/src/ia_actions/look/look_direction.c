@@ -20,6 +20,21 @@ static int manage_pos(int index, int max)
     return index;
 }
 
+static void update_egg_count(game_t *game, hashmap_t **content, tile_t *tile)
+{
+    egg_t *egg = NULL;
+    int eggs_number = 0;
+    size_t size = array_get_size(game->eggs);
+
+    for (size_t i = 0; i < size ; i++) {
+        egg = (egg_t *)array_get_at(game->eggs, i);
+        if (egg->coordinates.x == tile->coordinates.x
+            && egg->coordinates.y == tile->coordinates.y)
+            eggs_number++;
+    }
+    hashmap_set(*content, "egg", eggs_number);
+}
+
 static char *make_msg(char *msg, char *element)
 {
     if (strlen(msg) == 0)
@@ -43,6 +58,7 @@ char *look_north(game_t *game, short level,
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
             tile = get_tile(game->map, x, y);
+            update_egg_count(game, &content, tile);
             msg = make_msg(msg, get_element_on_tile
                 (tile, content));
             x++;
@@ -66,6 +82,7 @@ char *look_south(game_t *game, short level,
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             x = manage_pos(x, game->map->width);
             tile = get_tile(game->map, x, y);
+            update_egg_count(game, &content, tile);
             msg = make_msg(msg, get_element_on_tile
                 (tile, content));
             x--;
@@ -89,6 +106,7 @@ char *look_west(game_t *game, short level,
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
             tile = get_tile(game->map, x, y);
+            update_egg_count(game, &content, tile);
             msg = make_msg(msg, get_element_on_tile
                 (tile, content));
             y--;
@@ -112,6 +130,7 @@ char *look_east(game_t *game, short level,
         for (size_t j = 0; j < (size_t)1 + (i * 2); j++) {
             y = manage_pos(x, game->map->width);
             tile = get_tile(game->map, x, y);
+            update_egg_count(game, &content, tile);
             msg = make_msg(msg, get_element_on_tile
                 (tile, content));
             y++;
