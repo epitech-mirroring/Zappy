@@ -35,7 +35,6 @@ static void update_actions(trantorian_t *trantorian)
     if (tmp != NULL)
         tmp->time = trantorian->waiting_tick;
     array_insert(trantorian->actions, action, 0);
-    trantorian->waiting_tick = action->time;
 }
 
 static void ping_all(game_t *game, array_t *trantorians,
