@@ -45,6 +45,14 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
     _picModel = LoadModel("gui/src/assets/pic/potion.obj");
     _picTexture = LoadTexture("gui/src/assets/pic/potion.png");
     _picModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _picTexture;
+
+    _pieKoModel = LoadModel("gui/src/assets/pie/potion.obj");
+    _pieKoTexture = LoadTexture("gui/src/assets/pie/potion_red.png");
+    _pieKoModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _picTexture;
+
+    _pieOkModel = LoadModel("gui/src/assets/pie/potion.obj");
+    _pieOkTexture = LoadTexture("gui/src/assets/pie/potion_green.png");
+    _pieOkModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _picTexture;
 }
 
 void Trantorian::setAction(Action action)
@@ -247,7 +255,12 @@ Model Trantorian::getPicModel() const
     return _picModel;
 }
 
-Model Trantorian::getPieModel() const
+Model Trantorian::getPieKoModel() const
 {
-    return _pieModel;
+    return _pieKoModel;
+}
+
+Model Trantorian::getPieOkModel() const
+{
+    return _pieOkModel;
 }

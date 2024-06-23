@@ -476,8 +476,11 @@ void Display::DrawAction()
                     case Trantorian::Action::INCANTATION_S:
                         DrawStartIncantationAction(trantorian);
                         break;
-                    case Trantorian::Action::INCANTATION_E:
-                        // DrawEndIncantationAction(trantorian);
+                    case Trantorian::Action::INCANTATION_KO:
+                        DrawEndIncantationAction(trantorian);
+                        break;
+                    case Trantorian::Action::INCANTATION_OK:
+                        DrawEndIncantationAction(trantorian);
                         break;
                     default:
                         return;
@@ -568,6 +571,22 @@ void Display::DrawStartIncantationAction(Trantorian trantorian)
     Vector3 scale = {0.3f, 0.3f, 0.3f};
     if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
         DrawModelEx(trantorian.getPicModel(), position, rotationAxis, 0.0f, scale, WHITE);
+    } else {
+        trantorian.setAction(Trantorian::Action::NONE);
+    }
+}
+
+void Display::DrawEndIncantationAction(Trantorian trantorian)
+{
+    Vector3 position = {
+        static_cast<float>(trantorian.getPosition().getX()),
+        2.5f,
+        static_cast<float>(trantorian.getPosition().getY())
+    };
+    Vector3 rotationAxis = {0.0f, 1.0f, 0.0f};
+    Vector3 scale = {0.3f, 0.3f, 0.3f};
+    if (GetTime() - trantorian.getActionStartTime() < 1.0f) {
+        DrawModelEx(trantorian.getPieOkModel(), position, rotationAxis, 0.0f, scale, WHITE);
     } else {
         trantorian.setAction(Trantorian::Action::NONE);
     }

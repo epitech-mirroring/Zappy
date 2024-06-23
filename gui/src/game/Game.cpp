@@ -365,10 +365,24 @@ void Game::initializeCallbacks()
 
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
-        // HANDLE INCANTATION END
-        std::string log = "GUI LOG: Incantation ended";
-        _display.addLog(log);
-        std::cout << "GUI LOG: Incantation ended" << std::endl;
+        
+        int x = std::stoi(tokens[1]);
+        int y = std::stoi(tokens[2]);
+        int incantationResponse = std::stoi(tokens[3]);
+
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto trantorians : team.getTrantorianList()) {
+                if (trantorians.getPosition().getX() == x &&
+                    trantorians.getPosition().getY() == y) {
+                    Trantorian *trantorian = team.getTrantorianByIdMod(trantorians.getId());
+                    trantorian->setAction(Trantorian::Action::INCANTATION_OK);
+                    trantorian->setActionStartTime(GetTime());
+                    std::string log = "GUI LOG: Incantation ended";
+                    _display.addLog(log);
+                    std::cout << "GUI LOG: Incantation ended" << std::endl;
+                }
+            }
+        }
     });
 
     _commandFactory.setCallback("pic", [this](std::istringstream &iss){

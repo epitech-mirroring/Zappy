@@ -111,10 +111,16 @@ namespace GUI {
         void DrawBroadcastAction(Trantorian trantorian);
 
         /**
-         * @brief Draw broadcast action
+         * @brief Draw start incantation action
          * @return void (nothing to return)
          */
         void DrawStartIncantationAction(Trantorian trantorian);
+
+        /**
+         * @brief Draw end incantation action
+         * @return void (nothing to return)
+         */
+        void DrawEndIncantationAction(Trantorian trantorian);
 
         /**
          * @brief Cleanup object's models
