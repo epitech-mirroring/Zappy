@@ -162,6 +162,13 @@
       */
     int sigaction_init(void);
 
+    /**
+     * @brief Check if the server is running
+     *
+     * @return bool
+     */
+    bool is_server_running(void);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

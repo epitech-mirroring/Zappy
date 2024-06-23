@@ -112,6 +112,8 @@ void run(server_t *server)
             tv2 = &tv;
         if (select(server->max_fd + 1, &readfds, &writefds, NULL, tv2) == -1)
             return;
+        if (is_server_running() == false)
+            break;
         handle_new_connections(server, &readfds);
         read_clients_messages(server, &readfds);
         while (waitpid(-1, NULL, WNOHANG) > 0);

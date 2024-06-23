@@ -9,6 +9,8 @@
 #include "server.h"
 #include <signal.h>
 
+bool is_running = true;
+
 int sigaction_init(void)
 {
     struct sigaction action;
@@ -20,11 +22,17 @@ int sigaction_init(void)
         return 84;
 }
 
+bool is_server_running(void)
+{
+    return is_running;
+}
+
 void handle_sigint(int sig, siginfo_t *info, void *ucontext)
 {
     (void)info;
     (void)ucontext;
     (void)sig;
+    is_running = false;
     printf("Shutting down server...\n");
 }
 
