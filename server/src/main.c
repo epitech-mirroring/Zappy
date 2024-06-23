@@ -123,6 +123,14 @@ void free_tmp(size_t *map_size, array_t *teams)
     free(teams);
 }
 
+int launch_server(server_t *server)
+{
+    run(server);
+    shutdown_server(server);
+    destroy(server);
+    return 0;
+}
+
 int main(int ac, char **av)
 {
     size_t *map_size = find_map_size(ac, av);
@@ -131,6 +139,7 @@ int main(int ac, char **av)
     size_t single_tick_time = find_single_tick_time(ac, av);
     array_t *teams = find_teams(ac, av);
     server_t *server;
+    struct timeval tv = {0, 0};
 
     sigaction_init();
     srand(time(NULL));
@@ -141,11 +150,7 @@ int main(int ac, char **av)
     free_tmp(map_size, teams);
     server->single_tick_time = single_tick_time;
     server->remaining_us_before_next_tick = single_tick_time;
-    struct timeval tv = {0, 0};
     gettimeofday(&tv, NULL);
     server->prev_tick_time = tv.tv_sec * 1000000 + tv.tv_usec;
-    run(server);
-    shutdown_server(server);
-    destroy(server);
-    return 0;
+    return launch_server;
 }
