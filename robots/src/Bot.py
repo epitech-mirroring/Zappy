@@ -322,14 +322,15 @@ class Bot:
 
         time.sleep(1)
 
+        if self.remaining_places_in_team > 0:
+            self.remaining_places_in_team -= 1
+            Fork().handle_response("ok", self)
+
         while True:
             if not self.network_manager.isRunning:
                 break
             if self.world is None:
                 continue
-            if self.remaining_places_in_team > 0:
-                self.remaining_places_in_team -= 1
-                Fork().handle_response("ok", self)
             if len(self.actionQueue) != 0:
                 if not self.actionQueue[0].has_been_executed:
                     self.actionQueue[0].execute(self)
