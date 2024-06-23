@@ -106,6 +106,7 @@ void run_gui_commands(server_t *server)
             msg = buffer_get_next(client->buffer_asked, '\n')) {
             run_gui_command(server, client, msg);
         }
+        free(msg);
     }
     gui_send_updates(server->game, server);
 }

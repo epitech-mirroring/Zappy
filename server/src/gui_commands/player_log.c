@@ -82,7 +82,7 @@ void plv_log_gui(game_t *game, char *arg, client_t *client)
     if (check_plv_arg(game, arg) == false) {
         sprintf(str, "sbp\n");
         buffer_write(client->buffer_answered, str);
-        // free(str);
+        free(str);
         return;
     }
     uuid_parse(arg, uuid);
@@ -121,7 +121,7 @@ void pin_log_gui(game_t *game, char *arg, client_t *client)
     if (check_pin_arg(game, arg) == false) {
         sprintf(str, "sbp\n");
         buffer_write(client->buffer_answered, str);
-        // free(str);
+        free(str);
         return;
     }
     uuid_parse(arg, uuid);

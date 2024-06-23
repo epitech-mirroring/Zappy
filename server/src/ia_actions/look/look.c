@@ -55,4 +55,5 @@ void look(game_t *game, trantorian_t *trantorian)
         msg = look_west(game, (short)trantorian->level, coord, content);
     }
     manage_msg(trantorian, tmp, msg);
+    destroy_hashmap(content);
 }

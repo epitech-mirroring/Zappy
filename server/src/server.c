@@ -22,7 +22,6 @@ static void write_to_client(client_t *client)
     char *tmp = NULL;
 
     while (message != NULL) {
-        // printf("%s\n", message);
         tmp = calloc(strlen(message) + 2, sizeof(char));
         sprintf(tmp, "%s\n", message);
         send(client->socket, tmp, strlen(tmp), MSG_NOSIGNAL);
@@ -156,6 +155,7 @@ void new_clients_check(server_t *server, client_t *client)
     char *tmp = calloc(1024, sizeof(char));
 
     if (client->type != UNKNOWN) {
+        free(tmp);
         return;
     }
     message = get_next_message(client);

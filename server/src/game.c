@@ -64,7 +64,7 @@ static bool can_create_trantorian(game_t *game, char *team_name)
 static void trantorian_action(game_t *game, trantorian_t *trantorian)
 {
     size_t i = 0;
-    action_t action;
+    action_t *action;
 
     if (array_get_size(trantorian->actions) == 0)
         return;
@@ -73,9 +73,11 @@ static void trantorian_action(game_t *game, trantorian_t *trantorian)
     if (trantorian->is_dead)
         return;
     while (actions_fnc[i].fnc != NULL) {
-        action = *(action_t *)array_get_at(trantorian->actions, 0);
-        if (actions_fnc[i].action == action.action) {
+        action = (action_t *)array_get_at(trantorian->actions, 0);
+        if (actions_fnc[i].action == action->action) {
             actions_fnc[i].fnc(game, trantorian);
+            free(action->action_name);
+            free(action);
             array_remove(trantorian->actions, 0);
             return;
         }
@@ -98,8 +100,8 @@ static void new_client_ping(game_t *game, client_t *client,
 
 void handle_new_client(game_t *game)
 {
-    client_t *client = NULL;
     char *msg = NULL;
+    client_t *client = NULL;
     trantorian_t *trantorian = NULL;
 
     for (size_t i = 0; i < array_get_size(game->clients_without_team); i++) {
@@ -112,9 +114,8 @@ void handle_new_client(game_t *game)
                 get_team_by_name(game->teams, msg), client);
             trantorian = (trantorian_t *)array_get_at
                 (game->trantorians, array_get_size(game->trantorians) - 1);
-            new_client_ping(game, client,
-                get_team_by_name(game->teams, msg), trantorian);
             array_remove(game->clients_without_team, i);
+            i = 0;
         } else
             new_client_unknow_team(game, client, msg, i);
         free(msg);
@@ -207,4 +208,5 @@ void create_trantorian(game_t *game, team_t *team, client_t *client)
     array_push_back(game->trantorians, trantorian);
     ebo_log_gui(game, egg);
     player_spawn(egg, team, game, i);
+    new_client_ping(game, client, team, trantorian);
 }
