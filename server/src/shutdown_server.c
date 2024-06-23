@@ -9,7 +9,7 @@
 #include "server.h"
 #include <signal.h>
 
-volatile bool is_running = true;
+sig_atomic_t is_running = true;
 
 int sigaction_init(void)
 {
