@@ -27,10 +27,13 @@ static char *make_string_for_elements(hashmap_t *elements)
     char *element_str[9] = {"player", "food", "linemate", "deraumere",
                                   "sibur", "mendiane", "phiras", "thystame", NULL};
     int count = 0;
+    if (is_hashmap_empty(elements) == true)
+        return NULL;
 
     for (int i = 0; i < 8; i++) {
-            count = hashmap_get(elements, element_str[i]);
-            count = (count > 8) ? 0 : count;
+        if (hashmap_contains(elements, element_str[i]) == false)
+            hashmap_put(elements, element_str[i], 0);
+        count = hashmap_get(elements, element_str[i]);
         if (count > 0){
             tmp = make_string(element_str[i], tmp, count);
         }
