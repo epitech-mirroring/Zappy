@@ -40,22 +40,19 @@ void look(game_t *game, trantorian_t *trantorian)
     char *msg = NULL;
     char *tmp = calloc(100000, sizeof(char));
     hashmap_t *content = init_tile_content();
+    coordinates_t coord = trantorian->coordinates;
 
     if (trantorian->direction == NORTH) {
-        msg = look_north
-            (game, (short)trantorian->level, trantorian->coordinates, content);
+        msg = look_north(game, (short)trantorian->level, coord, content);
     }
     if (trantorian->direction == EAST) {
-        msg = look_east
-            (game, (short)trantorian->level, trantorian->coordinates, content);
+        msg = look_east(game, (short)trantorian->level, coord, content);
     }
     if (trantorian->direction == SOUTH) {
-        msg = look_south
-            (game, (short)trantorian->level, trantorian->coordinates, content);
+        msg = look_south(game, (short)trantorian->level, coord, content);
     }
     if (trantorian->direction == WEST) {
-        msg = look_west
-            (game, (short)trantorian->level, trantorian->coordinates, content);
+        msg = look_west(game, (short)trantorian->level, coord, content);
     }
     manage_msg(trantorian, tmp, msg);
 }

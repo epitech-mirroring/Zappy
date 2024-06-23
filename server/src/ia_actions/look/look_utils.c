@@ -25,11 +25,10 @@ static char *make_string_for_elements(hashmap_t *elements)
 {
     char *tmp = calloc(2048, sizeof(char));
     char *element_str[9] = {"player", "food", "linemate", "deraumere",
-                                  "sibur", "mendiane", "phiras", "thystame", NULL};
+        "sibur", "mendiane", "phiras", "thystame", NULL};
     int count = 0;
     if (is_hashmap_empty(elements) == true)
         return NULL;
-
     for (int i = 0; i < 8; i++) {
         if (hashmap_contains(elements, element_str[i]) == false)
             hashmap_put(elements, element_str[i], 0);
@@ -52,6 +51,5 @@ char *get_element_on_tile(tile_t *tile, hashmap_t *content)
     hashmap_set(content, "mendiane", hashmap_get(tile->resources, "mendiane"));
     hashmap_set(content, "phiras", hashmap_get(tile->resources, "phiras"));
     hashmap_set(content, "thystame", hashmap_get(tile->resources, "thystame"));
-
     return make_string_for_elements(content);
 }

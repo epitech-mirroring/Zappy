@@ -9,7 +9,7 @@
 #include "server.h"
 #include <signal.h>
 
-bool is_running = true;
+volatile bool is_running = true;
 
 int sigaction_init(void)
 {
@@ -20,6 +20,12 @@ int sigaction_init(void)
 
     if (sigaction(SIGINT, &action, NULL) == -1)
         return 84;
+}
+
+void shutdown_action(server_t *server)
+{
+    if (is_server_running())
+        shutdown_server(server);
 }
 
 bool is_server_running(void)

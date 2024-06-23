@@ -154,12 +154,12 @@
      */
     void handle_sigint(int sig, siginfo_t *info, void *ucontext);
 
-     /**
-      *
-      * @brief Initialize the sigaction
-      *
-      * @return void
-      */
+    /**
+     *
+     * @brief Initialize the sigaction
+     *
+     * @return void
+     */
     int sigaction_init(void);
 
     /**
@@ -168,6 +168,13 @@
      * @return bool
      */
     bool is_server_running(void);
+
+    /**
+     * @brief Shutdown the server
+     *
+     * @param server The server
+     */
+    void shutdown_action(server_t *server);
 
 #ifdef __cplusplus
 }
