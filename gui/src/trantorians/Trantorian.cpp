@@ -43,7 +43,7 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
     _pbcModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _pbcTexture;
 
     _picModel = LoadModel("gui/src/assets/pic/potion.obj");
-    _picTexture = LoadTexture("gui/src/assets/pic/lambert1_Base_Color.png");
+    _picTexture = LoadTexture("gui/src/assets/pic/potion.png");
     _picModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _picTexture;
 }
 
