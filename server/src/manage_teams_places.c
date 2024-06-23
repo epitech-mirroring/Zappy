@@ -37,7 +37,6 @@ void manage_teams_places(game_t *game)
         team = (team_t *)array_get_at(game->teams, i);
         nb = array_get_size(team->trantorians) +
             get_nb_eggs_in_team(team->uuid, game->eggs);
-        printf("nb = %ld\n", nb);
         if (nb < game->min_places) {
             fill_team_egg(game, team, nb);
             team->free_places = game->min_places;

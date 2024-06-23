@@ -7,6 +7,7 @@ from .Network import NetworkManager
 from .Objects import AbstractObject, Food
 from .World import World
 from .actions import AbstractAction
+from .actions.Fork import Fork
 from .actions.Forward import Forward
 from .actions.Look import Look
 from .actions.PickUp import PickUp
@@ -270,25 +271,27 @@ class Bot:
                 to_explore.sort(key=lambda x: f_score[x])
 
     def wander(self):
-        rand_x = random.randint(self.position[0] - 1, self.position[0] + 1)
-        rand_y = random.randint(self.position[1] - 1, self.position[1] + 1)
+        rand_x = random.randint(self.position[0] - self.world.width // 2,
+                                self.position[0] + self.world.width // 2)
+        rand_y = random.randint(self.position[1] - self.world.height // 2,
+                                self.position[1] + self.world.height // 2)
         self.a_star_towards((rand_x, rand_y))
 
     def feed(self):
         nearest_food = self.find_nearest_food()
-        if nearest_food is None:
-            self.wander()
-            return
-
-        distance = abs(self.position[0] - nearest_food[0]) + abs(
-            self.position[1] - nearest_food[1])
         # If distance too far scan around
         ticks_before_rescan = 20
-        if (distance > self.world.height or distance > self.world.width) and (
+        if (self.server_frequency is not None and
                 (time.time() - self.last_scan_time) > ticks_before_rescan /
                 self.server_frequency):
             self.scan()
-        elif distance > 1:
+            return
+        if nearest_food is None:
+            self.wander()
+            return
+        distance = abs(self.position[0] - nearest_food[0]) + abs(
+            self.position[1] - nearest_food[1])
+        if distance > 1:
             self.a_star_towards(nearest_food)
         else:
             self.add_action(PickUp(Food()))
@@ -319,6 +322,9 @@ class Bot:
         while True:
             if self.world is None:
                 continue
+            if self.remaining_places_in_team > 0:
+                self.remaining_places_in_team -= 1
+                Fork().handle_response("ok", self)
             if len(self.actionQueue) != 0:
                 if not self.actionQueue[0].has_been_executed:
                     self.actionQueue[0].execute(self)
@@ -326,3 +332,4 @@ class Bot:
                     continue
             else:
                 self.logic()
+
