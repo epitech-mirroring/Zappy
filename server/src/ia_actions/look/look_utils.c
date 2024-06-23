@@ -23,7 +23,7 @@ static char *make_string(char *element, char *message, int count)
 
 static char *make_string_for_elements(hashmap_t *elements)
 {
-    char *tmp = calloc(1024, sizeof(char));
+    char *tmp = calloc(2048, sizeof(char));
     char *element_str[9] = {"player", "food", "linemate", "deraumere",
                                   "sibur", "mendiane", "phiras", "thystame", NULL};
     int count = 0;
