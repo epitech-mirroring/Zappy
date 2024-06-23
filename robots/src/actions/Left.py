@@ -13,7 +13,8 @@ class Left(AbstractAction):
     def handle_response(self, response: str, bot):
         super().handle_response(response, bot)
         if response == "ok":
-            bot.direction = (bot.direction.value - 1) % 4
+            bot.direction = bot.direction.left()
         else:
-            print(f"Left failed: {response}")
+            if bot.debug:
+                print(f"Left failed: {response}")
             exit(1)

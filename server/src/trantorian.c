@@ -25,7 +25,7 @@ trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
     trantorian->coordinates = coordinates;
     trantorian->level = 1;
     trantorian->inventory = init_inventory();
-    hashmap_set(trantorian->inventory.resources, "food", 10);
+    trantorian->inventory.food_time = 1260;
     trantorian->actions = array_constructor(sizeof(action_t), NULL);
     trantorian->direction = NORTH;
     trantorian->waiting_tick = 0;
@@ -39,11 +39,21 @@ trantorian_t *init_trantorian(coordinates_t coordinates, client_t *client)
 
 void destroy_trantorian(trantorian_t *trantorian)
 {
+    size_t size = array_get_size(trantorian->actions);
+    action_t *action = NULL;
+
     if (trantorian != NULL) {
-        array_destructor(trantorian->actions);
         destroy_hashmap(trantorian->inventory.resources);
         uuid_clear(trantorian->uuid);
     }
+    for (size_t i = 0; i < size; i++) {
+        action = (action_t *)array_get_at(trantorian->actions, i);
+        if (action == NULL)
+            continue;
+        free(action->action_name);
+        free(action);
+    }
+    array_destructor(trantorian->actions);
     free(trantorian);
 }
 
@@ -69,7 +79,7 @@ void trantorian_tick(trantorian_t *trantorian)
 
 char *get_direction_str(enum direction_e direction)
 {
-    for (int i = 0; DIRECTION_TO_STRING[i].direction != -1; i++) {
+    for (int i = 0; DIRECTION_TO_STRING[i].str != NULL; i++) {
         if (DIRECTION_TO_STRING[i].direction == direction)
             return DIRECTION_TO_STRING[i].str;
     }

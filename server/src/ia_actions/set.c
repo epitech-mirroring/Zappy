@@ -11,7 +11,7 @@
 #include "gui.h"
 #include <string.h>
 
-static bool check_set_cmd(game_t *game, char *param, trantorian_t *trantorian)
+static bool check_set_cmd(char *param, trantorian_t *trantorian)
 {
     if (param == NULL) {
         return false;
@@ -49,7 +49,7 @@ void set(game_t *game, trantorian_t *trantorian)
     coordinates_t coords = trantorian->coordinates;
     tile_t *tile = get_tile_by_coordinates(game->map, coords);
 
-    if (!check_set_cmd(game, trantorian->param, trantorian)) {
+    if (!check_set_cmd(trantorian->param, trantorian)) {
         sprintf(msg, "ko\n");
         buffer_write(trantorian->client->buffer_answered, msg);
         free(msg);

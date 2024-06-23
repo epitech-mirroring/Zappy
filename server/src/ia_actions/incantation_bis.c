@@ -9,6 +9,8 @@
 #include "game.h"
 #include "incantation.h"
 #include "actions.h"
+#include "gui.h"
+#include <string.h>
 
 static size_t find_trantorian_in_incantation(incantation_t *incantation,
     trantorian_t *trantorian)
@@ -44,13 +46,18 @@ void incantation_dead_trantorian(array_t *incantations,
 static void remove_incantation(game_t *game, array_t *trantorians, size_t i)
 {
     trantorian_t *trantorian = NULL;
+    char *msg = calloc(1024, sizeof(char));
 
     for (size_t j = 0; j < array_get_size(trantorians); j++) {
         trantorian = (trantorian_t *)array_get_at(trantorians, j);
         array_remove(trantorian->actions, 0);
+        sprintf(msg, "pie %li %li %li\n", trantorian->coordinates.x,
+            trantorian->coordinates.y, trantorian->level);
+        array_push_back(game->gui_log, strdup(msg));
         trantorian->incantated = false;
     }
     array_remove(game->incantations, i);
+    free(msg);
 }
 
 void incantations_check(game_t *game)

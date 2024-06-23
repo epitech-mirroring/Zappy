@@ -21,9 +21,11 @@ inventory_t init_inventory(void)
 char *inventory_to_str(trantorian_t *trantorian)
 {
     char *str = malloc(sizeof(char) * 1024);
+    char *uuid = malloc(sizeof(char) * 37);
     inventory_t inventory = trantorian->inventory;
 
-    sprintf(str, "pin %li %i %i %i %i %i %i %i %i %i\n", trantorian->uuid,
+    uuid_unparse(trantorian->uuid, uuid);
+    sprintf(str, "pin %s %li %li %i %i %i %i %i %i %i\n", uuid,
     trantorian->coordinates.x, trantorian->coordinates.y,
     hashmap_get(inventory.resources, "food"),
     hashmap_get(inventory.resources, "linemate"),
@@ -32,5 +34,6 @@ char *inventory_to_str(trantorian_t *trantorian)
     hashmap_get(inventory.resources, "mendiane"),
     hashmap_get(inventory.resources, "phiras"),
     hashmap_get(inventory.resources, "thystame"));
+    free(uuid);
     return str;
 }

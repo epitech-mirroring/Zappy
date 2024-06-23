@@ -15,7 +15,7 @@ team_t *init_team(char *name)
 
     team->name = name;
     uuid_generate(team->uuid);
-    team->trantorians = array_constructor(sizeof(uuid_t), (void *)&uuid_clear);
+    team->trantorians = array_constructor(sizeof(uuid_t), NULL);
     return team;
 }
 

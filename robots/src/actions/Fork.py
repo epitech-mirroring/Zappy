@@ -1,6 +1,4 @@
 from .AbstractAction import AbstractAction
-from ..Bot import Bot
-from ..Network import NetworkManager
 
 import os
 
@@ -21,12 +19,13 @@ class Fork(AbstractAction):
             # Egg laid so we can fork
             pid = os.fork()
             if pid == 0:
-                network = NetworkManager(bot.network_manager.serverPort,
-                                         bot.network_manager.serverIP)
-                bot = Bot(network, bot.team)
-                bot.start()
+                # Execute './zappy_ai -p port -n name -h machine'
+                os.execlp("./zappy_ai", "./zappy_ai", "-p",
+                          str(bot.network_manager.serverPort), "-n", bot.team,
+                          "-h", bot.network_manager.serverIP)
             elif pid > 0:
                 pass
         else:
-            print(f"Fork failed: {response}")
+            if bot.debug:
+                print(f"Fork failed: {response}")
             exit(1)

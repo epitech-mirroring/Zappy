@@ -18,7 +18,7 @@ char *tile_to_string(tile_t *tile)
         sprintf(str, "sbp\n");
         return str;
     }
-    sprintf(str, "bct %i %i %i %i %i %i %i %i %i\n", tile->coordinates.x,
+    sprintf(str, "bct %li %li %i %i %i %i %i %i %i\n", tile->coordinates.x,
         tile->coordinates.y, hashmap_get(tile->resources, "food"),
         hashmap_get(tile->resources, "linemate"), hashmap_get(
             tile->resources, "deraumere"), hashmap_get(
@@ -54,6 +54,6 @@ char *map_dimensions_to_string(map_t *map)
 {
     char *str = calloc(1024, sizeof(char));
 
-    sprintf(str, "msz %i %i\n", map->width, map->height);
+    sprintf(str, "msz %li %li\n", map->width, map->height);
     return str;
 }

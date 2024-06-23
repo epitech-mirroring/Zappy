@@ -14,12 +14,11 @@ class Inventory(AbstractAction):
 
     def handle_response(self, response: str, bot):
         super().handle_response(response, bot)
-        super().handle_response(response, bot)
         stripped = response.strip()[1:-1]
         slots = stripped.split(",")
         bot.inventory.clear()
         for items in slots:
-            name, quantity = items.split(" ")
+            name, quantity = items.strip().split(" ")
             parsed: AbstractObject or None = parse_item(name)
             if parsed is not None:
                 parsed.set_count(int(quantity))

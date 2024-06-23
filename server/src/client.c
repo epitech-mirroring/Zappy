@@ -19,8 +19,8 @@ client_t *init_client(int socket, client_type_t type)
         return NULL;
     client->socket = socket;
     client->type = type;
-    client->buffer_asked = create_buffer(100000, '\n');
-    client->buffer_answered = create_buffer(100000, '\n');
+    client->buffer_asked = create_buffer(1000000, '\n');
+    client->buffer_answered = create_buffer(1000000, '\n');
     client->need_to_be_kick = false;
     return client;
 }
