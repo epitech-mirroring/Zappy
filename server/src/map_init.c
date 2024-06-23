@@ -6,8 +6,22 @@
 ** You can even have multiple lines if you want !
 */
 
-#include "map.h"
-#include "egg.h"
+#include "game.h"
+
+map_t *init_map(size_t width, size_t height)
+{
+    map_t *map = malloc(sizeof(map_t));
+
+    map->width = width;
+    map->height = height;
+    map->tiles = array_constructor(sizeof(tile_t), (void *)&destroy_tile);
+    for (size_t y = 0; y < height; y++) {
+            for (size_t x = 0; x < width; x++) {
+                    array_push_back(map->tiles, init_tile(x, y));
+                }
+        }
+    return map;
+}
 
 tile_t *init_tile(size_t x, size_t y)
 {
@@ -16,14 +30,8 @@ tile_t *init_tile(size_t x, size_t y)
     tile->coordinates.x = x;
     tile->coordinates.y = y;
     tile->resources = init_resources();
-    tile->eggs = array_constructor(sizeof(egg_t *), (void *)&destroy_egg);
+    tile->eggs = array_constructor(sizeof(egg_t *), NULL);
     return tile;
-}
-
-void destroy_tile(tile_t *tile)
-{
-    array_destructor(tile->eggs);
-    free(tile);
 }
 
 hashmap_t *init_resources(void)

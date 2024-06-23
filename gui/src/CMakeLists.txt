@@ -63,6 +63,7 @@ target_sources(zappy_gui_lib
     # TESTS
     ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockTrantorians.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockTeams.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockEgg.cpp
   PUBLIC
     # ARGS
     ${CMAKE_CURRENT_SOURCE_DIR}/handle_args/HandleArgs.hpp
@@ -129,4 +130,5 @@ target_sources(zappy_gui_lib
     # TESTS
     ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockTrantorians.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockTeams.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/MockEgg.hpp
 )

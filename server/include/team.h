@@ -60,6 +60,15 @@ extern "C" {
      */
     char *teams_to_string(array_t *teams);
 
+    /**
+     * @brief Check if a Trantorian is in a team
+     *
+     * @param trantorian The Trantorian
+     * @param team The team
+     * @return bool True if the Trantorian is in the team, false otherwise
+     */
+    bool is_in_team(trantorian_t *trantorian, team_t *team);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

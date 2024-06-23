@@ -43,3 +43,22 @@ void destroy_hashmap(hashmap_t *map)
     free(map->buckets);
     free(map);
 }
+
+void hashmap_set(hashmap_t *map, char *key, int data)
+{
+    int hash = hashcode(key);
+    bucket_t *bucket = map->buckets[hash];
+
+    if (bucket == NULL)
+        return;
+    while (bucket->next != NULL) {
+        if (strcmp(bucket->key, key) == 0) {
+            break;
+        }
+        bucket = bucket->next;
+    }
+    if (strcmp(bucket->key, key) == 0) {
+        bucket->data = data;
+        return;
+    }
+}

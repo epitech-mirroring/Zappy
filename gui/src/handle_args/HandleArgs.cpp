@@ -18,16 +18,35 @@ using namespace GUI;
 int HandleArgs::checkArgs(int nbArgs, char **args)
 {
     try {
-        if (nbArgs == 2 &&
-            (std::string(args[1]) == "--help" || std::string(args[1]) == "-h")) {
+        if (nbArgs == 2 && std::string(args[1]) == "--help") {
             printUsage();
-            return 0;
+            exit(0);
         }
-        if (nbArgs != 3)
+        if (nbArgs < 3 || nbArgs > 5)
             throw GUI::ArgsException("ARGS ERROR: Invalid number of arguments");
-        if (checkPort(args[1]) == 84)
+
+        std::string port;
+        std::string hostname = "127.0.0.1";
+
+        for (int i = 1; i < nbArgs; i += 2) {
+            std::string arg(args[i]);
+            if (arg == "-p") {
+                if (i + 1 >= nbArgs || args[i + 1][0] == '-')
+                    throw GUI::ArgsException("ARGS ERROR: Missing port value");
+                port = std::string(args[i + 1]);
+            } else if (arg == "-h") {
+                if (i + 1 >= nbArgs || args[i + 1][0] == '-')
+                    throw GUI::ArgsException("ARGS ERROR: Missing hostname value");
+                hostname = std::string(args[i + 1]);
+            } else {
+                throw GUI::ArgsException("ARGS ERROR: Invalid argument");
+            }
+        }
+        if (port.empty())
+            throw GUI::ArgsException("ARGS ERROR: Missing port");
+        if (checkPort(port) == 84)
             throw GUI::ArgsException("ARGS ERROR: Invalid port");
-        if (checkHostname(args[2]) == 84)
+        if (checkHostname(hostname) == 84)
             throw GUI::ArgsException("ARGS ERROR: Invalid hostname");
     } catch (const GUI::ArgsException &e) {
         std::cerr << e.what() << std::endl;
@@ -38,7 +57,7 @@ int HandleArgs::checkArgs(int nbArgs, char **args)
 
 void HandleArgs::printUsage()
 {
-    std::cout << "USAGE: ./zappy_gui -p port -h machine" << std::endl;
+    std::cout << "USAGE: ./zappy_gui -p port [-h hostname]" << std::endl;
 }
 
 int HandleArgs::checkPort(const std::string &port)

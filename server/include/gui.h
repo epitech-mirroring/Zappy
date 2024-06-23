@@ -22,7 +22,7 @@ extern "C" {
      */
     typedef struct gui_game_command_s {
         char *cmd;
-        void (*func)(game_t *game, char *msg);
+        void (*func)(game_t *game, char *msg, client_t *client);
     } gui_game_command_t;
 
     /**
@@ -34,7 +34,7 @@ extern "C" {
      */
     typedef struct gui_server_command_s {
         char *cmd;
-        void (*func)(server_t *server, char *msg);
+        void (*func)(server_t *server, char *msg, client_t *client);
     } gui_server_command_t;
 
     /**
@@ -57,7 +57,7 @@ extern "C" {
      * @param game The game
      * @param arg The argument
      */
-    void msz_log_gui(game_t *game, char *arg);
+    void msz_log_gui(game_t *game, char *arg, client_t *client);
 
     /**
      * @brief bct command
@@ -65,7 +65,7 @@ extern "C" {
      * @param game The game
      * @param arg The argument
      */
-    void bct_log_gui(game_t *game, char *arg);
+    void bct_log_gui(game_t *game, char *arg, client_t *client);
 
     /**
      * @brief mct command
@@ -73,7 +73,7 @@ extern "C" {
      * @param game The game
      * @param arg The argument
      */
-    void mct_log_gui(game_t *game, char *arg);
+    void mct_log_gui(game_t *game, char *arg, client_t *client);
 
     /**
      * @brief tna command
@@ -81,7 +81,7 @@ extern "C" {
      * @param game The game
      * @param arg The argument
      */
-    void tna_log_gui(game_t *game, char *arg);
+    void tna_log_gui(game_t *game, char *arg, client_t *client);
 
     /**
      * @brief pnw command
@@ -97,7 +97,7 @@ extern "C" {
      * @param game The game
      * @param arg The argument
      */
-    void ppo_log_gui(game_t *game, char *arg);
+    void ppo_log_gui(game_t *game, char *arg, client_t *client);
 
     /**
      * @brief plv command
@@ -105,7 +105,7 @@ extern "C" {
      * @param game The game
      * @param arg The argument
      */
-    void plv_log_gui(game_t *game, char *arg);
+    void plv_log_gui(game_t *game, char *arg, client_t *client);
 
     /**
      * @brief pin command
@@ -113,7 +113,7 @@ extern "C" {
      * @param game The game
      * @param arg The argument
      */
-    void pin_log_gui(game_t *game, char *arg);
+    void pin_log_gui(game_t *game, char *arg, client_t *client);
 
     /**
      * @brief pex command
@@ -158,7 +158,7 @@ extern "C" {
      * @param trantorian The trantorian
      * @param resource The resource
      */
-    void pdr_log_gui(game_t *game, trantorian_t *trantorian, size_t resource);
+    void pdr_log_gui(game_t *game, trantorian_t *trantorian, char *resource);
 
     /**
      * @brief pgt command
@@ -167,7 +167,7 @@ extern "C" {
      * @param trantorian The trantorian
      * @param resource The resource
      */
-    void pgt_log_gui(game_t *game, trantorian_t *trantorian, size_t resource);
+    void pgt_log_gui(game_t *game, trantorian_t *trantorian, char *resource);
 
     /**
      * @brief pdi command
@@ -208,7 +208,7 @@ extern "C" {
      * @param server The server
      * @param arg The argument
      */
-    void sgt_log_gui(server_t *server, char *arg);
+    void sgt_log_gui(server_t *server, char *arg, client_t *client);
 
     /**
      * @brief sst command
@@ -216,7 +216,7 @@ extern "C" {
      * @param server The server
      * @param arg The argument
      */
-    void sst_log_gui(server_t *server, char *arg);
+    void sst_log_gui(server_t *server, char *arg, client_t *client);
 
     /**
      * @brief seg command

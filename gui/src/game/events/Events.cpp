@@ -10,38 +10,8 @@
 using namespace GUI;
 
 Events::Events()
-    : _selectedTile(nullptr), _hoveredTile(nullptr),
-      _selectedTrantorian(nullptr), _hoveredTrantorian(nullptr) {}
-
-bool Events::CheckCollisionRayBox(Ray ray, BoundingBox box)
+    : _selectedTile(nullptr), _hoveredTile(nullptr)
 {
-    float tmin = (box.min.x - ray.position.x) / ray.direction.x;
-    float tmax = (box.max.x - ray.position.x) / ray.direction.x;
-
-    if (tmin > tmax) std::swap(tmin, tmax);
-
-    float tymin = (box.min.y - ray.position.y) / ray.direction.y;
-    float tymax = (box.max.y - ray.position.y) / ray.direction.y;
-
-    if (tymin > tymax) std::swap(tymin, tymax);
-    if ((tmin > tymax) || (tymin > tmax))
-        return false;
-    if (tymin > tmin)
-        tmin = tymin;
-    if (tymax < tmax)
-        tmax = tymax;
-
-    float tzmin = (box.min.z - ray.position.z) / ray.direction.z;
-    float tzmax = (box.max.z - ray.position.z) / ray.direction.z;
-
-    if (tzmin > tzmax) std::swap(tzmin, tzmax);
-    if ((tmin > tzmax) || (tzmin > tmax))
-        return false;
-    if (tzmin > tmin)
-        tmin = tzmin;
-    if (tzmax < tmax)
-        tmax = tzmax;
-    return true;
 }
 
 void Events::detectHoveredTile(Camera _camera, World &_world)
@@ -64,7 +34,9 @@ void Events::detectHoveredTile(Camera _camera, World &_world)
                 {static_cast<float>(tile.getPosition().getX()) + 0.5f, 1.0f,
                     static_cast<float>(tile.getPosition().getY()) + 0.5f}
             };
-            if (CheckCollisionRayBox(ray, box)) {
+
+            RayCollision collision = GetRayCollisionBox(ray, box);
+            if (collision.hit) {
                 _hoveredTile = &tile;
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
                     _selectedTile = &tile;
@@ -92,15 +64,16 @@ void Events::detectHoveredTrantorian(Camera _camera, Teams &_teams)
     for (auto& team : _teams.getTeamsList()) {
         for (auto& trantorian : team.getTrantorianList()) {
             BoundingBox box = {
-                {static_cast<float>(trantorian.getPosition().getX()) - 0.5f, 0.25f,
+                {static_cast<float>(trantorian.getPosition().getX()) - 0.5f, 0.5f,
                     static_cast<float>(trantorian.getPosition().getY()) - 0.5f},
-                {static_cast<float>(trantorian.getPosition().getX()) + 0.5f, 1.25f,
+                {static_cast<float>(trantorian.getPosition().getX()) + 0.5f, 2.0f,
                     static_cast<float>(trantorian.getPosition().getY()) + 0.5f}
             };
-            if (CheckCollisionRayBox(ray, box)) {
-                _hoveredTrantorian = &trantorian;
+            RayCollision collision = GetRayCollisionBox(ray, box);
+            if (collision.hit) {
+                _hoveredTrantorian = std::make_unique<Trantorian>(trantorian);
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-                    _selectedTrantorian = &trantorian;
+                    _selectedTrantorian = std::make_unique<Trantorian>(trantorian);
                     _selectedTile = nullptr;
                     std::cout << "Selected Trantorian ID: " << trantorian.getId() << std::endl;
                 }

@@ -11,11 +11,12 @@
 void pdi_log_gui(game_t *game, trantorian_t *trantorian)
 {
     char *str = calloc(1024, sizeof(char));
-    char *uuid = NULL;
+    char *uuid = calloc(37, sizeof(char));
 
     uuid_unparse(trantorian->uuid, uuid);
     sprintf(str, "pdi %s\n", uuid);
     array_push_back(game->gui_log, str);
+    free(uuid);
 }
 
 static bool check_ppo_arg(game_t *game, char *arg)
@@ -33,7 +34,7 @@ static bool check_ppo_arg(game_t *game, char *arg)
     return false;
 }
 
-void ppo_log_gui(game_t *game, char *arg)
+void ppo_log_gui(game_t *game, char *arg, client_t *client)
 {
     char *str = calloc(1024, sizeof(char));
     uuid_t uuid;
@@ -41,7 +42,7 @@ void ppo_log_gui(game_t *game, char *arg)
 
     if (check_ppo_arg(game, arg) == false) {
         sprintf(str, "sbp\n");
-        array_push_back(game->gui_log, str);
+        buffer_write(client->buffer_answered, str);
         return;
     }
     uuid_parse(arg, uuid);
@@ -51,7 +52,7 @@ void ppo_log_gui(game_t *game, char *arg)
             break;
     }
     str = trantorian_pos_to_str(trantorian);
-    array_push_back(game->gui_log, str);
+    buffer_write(client->buffer_answered, str);
 }
 
 static bool check_plv_arg(game_t *game, char *arg)
@@ -69,7 +70,7 @@ static bool check_plv_arg(game_t *game, char *arg)
     return false;
 }
 
-void plv_log_gui(game_t *game, char *arg)
+void plv_log_gui(game_t *game, char *arg, client_t *client)
 {
     char *str = calloc(1024, sizeof(char));
     uuid_t uuid;
@@ -77,7 +78,7 @@ void plv_log_gui(game_t *game, char *arg)
 
     if (check_plv_arg(game, arg) == false) {
         sprintf(str, "sbp\n");
-        array_push_back(game->gui_log, str);
+        buffer_write(client->buffer_answered, str);
         return;
     }
     uuid_parse(arg, uuid);
@@ -87,7 +88,7 @@ void plv_log_gui(game_t *game, char *arg)
             break;
     }
     str = trantorian_level_to_str(trantorian);
-    array_push_back(game->gui_log, str);
+    buffer_write(client->buffer_answered, str);
 }
 
 static bool check_pin_arg(game_t *game, char *arg)
@@ -105,7 +106,7 @@ static bool check_pin_arg(game_t *game, char *arg)
     return false;
 }
 
-void pin_log_gui(game_t *game, char *arg)
+void pin_log_gui(game_t *game, char *arg, client_t *client)
 {
     char *str = calloc(1024, sizeof(char));
     uuid_t uuid;
@@ -113,7 +114,7 @@ void pin_log_gui(game_t *game, char *arg)
 
     if (check_pin_arg(game, arg) == false) {
         sprintf(str, "sbp\n");
-        array_push_back(game->gui_log, str);
+        buffer_write(client->buffer_answered, str);
         return;
     }
     uuid_parse(arg, uuid);
@@ -123,12 +124,12 @@ void pin_log_gui(game_t *game, char *arg)
             break;
     }
     str = inventory_to_str(trantorian);
-    array_push_back(game->gui_log, str);
+    buffer_write(client->buffer_answered, str);
 }
 
-void tna_log_gui(game_t *game, char *arg)
+void tna_log_gui(game_t *game, char *arg, client_t *client)
 {
     char *str = teams_to_string(game->teams);
 
-    array_push_back(game->gui_log, str);
+    buffer_write(client->buffer_answered, str);
 }

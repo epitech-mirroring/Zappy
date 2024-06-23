@@ -22,8 +22,8 @@ Trantorian::Trantorian(std::string id, int x, int y, float orientation, int leve
         _orientation = 270;
     else
         _orientation = 0;
-    _trantorianModel = LoadModel("gui/src/assets/trantorian/trantorian.obj");
-    _trantorianTexture = LoadTexture("gui/src/assets/trantorian/trantorian.png");
+    _trantorianModel = LoadModel("tests/assets/trantorian/trantorian.obj");
+    _trantorianTexture = LoadTexture("tests/assets/trantorian/trantorian.png");
     _trantorianModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _trantorianTexture;
 
     _pexModel = LoadModel("gui/src/assets/pex/boot.obj");
@@ -113,7 +113,7 @@ void Trantorian::setPosition(int x, int y)
     _position.setY(y);
 }
 
-Position Trantorian::getPosition()
+const GUI::Position& Trantorian::getPosition() const
 {
     return _position;
 }
@@ -132,7 +132,16 @@ bool Trantorian::operator==(const Trantorian& other) const
 
 void Trantorian::setOrientation(float orientation)
 {
-    _orientation = orientation;
+    if (orientation == static_cast<float>(NORTH))
+        _orientation = 0;
+    else if (orientation == static_cast<float>(EAST))
+        _orientation = 90;
+    else if (orientation == static_cast<float>(SOUTH))
+        _orientation = 180;
+    else if (orientation == static_cast<float>(WEST))
+        _orientation = 270;
+    else
+        _orientation = 0;
 }
 
 float Trantorian::getOrientation()

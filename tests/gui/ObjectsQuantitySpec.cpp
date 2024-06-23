@@ -18,43 +18,43 @@
 TEST(get_objects_density, test1)
 {
     GUI::Deraumere deraumere;
-    ASSERT_FLOAT_EQ(0.15, deraumere.getDensity());
+    ASSERT_EQ(1, deraumere.getQuantity());
 }
 
 TEST(get_objects_density, test2)
 {
     GUI::Linemate linemate;
-    ASSERT_FLOAT_EQ(0.3, linemate.getDensity());
+    ASSERT_EQ(1, linemate.getQuantity());
 }
 
 TEST(get_objects_density, test3)
 {
     GUI::Mendiane mendiane;
-    ASSERT_FLOAT_EQ(0.1, mendiane.getDensity());
+    ASSERT_EQ(1, mendiane.getQuantity());
 }
 
 TEST(get_objects_density, test4)
 {
     GUI::Phiras phiras;
-    ASSERT_FLOAT_EQ(0.08, phiras.getDensity());
+    ASSERT_EQ(1, phiras.getQuantity());
 }
 
 TEST(get_objects_density, test5)
 {
     GUI::Sibur sibur;
-    ASSERT_FLOAT_EQ(0.1, sibur.getDensity());
+    ASSERT_EQ(1, sibur.getQuantity());
 }
 
 TEST(get_objects_density, test6)
 {
     GUI::Thystame thystame;
-    ASSERT_FLOAT_EQ(0.05, thystame.getDensity());
+    ASSERT_EQ(1, thystame.getQuantity());
 }
 
 TEST(get_objects_density, test7)
 {
     GUI::Food food;
-    ASSERT_FLOAT_EQ(0.5, food.getDensity());
+    ASSERT_EQ(1, food.getQuantity());
 }
 
 TEST(get_object_density, test7)
@@ -63,7 +63,7 @@ TEST(get_object_density, test7)
 
     std::unique_ptr<GUI::AStone> deraumere_ptr =
         std::make_unique<GUI::Deraumere>();
-    ASSERT_FLOAT_EQ(0.15, deraumere_ptr->getDensity());
+    ASSERT_EQ(1, deraumere_ptr->getQuantity());
 }
 
 TEST(get_object_density, test8)
@@ -72,7 +72,7 @@ TEST(get_object_density, test8)
 
     std::unique_ptr<GUI::AStone> linemate_ptr =
         std::make_unique<GUI::Linemate>();
-    ASSERT_FLOAT_EQ(0.3, linemate_ptr->getDensity());
+    ASSERT_EQ(1, linemate_ptr->getQuantity());
 }
 
 TEST(get_object_density, test9)
@@ -81,7 +81,7 @@ TEST(get_object_density, test9)
 
     std::unique_ptr<GUI::AStone> mendiane_ptr =
         std::make_unique<GUI::Mendiane>();
-    ASSERT_FLOAT_EQ(0.1, mendiane_ptr->getDensity());
+    ASSERT_EQ(1, mendiane_ptr->getQuantity());
 }
 
 TEST(get_object_density, test10)
@@ -90,7 +90,7 @@ TEST(get_object_density, test10)
 
     std::unique_ptr<GUI::AStone> phiras_ptr =
         std::make_unique<GUI::Phiras>();
-    ASSERT_FLOAT_EQ(0.08, phiras_ptr->getDensity());
+    ASSERT_EQ(1, phiras_ptr->getQuantity());
 }
 
 TEST(get_object_density, test11)
@@ -99,7 +99,7 @@ TEST(get_object_density, test11)
 
     std::unique_ptr<GUI::AStone> sibur_ptr =
         std::make_unique<GUI::Sibur>();
-    ASSERT_FLOAT_EQ(0.1, sibur_ptr->getDensity());
+    ASSERT_EQ(1, sibur_ptr->getQuantity());
 }
 
 TEST(get_object_density, test12)
@@ -108,7 +108,7 @@ TEST(get_object_density, test12)
 
     std::unique_ptr<GUI::AStone> thystame_ptr =
         std::make_unique<GUI::Thystame>();
-    ASSERT_FLOAT_EQ(0.05, thystame_ptr->getDensity());
+    ASSERT_EQ(1, thystame_ptr->getQuantity());
 }
 
 TEST(get_object_density, test13)
@@ -117,5 +117,5 @@ TEST(get_object_density, test13)
 
     std::unique_ptr<GUI::Food> food_ptr =
         std::make_unique<GUI::Food>();
-    ASSERT_FLOAT_EQ(0.5, food_ptr->getDensity());
+    ASSERT_EQ(1, food_ptr->getQuantity());
 }

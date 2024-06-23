@@ -106,7 +106,7 @@ TEST_F(TileTest, CreateObjectByType) {
 }
 
 TEST_F(TileTest, UpdateTileContent_AddObjects) {
-    std::vector<std::string> tileContent = {"X", "Y", "1", "0", "1", "0", "0", "0", "0"};
+    std::vector<std::string> tileContent = {"1", "0", "1", "0", "0", "0", "0"};
     tile.updateTileContent(tileContent);
 
     auto objects = tile.getObjects();
@@ -134,43 +134,25 @@ TEST_F(TileTest, UpdateTileContent_RemoveObjects) {
     tile.addObject(food);
     tile.addObject(linemate);
 
-    std::vector<std::string> tileContent = {"X", "Y", "0", "0", "0", "0", "0", "0", "0"};
+    std::vector<std::string> tileContent = {"0", "0", "0", "0", "0", "0", "0"};
     tile.updateTileContent(tileContent);
 
     auto objects = tile.getObjects();
     EXPECT_EQ(objects.size(), 0);
-
-    delete food;
-    delete linemate;
 }
 
 TEST_F(TileTest, UpdateTileContent_MixedChanges) {
-    std::vector<std::string> initialContent = {"X", "Y", "0", "1", "1", "0", "0", "0", "0"};
+    std::vector<std::string> initialContent = {"0", "1", "1", "0", "0", "0", "0"};
     tile.updateTileContent(initialContent);
 
     std::list<IObject*> obj = tile.getObjects();
     EXPECT_EQ(obj.size(), 2);
 
-    std::vector<std::string> newContent = {"X", "Y", "0", "2", "0", "1", "0", "0", "0"};
+    std::vector<std::string> newContent = {"0", "2", "0", "1", "0", "0", "0"};
     tile.updateTileContent(newContent);
 
     auto objects = tile.getObjects();
-    EXPECT_EQ(objects.size(), 3);
-
-    int linemateCount = 0;
-    int siburCount = 0;
-
-    for (auto obj : objects) {
-        if (obj->getType() == Tile::LINEMATE) {
-            linemateCount++;
-        } else if (obj->getType() == Tile::SIBUR) {
-            siburCount++;
-        }
-        delete obj;
-    }
-
-    EXPECT_EQ(linemateCount, 2);
-    EXPECT_EQ(siburCount, 1);
+    EXPECT_EQ(objects.size(), 2);
 }
 
 TEST_F(TileTest, GetObjects) {

@@ -71,7 +71,7 @@ namespace GUI {
              * @brief Get trantorian postion
              * @return pair of ints
              */
-            [[nodiscard]] GUI::Position getPosition();
+            [[nodiscard]] const GUI::Position& getPosition() const;
 
             /**
              * @brief Set trantorian's lifetime

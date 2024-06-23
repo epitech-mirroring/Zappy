@@ -53,7 +53,7 @@ namespace GUI {
              * @brief Get list of trantorian in the team
              * @return list of trantorian objects
              */
-            [[nodiscard]] std::list<Trantorian>& getTrantorianList();
+            [[nodiscard]] std::list<Trantorian> getTrantorianList() const;
 
             /**
              * @brief Add team to teams list
@@ -103,6 +103,13 @@ namespace GUI {
              */
             [[nodiscard]] std::list<Egg> getEggList() const;
 
+            /**
+             * @brief Get trantorian by id
+             * @param id std::string of trantorian's id
+             * @return Trantorian object
+             * @note this function is used to get a modifiable trantorian
+             */
+            Trantorian* getTrantorianByIdMod(const std::string& id);
         private:
             std::string _name;
             std::list<Trantorian> _trantorians;

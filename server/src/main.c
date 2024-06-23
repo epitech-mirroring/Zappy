@@ -133,6 +133,7 @@ int main(int ac, char **av)
         return 84;
     server->single_tick_time = single_tick_time;
     run(server);
+    shutdown_server(server);
     destroy(server);
     return 0;
 }

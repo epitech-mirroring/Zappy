@@ -46,7 +46,7 @@ void Teams::removeTrantorian(std::string trantorianId)
     }
 }
 
-std::list<Trantorian>& Teams::getTrantorianList()
+std::list<Trantorian> Teams::getTrantorianList() const
 {
     return _trantorians;
 }
@@ -112,4 +112,14 @@ void Teams::removeEggFromList(std::string eggId)
 std::list<Egg> Teams::getEggList() const
 {
     return _eggs;
+}
+
+Trantorian* Teams::getTrantorianByIdMod(const std::string& id)
+{
+    for (auto& trantorian : _trantorians) {
+        if (trantorian.getId() == id) {
+            return &trantorian;
+        }
+    }
+    return nullptr;
 }

@@ -12,6 +12,7 @@
     #include "world/World.hpp"
     #include "trantorians/Teams.hpp"
 
+    #include <memory>
     #include <raylib.h>
     #include <iostream>
     #include <vector>
@@ -20,21 +21,34 @@
 namespace GUI {
     class Events {
     public:
+        /**
+         * @brief Construct a new Events object
+         */
         Events();
+        /**
+         * @brief Destroy the Events object
+         */
         ~Events() = default;
 
-        bool CheckCollisionRayBox(Ray ray, BoundingBox box);
-
+        /**
+         * @brief Detect the hovered tile
+         * @param _camera camera object
+         * @param _world world object
+         */
         void detectHoveredTile(Camera _camera, World &_world);
-
+        /**
+         * @brief Detect the selected tile
+         * @param _camera camera object
+         * @param _world world object
+         */
         void detectHoveredTrantorian(Camera _camera, Teams &_teams);
 
     protected:
-        Tile* _selectedTile;
-        Tile* _hoveredTile;
+        Tile* _selectedTile;                // tile selected by the user
+        Tile* _hoveredTile;                 // tile hovered by the user
 
-        Trantorian* _selectedTrantorian;
-        Trantorian* _hoveredTrantorian;
+        std::unique_ptr<Trantorian> _selectedTrantorian;    // trantorian selected by the user
+        std::unique_ptr<Trantorian> _hoveredTrantorian;     // trantorian hovered by the user
     };
-} // namespace GUI
+} // namespace GUI //
 #endif /* !EVENTS_HPP_ */

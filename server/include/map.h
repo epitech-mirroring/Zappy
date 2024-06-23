@@ -150,6 +150,15 @@ extern "C" {
      */
     hashmap_t *init_resources(void);
 
+    /**
+     * @brief Update the tile player count when a player move
+     *
+     * @param prev Previous position of the player
+     * @param now Actual position of the player
+     * @param map map of the game
+     */
+    void update_pos(coordinates_t prev, coordinates_t now, map_t *map);
+
     #ifdef __cplusplus
 }
     #endif // __cplusplus

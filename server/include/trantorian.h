@@ -47,7 +47,10 @@ extern "C" {
         enum direction_e direction;
         size_t waiting_tick;
         size_t nb_waiting_actions;
+        bool is_dead;
+        bool incantated;
         client_t *client;
+        char *param;
     } trantorian_t;
 
     /**
@@ -98,13 +101,12 @@ extern "C" {
     char *trantorian_level_to_str(trantorian_t *trantorian);
 
     /**
-     * @brief Return a string representation of the new player connection
+     * @brief A function that get the string representation of a direction
      *
-     * @param trantorian The trantorian to represent
-     * @param team The team of the trantorian
-     * @return char* The string representation of the new player connection
-    */
-    char *new_player_connection_log(trantorian_t *trantorian, char *team);
+     * @param direction The direction to represent
+     * @return char* The string representation of the direction
+     */
+    char *get_direction_str(enum direction_e direction);
 
     #ifdef __cplusplus
 }

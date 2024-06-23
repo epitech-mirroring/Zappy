@@ -37,6 +37,7 @@ extern "C" {
     typedef struct client_s {
         int socket;
         client_type_t type;
+        bool need_to_be_kick;
 
         buffer_t *buffer_asked;
         buffer_t *buffer_answered;
@@ -73,14 +74,6 @@ extern "C" {
      * @return char* The message
      */
     char *get_next_message(client_t *client);
-
-    /**
-     * @brief Get the type of the client
-     *
-     * @param client The target client
-     * @return client_type_t The type of the client
-     */
-    client_type_t get_type(client_t *client);
 
     #ifdef __cplusplus
 }

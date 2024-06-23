@@ -18,7 +18,7 @@ char *tile_to_string(tile_t *tile)
         sprintf(str, "sbp\n");
         return str;
     }
-    sprintf(str, "bct %i %i %i %i\n", tile->coordinates.x,
+    sprintf(str, "bct %i %i %i %i %i %i %i %i %i\n", tile->coordinates.x,
         tile->coordinates.y, hashmap_get(tile->resources, "food"),
         hashmap_get(tile->resources, "linemate"), hashmap_get(
             tile->resources, "deraumere"), hashmap_get(

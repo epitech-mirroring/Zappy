@@ -33,7 +33,7 @@ extern "C" {
         array_t *clients;
 
         size_t single_tick_time; // in microseconds
-        long long nb_ticks; // number of ticks
+        suseconds_t prev_tick_time; // in microseconds
 
         unsigned short port;
         int max_fd;
@@ -119,6 +119,29 @@ extern "C" {
      * @param server The server
      */
     void write_to_clients(server_t *server);
+
+    /**
+     * @brief remove the useless clients
+     *
+     * @param server The server
+     */
+    void check_dead_client(server_t *server);
+
+    /**
+     * @brief shutdown the server
+     *
+     * @param server The server to shutdown
+     */
+    void shutdown_server(server_t *server);
+
+    /**
+     * @brief Get an ia with a file descriptor
+     *
+     * @param game The game
+     * @param fd The file descriptor
+     * @return trantorian_t* The trantorian
+     */
+    trantorian_t *get_ia_with_fd(game_t *game, int fd);
 
     #ifdef __cplusplus
 }

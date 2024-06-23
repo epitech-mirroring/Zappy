@@ -39,11 +39,14 @@ void Game::runGame()
     initializeCallbacks();
 
     while (_display.windowShouldClose() == false) {
-        _display.updateCamera();
+        ensureGameInit();
+        _display.setTimeUnit(_timeUnit);
+        handleNewTimeUnit();
         _display.displayElements();
         data = _client.readData();
         protocolHandler.handleData(data);
         data.clear();
+        ensureGameInformation();
     }
     _display.closeWindow();
 }
@@ -72,6 +75,55 @@ void Game::createWorld(std::vector<std::string> data)
     std::cout << "GUI LOG: Tiles created (" << (_world.getTiles().size()
         * _world.getTiles().size()) << ")" << std::endl;
     std::cout << "GUI LOG: Clouds created (" << _display.getClouds().size() << ")" << std::endl;
+}
+
+void Game::handleNewTimeUnit()
+{
+    std::string newTimeUnitStr = _display.getNewTimeUnit();
+    try {
+        if (newTimeUnitStr != "" && (std::stoi(newTimeUnitStr) != _timeUnit)) {
+            std::string request = "sst " + newTimeUnitStr + "\n";
+            _client._socket.get()->send(request);
+            _timeUnit = std::stoi(newTimeUnitStr);
+            std::cout << "GUI LOG: Sent SGT: " << newTimeUnitStr << std::endl;
+        }
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "INVALID TIME UNIT" << std::endl;
+        newTimeUnitStr.clear();
+        _display.setNewTimeUnit(newTimeUnitStr);
+    } catch (const std::out_of_range& e) {
+        std::cerr << "INVALID TIME UNIT" << std::endl;
+        newTimeUnitStr.clear();
+        _display.setNewTimeUnit(newTimeUnitStr);
+    }
+}
+
+void Game::ensureGameInit()
+{
+    if (_world.getHeight() == 0 && _world.getWidth() == 0) {
+        _client._socket.get()->send("msz\n");
+    }
+    if (_timeUnit == 0) {
+        _client._socket.get()->send("sgt\n");
+    }
+    if (Teams::getTeamsList().size() == 0) {
+        _client._socket.get()->send("tna\n");
+    }
+}
+
+void Game::ensureGameInformation()
+{
+    _client._socket.get()->send("mct\n");
+    for (auto &team : Teams::getTeamsList()) {
+        for (auto &trantorian : team.getTrantorianList()) {
+            std::string pinRequest = "pin " + trantorian.getId() + "\n";
+            std::string ppoRequest = "ppo " + trantorian.getId() + "\n";
+            std::string plvRequest = "plv " + trantorian.getId() + "\n";
+            _client._socket.get()->send(pinRequest);
+            _client._socket.get()->send(ppoRequest);
+            _client._socket.get()->send(plvRequest);
+        }
+    }
 }
 
 void Game::initializeCallbacks()
@@ -116,6 +168,8 @@ void Game::initializeCallbacks()
         Teams team(tokens[1]);
         _teams.addTeamToTeamsList(team);
         std::list<Teams> teams = Teams::getTeamsList();
+        std::string log = "GUI LOG: Team " + tokens[1] + " added";
+        _display.addLog(log);
         std::cout << "GUI LOG: There is " << teams.size() << " teams" << std::endl;
     });
 
@@ -129,12 +183,17 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
         }
 
+        int orientation = std::stoi(tokens[4]);
+        float orientationFloat = static_cast<float>(orientation);
         Trantorian player(tokens[1], std::stoi(tokens[2]), std::stoi(tokens[3]),
-                        std::stof(tokens[4]), std::stoi(tokens[5]));
+                        orientationFloat, std::stoi(tokens[5]));
 
         for (auto &team : Teams::getTeamsList()) {
             if (team.getName() == tokens[6]) {
                 team.addTrantorian(player);
+                std::string log = "GUI LOG: Player " + player.getId() +
+                    " added to " + team.getName();
+                _display.addLog(log);
                 std::cout << "GUI LOG: Player " << player.getId() <<
                     " added to team " << team.getName() << std::endl;
             }
@@ -151,14 +210,17 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    trantorian.setPosition(std::stoi(tokens[2]), std::stoi(tokens[3]));
-                    trantorian.setOrientation(std::stof(tokens[4]));
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " position updated" << std::endl;
-                }
+        int orientation = std::stoi(tokens[4]);
+        float orientationFloat = static_cast<float>(orientation);
+        for (auto& team : Teams::getTeamsList()) {
+            Trantorian* trantorian = team.getTrantorianByIdMod(tokens[1]);
+            if (trantorian != nullptr) {
+                trantorian->setPosition(std::stoi(tokens[2]), std::stoi(tokens[3]));
+                trantorian->setOrientation(orientationFloat);
+                std::cout << "GUI LOG: Player " << trantorian->getId()
+                    << " position updated to (" << trantorian->getPosition().getX() << ", "
+                    << trantorian->getPosition().getY() << ")" << std::endl;
+                break;
             }
         }
     });
@@ -176,6 +238,9 @@ void Game::initializeCallbacks()
             for (auto &trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == tokens[1]) {
                     trantorian.setLevel(std::stoi(tokens[2]));
+                    std::string log = "GUI LOG: Player " + trantorian.getId() +
+                        " level updated";
+                    _display.addLog(log);
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " level updated" << std::endl;
                 }
@@ -193,6 +258,8 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         _world = World(std::stoi(tokens[1]), std::stoi(tokens[2]));
+        std::string log = "GUI LOG: World created (" + tokens[1] + ", " + tokens[2] + ")";
+        _display.addLog(log);
         std::cout << "GUI LOG: World size updated (" <<
             _world.getHeight() << ", " << _world.getWidth() << ")" << std::endl;
     });
@@ -206,17 +273,16 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
 
-        for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
-                if (trantorian.getId() == tokens[1]) {
-                    trantorian.setInventory(tokens);
-                    std::cout << "GUI LOG: Player " << trantorian.getId()
-                        << " level updated" << std::endl;
-                }
+        for (auto& team : Teams::getTeamsList()) {
+            Trantorian* trantorian = team.getTrantorianByIdMod(tokens[1]);
+            if (trantorian != nullptr) {
+                trantorian->setInventory(tokens);
+                std::cout << "GUI LOG: Player " << trantorian->getId()
+                    << " inventory updated" << std::endl;
+                break;
             }
         }
     });
-
     _commandFactory.setCallback("pex", [this](std::istringstream &iss){
         std::string data = iss.str();
         std::istringstream iss2(data);
@@ -229,11 +295,13 @@ void Game::initializeCallbacks()
         std::string trantorianId = tokens[1];
 
         for (auto &team : Teams::getTeamsList()) {
-            for (auto &trantorian : team.getTrantorianList()) {
+            for (auto trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == trantorianId) {
                     trantorian.setAction(Trantorian::Action::EXPULSION);
                     trantorian.setActionStartTime(GetTime());
-                        std::cout << "GUI LOG: Player " << trantorianId
+                        std::string log = "GUI LOG: Player " + trantorianId + " expulsed";
+                    _display.addLog(log);
+                    std::cout << "GUI LOG: Player " << trantorianId
                             << " has been expulsed" << std::endl;
                 }
             }
@@ -257,6 +325,9 @@ void Game::initializeCallbacks()
                 if (trantorian.getId() == tokens[1]) {
                     trantorian.setAction(Trantorian::Action::BROADCAST);
                     trantorian.setActionStartTime(GetTime());
+                    std::string log = "GUI LOG: Player " + trantorianId +
+                        " has broadcasted: \n" + message;
+                    _display.addLog(log);
                     std::cout << "GUI LOG: Player " << trantorianId
                         << " has broadcasted: " << message << std::endl;
                 }
@@ -277,6 +348,9 @@ void Game::initializeCallbacks()
             for (auto &trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == tokens[1]) {
                     // HANDLE ACTION LAYING EGG
+                    std::string log = "GUI LOG: Player " + trantorian.getId() +
+                        "laying an egg";
+                    _display.addLog(log);
                     std::cout << "GUI LOG: Player " << trantorian.getId()
                         << " is laying an egg" << std::endl;
                 }
@@ -293,6 +367,9 @@ void Game::initializeCallbacks()
         while (std::getline(iss2, token, ' '))
             tokens.push_back(token);
         // HANDLE INCANTATION END
+        std::string log = "GUI LOG: Incantation ended";
+        _display.addLog(log);
+        std::cout << "GUI LOG: Incantation ended" << std::endl;
     });
 
     _commandFactory.setCallback("pic", [this](std::istringstream &iss){
@@ -319,6 +396,15 @@ void Game::initializeCallbacks()
         //     }
         // }
         std::cout << "GUI LOG: PLAYER START INCANTATION" << std::endl;
+        for (auto &team : Teams::getTeamsList()) {
+            for (auto &trantorian : team.getTrantorianList()) {
+                if (trantorian.getId() == tokens[1]) {
+                    std::string log = "GUI LOG: Player " + trantorian.getId() + " started incantation";
+                    _display.addLog(log);
+                    std::cout << "GUI LOG: Incantation started by player " << trantorian.getId() << std::endl;
+                }
+            }
+        }
     });
 
     _commandFactory.setCallback("sst", [this](std::istringstream &iss){
@@ -331,6 +417,8 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         _timeUnit = std::stoi(tokens[1]);
+        std::string log = "GUI LOG: New frequency set (" + std::to_string(_timeUnit) + ")";
+        _display.addLog(log);
         std::cout << "GUI LOG: New time unit set (" << _timeUnit << ")" << std::endl;
     });
 
@@ -344,6 +432,8 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         _timeUnit = std::stoi(tokens[1]);
+        std::string log = "GUI LOG: frequency received (" + std::to_string(_timeUnit) + ")";
+        _display.addLog(log);
         std::cout << "GUI LOG: Time unit requested (" << _timeUnit << ")" << std::endl;
     });
 
@@ -362,7 +452,9 @@ void Game::initializeCallbacks()
             for (auto &trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == trantorianId) {
                     trantorian.setIsAlive(false);
+                    std::string log = "GUI LOG: Player " + trantorianId + " died";
                     team.removeTrantorian(trantorianId);
+                    _display.addLog(log);
                     std::cout << "GUI LOG: Player " << trantorianId
                         << " died" << std::endl;
                 }
@@ -380,13 +472,16 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         std::string trantorianId = tokens[1];
-        int ressourceNb = std::stoi(tokens[2]);
+        std::string ressourceNb = tokens[2];
 
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == trantorianId) {
                     trantorian.setAction(Trantorian::Action::DROP);
                     trantorian.setActionStartTime(GetTime());
+                    std::string log = "GUI LOG: Player " + trantorianId +
+                        " dropped: " + ressourceNb;
+                    _display.addLog(log);
                     std::cout << "GUI LOG: Player " << trantorianId
                         << " has dropped: " << ressourceNb << " ressources" << std::endl;
                 }
@@ -404,14 +499,17 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         std::string trantorianId = tokens[1];
-        int ressourceNb = std::stoi(tokens[2]);
+        std::string ressourceNb = tokens[2];
 
         for (auto &team : Teams::getTeamsList()) {
             for (auto &trantorian : team.getTrantorianList()) {
                 if (trantorian.getId() == trantorianId) {
                     trantorian.setAction(Trantorian::Action::COLLECT);
                     trantorian.setActionStartTime(GetTime());
-                        std::cout << "GUI LOG: Player " << trantorianId
+                        std::string log = "GUI LOG: Player " + trantorianId +
+                        " collected: " + ressourceNb;
+                    _display.addLog(log);
+                    std::cout << "GUI LOG: Player " << trantorianId
                             << " has collected" << ressourceNb << " ressources" << std::endl;
                 }
             }
@@ -440,6 +538,9 @@ void Game::initializeCallbacks()
                     pos.setY(y);
                     Egg egg(eggId, trantorianId, pos);
                     team.addEggToList(egg);
+                    std::string log = "GUI LOG: Egg " + eggId +
+                        " layed by player " + trantorianId;
+                    _display.addLog(log);
                     std::cout << "GUI LOG: Egg " << eggId
                         << " has been layed by player " << trantorianId << std::endl;
                 }
@@ -457,6 +558,8 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         // HANDLE PLAYER CONNECTION FOR AN EGG
+        std::string log = "GUI LOG: Player connection for " + tokens[1] + " Egg";
+        _display.addLog(log);
         std::cout << "GUI LOG: Player connection for " << token[1] << " Egg" << std::endl;
     });
 
@@ -475,7 +578,9 @@ void Game::initializeCallbacks()
             for (auto &egg : team.getEggList()) {
                 if (egg.getEggId() == eggId) {
                     team.removeEggFromList(eggId);
-                    std::cout << "GUI LOG: Death of " << eggId << " Egg" << std::endl;
+                    std::string log = "GUI LOG: Death of " + eggId + " Egg";
+        _display.addLog(log);
+        std::cout << "GUI LOG: Death of " << eggId << " Egg" << std::endl;
                 }
             }
         }
@@ -491,6 +596,8 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         // HANDLE END OF GAME
+        std::string log = "GUI LOG: Team " + tokens[1] + " end the game";
+        _display.addLog(log);
         std::cout << "GUI LOG: Team " << token[1] << " end the game" << std::endl;
     });
 
@@ -504,6 +611,8 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         // HANDLE MESSAGE FROM THE SERVER
+        std::string log = "GUI LOG: Message from the server: " + tokens[1];
+        _display.addLog(log);
         std::cout << "GUI LOG: Message from the server: " << token[1] << std::endl;
     });
 
@@ -517,6 +626,8 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         // HANDLE UNKNOWN COMMAND
+        std::string log = "GUI LOG: Unkown command";
+        _display.addLog(log);
         std::cout << "GUI LOG: Unkown command" << std::endl;
     });
 
@@ -530,6 +641,8 @@ void Game::initializeCallbacks()
             tokens.push_back(token);
 
         // HANDLE COMMAND PARAMETER
+        std::string log = "GUI LOG: Command parameter requested";
+        _display.addLog(log);
         std::cout << "GUI LOG: Command parameter requested" << std::endl;
     });
 }

@@ -51,10 +51,23 @@ namespace GUI {
         void initTimeUnit(std::vector<std::string> data);
 
         /**
+         * @brief Check if the GUI has requested a new time unit if true send it to the server
+         */
+        void handleNewTimeUnit();
+        /**
          * @brief Initialize the callbacks of the game
          */
         void initializeCallbacks();
 
+        /**
+         * @brief Ensure the game is initialized by requesting the game info to the server
+         */
+        void ensureGameInit();
+
+        /**
+         * @brief Ensure the info are received from the server
+         */
+        void ensureGameInformation();
     private:
         World _world;                            // World object
         Teams _teams;                            // Teams object
