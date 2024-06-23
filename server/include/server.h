@@ -87,14 +87,6 @@
     void remove_client(server_t *server, int fd);
 
     /**
-     * @brief Read a client message
-     *
-     * @param server The server
-     * @param client The client
-     */
-    void read_client_message(server_t *server, client_t *client);
-
-    /**
      * @brief Identify if a client is a GUI or an IA client
      *
      * @param server The server
@@ -181,6 +173,39 @@
      * @param server The server
      */
     void shutdown_action(server_t *server);
+
+    /**
+     * @brief Get the closest action
+     *
+     * @param server The server
+     * @return int The closest action
+     */
+    int get_closest_action(server_t *server);
+
+    /**
+     * @brief Tick the server
+     * @param server The server
+     * @param readfds The read file descriptors
+     * @param writefds The write file descriptors
+     */
+    void fill_fd_set(server_t *server, fd_set *readfds, fd_set *writefds);
+
+    /**
+    * @brief Tick the server
+    * @param server The server
+    * @param writefds The write file descriptors
+     */
+    void read_clients_messages(server_t *server, fd_set *readfds);
+
+    /**
+     * @brief Tick the server
+     *
+     * @param server The server
+     * @param writefds The write file descriptors
+     * @param readfds The read file descriptors
+     */
+    void tick(server_t *server, fd_set *write_fds);
+
 
 #ifdef __cplusplus
 }
